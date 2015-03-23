@@ -1,0 +1,130 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{fullpage}
+
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm} \newtheorem{theorem}{Theorem}
+\usepackage{color}
+\usepackage{float}
+\usepackage{listings}
+
+\usepackage{multirow}
+\usepackage{tikz} \usetikzlibrary{trees}
+\usepackage{hyperref}  % should always be the last package
+
+
+% useful (wrappers for) math symbols:
+\newcommand{\Cardinality}[1]{\left\lvert#1\right\rvert}
+%\newcommand{\Cardinality}[1]{\##1}
+\newcommand{\Ceiling}[1]{\left\lceil#1\right\rceil}
+\newcommand{\Floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Intersect}{\cap}
+\newcommand{\Sequence}[1]{\left[#1\right]}
+\newcommand{\Set}[1]{\left\{#1\right\}}
+\newcommand{\SetComp}[2]{\Set{#1\SuchThat#2}}
+\newcommand{\SuchThat}{\mid}
+\newcommand{\Tuple}[1]{\langle#1\rangle}
+\newcommand{\Union}{\cup}
+\newcommand{\Returns}{\longrightarrow}
+
+
+\title{\textbf{Självständigt arbete \\
+    Uppsala University -- Spring 2015 \\
+    To-Do list for project \\
+    by Zinister Interactive}}              
+
+\author{Alfred \and Josef \and Philip}
+
+%\date{Month Day, Year}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\section{För alla att fixa}
+\begin{enumerate}
+\item Ladda ner GO
+\item Ladda App engine
+\item Ladda ner Python
+\item Android Studio - För appen
+\item TexMaker - För rapport
+\end{enumerate}
+
+\section{Planera}
+\begin{enumerate}
+\item Kommer senare
+\end{enumerate}
+
+\section{Definiera för projektet}
+\begin{enumerate}
+\item Kommer senare
+\end{enumerate}
+
+\section{Regler för gruppen}
+\begin{enumerate}
+\item Pusha inget om det inte fungerar
+\item Vid problem angående gruppen - Diskutera problemen strukturerat
+\item Man måste komma på bokade möten. Anledningar att missa möten kan vara:
+\item[•] Sjukdom
+\item[•] Andra möten som ej kan bokas om
+\item[•] Krig
+\item[•] Överenskommelse genom gruppen
+\item[•] Communication is key.
+\item Jobba enligt mallen för Agile Development
+
+\end{enumerate}
+
+\section{Tekniska utmaningar}
+\begin{enumerate}
+\item Hur vi ska samordna mellan användare, vänner etc
+\item Rating, matchmaking
+\item Balansering av svårighetsgrad
+\item Lära datorn att göra frågor själv (automatisk generering)
+\item Att hantera feedback från Alpha/Beta-test
+\item Att det faktiskt ska bli en \textbf{färdig produkt}
+
+\subsection{Vad kan vi:}
+\item[•] Använda oss av kunskaper från MDI, IOOPM, OSM \& PKD
+
+\subsection{Vi vi kommer behöva lära oss:}
+\item[•] Programmera för mobila enheter
+\item[•] Att faktiskt ta fram en färdig produkt
+\item[•] Programmera interface på ett bra sätt
+\item[•] 
+
+\end{enumerate}
+
+\section{Prioritetslista}
+\begin{enumerate}
+\item Server med grundläggande spelmekanik
+\item Androidapplikation
+\item[•] Snygg layout
+\item[•] Fungera och snygg
+\item Automatisk frågehämtare
+\item Utveckla \textbf{servern} med: 
+\item[•] Bättre matchmaking, Rankingsystem 
+\item[•] Maskininlärning av svårighetsgrad på frågor
+
+\end{enumerate}
+
+\section{Spelregler}
+\begin{enumerate}
+\item Man spelar en mot en
+\item Varje match har ett game-mode
+\item[•] Först till en viss poäng
+\item[•] Vinna flest rundor under en match
+\item Båda personerna får samma historiska händelse som referens (start) vid början på en omgång
+\item Varje person får X antal händelser (samma händelser) som den ska placera ut på tidslinjen
+\item[•] Om man placerar första händelsen fel så får man inte placera ut dom andra händelserna och den rundan är därmed över för spelaren
+\item[•] Om användaren placerar ut händelsen på rätt plats kommer den få fortsätta att placera ut nästa händelse och så vidare  
+\end{enumerate}
+
+\end{document}
