@@ -15,7 +15,7 @@ func init() {
 // Fetch latest top-list or something for the start page.
 func handler(w http.ResponseWriter, r *http.Request) {
 	game_id := r.FormValue("game_id")
-	fmt.Fprintf(w,"Top list")
+	fmt.Fprintf(w,"Game id: "+game_id+"\nTop list")
 }
 
 // question handles the request and delivery of new questions to each game,
@@ -42,5 +42,5 @@ func friend(w http.ResponseWriter, r *http.Request) {
 	friend_id := r.FormValue("friend_id")
 	action := r.FormValue("action") // add, remove, challenge
 
-	fmt.Fprintf(w,"Game id: "+game_id+"\nThe friend list")
+	fmt.Fprintf(w,"Game id: "+game_id+"\nFriend id: "+friend_id+"\nAction: "+action+"\nThe friend list")
 }
