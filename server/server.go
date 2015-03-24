@@ -9,6 +9,7 @@ func init() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/question", question)
 	http.HandleFunc("/friendlist", friendlist)
+	http.HandleFunc("/friend", friend)
 }
 
 // Init function.
