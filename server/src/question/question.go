@@ -1,7 +1,7 @@
 package question
 
 import (
-	time
+	"time"
 )
 
 type Question struct {
