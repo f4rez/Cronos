@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"src/question_crawler"
 )
 
 func init() {
@@ -10,6 +11,7 @@ func init() {
 	http.HandleFunc("/question", question)
 	http.HandleFunc("/friendlist", friendlist)
 	http.HandleFunc("/friend", friend)
+	http.HandleFunc("/crawl", crawl)
 }
 
 // Init function.
@@ -44,4 +46,8 @@ func friend(w http.ResponseWriter, r *http.Request) {
 	action := r.FormValue("action") // add, remove, challenge
 
 	fmt.Fprintf(w,"Game id: "+game_id+"\nFriend id: "+friend_id+"\nAction: "+action+"\nThe friend list")
+}
+
+func crawl(w http.ResponseWriter, r *http.Request) {
+	question_crawler.Main(w,r)
 }
