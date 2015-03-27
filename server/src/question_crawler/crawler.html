@@ -1,0 +1,86 @@
+<html>
+<head>
+    <title>Question crawler</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <style>
+        body {
+            font-family:arial;
+        }
+
+        #wrapper {
+            width:40%;
+            margin:0 auto;
+            padding:4em;
+            margin-top:5em;
+            border-radius:3em;
+            background:#eee;
+            text-align:center;
+        }
+
+        h1, h2 {
+            color:#333;
+            font-weight:normal;
+            text-align:center;
+        }
+
+        h2 {
+            font-size:4em;
+        }
+
+        .button {
+            border-radius:.5em;
+            padding:1em;
+            margin:0 1em;
+            color:#fff;
+            border:0;
+            cursor:pointer;
+        }
+
+        .button:hover {
+            box-shadow:0 0 5px #000;
+        }
+
+        .green {
+            background:#00C176;
+        }
+
+        .red {
+            background:#FF003C;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            $(document).keydown(function(e) {
+                switch(e.which) {
+                    case 90: // z
+                        window.location = $('.remove').attr('href');
+                    break;
+
+                    case 88: // x
+                        window.location = $('.easy').attr('href');
+                    break;
+
+                    case 67: // c
+                        window.location = $('.medel').attr('href');
+                    break;
+
+                    case 86: // v
+                        window.location = $('.hard').attr('href');
+                    break;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <h1>{{.Year}}</h1>
+        <h2>{{.Question}}</h2>
+        <a href="/store?q={{.ID}}&level=0" class="remove"><button class="button red">Radera</button></a>
+        <a href="/store?q={{.ID}}&level=500" class="easy"><button class="button green">Lätt</button></a>
+        <a href="/store?q={{.ID}}&level=1000" class="medium"><button class="button green">Medel</button></a>
+        <a href="/store?q={{.ID}}&level=1500" class="hard"><button class="button green">Svår</button></a>
+    </div>
+</body>
+
+</html>

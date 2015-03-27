@@ -1,5 +1,6 @@
 package question
 
+<<<<<<< HEAD
 import (
 	"math/rand"
 	"appengine"
@@ -9,6 +10,13 @@ import (
 type Question struct {
 	ID, Level, Year int
 	Question        string
+=======
+
+type Question struct {
+	ID, Level int
+	Question string
+	Year int
+>>>>>>> 136a52aed7df007d17b5574f6fa7aae74db321cf
 }
 
 func QuestionKey(c appengine.Context) *datastore.Key {
