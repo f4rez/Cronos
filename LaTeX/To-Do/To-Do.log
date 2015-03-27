@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.3)  23 MAR 2015 16:54
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.3.3)  25 MAR 2015 11:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -864,22 +864,23 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 76.
- [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 130.
- [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 130.
- (./To-Do.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 130.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 130.
+ [2] [3]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 152.
+ [4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 152.
+
+(./To-Do.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 152.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 152.
 Package rerunfilecheck Info: File `To-Do.out' has not changed.
-(rerunfilecheck)             Checksum: 9F3AB7A4D37213976E24DBD09DD8EB9D;500.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 130.
+(rerunfilecheck)             Checksum: 9AD18CE7D98E8570884329E240BFF347;547.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 152.
  ) 
 Here is how much of TeX's memory you used:
- 16299 strings out of 494424
- 278004 string characters out of 6165347
+ 16310 strings out of 494424
+ 278086 string characters out of 6165347
  356194 words of memory out of 5000000
- 19202 multiletter control sequences out of 15000+600000
+ 19203 multiletter control sequences out of 15000+600000
  10668 words of font info for 40 fonts, out of 8000000 for 9000
  372 hyphenation exceptions out of 8191
  56i,6n,55p,435b,435s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -888,10 +889,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on To-Do.pdf (3 pages, 72001 bytes).
+Output written on To-Do.pdf (4 pages, 73963 bytes).
 PDF statistics:
- 116 PDF objects out of 1000 (max. 8388607)
- 104 compressed objects within 2 object streams
- 38 named destinations out of 1000 (max. 500000)
- 85 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 133 PDF objects out of 1000 (max. 8388607)
+ 120 compressed objects within 2 object streams
+ 48 named destinations out of 1000 (max. 500000)
+ 93 words of extra memory for PDF output out of 10000 (max. 10000000)
 
