@@ -1,22 +1,14 @@
 package question
 
-<<<<<<< HEAD
 import (
-	"math/rand"
 	"appengine"
 	"appengine/datastore"
+	"math/rand"
 )
 
 type Question struct {
 	ID, Level, Year int
 	Question        string
-=======
-
-type Question struct {
-	ID, Level int
-	Question string
-	Year int
->>>>>>> 136a52aed7df007d17b5574f6fa7aae74db321cf
 }
 
 func QuestionKey(c appengine.Context) *datastore.Key {
@@ -37,7 +29,7 @@ func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key) {
 	keys := make([]*datastore.Key, 0, 10)
 	max := getCountQuestions(c)
 	values := getRandomValues(5, max)
-	for value,i := range values {
+	for value, i := range values {
 		keys[i] = getKeyForINdex(c, value)
 	}
 	key, err := qn.GetAll(c, &question)
@@ -47,7 +39,7 @@ func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key) {
 
 func getRandomValues(numberOfValues, maxValue int) []int {
 	numbers := make([]int, numberOfValues)
-	for _,i := range numbers {
+	for _, i := range numbers {
 		numbers[i] = rand.Intn(maxValue)
 	}
 	return numbers
@@ -56,11 +48,11 @@ func getRandomValues(numberOfValues, maxValue int) []int {
 func getCountQuestions(c appengine.Context) (int, error) {
 	query := datastore.NewQuery("Question")
 	count, err := query.Count(c)
-	return count, err 
+	return count, err
 
 }
 
-func getKeyForIndex (c appengine.Context, id int) (*datastore.Key, error) {
+func getKeyForIndex(c appengine.Context, id int) (*datastore.Key, error) {
 	qn := datastore.NewQuery("Question").
 		Ancestor(QuestionKey(c)).
 		Limit(1).
@@ -70,4 +62,3 @@ func getKeyForIndex (c appengine.Context, id int) (*datastore.Key, error) {
 
 	return keys[0], err
 }
-
