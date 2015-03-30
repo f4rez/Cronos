@@ -20,7 +20,7 @@ func SaveQuestion(c appengine.Context, question Question) {
 	key := datastore.NewIncompleteKey(c, "Question", QuestionKey(c))
 	_, err := datastore.Put(c, key, &question)
 	if err != nil {
-		c.Infof("Error in saving: ", err)
+		c.Infof("Error in saving question: ", err)
 	}
 }
 
@@ -32,10 +32,6 @@ func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key, error) {
 	values := getRandomValues(c, 5, max)
 	for i, value := range values {
 		keys[i], _ = getKeyForIndex(c, value)
-		c.Infof("Random value = %v, Max = %v, key = %v", value, max, keys[i])
-	}
-	for _, key := range keys {
-		c.Infof("KEEEEEY: %v", key)
 	}
 	err := datastore.GetMulti(c, keys, question)
 	a := len(question)
