@@ -20,6 +20,7 @@ func init() {
 	http.HandleFunc("/friendlist", friendlist)
 	http.HandleFunc("/friend", friend)
 	http.HandleFunc("/crawl", crawl)
+	http.HandleFunc("/crawl_data", crawl_data)
 	http.HandleFunc("/test", addTestQuestions)
 	http.HandleFunc("/registerNewUser", register)
 	http.HandleFunc("/joinGame", joinGame)
@@ -158,4 +159,8 @@ func register(w http.ResponseWriter, r *http.Request) {
 		url, _ := user.LoginURL(c, "/registerNewUser")
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 	}
+}
+
+func crawl_data(w http.ResponseWriter, r *http.Request) {
+	question_crawler.Crawl_data(w,r)
 }
