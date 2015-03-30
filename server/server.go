@@ -12,6 +12,7 @@ func init() {
 	http.HandleFunc("/friendlist", friendlist)
 	http.HandleFunc("/friend", friend)
 	http.HandleFunc("/crawl", crawl)
+	http.HandleFunc("/crawl_data", crawl_data)
 }
 
 // Init function.
@@ -50,4 +51,8 @@ func friend(w http.ResponseWriter, r *http.Request) {
 
 func crawl(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Main(w,r)
+}
+
+func crawl_data(w http.ResponseWriter, r *http.Request) {
+	question_crawler.Crawl_data(w,r)
 }
