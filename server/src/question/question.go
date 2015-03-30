@@ -40,6 +40,22 @@ func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key, error) {
 	return question, keys, err
 }
 
+func GetQuestionsWithPrevious(c appengine.Context, prev []int) ([]Question, []*datastore.Key, error) {
+	question := make([]Question, 5, 10)
+	keys := make([]*datastore.Key, 5, 10)
+	max, _ := getCountQuestions(c)
+	max--
+	values := getRandomValuesWithPrevious(c, 5, max, prev)
+	for i, value := range values {
+		keys[i], _ = getKeyForIndex(c, value)
+	}
+	err := datastore.GetMulti(c, keys, question)
+	a := len(question)
+	b := len(keys)
+	c.Infof("Error getQuestions = %v, Len of Questions = %v, len of keys %v", err, a, b)
+	return question, keys, err
+}
+
 func getRandomValues(c appengine.Context, numberOfValues, maxValue int) []int {
 	numbers := make([]int, numberOfValues)
 	for i, _ := range numbers {
@@ -51,6 +67,30 @@ func getRandomValues(c appengine.Context, numberOfValues, maxValue int) []int {
 	} else {
 		return getRandomValues(c, numberOfValues, maxValue)
 	}
+}
+
+func getRandomValuesWithPrevious(c appengine.Context, numberOfValues, maxValue int, prev []int) []int {
+	numbers := make([]int, numberOfValues)
+	for i, _ := range numbers {
+
+		numbers[i] = getRandomValue(c, prev, maxValue)
+	}
+	if containsDubble(c, numbers) {
+		return numbers
+	} else {
+
+		return getRandomValuesWithPrevious(c, numberOfValues, maxValue, prev)
+	}
+}
+
+func getRandomValue(c appengine.Context, nrs []int, maxValue int) int {
+	r := rand.Intn(maxValue)
+	for _, a := range nrs {
+		if r == a {
+			return getRandomValue(c, nrs, maxValue)
+		}
+	}
+	return r
 }
 
 func containsDubble(c appengine.Context, nr []int) bool {
