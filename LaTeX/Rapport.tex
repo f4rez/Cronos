@@ -57,10 +57,31 @@ Det finns vissa delar i det här systemet som blir mer avancerade att lösa än 
 \end{itemize}
 \section{Genomförande}
 \subsection{Metoder}
+\begin{itemize}
+\item Scrum: Projektet ska följa en agil struktur för programutveckling. Till hjälp används Trello\footnote{http://www.trello.com} för att skapa uppgifter enligt Scrums struktur. Kontinuerliga gruppmöten hålls också där lägesuppdateringar görs.
+\item Android Studio används för androidutveckling och simulering.
+\item Google App Engine används lokalt för simulering av serverapplikationen. I skarpt läge kommer också App Engine att användas, men då i Googles moln.
+\item Wikipedia används som informationskälla för frågorna som spelet presenterar för användarna.
+\item Git används för att synkronisera projektet. Ett privat repo på Bitbucket\footnote{http://www.bitbucket.org} används till detta.
+\item Google Hangouts används för kommunikation när gruppmedlemmarna är på olika fysiska platser.
+\end{itemize}
 \subsection{Systemstruktur}
+\begin{itemize}
+\item Databas, i App Engine med biblioteket \textit{datastore}.
+\item Server, körs i App Engine och skriven i Go.
+\item Klient, Androidapplikation
+\item Crawler, informationssökare, en del av servern.
+\end{itemize}
 \subsection{Avgränsningar}
+En applikation för ios prioriteras inte i första hand. Skulle det bli tid över och resten av systemet anses tillräckligt klart så kommer detta att utvecklas, men annars inte. Någon applikation för Windows finns inte heller med i planeringen.
 \subsection{Krav}
+Systemet ska klara många spelare samtidigt, dock bara två per spel. Eftersom App Engine används för servern så kommer det inte bli något problem, det är en tjänst som automatiskt skalar beroende på belastning.
+
+Informationssökaren ska tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. Sökaren ska också vara så pass bra att den administrativa kontrollen går fort och att så lite som möjligt behöver korrigeras där.
 \subsection{Utvärdering}
+Planen är att en fungerande beta eller alfaversion av systemet ska färdigställas ett tag innan projektets slut. I den här versionen ska användare ha möjlighet att ge feedback och att testa applikationen. Så många fel som möjligt ska sedan justeras innan den skarpa versionen släpps.
+
+Gränssnittet och användandet av applikationen kommer också att utvärderas med hjälp av metoder från Människa-data-interaktionsområdet.
 \appendix
 \section{Tidsplan}
 \section{Kursmål}
