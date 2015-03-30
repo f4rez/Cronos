@@ -1,9 +1,6 @@
 package question_crawler
 
 import (
-	"net/http"
-	"src/question"
-	"html/template"
 	"log"
 	//"fmt"
 	//"io/ioutil"
@@ -11,6 +8,8 @@ import (
 	"appengine/urlfetch"
 	//"regexp"
 	"encoding/xml"
+	"net/http"
+	"src/question"
 )
 
 func Main(w http.ResponseWriter, r *http.Request) {
