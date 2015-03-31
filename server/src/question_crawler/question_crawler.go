@@ -102,7 +102,7 @@ func Store(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
 	year := r.FormValue("year")
-	q := r.FormValue("question")
+	q := r.FormValue("q")
 	level := r.FormValue("level")
 
 	var qu question.Question
@@ -111,5 +111,11 @@ func Store(w http.ResponseWriter, r *http.Request) {
 	qu.Year,_ = strconv.Atoi(year)
 	qu.Question = q
 
+	if(question.HasQuestion(c, qu)) {
+		c.Infof("Question already in database")
+		return
+	}
+
+	c.Infof("LEVEL: %+v\n", level)
 	question.SaveQuestion(c, qu)
 }

@@ -76,7 +76,7 @@
                 }
 
                 if(e.which == 90 || e.which == 88 || e.which == 67 || e.which == 86) {
-                    $.get("/store?q="+question+"&year="+year+"level="+level, function() {
+                    $.get("/store", {q:question, year:year, level:level}, function() {
                         counter = counter+1;
 
                         if(q.length <= counter) {
