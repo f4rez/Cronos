@@ -54,7 +54,7 @@ func GetUser(c appengine.Context, Oid string) (Users, *datastore.Key, error) {
 		c.Infof("User: %v key %v", mUser[1], key[0])
 		return mUser[1], key[0], nil
 	} else {
-		c.Infof("Err: %v, user %v", err, mUser[2])
+		c.Infof("Err: %v, user %v", err, mUser[0])
 		u := new(Users)
 		return *u, nil, err
 	}

@@ -132,11 +132,9 @@ func crawl(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Main(w, r)
 }
 
-
 func store(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Store(w, r)
 }
-
 
 func addTestQuestions(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
@@ -162,15 +160,21 @@ func joinGame(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Game ID: %d", game.GID)
 	} else {
 		mUser, _, err2 := users.GetUser(c, game.FID)
+		if err2 != nil {
+			c.Infof("User not found: %v", err2)
+		}
+
 		initMess := new(GameInitMessage)
 		initMess.GID = game.GID
 		initMess.Opp_ID = mUser.Oid
 		initMess.Opp_name = mUser.Name
-		fmt.Fprintf(w, "Game ID: %d. Opponent ID & Name: %s & %s", initMess.GID, initMess.Opp_ID, initMess.Opp_name)
-		/*json.Marshal(GameInitMessage)
-		 */
-		if err2 != nil {
-			c.Infof("User not found: %v", err2)
+		c.Infof("mUser is: %v", mUser)
+
+		str, err3 := json.Marshal(initMess)
+		fmt.Fprint(w, string(str))
+
+		if err3 != nil {
+			c.Infof("Fel i ", err3)
 		}
 
 	}
