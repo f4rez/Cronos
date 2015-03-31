@@ -14,6 +14,11 @@ import (
 	"src/users"
 )
 
+type GameInitMessage struct {
+	GID              int
+	Opp_name, Opp_ID string
+}
+
 func init() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/question", mquestion)
@@ -24,6 +29,7 @@ func init() {
 	http.HandleFunc("/test", addTestQuestions)
 	http.HandleFunc("/registerNewUser", register)
 	http.HandleFunc("/joinGame", joinGame)
+	http.HandleFunc("/store", store)
 }
 
 // Init function.
@@ -133,6 +139,10 @@ func crawl(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Main(w, r)
 }
 
+func store(w http.ResponseWriter, r *http.Request) {
+	question_crawler.Store(w, r)
+}
+
 func addTestQuestions(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	question.AddSomeQuestionsForTesting(c)
@@ -148,10 +158,34 @@ func joinGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, _, err := game.FindFreeGame(c)
+	game, _, err := game.FindFreeGame(c)
+
 	if err != nil {
 		c.Infof("Error joingGame: %v", err)
 	}
+	if game.SID == "" {
+		fmt.Fprintf(w, "Game ID: %d", game.GID)
+	} else {
+		mUser, _, err2 := users.GetUser(c, game.FID)
+		if err2 != nil {
+			c.Infof("User not found: %v", err2)
+		}
+
+		initMess := new(GameInitMessage)
+		initMess.GID = game.GID
+		initMess.Opp_ID = mUser.Oid
+		initMess.Opp_name = mUser.Name
+		c.Infof("mUser is: %v", mUser)
+
+		str, err3 := json.Marshal(initMess)
+		fmt.Fprint(w, string(str))
+
+		if err3 != nil {
+			c.Infof("Fel i ", err3)
+		}
+
+	}
+
 }
 
 func register(w http.ResponseWriter, r *http.Request) {
@@ -169,5 +203,5 @@ func register(w http.ResponseWriter, r *http.Request) {
 }
 
 func crawl_data(w http.ResponseWriter, r *http.Request) {
-	question_crawler.Crawl_data(w,r)
+	question_crawler.Crawl_data(w, r)
 }

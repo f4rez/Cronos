@@ -50,36 +50,63 @@
     </style>
     <script>
         $(document).ready(function(){
+            var q;
+            var counter = 0;
             $(document).keydown(function(e) {
+
+                var question = $('.question').text();
+                var year = $('.year').text();
+                var level = 0;
+
                 switch(e.which) {
                     case 90: // z
-                        window.location = $('.remove').attr('href');
                     break;
 
                     case 88: // x
-                        window.location = $('.easy').attr('href');
+                        level = 500;
                     break;
 
                     case 67: // c
-                        window.location = $('.medel').attr('href');
+                        level = 1000;
                     break;
 
                     case 86: // v
-                        window.location = $('.hard').attr('href');
+                        level = 1500;
                     break;
                 }
+
+                if(e.which == 90 || e.which == 88 || e.which == 67 || e.which == 86) {
+                    $.get("/store?q="+question+"&year="+year+"level="+level, function() {
+                        counter = counter+1;
+
+                        if(q.length <= counter) {
+                            alert("Slut på frågor");
+                        }
+
+                        $('.year').text(q[counter].Year);
+                        $('.question').text(q[counter].Question);
+                    });
+                }
             });
+
+            $.getJSON("/crawl_data", function(data){
+                $('.year').text(data[0].Year);
+                $('.question').text(data[0].Question);
+                q = data;
+            });
+
+
         });
     </script>
 </head>
 <body>
     <div id="wrapper">
-        <h1>{{.Year}}</h1>
-        <h2>{{.Question}}</h2>
-        <a href="/store?q={{.ID}}&level=0" class="remove"><button class="button red">Radera (z)</button></a>
-        <a href="/store?q={{.ID}}&level=500" class="easy"><button class="button green">Lätt (x)</button></a>
-        <a href="/store?q={{.ID}}&level=1000" class="medium"><button class="button green">Medel (c)</button></a>
-        <a href="/store?q={{.ID}}&level=1500" class="hard"><button class="button green">Svår (v)</button></a>
+        <h1 class="year">{{.Year}}</h1>
+        <h2 class="question">{{.Question}}</h2>
+        <a href="#" class="remove"><button class="button red">Radera (z)</button></a>
+        <a href="#" class="easy"><button class="button green">Lätt (x)</button></a>
+        <a href="#" class="medium"><button class="button green">Medel (c)</button></a>
+        <a href="#" class="hard"><button class="button green">Svår (v)</button></a>
     </div>
 </body>
 
