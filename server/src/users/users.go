@@ -7,8 +7,10 @@ import (
 )
 
 type Users struct {
-	Oid, Name                 string
-	FriendList, ChallengeList []string
+	Oid           string
+	Name          string
+	FriendList    []string `json:"-"`
+	ChallengeList []string `json:"-"`
 }
 
 func UserKey(c appengine.Context) *datastore.Key {
@@ -54,11 +56,61 @@ func GetUser(c appengine.Context, Oid string) (Users, *datastore.Key, error) {
 		c.Infof("User: %v key %v", mUser[1], key[0])
 		return mUser[1], key[0], nil
 	} else {
-		c.Infof("Err: %v, user %v", err, mUser[2])
+		c.Infof("Err: %v, user %v", err, mUser[1])
 		u := new(Users)
 		return *u, nil, err
 	}
 
+}
+
+func getUsers(c appengine.Context, ids []string) ([]Users, []*datastore.Key, error) {
+	c.Infof("ids: %v", ids)
+	friends := make([]Users, len(ids), 100)
+	keys := make([]*datastore.Key, len(ids), 100)
+	for i, value := range ids {
+		key, err2 := getKeyForIndex(c, value)
+		keys[i] = key
+		if err2 != nil {
+			c.Infof("Error getUsers1: %v", err2)
+			return friends, keys, err2
+		}
+	}
+	c.Infof("keys: %v", keys)
+	err := datastore.GetMulti(c, keys, friends)
+	if err != nil {
+		c.Infof("Error getUsers2: %v, keys: %v", err, keys)
+	return friends, keys, err
+	}
+	c.Infof("Friends: %v, keys: %v", friends, keys)
+	return friends, keys, nil
+
+}
+
+func GetFriendList(c appengine.Context, id string) ([]Users, error) {
+	mUser, _, err := GetUser(c, id)
+	if err == nil {
+		users, _, err2 := getUsers(c, mUser.FriendList)
+		if err2 == nil {
+			return users, nil
+		}
+		return make([]Users, 1), err2
+	}
+	return make([]Users, 1), err
+
+}
+
+func getKeyForIndex(c appengine.Context, id string) (*datastore.Key, error) {
+	qn := datastore.NewQuery("Users").
+		Ancestor(UserKey(c)).
+		Limit(1).
+		Filter("Oid =", id).
+		KeysOnly()
+	keys, err := qn.GetAll(c, nil)
+	if len(keys) > 0 {
+		return keys[0], err
+	} else {
+		return nil, err
+	}
 }
 
 func AddFriend(c appengine.Context, mOid, fOid string) error {

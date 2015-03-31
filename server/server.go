@@ -63,9 +63,16 @@ func mquestion(w http.ResponseWriter, r *http.Request) {
 
 // Get the friend list
 func friendlist(w http.ResponseWriter, r *http.Request) {
-	game_id := r.FormValue("game_id")
-
-	fmt.Fprintf(w, "Game id: "+game_id+"\nThe friend list")
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+	url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	friendList,_ := users.GetFriendList(c,u.ID)
+	fString, _ := json.Marshal(friendList)
+	fmt.Fprintf(w, "Game id: "+ string(fString)+"\nThe friend list")
 }
 
 // Handle single friends (add, remove, challenge etc)
