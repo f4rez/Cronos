@@ -14,6 +14,11 @@ import (
 	"src/users"
 )
 
+type GameInitMessage struct {
+	GID              int
+	Opp_name, Opp_ID string
+}
+
 func init() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/question", mquestion)
@@ -64,9 +69,16 @@ func mquestion(w http.ResponseWriter, r *http.Request) {
 
 // Get the friend list
 func friendlist(w http.ResponseWriter, r *http.Request) {
-	game_id := r.FormValue("game_id")
-
-	fmt.Fprintf(w, "Game id: "+game_id+"\nThe friend list")
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+	url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	friendList,_ := users.GetFriendList(c,u.ID)
+	fString, _ := json.Marshal(friendList)
+	fmt.Fprintf(w, "Game id: "+ string(fString)+"\nThe friend list")
 }
 
 // Handle single friends (add, remove, challenge etc)
@@ -127,11 +139,9 @@ func crawl(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Main(w, r)
 }
 
-
 func store(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Store(w, r)
 }
-
 
 func addTestQuestions(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
@@ -148,10 +158,34 @@ func joinGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, _, err := game.FindFreeGame(c)
+	game, _, err := game.FindFreeGame(c)
+
 	if err != nil {
 		c.Infof("Error joingGame: %v", err)
 	}
+	if game.SID == "" {
+		fmt.Fprintf(w, "Game ID: %d", game.GID)
+	} else {
+		mUser, _, err2 := users.GetUser(c, game.FID)
+		if err2 != nil {
+			c.Infof("User not found: %v", err2)
+		}
+
+		initMess := new(GameInitMessage)
+		initMess.GID = game.GID
+		initMess.Opp_ID = mUser.Oid
+		initMess.Opp_name = mUser.Name
+		c.Infof("mUser is: %v", mUser)
+
+		str, err3 := json.Marshal(initMess)
+		fmt.Fprint(w, string(str))
+
+		if err3 != nil {
+			c.Infof("Fel i ", err3)
+		}
+
+	}
+
 }
 
 func register(w http.ResponseWriter, r *http.Request) {
@@ -169,5 +203,5 @@ func register(w http.ResponseWriter, r *http.Request) {
 }
 
 func crawl_data(w http.ResponseWriter, r *http.Request) {
-	question_crawler.Crawl_data(w,r)
+	question_crawler.Crawl_data(w, r)
 }

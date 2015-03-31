@@ -7,6 +7,9 @@ import (
 	"encoding/json"
 	"src/question"
 	"time"
+	"net/http"
+	"fmt"
+	"strconv"
 )
 
 type Game struct {
@@ -21,6 +24,7 @@ type Game struct {
 type Round struct {
 	QuestionSID        []int
 	fAnswers, sAnswers []int
+	fPoints, sPoints int
 }
 
 func GameKey(c appengine.Context) *datastore.Key {
@@ -68,6 +72,7 @@ func CreateGame(c appengine.Context, FID string) (Game, *datastore.Key, error) {
 
 	return *g, key, err
 }
+
 func (g *Game) AddLastPlayer(SID string) {
 	g.SID = SID
 }
@@ -150,6 +155,7 @@ func (g *Game) AddNewRound(c appengine.Context) {
 	}
 
 }
+
 func (g *Game) isUsersTurn(id string) bool {
 	if id == g.FID {
 		return g.Turn
@@ -169,7 +175,55 @@ func getIDs(q []question.Question) []int {
 func (g *Game) getNewestRound() Round {
 	return g.Rounds[len(g.Rounds)-1]
 }
-func (r *Round) name() {
+
+func (g *Game) haveAnswersQ(id string) bool {
+	r := g.getNewestRound()
+	if id == g.FID {
+		return len(r.fAnswers) > 0
+	} else {
+		return len(r.sAnswers) > 0
+	}
+}
+
+func MatchHandler(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+ 	gID, err := strconv.ParseInt(r.FormValue("game_id"), 10, 32)
+	if err != nil {
+		c.Infof("Error parsing gameID: ", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	game, _, err2 := GetGame(c, int(gID))
+	if err2 != nil {
+		c.Infof("Error getting game: ", err)
+		http.Error(w, err2.Error(), http.StatusInternalServerError)
+		return
+	}
+	if !game.isUsersTurn(u.ID) {
+		fmt.Fprintf(w, "Det är inte din tur pucko...")
+		return
+	}
+	if game.haveAnswersQ(u.ID) {
+		game.AddNewRound(c)
+		r := game.getNewestRound()
+		questions, _ := question.GetQuestionsWithID(c, r.QuestionSID)
+		str, _ := json.Marshal(questions)
+		fmt.Fprintf(w, "q: %v", str)
+	}
+	a1, err1 := strconv.ParseInt(r.FormValue("a1"), 10, 32)
+	a2, err2 := strconv.ParseInt(r.FormValue("a2"), 10, 32)
+	a3, err3 := strconv.ParseInt(r.FormValue("a3"), 10, 32)
+	a4, err4 := strconv.ParseInt(r.FormValue("a4"), 10, 32)
+	a5, err5 := strconv.ParseInt(r.FormValue("a5"), 10, 32)
+		if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil {
+		fmt.Fprintf(w, "error parsing input")
+	}
 
 }
 

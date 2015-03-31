@@ -69,6 +69,18 @@ func GetQuestionsWithPrevious(c appengine.Context, prev []int) ([]Question, []*d
 	return question, keys, err
 }
 
+func GetQuestionsWithID(c appengine.Context, ids []int) ([]Question, error) {
+	question := make([]Question, 5, 10)
+	keys := make([]*datastore.Key, 5, 10)
+	for i, value := range ids {
+		keys[i], _ = getKeyForIndex(c, value)
+	}
+	err := datastore.GetMulti(c, keys, question)
+	
+	return question, err
+
+}
+
 func getRandomValues(c appengine.Context, numberOfValues, maxValue int) []int {
 	numbers := make([]int, numberOfValues)
 	for i, _ := range numbers {
