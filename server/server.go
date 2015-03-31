@@ -14,6 +14,11 @@ import (
 	"src/users"
 )
 
+type GameInitMessage struct {
+	GID              int
+	Opp_name, Opp_ID string
+}
+
 func init() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/question", mquestion)
@@ -141,10 +146,28 @@ func joinGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, _, err := game.FindFreeGame(c)
+	game, _, err := game.FindFreeGame(c)
+
 	if err != nil {
 		c.Infof("Error joingGame: %v", err)
 	}
+	if game.SID == "" {
+		fmt.Fprintf(w, "Game ID: %d", game.GID)
+	} else {
+		mUser, _, err2 := users.GetUser(c, game.FID)
+		initMess := new(GameInitMessage)
+		initMess.GID = game.GID
+		initMess.Opp_ID = mUser.Oid
+		initMess.Opp_name = mUser.Name
+		fmt.Fprintf(w, "Game ID: %d. Opponent ID & Name: %s & %s", initMess.GID, initMess.Opp_ID, initMess.Opp_name)
+		/*json.Marshal(GameInitMessage)
+		 */
+		if err2 != nil {
+			c.Infof("User not found: %v", err2)
+		}
+
+	}
+
 }
 
 func register(w http.ResponseWriter, r *http.Request) {
@@ -162,5 +185,5 @@ func register(w http.ResponseWriter, r *http.Request) {
 }
 
 func crawl_data(w http.ResponseWriter, r *http.Request) {
-	question_crawler.Crawl_data(w,r)
+	question_crawler.Crawl_data(w, r)
 }
