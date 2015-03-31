@@ -11,7 +11,7 @@
             width:40%;
             margin:0 auto;
             padding:4em;
-            margin-top:5em;
+            margin-top:1em;
             border-radius:3em;
             background:#eee;
             text-align:center;
@@ -24,7 +24,7 @@
         }
 
         h2 {
-            font-size:4em;
+            font-size:3em;
         }
 
         .button {
@@ -47,6 +47,25 @@
         .red {
             background:#FF003C;
         }
+
+        #link {
+            width:400px;
+        }
+
+        .year {
+            cursor:pointer;
+            text-decoration:underline;
+        }
+
+        .question {
+            display:block;
+            margin:0 auto;
+            margin-bottom:3em;
+            font-size:3em;
+            text-align:center;
+            overflow:hidden;
+            cursor:pointer;
+        }
     </style>
     <script>
         $(document).ready(function(){
@@ -59,23 +78,23 @@
                 var level = 0;
 
                 switch(e.which) {
-                    case 90: // z
+                    case 49: // 1
                     break;
 
-                    case 88: // x
+                    case 50: // 2
                         level = 500;
                     break;
 
-                    case 67: // c
+                    case 51: // 3
                         level = 1000;
                     break;
 
-                    case 86: // v
+                    case 52: // 4
                         level = 1500;
                     break;
                 }
 
-                if(e.which == 90 || e.which == 88 || e.which == 67 || e.which == 86) {
+                if(e.which == 49 || e.which == 50 || e.which == 51 || e.which == 52) {
                     $.get("/store", {q:question, year:year, level:level}, function() {
                         counter = counter+1;
 
@@ -89,24 +108,36 @@
                 }
             });
 
-            $.getJSON("/crawl_data", function(data){
-                $('.year').text(data[0].Year);
-                $('.question').text(data[0].Question);
-                q = data;
+            $('#theform').submit(function(){
+
+
+                var url = $('#link').val();
+
+                $.getJSON("/crawl_data", {site: url}, function(data){
+                    $('.year').text(data[0].Year);
+                    $('.question').text(data[0].Question);
+                    q = data;
+                });
+
+                return false;
             });
 
-
         });
+
     </script>
 </head>
 <body>
     <div id="wrapper">
-        <h1 class="year">{{.Year}}</h1>
-        <h2 class="question">{{.Question}}</h2>
-        <a href="#" class="remove"><button class="button red">Radera (z)</button></a>
-        <a href="#" class="easy"><button class="button green">Lätt (x)</button></a>
-        <a href="#" class="medium"><button class="button green">Medel (c)</button></a>
-        <a href="#" class="hard"><button class="button green">Svår (v)</button></a>
+        <form id="theform">
+            <input type="text" id="link" />
+            <input type="submit" value="Hämta sida"/>
+        </form>
+        <h1 class="year" contenteditable></h1>
+        <div class="question" contenteditable></div>
+        <a href="#" class="remove"><button class="button red">Radera (1)</button></a>
+        <a href="#" class="easy"><button class="button green">Lätt (2)</button></a>
+        <a href="#" class="medium"><button class="button green">Medel (3)</button></a>
+        <a href="#" class="hard"><button class="button green">Svår (4)</button></a>
     </div>
 </body>
 
