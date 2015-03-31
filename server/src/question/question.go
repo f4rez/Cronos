@@ -27,7 +27,7 @@ func SaveQuestion(c appengine.Context, question Question) {
 func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key, error) {
 	question := make([]Question, 5, 10)
 	keys := make([]*datastore.Key, 5, 10)
-	max, _ := getCountQuestions(c)
+	max, _ := GetCountQuestions(c)
 	max--
 	values := getRandomValues(c, 5, max)
 	for i, value := range values {
@@ -43,7 +43,7 @@ func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key, error) {
 func GetQuestionsWithPrevious(c appengine.Context, prev []int) ([]Question, []*datastore.Key, error) {
 	question := make([]Question, 5, 10)
 	keys := make([]*datastore.Key, 5, 10)
-	max, _ := getCountQuestions(c)
+	max, _ := GetCountQuestions(c)
 	max--
 	values := getRandomValuesWithPrevious(c, 5, max, prev)
 	for i, value := range values {
@@ -115,7 +115,7 @@ func isAlone(c appengine.Context, nr int, numbers []int) bool {
 	return true
 }
 
-func getCountQuestions(c appengine.Context) (int, error) {
+func GetCountQuestions(c appengine.Context) (int, error) {
 	query := datastore.NewQuery("Question").KeysOnly()
 	count, err := query.Count(c)
 	return count, err

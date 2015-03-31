@@ -29,6 +29,7 @@ func init() {
 	http.HandleFunc("/test", addTestQuestions)
 	http.HandleFunc("/registerNewUser", register)
 	http.HandleFunc("/joinGame", joinGame)
+	http.HandleFunc("/store", store)
 }
 
 // Init function.
@@ -130,6 +131,12 @@ func answers(w http.ResponseWriter, r *http.Request) {
 func crawl(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Main(w, r)
 }
+
+
+func store(w http.ResponseWriter, r *http.Request) {
+	question_crawler.Store(w, r)
+}
+
 
 func addTestQuestions(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
