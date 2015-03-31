@@ -97,3 +97,19 @@ func filter_question(listitem string) (temp_item, error) {
 
 	return q, nil
 }
+
+func Store(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+
+	year := r.FormValue("year")
+	q := r.FormValue("question")
+	level := r.FormValue("level")
+
+	var qu question.Question
+	qu.ID, _ = question.GetCountQuestions(c)
+	qu.Level,_ = strconv.Atoi(level)
+	qu.Year,_ = strconv.Atoi(year)
+	qu.Question = q
+
+	question.SaveQuestion(c, qu)
+}
