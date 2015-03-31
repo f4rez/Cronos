@@ -6,7 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
+	"src/game"
 	"src/question"
 	"src/question_crawler"
 	"src/users"
@@ -21,6 +23,7 @@ func init() {
 	http.HandleFunc("/crawl_data", crawl_data)
 	http.HandleFunc("/test", addTestQuestions)
 	http.HandleFunc("/registerNewUser", register)
+	http.HandleFunc("/joinGame", joinGame)
 }
 
 // Init function.
@@ -48,6 +51,12 @@ func mquestion(w http.ResponseWriter, r *http.Request) {
 	//game_id := r.FormValue("game_id")
 	answer := r.FormValue("answer") // TODO: This might be five answers, or not?
 	questions, _, _ := question.GetQuestions(c)
+	prev := make([]int, 1, 10)
+	for _, q := range questions {
+		prev = append(prev, q.ID)
+	}
+	q2, _, _ := question.GetQuestionsWithPrevious(c, prev)
+	questions = append(questions, q2...)
 	rString, _ := json.Marshal(questions)
 	fmt.Fprintf(w, "Game id: "+string(rString)+"\nAnswer(s): "+answer)
 }
@@ -83,8 +92,34 @@ func friend(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "ID: "+u.ID+"\nFriend id: "+friend_id+"\nAction: "+action+"\nThe friend list")
 		}
 	} else {
-
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
 	}
+}
+
+func answers(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+
+	if u == nil {
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+
+	a1, err1 := strconv.ParseInt(r.FormValue("a1"), 10, 32)
+	a2, err2 := strconv.ParseInt(r.FormValue("a2"), 10, 32)
+	a3, err3 := strconv.ParseInt(r.FormValue("a3"), 10, 32)
+	a4, err4 := strconv.ParseInt(r.FormValue("a4"), 10, 32)
+	a5, err5 := strconv.ParseInt(r.FormValue("a5"), 10, 32)
+	gID, err6 := strconv.ParseInt(r.FormValue("game_id"), 10, 32)
+	if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil || err6 != nil {
+		fmt.Fprintf(w, "error parsing input")
+	}
+
+	game.ParseRoundData(c, u.ID, (int)(gID), (int)(a1), (int)(a2), (int)(a3), (int)(a4), (int)(a5))
+
 }
 
 func crawl(w http.ResponseWriter, r *http.Request) {
@@ -95,6 +130,21 @@ func addTestQuestions(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	question.AddSomeQuestionsForTesting(c)
 
+}
+
+func joinGame(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+
+	_, _, err := game.FindFreeGame(c)
+	if err != nil {
+		c.Infof("Error joingGame: %v", err)
+	}
 }
 
 func register(w http.ResponseWriter, r *http.Request) {

@@ -141,12 +141,3 @@ func pos(slice []string, value string) int {
 	}
 	return -1
 }
-
-func (u *Users) Remove1(c appengine.Context, str string) {
-	item := pos(u.FriendList, str)
-
-	s := u.FriendList
-	s = append(s[:item], s[item+1:]...)
-	u.FriendList = s
-	c.Infof("After remove %v, pos: %v", u.FriendList, item)
-}
