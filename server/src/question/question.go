@@ -24,6 +24,19 @@ func SaveQuestion(c appengine.Context, question Question) {
 	}
 }
 
+// Return true if there exist a question with the same text in datastore.
+func HasQuestion(c appengine.Context, qu Question) bool {
+	q := datastore.NewQuery("Question").Filter("Question =", qu.Question)
+
+	var values []Question
+	q.GetAll(c, &values)
+
+	if(len(values) == 0){
+		return false
+	}
+	return true
+}
+
 func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key, error) {
 	question := make([]Question, 5, 10)
 	keys := make([]*datastore.Key, 5, 10)

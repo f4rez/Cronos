@@ -27,7 +27,7 @@ type temp_item struct {
 func Main(w http.ResponseWriter, r *http.Request) {
 
 	// Sample question, should be retrieved from a database
-	q := question.Question{ID: 1, Level: 1000, Question: "hej", Year: 1980}
+	q := question.Question{ID: 1, Level: 0, Question: "Hämta sida först", Year: 0000}
 
 	t, err := template.ParseFiles("src/question_crawler/crawler.html")
 	if err != nil {
@@ -39,15 +39,12 @@ func Main(w http.ResponseWriter, r *http.Request) {
 
 
 func Crawl_data(w http.ResponseWriter, r *http.Request) {
-	templist,_ := get_site("https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_datorspels%C3%A5r", r)
+	site := r.FormValue("site")
+	// "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_datorspels%C3%A5r"
+
+	templist,_ := get_site(site, r)
 	text,_ := json.Marshal(templist)
 	fmt.Fprintf(w, string(text))
-
-	//fmt.Fprintf(w,"%+v\n", q)
-
-	//re := regexp.MustCompile("")
-	//items := re.FindAllString(html, 0)
-	//fmt.Fprintf(w, html)
 }
 
 
@@ -95,6 +92,10 @@ func filter_question(listitem string) (temp_item, error) {
 	q.Year, _ = strconv.Atoi(parts[0])
 	q.Question = parts[1]
 
+	if(q.Year <= 0) {
+		return q, errors.New("The year is not complete.")
+	}
+
 	return q, nil
 }
 
@@ -102,7 +103,7 @@ func Store(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
 	year := r.FormValue("year")
-	q := r.FormValue("question")
+	q := r.FormValue("q")
 	level := r.FormValue("level")
 
 	var qu question.Question
@@ -111,5 +112,11 @@ func Store(w http.ResponseWriter, r *http.Request) {
 	qu.Year,_ = strconv.Atoi(year)
 	qu.Question = q
 
+	if(question.HasQuestion(c, qu)) {
+		c.Infof("Question already in database")
+		return
+	}
+
+	c.Infof("LEVEL: %+v\n", level)
 	question.SaveQuestion(c, qu)
 }
