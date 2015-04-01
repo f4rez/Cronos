@@ -34,10 +34,11 @@ func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key, error) {
 		keys[i], _ = getKeyForIndex(c, value)
 	}
 	err := datastore.GetMulti(c, keys, question)
-	a := len(question)
-	b := len(keys)
-	c.Infof("Error getQuestions = %v, Len of Questions = %v, len of keys %v", err, a, b)
-	return question, keys, err
+	if err != nil {
+		c.Infof("Error in GetQuestions: %v", err)
+		return question, keys, err
+	}
+	return question, keys, nil
 }
 
 func GetQuestionsWithPrevious(c appengine.Context, prev []int) ([]Question, []*datastore.Key, error) {
@@ -50,10 +51,11 @@ func GetQuestionsWithPrevious(c appengine.Context, prev []int) ([]Question, []*d
 		keys[i], _ = getKeyForIndex(c, value)
 	}
 	err := datastore.GetMulti(c, keys, question)
-	a := len(question)
-	b := len(keys)
-	c.Infof("Error getQuestions = %v, Len of Questions = %v, len of keys %v", err, a, b)
-	return question, keys, err
+	if err != nil {
+		c.Infof("Error in GetQuestions: %v", err)
+		return question, keys, err
+	}
+	return question, keys, nil
 }
 
 func GetQuestionsWithID(c appengine.Context, ids []int) ([]Question, error) {
@@ -63,7 +65,7 @@ func GetQuestionsWithID(c appengine.Context, ids []int) ([]Question, error) {
 		keys[i], _ = getKeyForIndex(c, value)
 	}
 	err := datastore.GetMulti(c, keys, question)
-	
+
 	return question, err
 
 }

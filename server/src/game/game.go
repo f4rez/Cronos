@@ -5,18 +5,19 @@ import (
 	"appengine/datastore"
 	"appengine/user"
 	"encoding/json"
-	"src/question"
-	"time"
-	"net/http"
+	"errors"
 	"fmt"
+	"net/http"
+	"src/question"
 	"strconv"
+	"time"
 )
 
 type Game struct {
 	FID, SID   string
 	GID        int
 	Rounds     []Round `datastore:"-"`
-	RoundsJson []byte
+	RoundsJson string
 	Turn       bool
 	Created    time.Time
 }
@@ -24,7 +25,7 @@ type Game struct {
 type Round struct {
 	QuestionSID        []int
 	fAnswers, sAnswers []int
-	fPoints, sPoints int
+	fPoints, sPoints   int
 }
 
 func GameKey(c appengine.Context) *datastore.Key {
@@ -36,7 +37,7 @@ func (game *Game) SaveGame(c appengine.Context) (*datastore.Key, error) {
 	if err != nil {
 		return nil, err
 	}
-	game.RoundsJson = str
+	game.RoundsJson = string(str)
 	key := datastore.NewIncompleteKey(c, "Game", GameKey(c))
 	k, err2 := datastore.Put(c, key, game)
 	if err != nil {
@@ -50,7 +51,7 @@ func (game *Game) UpdateGame(c appengine.Context, key *datastore.Key) error {
 	if err != nil {
 		return err
 	}
-	game.RoundsJson = str
+	game.RoundsJson = string(str)
 	c.Infof("Updating game : %v", game)
 	_, err2 := datastore.Put(c, key, game)
 	if err2 != nil {
@@ -68,9 +69,31 @@ func CreateGame(c appengine.Context, FID string) (Game, *datastore.Key, error) {
 	g.FID = FID
 	g.Created = time.Now()
 	g.Rounds = append(g.Rounds, FirstRound(c))
-	key, err := g.SaveGame(c)
+	id, err := getHighesMatchID(c)
+	if err != nil {
+		return *new(Game), nil, err
+	}
+	g.GID = id + 1
+	key, err2 := g.SaveGame(c)
+	c.Infof("Created game: %v", *g)
+	if err2 != nil {
+		return *g, nil, err
+	}
+	return *g, key, nil
+}
 
-	return *g, key, err
+func getHighesMatchID(c appengine.Context) (int, error) {
+	game := make([]Game, 1, 1)
+	qn := datastore.NewQuery("Game").
+		Ancestor(GameKey(c)).
+		Limit(1).
+		Order("-Created")
+	if key, err := qn.GetAll(c, &game); len(key) > 0 {
+		c.Infof("Highest gameID: %v", game[1])
+		return game[1].GID, nil
+	} else {
+		return 0, err
+	}
 }
 
 func (g *Game) AddLastPlayer(SID string) {
@@ -82,13 +105,13 @@ func GetGame(c appengine.Context, id int) (Game, *datastore.Key, error) {
 	qn := datastore.NewQuery("Game").
 		Ancestor(GameKey(c)).
 		Limit(1).
-		Filter("Id =", id)
+		Filter("GID =", id)
 	if key, err := qn.GetAll(c, &game); len(key) > 0 {
 		json.Unmarshal(game[1].RoundsJson, game[1].Rounds)
-		c.Infof("User: %v key %v", game[1], key[0])
+		c.Infof("Game: %v key %v", game[1], key[0])
 		return game[1], key[0], nil
 	} else {
-		c.Infof("Err: %v, user %v", err, game[0])
+		c.Infof("Err: %v, len(key): %v, id = %v", err, len(key), id)
 		u := new(Game)
 		return *u, nil, err
 	}
@@ -172,12 +195,16 @@ func getIDs(q []question.Question) []int {
 	return id
 }
 
-func (g *Game) getNewestRound() Round {
+func (g *Game) getNewestRound(c appengine.Context) Round {
+	if len(g.Rounds) == 0 {
+		g.AddNewRound(c)
+		return g.Rounds[0]
+	}
 	return g.Rounds[len(g.Rounds)-1]
 }
 
-func (g *Game) haveAnswersQ(id string) bool {
-	r := g.getNewestRound()
+func (g *Game) haveAnswersQ(c appengine.Context, id string) bool {
+	r := g.getNewestRound(c)
 	if id == g.FID {
 		return len(r.fAnswers) > 0
 	} else {
@@ -193,25 +220,26 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
- 	gID, err := strconv.ParseInt(r.FormValue("game_id"), 10, 32)
+	gID, err := strconv.ParseInt(r.FormValue("game_id"), 10, 32)
 	if err != nil {
 		c.Infof("Error parsing gameID: ", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	game, _, err2 := GetGame(c, int(gID))
+	game, key, err2 := GetGame(c, int(gID))
 	if err2 != nil {
 		c.Infof("Error getting game: ", err)
 		http.Error(w, err2.Error(), http.StatusInternalServerError)
 		return
 	}
 	if !game.isUsersTurn(u.ID) {
-		fmt.Fprintf(w, "Det är inte din tur pucko...")
+		err3 := errors.New("Det är inte din tur doe....")
+		http.Error(w, err3.Error(), http.StatusInternalServerError)
 		return
 	}
-	if game.haveAnswersQ(u.ID) {
+	if game.haveAnswersQ(c, u.ID) {
 		game.AddNewRound(c)
-		r := game.getNewestRound()
+		r := game.getNewestRound(c)
 		questions, _ := question.GetQuestionsWithID(c, r.QuestionSID)
 		str, _ := json.Marshal(questions)
 		fmt.Fprintf(w, "q: %v", str)
@@ -221,41 +249,37 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 	a3, err3 := strconv.ParseInt(r.FormValue("a3"), 10, 32)
 	a4, err4 := strconv.ParseInt(r.FormValue("a4"), 10, 32)
 	a5, err5 := strconv.ParseInt(r.FormValue("a5"), 10, 32)
-		if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil {
+	if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil {
 		fmt.Fprintf(w, "error parsing input")
+		http.Error(w, err2.Error(), http.StatusInternalServerError)
 	}
+	ParseRoundData(c, u.ID, game, key, int(a1), int(a2), int(a3), int(a4), int(a5))
 
 }
 
-func ParseRoundData(c appengine.Context, uID string, GID, a1, a2, a3, a4, a5 int) {
-	g, key, err := GetGame(c, GID)
-	if err != nil {
-		c.Infof("Error Parsing round data: %v", err)
-	} else {
-		if g.isUsersTurn(uID) {
-			round := g.getNewestRound()
-			ans := []int{a1, a2, a3, a4, a5}
-			if uID == g.FID {
-				round.fAnswers = ans
-				if round.sAnswers == nil {
-					g.ChangeTurn()
-					return
-				} else {
-					g.AddNewRound(c)
-				}
-			} else {
-				round.sAnswers = ans
-				if round.fAnswers == nil {
-					g.ChangeTurn()
-					return
-				} else {
-					g.AddNewRound(c)
-				}
-			}
-			g.UpdateGame(c, key)
+func ParseRoundData(c appengine.Context, uID string, g Game, key *datastore.Key, a1, a2, a3, a4, a5 int) {
+	round := g.getNewestRound(c)
+	ans := []int{a1, a2, a3, a4, a5}
+	if uID == g.FID {
+		c.Infof("a")
+		round.fAnswers = ans
+		if round.sAnswers == nil {
+			c.Infof("b")
+			g.ChangeTurn()
 		} else {
-			c.Infof("Not Users Turn")
-			return
+			c.Infof("c")
+			g.AddNewRound(c)
+		}
+	} else {
+		c.Infof("e")
+		round.sAnswers = ans
+		if round.fAnswers == nil {
+			g.ChangeTurn()
+
+		} else {
+			c.Infof("g")
+			g.AddNewRound(c)
 		}
 	}
+	g.UpdateGame(c, key)
 }

@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"src/game"
 	"src/question"
@@ -30,6 +29,7 @@ func init() {
 	http.HandleFunc("/registerNewUser", register)
 	http.HandleFunc("/joinGame", joinGame)
 	http.HandleFunc("/store", store)
+	http.HandleFunc("/match", matchHandler)
 }
 
 // Init function.
@@ -72,13 +72,13 @@ func friendlist(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	u := user.Current(c)
 	if u == nil {
-	url, _ := user.LoginURL(c, "/")
+		url, _ := user.LoginURL(c, "/")
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
-	friendList,_ := users.GetFriendList(c,u.ID)
+	friendList, _ := users.GetFriendList(c, u.ID)
 	fString, _ := json.Marshal(friendList)
-	fmt.Fprintf(w, "Game id: "+ string(fString)+"\nThe friend list")
+	fmt.Fprintf(w, "Game id: "+string(fString)+"\nThe friend list")
 }
 
 // Handle single friends (add, remove, challenge etc)
@@ -109,30 +109,6 @@ func friend(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
-}
-
-func answers(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	u := user.Current(c)
-
-	if u == nil {
-		url, _ := user.LoginURL(c, "/")
-		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
-		return
-	}
-
-	a1, err1 := strconv.ParseInt(r.FormValue("a1"), 10, 32)
-	a2, err2 := strconv.ParseInt(r.FormValue("a2"), 10, 32)
-	a3, err3 := strconv.ParseInt(r.FormValue("a3"), 10, 32)
-	a4, err4 := strconv.ParseInt(r.FormValue("a4"), 10, 32)
-	a5, err5 := strconv.ParseInt(r.FormValue("a5"), 10, 32)
-	gID, err6 := strconv.ParseInt(r.FormValue("game_id"), 10, 32)
-	if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil || err6 != nil {
-		fmt.Fprintf(w, "error parsing input")
-	}
-
-	game.ParseRoundData(c, u.ID, (int)(gID), (int)(a1), (int)(a2), (int)(a3), (int)(a4), (int)(a5))
-
 }
 
 func crawl(w http.ResponseWriter, r *http.Request) {
@@ -204,4 +180,8 @@ func register(w http.ResponseWriter, r *http.Request) {
 
 func crawl_data(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Crawl_data(w, r)
+}
+
+func matchHandler(w http.ResponseWriter, r *http.Request) {
+	game.MatchHandler(w, r)
 }
