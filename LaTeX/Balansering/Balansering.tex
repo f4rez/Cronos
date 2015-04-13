@@ -1,0 +1,72 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{fontenc}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+
+\author{
+Alfred Yrelin \\
+\textup{Dept. of Information Technology}\\
+\textup{Uppsala University}\\
+\textup{Uppsala Sweden}\\
+\textup{Alfred.Yrelin.2125@student.uu.se}
+\and 
+Josef Svensson \\
+\textup{Dept. of Information Technology}\\
+\textup{Uppsala University}\\
+\textup{Uppsala Sweden}\\
+\textup{Josef.Svensson.8440@student.uu.se}
+\and
+Philip Åkerfeldt \\
+\textup{Dept. of Information Technology}\\
+\textup{Uppsala University}\\
+\textup{Uppsala Sweden}\\
+\textup{Philip.Akerfeldt.4987@student.uu.se}
+}
+
+\title{Balansering}
+
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+
+\section{Spelarnas Rating}
+Ett problem som vi ställs inför är balanseringen av spelare och deras rating. Det som krävs av oss som grupp är att hitta idéer för hur ratingen ska baseras, utvärderas och utvecklas. Först och främst kan det vara värt att nämna anledningen till att vi vill ha med rating i spelet och det är för att det skapar en mycket mer balanserad spelupplevelse för alla spelare. Oerfarna spelare ska kunna bli skyddade från de mer erfarna spelarna. Rättvisa motståndare ska enkelt kunna tas fram vid skapandet av nya matcher. \\
+
+\textbf{TL;DR} 
+\begin{enumerate}
+\item Avgöra en spelares styrka/kunskapsnivå
+\item Hitta lämpliga motståndare
+\end{enumerate}
+
+Några olika idéer som vi kommit fram till just nu baseras mycket på andra spel som använder sig av någon slags match-rating för att balansering. Exempelvis ska en spelare med högre rating inte kunna gynnas av att vinna mot spelare som har en mycket lägre rating. Detta för att undvika att spelare utnyttjar sämre spelare för att få bättre rating.
+En metod för att balansera man skulle kunna få detta att fungera är genom att vid varje avslutad match kommer spelet att se på de båda spelarnas rating och avgöra hur mycket poäng vinnaren ska få och hur mycket poäng förloraren ska tappa.\\ \textbf{Ett exempel:} Spelare 1 har 4000 MMR (MatchMaking Rating) och spelare 2 har 3400 MMR. Vid påbörjad match kan båda spelarna se hur mycket rating dom kommmer erhålla/förlora om dom vinner respektive förlorar matchen. 
+
+Detta är enligt en välutvecklad metod som kallas för \textit{Elo Rating System}\footnote{\url{http://en.wikipedia.org/wiki/Elo_rating_system} 2015-04-13}  som används inom flera olika sporter.
+Exemplet ovan bygger lite på Elo's system. Systemet är designat på så sätt att det tittar på en spelares tidigare matcher och beräknar hur många procent av sina tidigare matcher den vunnit. Sen väljer systemet ett förutbestämd vinnare. Om denna förutbestämda vinnare vinner matchen så kommer den få en mindre summa poäng. Skulle det huruvida vara så att den som inte valdes som den förutbestämda vinnaren vann matchen så skulle denne få en större summa poäng.
+
+Ett problem som kan uppstå här är ett återkommande sådant när det gäller balansering. Problemet jag talar om är självklart den "eviga balanseringen" som vi kallar det. Konceptet bakom detta uttrycket är att det alltid går att balansera mer. I detta fall återkommer vi till balansering av poäng. Hur mycket poäng ska vinnaren få i det första fallet och hur mycket ska vinnaren få i andra fallet? Spelar det någon roll om ratingen mellan spelaren är större eller mindre? Om ja, hur ska då poängen fördelas gentemot andra spelare och deras matcher. 
+Dessa är några av frågorna vi kommer tvingas svara på för att få ett riktigt balanserat spel.
+
+\newpage
+
+\section{Frågornas Rating} 
+Ett annat problem som vi ställs inför är balanseringen av frågor. Detta är viktigt för att spelare inte ska få för svåra frågor. Om detta skulle ske skulle spelet bli för svårt och då skulle vi antagligen tappa användare. För att vi ska kunna balansera frågorna i spelet kommer varje fråga ha ett index som används för att avgöra vilket tier den ska erhållas.
+Den idén vi har för att balansera frågorna just nu är att vid varje match så kommer användarna att placera ut händelserna (frågorna) i någon slags ordning. Beroende på om användaren svarade rätt eller fel så kommer frågans index öka eller minska. Poängen den kommer minska med beror på hur många användare det finns och vad det finns för maxvärde för frågornas svårighetsgrad. 
+När frågorna hämtas inför en match kommer spelet att välja frågor som passar användarnas tier. Exempelvis kommer spelare som båda tillhör ett tier få frågor av samma tier. 
+Från början tänker vi ha fem stycken tiers. Båda spelarna och frågorna kommer \cite{placeras} i dessa tiers och matcherna kommer välja saker och ting utifrån dessa tiers.
+
+Hur balanseringen av dessa tiers kommer ske och hur skalbarheten kommer fungera tillsammans med balanseringen är inte ännu bestämt. 
+
+
+\end{document}
