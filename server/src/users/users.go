@@ -11,6 +11,7 @@ type Users struct {
 	Name          string
 	FriendList    []string `json:"-"`
 	ChallengeList []string `json:"-"`
+	Games         []int
 }
 
 func UserKey(c appengine.Context) *datastore.Key {
@@ -31,6 +32,10 @@ func (users *Users) UpdateUser(c appengine.Context, key *datastore.Key) {
 	if err != nil {
 		c.Infof("Error in updating user: ", err)
 	}
+}
+
+func (users *User) addGame(c appengine.Context, g Game) {
+	users.Games = append(users.Games, g.ID)
 }
 
 func MakeUser(c appengine.Context) (Users, error) {
@@ -83,6 +88,15 @@ func getUsers(c appengine.Context, ids []string) ([]Users, []*datastore.Key, err
 	c.Infof("Friends: %v, keys: %v", friends, keys)
 	return friends, keys, nil
 
+}
+
+func JoinGame(c appengine.Context, id string, gID int) error {
+	user, key, err := GetUser(c, id)
+	if err != nil {
+		return err
+	}
+	user.addGame(c, gID)
+	return nil
 }
 
 func GetFriendList(c appengine.Context, id string) ([]Users, error) {
