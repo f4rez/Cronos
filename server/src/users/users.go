@@ -53,7 +53,7 @@ func GetUser(c appengine.Context, Oid string) (Users, *datastore.Key, error) {
 		Limit(1).
 		Filter("Oid =", Oid)
 	if key, err := qn.GetAll(c, &mUser); len(key) > 0 {
-		c.Infof("User: %v key %v", mUser[1], key[0])
+		c.Infof("Fetched User:", mUser[1].Name)
 		return mUser[1], key[0], nil
 	} else {
 		u := new(Users)
@@ -78,7 +78,7 @@ func getUsers(c appengine.Context, ids []string) ([]Users, []*datastore.Key, err
 	err := datastore.GetMulti(c, keys, friends)
 	if err != nil {
 		c.Infof("Error getUsers2: %v, keys: %v", err, keys)
-	return friends, keys, err
+		return friends, keys, err
 	}
 	c.Infof("Friends: %v, keys: %v", friends, keys)
 	return friends, keys, nil

@@ -14,18 +14,21 @@ import (
 )
 
 type Game struct {
-	FID, SID   string
-	GID        int
-	Rounds     []Round `datastore:"-"`
-	RoundsJson string
-	Turn       bool
-	Created    time.Time
+	FID, SID      string
+	GID           int
+	Rounds        []Round `datastore:"-"`
+	NumberOfTurns int
+	RoundsJson    []byte
+	Turn          bool
+	Created       time.Time
 }
 
 type Round struct {
-	QuestionSID        []int
-	fAnswers, sAnswers []int
-	fPoints, sPoints   int
+	QuestionSID       []int
+	PlayerOneAnswers  []int
+	PlayerTwoAnswerss []int
+	PlayerOnePoints   int
+	PlayerTwoPoints   int
 }
 
 func GameKey(c appengine.Context) *datastore.Key {
@@ -33,11 +36,12 @@ func GameKey(c appengine.Context) *datastore.Key {
 }
 
 func (game *Game) SaveGame(c appengine.Context) (*datastore.Key, error) {
+	c.Infof("Saving game: %v", game.GID)
 	str, err := json.Marshal(game.Rounds)
 	if err != nil {
 		return nil, err
 	}
-	game.RoundsJson = string(str)
+	game.RoundsJson = str
 	key := datastore.NewIncompleteKey(c, "Game", GameKey(c))
 	k, err2 := datastore.Put(c, key, game)
 	if err != nil {
@@ -51,11 +55,11 @@ func (game *Game) UpdateGame(c appengine.Context, key *datastore.Key) error {
 	if err != nil {
 		return err
 	}
-	game.RoundsJson = string(str)
-	c.Infof("Updating game : %v", game)
+	game.RoundsJson = str
+	c.Infof("Updating game : %v", game.GID)
 	_, err2 := datastore.Put(c, key, game)
 	if err2 != nil {
-		c.Infof("Error in updating game: ", err)
+		c.Infof("Error in updating game: ", err2)
 	}
 	return err2
 }
@@ -69,13 +73,15 @@ func CreateGame(c appengine.Context, FID string) (Game, *datastore.Key, error) {
 	g.FID = FID
 	g.Created = time.Now()
 	g.Rounds = append(g.Rounds, FirstRound(c))
+	g.NumberOfTurns = 1
 	id, err := getHighesMatchID(c)
 	if err != nil {
 		return *new(Game), nil, err
 	}
 	g.GID = id + 1
+	c.Infof("Created game: %v", g.GID)
 	key, err2 := g.SaveGame(c)
-	c.Infof("Created game: %v", *g)
+	c.Infof("Created game: %v", g.GID)
 	if err2 != nil {
 		return *g, nil, err
 	}
@@ -89,15 +95,10 @@ func getHighesMatchID(c appengine.Context) (int, error) {
 		Limit(1).
 		Order("-Created")
 	if key, err := qn.GetAll(c, &game); len(key) > 0 {
-		c.Infof("Highest gameID: %v", game[1])
 		return game[1].GID, nil
 	} else {
 		return 0, err
 	}
-}
-
-func (g *Game) AddLastPlayer(SID string) {
-	g.SID = SID
 }
 
 func GetGame(c appengine.Context, id int) (Game, *datastore.Key, error) {
@@ -107,8 +108,15 @@ func GetGame(c appengine.Context, id int) (Game, *datastore.Key, error) {
 		Limit(1).
 		Filter("GID =", id)
 	if key, err := qn.GetAll(c, &game); len(key) > 0 {
-		json.Unmarshal(game[1].RoundsJson, game[1].Rounds)
-		c.Infof("Game: %v key %v", game[1], key[0])
+		temp := make([]Round, 10, 10)
+		temp2 := game[1].RoundsJson
+		err2 := json.Unmarshal(temp2, &temp)
+		if err2 != nil {
+			u := new(Game)
+			return *u, nil, err2
+		}
+		game[1].Rounds = temp
+		c.Infof("Game: %v", game[1].GID)
 		return game[1], key[0], nil
 	} else {
 		c.Infof("Err: %v, len(key): %v, id = %v", err, len(key), id)
@@ -128,22 +136,25 @@ func FindFreeGame(c appengine.Context) (Game, *datastore.Key, error) {
 		return *new(Game), nil, err
 	}
 	if count == 0 {
-		c.Infof("Count: %v", count)
 		u := user.Current(c)
 		return CreateGame(c, u.ID)
 	} else {
 		game := make([]Game, 1, 1)
 		if key, err := qn.GetAll(c, &game); len(key) > 0 {
-			mGame := game[1]
-			json.Unmarshal(mGame.RoundsJson, mGame.Rounds)
+			temp := make([]Round, 1, 1)
+			temp2 := game[1].RoundsJson
+			err := json.Unmarshal(temp2, &temp)
+			if err != nil {
+				u := new(Game)
+				return *u, nil, err
+			}
+			game[1].Rounds = temp
 			u := user.Current(c)
-			mGame.SID = u.ID
-			c.Infof("User: %v key %v", mGame, key[0])
-
-			mGame.UpdateGame(c, key[0])
-			return mGame, key[0], nil
+			game[1].SID = u.ID
+			game[1].UpdateGame(c, key[0])
+			return game[1], key[0], nil
 		} else {
-			c.Infof("Err: %v, user %v", err, game[0])
+			c.Infof("Err: %v", err)
 			u := new(Game)
 			return *u, nil, err
 		}
@@ -153,6 +164,12 @@ func FindFreeGame(c appengine.Context) (Game, *datastore.Key, error) {
 
 func FirstRound(c appengine.Context) Round {
 	round := new(Round)
+	padding := make([]int, 1)
+	padding[0] = 1
+	round.PlayerOneAnswers = padding
+	round.PlayerTwoAnswerss = padding
+	round.PlayerTwoPoints = 1
+	round.PlayerOnePoints = 1
 	questions, _, err := question.GetQuestions(c)
 	if err == nil {
 		for _, q := range questions {
@@ -175,15 +192,16 @@ func (g *Game) AddNewRound(c appengine.Context) {
 		round := new(Round)
 		round.QuestionSID = getIDs(questions)
 		g.Rounds = append(g.Rounds, *round)
+		g.NumberOfTurns++
 	}
 
 }
 
 func (g *Game) isUsersTurn(id string) bool {
 	if id == g.FID {
-		return g.Turn
-	} else {
 		return !g.Turn
+	} else {
+		return g.Turn
 	}
 }
 
@@ -195,21 +213,12 @@ func getIDs(q []question.Question) []int {
 	return id
 }
 
-func (g *Game) getNewestRound(c appengine.Context) Round {
+func (g *Game) getNewestRound(c appengine.Context) *Round {
 	if len(g.Rounds) == 0 {
 		g.AddNewRound(c)
-		return g.Rounds[0]
+		return &g.Rounds[0]
 	}
-	return g.Rounds[len(g.Rounds)-1]
-}
-
-func (g *Game) haveAnswersQ(c appengine.Context, id string) bool {
-	r := g.getNewestRound(c)
-	if id == g.FID {
-		return len(r.fAnswers) > 0
-	} else {
-		return len(r.sAnswers) > 0
-	}
+	return &(g.Rounds[len(g.Rounds)-1])
 }
 
 func MatchHandler(w http.ResponseWriter, r *http.Request) {
@@ -226,6 +235,7 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	game, key, err2 := GetGame(c, int(gID))
 	if err2 != nil {
 		c.Infof("Error getting game: ", err)
@@ -237,48 +247,115 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err3.Error(), http.StatusInternalServerError)
 		return
 	}
-	if game.haveAnswersQ(c, u.ID) {
-		game.AddNewRound(c)
-		r := game.getNewestRound(c)
-		questions, _ := question.GetQuestionsWithID(c, r.QuestionSID)
-		str, _ := json.Marshal(questions)
-		fmt.Fprintf(w, "q: %v", str)
-	}
-	a1, err1 := strconv.ParseInt(r.FormValue("a1"), 10, 32)
-	a2, err2 := strconv.ParseInt(r.FormValue("a2"), 10, 32)
-	a3, err3 := strconv.ParseInt(r.FormValue("a3"), 10, 32)
-	a4, err4 := strconv.ParseInt(r.FormValue("a4"), 10, 32)
-	a5, err5 := strconv.ParseInt(r.FormValue("a5"), 10, 32)
-	if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil {
-		fmt.Fprintf(w, "error parsing input")
-		http.Error(w, err2.Error(), http.StatusInternalServerError)
-	}
-	ParseRoundData(c, u.ID, game, key, int(a1), int(a2), int(a3), int(a4), int(a5))
 
+	action := r.FormValue("action")
+
+	switch action {
+	case "getQuestions":
+		q, err4 := question.GetQuestionsWithID(c, game.getNewestRound(c).QuestionSID)
+		if err4 != nil {
+			c.Infof("Error getting questions: ", err)
+			http.Error(w, err4.Error(), http.StatusInternalServerError)
+			return
+		}
+		fmt.Fprint(w, q)
+		break
+	case "answerQuestions":
+		a1, errA1 := strconv.ParseInt(r.FormValue("a1"), 10, 32)
+		a2, errA2 := strconv.ParseInt(r.FormValue("a2"), 10, 32)
+		a3, errA3 := strconv.ParseInt(r.FormValue("a3"), 10, 32)
+		a4, errA4 := strconv.ParseInt(r.FormValue("a4"), 10, 32)
+		a5, errA5 := strconv.ParseInt(r.FormValue("a5"), 10, 32)
+		if errA1 != nil || errA2 != nil || errA3 != nil || errA4 != nil || errA5 != nil {
+			fmt.Fprintf(w, "error parsing input")
+			http.Error(w, errA2.Error(), http.StatusInternalServerError)
+		}
+		points := calculatePoints(a1, a2, a3, a4, a5)
+		ParseRoundData(c, u.ID, game, key, int(a1), int(a2), int(a3), int(a4), int(a5), points)
+		c.Infof("Points: %v", points)
+		if game.NumberOfTurns >= 5 {
+			one, two := calculateFinalScore(game)
+			if one > two {
+				fmt.Fprintf(w, "Winner is %v with %v points, loser is %v with %v points", game.FID, one, game.SID, two)
+			} else {
+				if one < two {
+					fmt.Fprintf(w, "Winner is %v with %v points, loser is %v with %v points", game.SID, two, game.FID, one)
+				} else {
+					if one == two {
+						fmt.Fprintf(w, "It's a draw finalscore: %v - %v", one, two)
+					}
+				}
+			}
+		}
+		break
+
+	}
 }
 
-func ParseRoundData(c appengine.Context, uID string, g Game, key *datastore.Key, a1, a2, a3, a4, a5 int) {
+func calculateFinalScore(g Game) (int, int) {
+	playerOne := 0
+	playerTwo := 0
+	for _, round := range g.Rounds {
+		playerOne += round.PlayerOnePoints
+		playerTwo += round.PlayerTwoPoints
+	}
+	return playerOne, playerTwo
+}
+
+func calculatePoints(a1, a2, a3, a4, a5 int64) int {
+	points := 0
+	if a1 == 2 {
+		if a2 == 2 {
+			if a3 == 2 {
+				if a4 == 2 {
+					if a5 == 2 {
+						points = 6
+						return points
+					}
+					points = 4
+					return points
+				}
+				points = 3
+				return points
+			}
+			points = 2
+			return points
+		}
+		points = 1
+		return points
+	}
+	return points
+}
+
+func ParseRoundData(c appengine.Context, uID string, g Game, key *datastore.Key, a1, a2, a3, a4, a5, points int) {
 	round := g.getNewestRound(c)
 	ans := []int{a1, a2, a3, a4, a5}
 	if uID == g.FID {
 		c.Infof("a")
-		round.fAnswers = ans
-		if round.sAnswers == nil {
+		round.PlayerOneAnswers = ans
+		round.PlayerOnePoints = points
+		if len(round.PlayerTwoAnswerss) < 2 {
 			c.Infof("b")
 			g.ChangeTurn()
 		} else {
 			c.Infof("c")
-			g.AddNewRound(c)
+			if g.NumberOfTurns < 5 {
+				g.AddNewRound(c)
+			}
 		}
 	} else {
 		c.Infof("e")
-		round.sAnswers = ans
-		if round.fAnswers == nil {
+		round.PlayerTwoAnswerss = ans
+		round.PlayerTwoPoints = points
+		if len(round.PlayerOneAnswers) < 2 {
+			c.Infof("f")
 			g.ChangeTurn()
 
 		} else {
 			c.Infof("g")
-			g.AddNewRound(c)
+			if g.NumberOfTurns < 5 {
+				g.AddNewRound(c)
+			}
 		}
 	}
 	g.UpdateGame(c, key)
