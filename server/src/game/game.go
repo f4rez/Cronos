@@ -231,20 +231,22 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	gID, err := strconv.ParseInt(r.FormValue("game_id"), 10, 32)
 	if err != nil {
-		c.Infof("Error parsing gameID: ", err)
+		c.Infof("Error parsing gameID: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	game, key, err2 := GetGame(c, int(gID))
 	if err2 != nil {
-		c.Infof("Error getting game: ", err)
+		c.Infof("Error getting game: %v", err)
 		http.Error(w, err2.Error(), http.StatusInternalServerError)
 		return
 	}
 	if !game.isUsersTurn(u.ID) {
 		err3 := errors.New("Det är inte din tur doe....")
+		fmt.Fprint(w, "Det är inte din tur")
 		http.Error(w, err3.Error(), http.StatusInternalServerError)
+
 		return
 	}
 
