@@ -85,6 +85,13 @@ func getUsers(c appengine.Context, ids []string) ([]Users, []*datastore.Key, err
 
 }
 
+func GetCountUsers(c appengine.Context) (int, error) {
+	query := datastore.NewQuery("Question").
+	KeysOnly()
+	count, err := query.Count(c)
+	return count, err
+}
+
 func GetFriendList(c appengine.Context, id string) ([]Users, error) {
 	mUser, _, err := GetUser(c, id)
 	if err == nil {

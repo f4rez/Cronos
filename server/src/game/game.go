@@ -270,6 +270,11 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Fprintf(w, "error parsing input")
 			http.Error(w, errA2.Error(), http.StatusInternalServerError)
 		}
+
+		// Do some balancing!
+		//TODO: goroutine eller annan thread?
+		go question.Balancer(r, game.getNewestRound(c).QuestionSID, game.FID, game.SID, game.Turn, []int{int(a1),int(a2),int(a3),int(a4),int(a5)})
+
 		points := calculatePoints(a1, a2, a3, a4, a5)
 		ParseRoundData(c, u.ID, game, key, int(a1), int(a2), int(a3), int(a4), int(a5), points)
 		c.Infof("Points: %v", points)
