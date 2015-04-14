@@ -34,8 +34,8 @@ func (users *Users) UpdateUser(c appengine.Context, key *datastore.Key) {
 	}
 }
 
-func (users *User) addGame(c appengine.Context, g Game) {
-	users.Games = append(users.Games, g.ID)
+func (users *Users) addGame(c appengine.Context, gid int) {
+	users.Games = append(users.Games, gid)
 }
 
 func MakeUser(c appengine.Context) (Users, error) {
@@ -92,7 +92,7 @@ func getUsers(c appengine.Context, ids []string) ([]Users, []*datastore.Key, err
 
 func GetCountUsers(c appengine.Context) (int, error) {
 	query := datastore.NewQuery("Question").
-	KeysOnly()
+		KeysOnly()
 	count, err := query.Count(c)
 	return count, err
 }
@@ -103,6 +103,7 @@ func JoinGame(c appengine.Context, id string, gID int) error {
 		return err
 	}
 	user.addGame(c, gID)
+	user.UpdateUser(c, key)
 	return nil
 }
 
