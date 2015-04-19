@@ -1,4 +1,4 @@
-\documentclass[swedish,12pt,a4paper]{article}
+å p\documentclass[swedish,12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -11,17 +11,19 @@
 \maketitle
 \newpage
 \begin{abstract}
-Vem vill inte kunna säga: ``Jag är bäst på...''? Människans natur gör att vi är tävlingsmänniskor, starkast överlever. Därför tror vi att spel som Quizkampen och Wordfeud har blivit så populära, eftersom man har möjlighet att se vem som är bäst. Vi vill skapa ett spel i den här kategorin, det vill säga, ett spel som går ut på att ordna historiska händelser relativt till andra händelser. Spelet utvecklas till Android med en back-end som drar nytta av Google app-engines skalbarhet för att ge applikationen möjlighet för att växa i takt med användarantalet. 
+Vem vill inte kunna säga: ``Jag är bäst på...''? Att tävla är något som många säkerligen tycker är roligare och mer socialt än att spela ensam. Detta är en av anledningarna till att vi tror att spel som Quizkampen och Wordfeud har blivit så populära. I tidigare nämnda spel har man möjlighet att se vem som är bäst på många olika spelplaner. Vi vill skapa ett spel som passar bra i denna kategorin. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. Spelet utvecklas till Android med en back-end som drar nytta av Google app-engines skalbarhet för att ge applikationen möjlighet för att växa i takt med användarantalet. 
 
 \end{abstract}
 \pagebreak
 \section{Förutsättningar}
 \subsection{Bakgrund}
 Applikationsutveckling för mobila enheter är ett spännande område. För utveckling av själva applikationen krävs kunskaper om Java, XML och gränssnittsdesign, men det är inte allt som krävs i ett mer avancerat projekt. Många applikationer interagerar på något vis med internet eller med andra klienter. När sådan funktionalitet önskas så behövs det också kunskap om nätverkshantering och serverutveckling. I det här projektet sker också viss automatisk hämtning av information varvid kunskap om utveckling av ett smart system som filtrerar data behövs.
+
 \subsection{Syfte}
 Det är projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter. I det här projektet ska en applikation utvecklas som ger flera användare möjlighet att interagera med varandra.
 
 Spelet som ska utvecklas går ut på att två användare får tävla om vem som har bäst koll på när olika historiska händelser ägde rum. Varje spelare får ett antal händelser som denne sedan ska sortera i kronologisk ordning. Spelaren som sorterar flest händelser rätt vinner. Förutom rent nöje så ger spelet också användaren möjlighet att få bättre koll på historien, applikationen kan alltså också användas i utbildningssammanhang.
+
 \subsection{Mål}
 Det finns tre stora delar i det här projektet som kan ses som projektets mål:
 \begin{itemize}
@@ -34,6 +36,7 @@ Det finns tre stora delar i det här projektet som kan ses som projektets mål:
 En mobilapplikation till först och främst Android ska utvecklas. Om det finns tid kommer också en version för iOS att utvecklas. Mobilapplikationen är det enda som användaren i slutändan kommer se, därför är gränssnittet extra viktigt i den här delen. 
 
 Applikationen till Android skrivs i Java och gränssnittet skrivs med hjälp av xml-markup.
+
 \subsubsection{Server}
 För att flera spelare ska kunna interagera med varandra så behövs det en server. En server gör också att frågorna som finns i spelet kommer kunna uppdateras kontinuerligt.
 
@@ -43,13 +46,17 @@ Servermjukvaran skrivs i programspråket Go och körs på Googles molntjänst Ap
 För att göra spelet så intressant som möjligt behövs det många frågor. Ett sätt att skapa många frågor är att utveckla mjukvara som kan hämta information och sätta ihop frågor automatiskt. 
 
 Målet med den automatiska informationshämtningen är ett delsystem som läser in delar av Wikipedia och kopplar samman årtal och händelser automatiskt. Det här systemet behöver också ett administrativt gränssnitt så att en administratör på ett snabbt vis kan korrekturläsa frågorna innan de används.
+
 \subsection{Motivation}
 Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på applikationer är Quizkampen, Wordfeud och Wordbase. Det är tydligt att spel där två personer kan mötas för att vinna över den andre, genom att svara på frågor eller lägga ord, är populära. Det spel som den här rapporten handlar om kombinerar koncepten från tidigare nämnda spel, med att både svara på frågor och lägga in dem på rätt plats. 
 
 En liknande version av det här spelet har också visat sig vara populär i sällskapsspelsform (\textit{När-då-då?}\footnote{http://www.spelexperten.com/sallskapsspel/familjespel/nar-da-da.html}, därför är hoppet högt om att också den här applikationen kan bli populär. Just nu finns det inte heller någon variant av det här spelkonceptet till Android, vilket är en lucka som kan täckas av det här projektet.
+
 \subsection{Lägesbeskrivning}
 Det finns ett spel för ios, \textit{Historiekampen}\footnote{https://itunes.apple.com/se/app/historiekampen/id840741173?mt=8} som också handlar om att lägga in händelser på en tidslinje. Genom en ytlig granskning av deras gränssnitt har det konstaterats att det går att göra bättre. Utan större kännedom om detaljerna i spelmekaniken så är också förhoppningen att den här applikationen ska bli roligare att spela. En nackdel som den befintliga ios-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
+
 \subsection{Frågeställningar}
+
 \subsubsection{Tekniska problem}
 Det finns vissa delar i det här systemet som blir mer avancerade att lösa än andra delar. Här listas några av dessa.
 \begin{itemize}
@@ -59,34 +66,48 @@ Det finns vissa delar i det här systemet som blir mer avancerade att lösa än 
 \item Spelet ska anpassa svårighetsgraden automatiskt så någon form av maskininlärning behövs. Tanken är att frågorna ska ha en svårighetsgrad som justeras automatiskt beroende på hur ofta de läggs rätt. Här måste det också tas hänsyn till hur resten av brädet ser ut vid tillfället.
 \item Ett system för att rangordna spelare så att en topplista kan visas behövs.
 \end{itemize}
+
 \section{Genomförande}
+
 \subsection{Metoder}
 \begin{itemize}
-\item Scrum: Projektet ska följa en agil struktur för programutveckling. Till hjälp används Trello\footnote{http://www.trello.com} för att skapa uppgifter enligt Scrums struktur. Kontinuerliga gruppmöten hålls också där lägesuppdateringar görs.
-\item Android Studio används för androidutveckling och simulering.
+\item Android Studio används för androidutveckling och simulering. Detta är ett smidigt verktyg som, nämn tidigare, enkelt kan simulera appen i olika valbara miljöer i form av layouts för olika mobiltelefoner. 
 \item Google App Engine används lokalt för simulering av serverapplikationen. I skarpt läge kommer också App Engine att användas, men då i Googles moln.
-\item Wikipedia används som informationskälla för frågorna som spelet presenterar för användarna.
+\item Wikipedia används som informationskälla för frågorna som spelet presenterar för användarna. Denna informationskälla används primärt under utvecklingsfasen och kommer mer stor sannolikhet att bytas ut mot andra informationskällor.
 \item Git används för att synkronisera projektet. Ett privat repo på Bitbucket\footnote{http://www.bitbucket.org} används till detta.
 \item Google Hangouts används för kommunikation när gruppmedlemmarna är på olika fysiska platser.
 \end{itemize}
+
 \subsection{Systemstruktur}
+
+*-------------------------------------------------*
+
+
+                 SKRIV UT DENNA DEL
+
+
+*-------------------------------------------------*
 \begin{itemize}
 \item Databas, i App Engine med biblioteket \textit{datastore}.
 \item Server, körs i App Engine och skriven i Go.
 \item Klient, Androidapplikation
 \item Crawler, informationssökare, en del av servern.
 \end{itemize}
-\subsection{Avgränsningar}
-En applikation för ios prioriteras inte i första hand. Skulle det bli tid över och resten av systemet anses tillräckligt klart så kommer detta att utvecklas, men annars inte. Någon applikation för Windows finns inte heller med i planeringen.
-\subsection{Krav}
-Systemet ska klara många spelare samtidigt, dock bara två per spel. Eftersom App Engine används för servern så kommer det inte bli något problem, det är en tjänst som automatiskt skalar beroende på belastning.
 
-Informationssökaren ska tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. Sökaren ska också vara så pass bra att den administrativa kontrollen går fort och att så lite som möjligt behöver korrigeras där.
+\subsection{Avgränsningar}
+En applikation för ios prioriteras inte i första hand. Skulle det bli tid över och resten av systemet anses tillräckligt klart så kommer detta att utvecklas, men annars inte. Någon applikation för Windows finns inte heller med i planeringen. Spelet kommer troligtvis ha ett par kategorier som ska finnas med i spelet, men dessa är ännu inte valda.
+
+\subsection{Krav}
+Systemet ska klara många spelare samtidigt, dock bara två per spel. Någon speciell siffra är inte bestämd ännu men med tanke på den otroligt bra grunden för skalbarhet som projektet står på kommer en siffra för antal spelare ganska snart kunna bestämmas. Eftersom App Engine används för servern så kommer det inte bli något problem, det är en tjänst som automatiskt skalar beroende på belastning.
+
+Informationssökaren ska tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. En hög kvalitet betyder frågor som är relevanta och som följer den strukturen vi har tänkt oss. Frågorna ska vara lätta att läsa och förstå och samtidigt befinna sig i det breda spektrumet av svårighetsgrader vi kommer ha i spelet. Sökaren för frågorna ska också vara så pass bra att den administrativa kontrollen går fort och att så lite som möjligt behöver korrigeras efter att frågorna har samlats.
+
 \subsection{Utvärdering}
 Planen är att en fungerande beta eller alfaversion av systemet ska färdigställas ett tag innan projektets slut. I den här versionen ska användare ha möjlighet att ge feedback och att testa applikationen. Så många fel som möjligt ska sedan justeras innan den skarpa versionen släpps.
 
 Gränssnittet och användandet av applikationen kommer också att utvärderas med hjälp av metoder från Människa-data-interaktionsområdet.
 \appendix
+
 \section{Tidsplan}
 
 \textbf{\href{http://www.gantt-chart.com//?td=550c7506aa5a1dd480bd4c8d-845131}{Tidsplan i form av Gantt-diagram}}\\
