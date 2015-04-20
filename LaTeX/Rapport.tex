@@ -17,7 +17,7 @@ Vem vill inte kunna säga: ``Jag är bäst på...''? Att tävla är något som m
 \pagebreak
 \section{Förutsättningar}
 \subsection{Bakgrund}
-Applikationsutveckling för mobila enheter är ett spännande område. För utveckling av själva applikationen krävs kunskaper om Java, XML och gränssnittsdesign, men det är inte allt som krävs i ett mer avancerat projekt. Många applikationer interagerar på något vis med internet eller med andra klienter. När sådan funktionalitet önskas så behövs det också kunskap om nätverkshantering och serverutveckling. I det här projektet sker också viss automatisk hämtning av information varvid kunskap om utveckling av ett smart system som filtrerar data behövs.
+Applikationsutveckling för mobila enheter är ett spännande område som växer ******http://press.trendforce.com/press/20150416-1889.html***** och det operativsystem som sålde mest enheter under första kvartalet av 2015 var Android. För utveckling av Androidapplikationer krävs kunskaper om Java och gränssnittsdesign, men det är inte allt som krävs i ett mer avancerat projekt. Många applikationer interagerar på något vis med internet eller med andra klienter. När sådan funktionalitet önskas så behövs en server för att att data ska kunnas delas och kommunikation mellan det olika enheterna upprättas. I det här projektet sker också viss automatisk hämtning av information varvid kunskap om utveckling av ett smart system som filtrerar data behövs.
 
 \subsection{Syfte}
 Det är projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter. I det här projektet ska en applikation utvecklas som ger flera användare möjlighet att interagera med varandra.
@@ -80,6 +80,13 @@ Det finns vissa delar i det här systemet som blir mer avancerade att lösa än 
 
 \subsection{Systemstruktur}
 
+\begin{figure}[hb]
+\centering
+\includegraphics[scale=1]{systemstruktur.jpg} 
+\end{figure} 
+
+
+
 *-------------------------------------------------*
 
 
@@ -93,6 +100,10 @@ Det finns vissa delar i det här systemet som blir mer avancerade att lösa än 
 \item Klient, Androidapplikation
 \item Crawler, informationssökare, en del av servern.
 \end{itemize}
+
+Systemet är uppbyggt kring http förfrågningar, när applikationen skickar en förfrågan finns det i servern flera oilka handlers som tar han om olika förfrågningar. Vill man lägga till nya frågor får man via webinterfacet ange vilken sida man vill gå igenom för att hitta frågor och får sedan från crawlern tillbaka frågor som man i interfacet får gå igenom för att ge en initial svårighetsgrad och sedan spara in i databasen om den håller tillräckligt hög klass.
+
+
 
 \subsection{Avgränsningar}
 En applikation för ios prioriteras inte i första hand. Skulle det bli tid över och resten av systemet anses tillräckligt klart så kommer detta att utvecklas, men annars inte. Någon applikation för Windows finns inte heller med i planeringen. Spelet kommer troligtvis ha ett par kategorier som ska finnas med i spelet, men dessa är ännu inte valda.
