@@ -4,6 +4,8 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"appengine/user"
+	"fmt"
+	"net/http"
 )
 
 type Users struct {
@@ -34,7 +36,7 @@ func (users *Users) UpdateUser(c appengine.Context, key *datastore.Key) {
 	}
 }
 
-func (users *Users) addGame(c appengine.Context, gid int) {
+func (users *Users) AddGame(gid int) {
 	users.Games = append(users.Games, gid)
 }
 
@@ -58,7 +60,7 @@ func GetUser(c appengine.Context, Oid string) (Users, *datastore.Key, error) {
 		Limit(1).
 		Filter("Oid =", Oid)
 	if key, err := qn.GetAll(c, &mUser); len(key) > 0 {
-		c.Infof("Fetched User:", mUser[1].Name)
+		c.Infof("Fetched User: %v", mUser[1].Name)
 		return mUser[1], key[0], nil
 	} else {
 		u := new(Users)
@@ -95,16 +97,6 @@ func GetCountUsers(c appengine.Context) (int, error) {
 		KeysOnly()
 	count, err := query.Count(c)
 	return count, err
-}
-
-func JoinGame(c appengine.Context, id string, gID int) error {
-	user, key, err := GetUser(c, id)
-	if err != nil {
-		return err
-	}
-	user.addGame(c, gID)
-	user.UpdateUser(c, key)
-	return nil
 }
 
 func GetFriendList(c appengine.Context, id string) ([]Users, error) {
@@ -176,6 +168,37 @@ func ChallengeFriend(c appengine.Context, mOid, fOid string) error {
 		return err
 	}
 
+}
+
+func RegisterUser(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+
+	u := user.Current(c)
+	qn := datastore.NewQuery("Users").
+		Ancestor(UserKey(c)).
+		Limit(1).
+		Filter("Oid =", u.ID)
+	count, err := qn.Count(c)
+	if err != nil {
+		c.Infof("Error : %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	c.Infof("count = %v", c)
+	if count > 0 {
+		return
+	} else {
+		users, _ := MakeUser(c)
+		if users.Oid != "" {
+			c.Infof("Saving user on registring ID = %v", users.Oid)
+			users.SaveUser(c)
+			return
+		} else {
+			c.Infof("Error login: %v", users)
+			url, _ := user.LoginURL(c, "/registerNewUser")
+			fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		}
+	}
 }
 
 func (u *Users) AddFriend(Oid string) {

@@ -8,15 +8,11 @@ import (
 	"net/http"
 
 	"src/game"
+	"src/messages"
 	"src/question"
 	"src/question_crawler"
 	"src/users"
 )
-
-type GameInitMessage struct {
-	GID              int
-	Opp_name, Opp_ID string
-}
 
 func init() {
 	http.HandleFunc("/", handler)
@@ -25,7 +21,7 @@ func init() {
 	http.HandleFunc("/friend", friend)
 	http.HandleFunc("/crawl", crawl)
 	http.HandleFunc("/crawl_data", crawl_data)
-	http.HandleFunc("/test", addTestQuestions)
+	http.HandleFunc("/startMess", startPageMessage)
 	http.HandleFunc("/registerNewUser", register)
 	http.HandleFunc("/joinGame", joinGame)
 	http.HandleFunc("/store", store)
@@ -110,19 +106,12 @@ func friend(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-
 func crawl(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Main(w, r)
 }
 
 func store(w http.ResponseWriter, r *http.Request) {
 	question_crawler.Store(w, r)
-}
-
-func addTestQuestions(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	question.AddSomeQuestionsForTesting(c)
-
 }
 
 func joinGame(w http.ResponseWriter, r *http.Request) {
@@ -147,7 +136,7 @@ func joinGame(w http.ResponseWriter, r *http.Request) {
 			c.Infof("User not found: %v", err2)
 		}
 
-		initMess := new(GameInitMessage)
+		initMess := new(messages.GameInitMessage)
 		initMess.GID = game.GID
 		initMess.Opp_ID = mUser.Oid
 		initMess.Opp_name = mUser.Name
@@ -165,17 +154,7 @@ func joinGame(w http.ResponseWriter, r *http.Request) {
 }
 
 func register(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "text/html; charset=utf-8")
-	c := appengine.NewContext(r)
-	users, _ := users.MakeUser(c)
-	if users.Oid != "" {
-		c.Infof("Saving user on registring ID = %v", users.Oid)
-		users.SaveUser(c)
-	} else {
-		c.Infof("Error login: %v", users)
-		url, _ := user.LoginURL(c, "/registerNewUser")
-		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
-	}
+	users.RegisterUser(w, r)
 }
 
 func crawl_data(w http.ResponseWriter, r *http.Request) {
@@ -184,4 +163,8 @@ func crawl_data(w http.ResponseWriter, r *http.Request) {
 
 func matchHandler(w http.ResponseWriter, r *http.Request) {
 	game.MatchHandler(w, r)
+}
+
+func startPageMessage(w http.ResponseWriter, r *http.Request) {
+	messages.GetStartPageMessage(w, r)
 }
