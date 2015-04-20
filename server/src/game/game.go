@@ -352,6 +352,7 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		}
+		fmt.Fprintf(w, "Dina svar har registrerats")
 		break
 
 	}
