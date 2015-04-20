@@ -9,7 +9,7 @@ import (
 	//"regexp"
 	//"encoding/xml"
 	"net/http"
-	"src/question"
+	"question"
 	"html/template"
 	"github.com/PuerkitoBio/goquery"
 	"strings"
