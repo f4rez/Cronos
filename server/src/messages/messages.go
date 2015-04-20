@@ -21,6 +21,10 @@ type gamesMessage struct {
 	MyTurn                      bool
 }
 
+type startMessage struct {
+	Games []gamesMessage
+}
+
 func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	u := user.Current(c)
