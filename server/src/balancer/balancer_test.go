@@ -18,6 +18,8 @@ func TestStupidQuestionBalancer(t *testing.T) {
 	questions, err := stupidQuestionBalancer(questions, answers)
 
 	if(err != nil) {
-		t.Errorf("An error occured.")
+		t.Errorf("Could not run Balancer.")
 	}
+
+	if()
 }
