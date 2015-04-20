@@ -1,8 +1,9 @@
-å p\documentclass[swedish,12pt,a4paper]{article}
+\documentclass[swedish,12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 
 \author{Alfred Yrelin\\Josef Svensson\\Philip Åkerfeldt}
@@ -20,7 +21,7 @@ Vem vill inte kunna säga: ``Jag är bäst på...''? Att tävla är något som m
 Applikationsutveckling för mobila enheter är ett spännande område som växer ******http://press.trendforce.com/press/20150416-1889.html***** och det operativsystem som sålde mest enheter under första kvartalet av 2015 var Android. För utveckling av Androidapplikationer krävs kunskaper om Java och gränssnittsdesign, men det är inte allt som krävs i ett mer avancerat projekt. Många applikationer interagerar på något vis med internet eller med andra klienter. När sådan funktionalitet önskas så behövs en server för att att data ska kunnas delas och kommunikation mellan det olika enheterna upprättas. I det här projektet sker också viss automatisk hämtning av information varvid kunskap om utveckling av ett smart system som filtrerar data behövs.
 
 \subsection{Syfte}
-Det är projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter. I det här projektet ska en applikation utvecklas som ger flera användare möjlighet att interagera med varandra.
+Det här projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter. I det här projektet ska en applikation utvecklas som ger flera användare möjlighet att interagera med varandra.
 
 Spelet som ska utvecklas går ut på att två användare får tävla om vem som har bäst koll på när olika historiska händelser ägde rum. Varje spelare får ett antal händelser som denne sedan ska sortera i kronologisk ordning. Spelaren som sorterar flest händelser rätt vinner. Förutom rent nöje så ger spelet också användaren möjlighet att få bättre koll på historien, applikationen kan alltså också användas i utbildningssammanhang.
 
@@ -50,7 +51,7 @@ Målet med den automatiska informationshämtningen är ett delsystem som läser 
 \subsection{Motivation}
 Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på applikationer är Quizkampen, Wordfeud och Wordbase. Det är tydligt att spel där två personer kan mötas för att vinna över den andre, genom att svara på frågor eller lägga ord, är populära. Det spel som den här rapporten handlar om kombinerar koncepten från tidigare nämnda spel, med att både svara på frågor och lägga in dem på rätt plats. 
 
-En liknande version av det här spelet har också visat sig vara populär i sällskapsspelsform (\textit{När-då-då?}\footnote{http://www.spelexperten.com/sallskapsspel/familjespel/nar-da-da.html}, därför är hoppet högt om att också den här applikationen kan bli populär. Just nu finns det inte heller någon variant av det här spelkonceptet till Android, vilket är en lucka som kan täckas av det här projektet.
+En liknande version av det här spelet har också visat sig vara populär i sällskapsspelsform (\textit{När-då-då?})\footnote{http://www.spelexperten.com/sallskapsspel/familjespel/nar-da-da.html}, därför är hoppet högt om att också den här applikationen kan bli populär. Just nu finns det inte heller någon variant av det här spelkonceptet till Android, vilket är en lucka som kan täckas av det här projektet.
 
 \subsection{Lägesbeskrivning}
 Det finns ett spel för ios, \textit{Historiekampen}\footnote{https://itunes.apple.com/se/app/historiekampen/id840741173?mt=8} som också handlar om att lägga in händelser på en tidslinje. Genom en ytlig granskning av deras gränssnitt har det konstaterats att det går att göra bättre. Utan större kännedom om detaljerna i spelmekaniken så är också förhoppningen att den här applikationen ska bli roligare att spela. En nackdel som den befintliga ios-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.

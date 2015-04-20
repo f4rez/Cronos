@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"src/game"
-	"src/question"
-	"src/question_crawler"
-	"src/users"
+	"game"
+	"question"
+	"question_crawler"
+	"users"
 )
 
 type GameInitMessage struct {
