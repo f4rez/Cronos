@@ -21,5 +21,4 @@ func TestStupidQuestionBalancer(t *testing.T) {
 		t.Errorf("Could not run Balancer.")
 	}
 
-	if()
 }
