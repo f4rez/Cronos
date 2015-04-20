@@ -1,22 +1,26 @@
 package com.example.awesomeness.awesomeness.Net;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.MatchActivity;
+import com.example.awesomeness.awesomeness.fragments.MainPageFragment;
+
+import java.util.Objects;
 
 /**
  * Created by josef on 2015-04-13.
  */
 public class Request extends AsyncTask<String, Void, String> {
 
-    private final Activity caller;
+    private final Fragment caller;
     NetRequests net;
     String action;
 
-    public Request(Activity caller, NetRequests net) {
+    public Request(Fragment caller, NetRequests net) {
         this.caller = caller;
         this.net = net;
     }
@@ -27,8 +31,7 @@ public class Request extends AsyncTask<String, Void, String> {
         action = string[0];
         switch (action){
          case "GetQuestions":
-             String s = string[1];
-             int id = Integer.parseInt(s);
+             String id = string[1];
              return net.getQuestions(id);
          case "JoinGame":
              return net.joinGame();
@@ -47,30 +50,18 @@ public class Request extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String returned) {
         switch (action){
-
-            case "GetQuestions":
-                MatchActivity m1 = (MatchActivity) caller;
-                m1.showQuestions(returned);
-                break;
             case "JoinGame":
-                MainActivity m2 = (MainActivity) caller;
-                m2.doneJoining(returned);
-                break;
-            case "AnswerQuestions":
-                MatchActivity m3 = (MatchActivity) caller;
-                m3.showQuestions(returned);
-                break;
-            case "RegisterUser":
-                MainActivity m4 = (MainActivity) caller;
-                m4.doneRegister(returned);
+                MainPageFragment m2 = (MainPageFragment) caller;
+                m2.showMatches(returned);
                 break;
             case "Login":
-                MainActivity m5 = (MainActivity) caller;
-                m5.doneLogin(returned);
+                MainPageFragment mainActivity = (MainPageFragment) caller;
+                mainActivity.doneLogin();
                 break;
-            case "StartMessage":
-                MainActivity m6 = (MainActivity) caller;
-                m6.showMatches(returned);
+            case "RegisterUser":
+                MainPageFragment m1 = (MainPageFragment) caller;
+                m1.doneRegister();
+                break;
         }
 
     }

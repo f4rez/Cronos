@@ -76,7 +76,7 @@ public class NetRequests {
        return "felf elfelfel";
         }
 
-    public String getQuestions(int gameID) {
+    public String getQuestions(String gameID) {
         URL url;
         try {
             url = new URL("http://"+ host +"/match?action=getQuestions&game_id=" + gameID);

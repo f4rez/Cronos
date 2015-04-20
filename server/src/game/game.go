@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"src/messages"
 	"src/question"
 	"src/users"
 	"strconv"
@@ -69,7 +70,7 @@ func (g *Game) ChangeTurn() {
 	g.Turn = !g.Turn
 }
 
-func CreateGame(c appengine.Context, user users.Users, uKey *datastore.Key) (Game, *datastore.Key, error) {
+func CreateGame(c appengine.Context, user users.Users, uKey *datastore.Key) (Game, error) {
 	g := new(Game)
 	g.FID = user.Oid
 	g.FName = user.Name
@@ -78,17 +79,13 @@ func CreateGame(c appengine.Context, user users.Users, uKey *datastore.Key) (Gam
 	g.NumberOfTurns = 1
 	id, err := getHighesMatchID(c)
 	if err != nil {
-		return *new(Game), nil, err
+		return *new(Game), err
 	}
 	g.GID = id + 1
 	c.Infof("Created game: %v", g)
-	key, err2 := g.SaveGame(c)
 	user.AddGame(g.GID)
 	user.UpdateUser(c, uKey)
-	if err2 != nil {
-		return *g, nil, err
-	}
-	return *g, key, nil
+	return *g, nil
 }
 
 func getHighesMatchID(c appengine.Context) (int, error) {
@@ -180,7 +177,8 @@ func FindFreeGame(c appengine.Context) (Game, *datastore.Key, error) {
 		return *new(Game), nil, err
 	}
 	if count == 0 {
-		return CreateGame(c, user, uKey)
+		g, err := CreateGame(c, user, uKey)
+		return g, nil, err
 	} else {
 		game := make([]Game, 1, 1)
 		if key, err := qn.GetAll(c, &game); len(key) > 0 {
@@ -271,6 +269,66 @@ func (g *Game) getNewestRound(c appengine.Context) *Round {
 		return &g.Rounds[0]
 	}
 	return &(g.Rounds[len(g.Rounds)-1])
+}
+
+func JoinGame(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+
+	mGame, _, err := FindFreeGame(c)
+	if err != nil {
+		c.Infof("Error joingGame: %v", err)
+	}
+	mGame.SaveGame(c)
+	GetStartPageMessage(w, r)
+}
+
+func ChallengerHandler(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+		c.Infof("Not logged in")
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+
+	mUser, uKey, uErr := users.GetUser(c, u.ID)
+	if uErr != nil {
+		c.Infof("Error getting user: %v", uErr)
+		http.Error(w, uErr.Error(), http.StatusInternalServerError)
+		return
+	}
+	opp := r.FormValue("Opponent")
+	mUser.RemoveChallenge(opp)
+
+	answer := r.FormValue("answer")
+	if answer == "accept" {
+		game, err := CreateGame(c, mUser, uKey)
+		if err != nil {
+			c.Infof("Error creating game: %v", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		oppUser, oKey, oErr := users.GetUser(c, opp)
+		if oErr != nil {
+			c.Infof("Error getting user: %v", oErr)
+			http.Error(w, oErr.Error(), http.StatusInternalServerError)
+			return
+		}
+		game.SID = oppUser.Oid
+		game.SName = oppUser.Name
+		game.SaveGame(c)
+
+		oppUser.AddGame(game.GID)
+		oppUser.UpdateUser(c, oKey)
+	}
+
 }
 
 func MatchHandler(w http.ResponseWriter, r *http.Request) {
@@ -425,4 +483,48 @@ func ParseRoundData(c appengine.Context, uID string, g Game, key *datastore.Key,
 		}
 	}
 	g.UpdateGame(c, key)
+}
+
+func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	users, _, err := users.GetUser(c, u.ID)
+	if err != nil {
+		c.Infof("Error getting users: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	games, _, gErr := GetGames(c, users.Games)
+	if gErr != nil {
+		c.Infof("Error getting users: %v", gErr)
+		http.Error(w, gErr.Error(), http.StatusInternalServerError)
+	}
+	mess := make([]messages.GamesMessage, len(games))
+	for i, mGame := range games {
+		g := new(messages.GamesMessage)
+		g.GID = mGame.GID
+		g.MyTurn = mGame.IsUsersTurn(u.ID)
+		g.Turn = mGame.NumberOfTurns
+		pointOne, pointTwo := CalculateScore(mGame)
+		if u.ID == mGame.FID {
+			g.MPoints = pointOne
+			g.OPoints = pointTwo
+			g.OppID = mGame.SID
+			g.OppName = mGame.SName
+		} else {
+			g.MPoints = pointTwo
+			g.OPoints = pointOne
+			g.OppID = mGame.FID
+			g.OppName = mGame.FName
+		}
+		mess[i] = *g
+	}
+	m, err := json.Marshal(mess)
+	fmt.Fprintf(w, string(m))
+
 }

@@ -7,18 +7,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Switch;
 
 import com.example.awesomeness.awesomeness.Adapters.DynamicListView;
 import com.example.awesomeness.awesomeness.Adapters.MatchAdapter;
 import com.example.awesomeness.awesomeness.Json.Decode;
+import com.example.awesomeness.awesomeness.Net.GameRequests;
 import com.example.awesomeness.awesomeness.Net.NetRequests;
-import com.example.awesomeness.awesomeness.Net.Request;
 import com.example.awesomeness.awesomeness.Question.Question;
 import com.example.awesomeness.awesomeness.R;
 import com.melnykov.fab.FloatingActionButton;
 
-import org.json.JSONException;
+
 
 import java.util.ArrayList;
 
@@ -40,10 +39,8 @@ public class MatchActivity extends ActionBarActivity{
         setContentView(R.layout.activity_match);
         Bundle extras = getIntent().getExtras();
         gameID = extras.getInt("gameID");
-        net = new NetRequests("192.168.0.22:8080",false);
-
-
-        Request req = new Request(this,net);
+        net = new NetRequests("192.168.0.37:8080",false);
+        GameRequests req = new GameRequests(this,net);
         req.execute("GetQuestions", String.valueOf(gameID));
 
     }
@@ -77,7 +74,7 @@ public class MatchActivity extends ActionBarActivity{
                if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1))){
                    addNextQuestion();
                } else {
-                   Request r = new Request(this,net);
+                   GameRequests r = new GameRequests(this,net);
                    r.execute("AnswerQuestions",id,"1","0","0","0","0");
                }
                 break;
@@ -85,7 +82,7 @@ public class MatchActivity extends ActionBarActivity{
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2))){
                     addNextQuestion();
                 } else {
-                    Request r = new Request(this,net);
+                    GameRequests r = new GameRequests(this,net);
                     r.execute("AnswerQuestions",id,"2","1","0","0","0");
                 }
                 break;
@@ -93,29 +90,29 @@ public class MatchActivity extends ActionBarActivity{
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3))){
                     addNextQuestion();
                 } else {
-                    Request r = new Request(this,net);
+                    GameRequests r = new GameRequests(this,net);
                     r.execute("AnswerQuestions",id,"2","2","1","0","0");
                 }
                 break;
             case 5:
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3),mAdapter.getItem(4))){
                     Log.d("MatchActivity","Allarätt");
-                    Request r = new Request(this,net);
+                    GameRequests r = new GameRequests(this,net);
                     r.execute("AnswerQuestions",id,"2","2","2","2","2");
                 } else {
                     Log.d("MatchActivity","inte alla rätt");
-                    Request r = new Request(this,net);
+                    GameRequests r = new GameRequests(this,net);
                     r.execute("AnswerQuestions",id,"2","2","2","1","0");
                 }
                 break;
             case 6:
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3),mAdapter.getItem(4),mAdapter.getItem(5))){
                     Log.d("MatchActivity","Allarätt");
-                    Request r = new Request(this,net);
+                    GameRequests r = new GameRequests(this,net);
                     r.execute("AnswerQuestions",id,"2","2","2","2","2");
                 } else {
                     Log.d("MatchActivity","inte alla rätt");
-                    Request r = new Request(this,net);
+                    GameRequests r = new GameRequests(this,net);
                     r.execute("AnswerQuestions",id,"2","2","2","2","1");
                 }
                 break;

@@ -31,7 +31,6 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:textSize="14sp"
-
         android:text="Det är din tur mot Fipparn"
         android:textColor="@color/dark_grey_text"
         android:textStyle="bold"

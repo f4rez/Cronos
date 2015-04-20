@@ -1,8 +1,14 @@
 package com.example.awesomeness.awesomeness;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,36 +16,46 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.TextView;
 
-import org.json.JSONException;
 
 import java.util.ArrayList;
 
-import com.example.awesomeness.awesomeness.Adapters.MatchAdapter;
 import com.example.awesomeness.awesomeness.Adapters.StartPageAdapter;
 import com.example.awesomeness.awesomeness.Json.Decode;
 import com.example.awesomeness.awesomeness.Match.GamesOverview;
 import com.example.awesomeness.awesomeness.Match.MatchActivity;
 import com.example.awesomeness.awesomeness.Net.NetRequests;
 import com.example.awesomeness.awesomeness.Net.Request;
-import com.example.awesomeness.awesomeness.Question.Question;
+import com.example.awesomeness.awesomeness.fragments.BaseFragment;
+import com.example.awesomeness.awesomeness.fragments.MainPageFragment;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private Toolbar mToolbar;
+    private CharSequence mTitle;
+    private DrawerLayout mDrawer;
 
     public NetRequests net;
-    public StartPageAdapter mAdapter;
-    public ListView mListview;
+
+
+
+    public static String TAG = "Zinister";
+    public static boolean DEBUG = true;
+    public static final int MAINPAGE = 100;
+    public static final int CASE_OFFERS = 101;
+    public static final int CASE_MAP = 102;
+    public static final int CASE_SCHEDULE = 103;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question);
-        net = new NetRequests("192.168.0.22:8080");
-        setUpListeners();
-        Request r = new Request(this,net);
-        r.execute("Login");
+        setContentView(R.layout.activity_main);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(mToolbar);
+        net = new NetRequests("192.168.0.37:8080");
     }
 
 
@@ -65,85 +81,83 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-    public void setUpListeners() {
-        Button b1 = (Button) findViewById(R.id.joinGame);
-        Button b2 = (Button) findViewById(R.id.regUser);
-        Button b3 = (Button) findViewById(R.id.login);
-
-
-        b1.setOnClickListener(this);
-        b2.setOnClickListener(this);
-        b3.setOnClickListener(this);
-
-    }
-
-
-
-    public void showMatches(String jsonString) {
-        Log.d("mainActivity"," ENterd showMatches json = " + jsonString);
-        Decode d = new Decode();
-        ArrayList<GamesOverview> gamesOverviews = d.decodeGamesOverview(jsonString);
-        if (mAdapter == null){
-            mAdapter = new StartPageAdapter(this,R.layout.game_overview,gamesOverviews);
-        } else {
-                mAdapter.clear();
-                mAdapter.addAll(gamesOverviews);
-        }
-
-
-        if (mListview == null)
-            mListview = (ListView) findViewById(R.id.mMatches);
-        mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GamesOverview g = (GamesOverview) parent.getItemAtPosition(position);
-                if(g.myTurn) {
-                    StartPageAdapter s = (StartPageAdapter) parent.getAdapter();
-                    Intent n = new Intent(s.c, MatchActivity.class);
-                    n.putExtra("gameID", g.gameID);
-                    s.c.startActivity(n);
-                }
-            }
-        });
-        mListview.setAdapter(mAdapter);
-
-    }
-
-    public void doneLogin(String j) {
-        Request r = new Request(this, net);
-        r.execute("RegisterUser");
-    }
-
-    public void doneRegister(String j) {
-        Request r = new Request(this, net);
-        r.execute("StartMessage");
-    }
-    public  void doneJoining(String j) {
-        Request r = new Request(this, net);
-        r.execute("StartMessage");
-    }
-
     @Override
-    public void onClick(View v) {
-        String gameID;
-        NumberPicker p;
-        int ii = 0;
-        ii = v.getId();
-        Request r = new Request(this, net);
+    public void onNavigationDrawerItemSelected(int position) {
+        // update the main content by replacing fragments
+        if (DEBUG) Log.d(TAG, "enterd onNavigationDrawerItemSelected");
+        BaseFragment baseFragment = selectFragment(position);
+        if (DEBUG) Log.d(TAG, "before open fragment");
+        openFragment(baseFragment);
+    }
 
-        switch (ii) {
-            case R.id.joinGame:
-                r.execute("JoinGame");
+
+    private void openFragment(BaseFragment baseFragment) {
+        if (DEBUG) Log.d(TAG, "in openFragment");
+        if (baseFragment != null) {
+            if (baseFragment.getTitleResourceId() > 0) {
+                if (DEBUG) Log.d(TAG, "getTitleResourceID = " + baseFragment.getTitleResourceId());
+                onSectionAttached(baseFragment.getTitleResourceId());
+            } else {
+                if (DEBUG) Log.d(TAG, "getTitleResourceID = " + baseFragment.getTitleResourceId());
+            }
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            fragmentTransaction.replace(R.id.container, baseFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else {
+            if (DEBUG) Log.d(TAG, "basefragment = null");
+        }
+
+    }
+    private BaseFragment selectFragment(int position) {
+        BaseFragment baseFragment = null;
+
+        switch (position) {
+            case MAINPAGE:
+                baseFragment = new MainPageFragment();
                 break;
-            case R.id.regUser:
-                r.execute("RegisterUser");
+
+
+        }
+        return baseFragment;
+    }
+
+    public void onSectionAttached(int number) {
+        if (DEBUG) Log.d(TAG, "onSectionAttached = " + number);
+        switch (number) {
+            case MAINPAGE:
+                mTitle = getString(R.string.title_section1);
                 break;
-            case R.id.login:
-                r.execute("Login");
+            case CASE_MAP:
+                mTitle = getString(R.string.title_section2);
+                break;
+            case CASE_OFFERS:
+                mTitle = getString(R.string.title_section3);
+                break;
+            case CASE_SCHEDULE:
+                mTitle = getString(R.string.title_section4);
                 break;
         }
+        restoreActionBar();
     }
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true);
+            //actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setTitle(mTitle);
+        }
+    }
+
+
+
+
+
+
+
+
 }

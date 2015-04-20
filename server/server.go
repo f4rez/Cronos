@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	"src/game"
-	"src/messages"
 	"src/question"
 	"src/question_crawler"
 	"src/users"
@@ -26,6 +25,7 @@ func init() {
 	http.HandleFunc("/joinGame", joinGame)
 	http.HandleFunc("/store", store)
 	http.HandleFunc("/match", matchHandler)
+	http.HandleFunc("/challenger", challengerHandler)
 }
 
 // Init function.
@@ -115,42 +115,7 @@ func store(w http.ResponseWriter, r *http.Request) {
 }
 
 func joinGame(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	u := user.Current(c)
-	if u == nil {
-		url, _ := user.LoginURL(c, "/")
-		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
-		return
-	}
-
-	game, _, err := game.FindFreeGame(c)
-
-	if err != nil {
-		c.Infof("Error joingGame: %v", err)
-	}
-	if game.SID == "" {
-		fmt.Fprintf(w, "Game ID: %d", game.GID)
-	} else {
-		mUser, _, err2 := users.GetUser(c, game.FID)
-		if err2 != nil {
-			c.Infof("User not found: %v", err2)
-		}
-
-		initMess := new(messages.GameInitMessage)
-		initMess.GID = game.GID
-		initMess.Opp_ID = mUser.Oid
-		initMess.Opp_name = mUser.Name
-		c.Infof("mUser is: %v", mUser)
-
-		str, err3 := json.Marshal(initMess)
-		fmt.Fprint(w, string(str))
-
-		if err3 != nil {
-			c.Infof("Fel i ", err3)
-		}
-
-	}
-
+	game.JoinGame(w, r)
 }
 
 func register(w http.ResponseWriter, r *http.Request) {
@@ -166,5 +131,9 @@ func matchHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func startPageMessage(w http.ResponseWriter, r *http.Request) {
-	messages.GetStartPageMessage(w, r)
+	game.GetStartPageMessage(w, r)
+}
+
+func challengerHandler(w http.ResponseWriter, r *http.Request) {
+	game.ChallengerHandler(w, r)
 }
