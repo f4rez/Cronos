@@ -77,7 +77,8 @@ public class MainPageFragment extends BaseFragment {
         r.execute("RegisterUser");
     }
     public void doneRegister(){
-
+        Request r = new Request(this, mainActivity.net);
+        r.execute("StartMessage");
     }
 
 

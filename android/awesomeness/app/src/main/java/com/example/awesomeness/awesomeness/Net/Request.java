@@ -84,13 +84,19 @@ public class Request extends AsyncTask<String, Void, String> {
             case "Search":
                 FindUsersFragment f = (FindUsersFragment) caller;
                 f.showResult(returned);
-
+                break;
             case "FriendAdd":
                 FindUsersFragment f2 = (FindUsersFragment) caller;
                 f2.addedFriend();
+                break;
             case "FriendChallenge":
                 ChallengeFriendFragment f1 = (ChallengeFriendFragment) caller;
                 f1.challengedFriend();
+                break;
+            case "StartMessage":
+                MainPageFragment pageFragment = (MainPageFragment) caller;
+                pageFragment.showMatches(returned);
+                break;
         }
 
     }

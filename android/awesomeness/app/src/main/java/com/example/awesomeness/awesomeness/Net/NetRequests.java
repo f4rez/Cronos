@@ -50,7 +50,7 @@ public class NetRequests {
             if (urlConnection != null)
                 urlConnection.disconnect();
         }
-        return "felf elfelfel";
+        return "error";
     }
 
     public String joinGame() {
@@ -73,7 +73,7 @@ public class NetRequests {
                 if (urlConnection != null)
                 urlConnection.disconnect();
             }
-       return "felf elfelfel";
+       return "error";
         }
 
     public String getQuestions(String gameID) {
@@ -95,7 +95,7 @@ public class NetRequests {
         } finally{
             urlConnection.disconnect();
         }
-        return "";
+        return "error";
     }
 
 
@@ -119,7 +119,7 @@ public class NetRequests {
         } finally{
             urlConnection.disconnect();
         }
-        return "";
+        return "error";
     }
 
 
@@ -142,7 +142,7 @@ public class NetRequests {
         } finally{
             urlConnection.disconnect();
         }
-        return "";
+        return "error";
 
     }
 
@@ -167,7 +167,7 @@ public class NetRequests {
             urlConnection.disconnect();
         }
         Log.d("hehe","slut");
-        return "";
+        return "error";
 
     }
 
@@ -190,7 +190,7 @@ public class NetRequests {
         } finally{
             urlConnection.disconnect();
         }
-        return "";
+        return "error";
 
     }
     public String search(String action, String parameter) {
@@ -212,7 +212,7 @@ public class NetRequests {
         } finally{
             urlConnection.disconnect();
         }
-        return "";
+        return "error";
 
     }
 
@@ -236,7 +236,7 @@ public class NetRequests {
         } finally{
             urlConnection.disconnect();
         }
-        return "";
+        return "error";
 
     }
 

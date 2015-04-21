@@ -62,7 +62,7 @@ public class FindUsersFragment extends BaseFragment {
                 FriendAdapter f = (FriendAdapter) parent.getAdapter();
                 MainActivity m = (MainActivity) getActivity();
                 Request r = new Request(getTargetFragment(),m.net);
-                r.execute("Friend", "add", f.getItem(position).Id);
+                r.execute("FriendAdd", f.getItem(position).Id);
             }
         });
     }
