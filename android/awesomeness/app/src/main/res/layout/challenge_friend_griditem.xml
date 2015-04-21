@@ -19,6 +19,7 @@
         android:text="Namn på någon"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
+        android:id="@+id/selectionText"
         android:textSize="17sp"/>
 
 </RelativeLayout>

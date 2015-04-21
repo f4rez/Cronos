@@ -8,8 +8,8 @@
         <item name="android:windowActionBar">false</item>
 
         <!-- Set AppCompat’s color theming attrs -->
-        <item name="colorPrimary">@color/primary_color_ea</item>
-        <item name="colorPrimaryDark">@color/primary_darkercolor_ea</item>
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_darkercolor</item>
         <item name="android:colorAccent">@color/accent_color_ea</item>
 
         <!-- The rest of your attributes -->
@@ -19,7 +19,7 @@
     <style name="MyActionBar"
         parent="@style/Widget.AppCompat.ActionBar">
         <item name="displayOptions">showTitle</item>
-        <item name="background">@color/primary_color_ea</item>
+        <item name="background">@color/primary_color</item>
 
     </style>
 </resources>

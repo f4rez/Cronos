@@ -32,7 +32,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.drawer_list_item, null);
+            v = vi.inflate(R.layout.challenge_friend_griditem, null);
 
         }
 

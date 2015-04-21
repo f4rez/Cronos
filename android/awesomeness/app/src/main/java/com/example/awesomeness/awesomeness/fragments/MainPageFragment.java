@@ -3,32 +3,21 @@ package com.example.awesomeness.awesomeness.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 
 import com.example.awesomeness.awesomeness.Adapters.DialogAdapter;
-import com.example.awesomeness.awesomeness.Adapters.DrawerAdapter;
 import com.example.awesomeness.awesomeness.Adapters.StartPageAdapter;
 import com.example.awesomeness.awesomeness.Items.DrawerItem;
 import com.example.awesomeness.awesomeness.Json.Decode;
@@ -55,7 +44,7 @@ public class MainPageFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_question, container, false);
+        View rootView = inflater.inflate(R.layout.start_page_fragment, container, false);
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         mListView = (ListView)rootView.findViewById(R.id.mMatches);
         if (mListView != null) {
@@ -124,7 +113,7 @@ public class MainPageFragment extends BaseFragment {
 
         AlertDialog.Builder builder =  new AlertDialog.Builder(getActivity());
         builder.setView(dialogView)
-                .setCancelable(false);
+                .setCancelable(true);
 
 
         final AlertDialog dialog = builder.create();

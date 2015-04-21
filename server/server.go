@@ -5,10 +5,9 @@ import (
 	"appengine/user"
 	"fmt"
 	"net/http"
-
-	"game"
-	"question_crawler"
-	"users"
+	"src/game"
+	"src/question_crawler"
+	"src/users"
 )
 
 func init() {
@@ -87,9 +86,10 @@ func challengerHandler(w http.ResponseWriter, r *http.Request) {
 func searchUsers(w http.ResponseWriter, r *http.Request) {
 	users.SearchUsers(w, r)
 }
+
 func test(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	u := new(users.Users)
+	u := new(users.User)
 	u.Oid = "1234567"
 	u.Name = "Nils nilsson"
 	u.SaveUser(c)

@@ -12,6 +12,7 @@ import (
 type Users struct {
 	Oid           string
 	Name          string
+	Picture       string
 	FriendList    []string `json:"-"`
 	ChallengeList []string `json:"-"`
 	Level         int
@@ -173,13 +174,12 @@ func ChallengeFriend(c appengine.Context, mOid, fOid string) error {
 }
 
 func findUsersByName(c appengine.Context, name string) ([]Users, error) {
-	mUser := make([]Users, 1, 10)
+	mUser := make([]Users, 0, 10)
 	qn := datastore.NewQuery("Users").
 		Ancestor(UserKey(c)).
 		Limit(10).
 		Filter("Name =", name)
 	if key, err := qn.GetAll(c, &mUser); len(key) > 0 {
-		c.Infof("Fetched User: %v", mUser[1].Name)
 		return mUser, nil
 	} else {
 
@@ -197,11 +197,13 @@ func SearchUsers(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
+	c.Infof("B")
 	typee := r.FormValue("type")
 	parameter := r.FormValue("search")
 
 	switch typee {
 	case "Name":
+		c.Infof("C")
 		users, err := findUsersByName(c, parameter)
 		if err != nil {
 			c.Infof("Error : %v", err)
@@ -214,9 +216,11 @@ func SearchUsers(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err2.Error(), http.StatusInternalServerError)
 			return
 		}
+		c.Infof("Sending: %v", string(ret))
 		fmt.Fprintf(w, string(ret))
 		break
 	case "ID":
+		c.Infof("D")
 		users, _, err := GetUser(c, parameter)
 		if err != nil {
 			c.Infof("Error : %v", err)
@@ -229,6 +233,7 @@ func SearchUsers(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err2.Error(), http.StatusInternalServerError)
 			return
 		}
+		c.Infof("Sending: %v", string(ret))
 		fmt.Fprintf(w, string(ret))
 		break
 	}
