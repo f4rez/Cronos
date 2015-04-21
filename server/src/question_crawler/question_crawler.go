@@ -8,19 +8,19 @@ import (
 	"appengine/urlfetch"
 	//"regexp"
 	//"encoding/xml"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/PuerkitoBio/goquery"
+	"html/template"
 	"net/http"
 	"question"
-	"html/template"
-	"github.com/PuerkitoBio/goquery"
-	"strings"
 	"strconv"
-	"errors"
-	"encoding/json"
-	"fmt"
+	"strings"
 )
 
 type temp_item struct {
-	Year int
+	Year     int
 	Question string
 }
 
@@ -37,16 +37,14 @@ func Main(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, q)
 }
 
-
 func Crawl_data(w http.ResponseWriter, r *http.Request) {
 	site := r.FormValue("site")
 	// "https://sv.wikipedia.org/wiki/Lista_%C3%B6ver_datorspels%C3%A5r"
 
-	templist,_ := get_site(site, r)
-	text,_ := json.Marshal(templist)
+	templist, _ := get_site(site, r)
+	text, _ := json.Marshal(templist)
 	fmt.Fprintf(w, string(text))
 }
-
 
 func get_site(uri string, r *http.Request) ([]temp_item, error) {
 	c := appengine.NewContext(r)
@@ -66,13 +64,13 @@ func get_site(uri string, r *http.Request) ([]temp_item, error) {
 	doc.Find("#bodyContent li").Not("#bodyContent #toc li").Each(func(i int, s *goquery.Selection) {
 		listitem := s.Text()
 
-		c.Infof("ITEM:\n"+listitem+"\n\n")
+		c.Infof("ITEM:\n" + listitem + "\n\n")
 
 		q, err := filter_question(listitem)
 
 		//c.Infof("%+v\n", err)
 
-		if(err == nil) {
+		if err == nil {
 			list_items = append(list_items, q)
 		}
 	})
@@ -86,13 +84,13 @@ func filter_question(listitem string) (temp_item, error) {
 	var q temp_item
 	parts := strings.Split(listitem, " – ")
 
-	if(len(parts) < 2) {
+	if len(parts) < 2 {
 		return q, errors.New("The statement is not a complete question.")
 	}
 	q.Year, _ = strconv.Atoi(parts[0])
 	q.Question = parts[1]
 
-	if(q.Year <= 0) {
+	if q.Year <= 0 {
 		return q, errors.New("The year is not complete.")
 	}
 
@@ -108,11 +106,11 @@ func Store(w http.ResponseWriter, r *http.Request) {
 
 	var qu question.Question
 	qu.ID, _ = question.GetCountQuestions(c)
-	qu.Level,_ = strconv.Atoi(level)
-	qu.Year,_ = strconv.Atoi(year)
+	qu.Level, _ = strconv.Atoi(level)
+	qu.Year, _ = strconv.Atoi(year)
 	qu.Question = q
 
-	if(question.HasQuestion(c, qu)) {
+	if question.HasQuestion(c, qu) {
 		c.Infof("Question already in database")
 		return
 	}

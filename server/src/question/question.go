@@ -6,6 +6,8 @@ import (
 	"math/rand"
 )
 
+var NUMBER_OF_QUESTIONS = 6
+
 type Question struct {
 	ID, Level, Year int
 	Question        string
@@ -31,18 +33,18 @@ func HasQuestion(c appengine.Context, qu Question) bool {
 	var values []Question
 	q.GetAll(c, &values)
 
-	if(len(values) == 0){
+	if len(values) == 0 {
 		return false
 	}
 	return true
 }
 
 func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key, error) {
-	question := make([]Question, 5, 10)
-	keys := make([]*datastore.Key, 5, 10)
+	question := make([]Question, NUMBER_OF_QUESTIONS)
+	keys := make([]*datastore.Key, NUMBER_OF_QUESTIONS)
 	max, _ := GetCountQuestions(c)
 	max--
-	values := getRandomValues(c, 5, max)
+	values := getRandomValues(c, NUMBER_OF_QUESTIONS, max)
 	for i, value := range values {
 		keys[i], _ = getKeyForIndex(c, value)
 	}
@@ -55,11 +57,12 @@ func GetQuestions(c appengine.Context) ([]Question, []*datastore.Key, error) {
 }
 
 func GetQuestionsWithPrevious(c appengine.Context, prev []int) ([]Question, []*datastore.Key, error) {
-	question := make([]Question, 5, 10)
-	keys := make([]*datastore.Key, 5, 10)
+	question := make([]Question, NUMBER_OF_QUESTIONS)
+	keys := make([]*datastore.Key, NUMBER_OF_QUESTIONS)
 	max, _ := GetCountQuestions(c)
 	max--
-	values := getRandomValuesWithPrevious(c, 5, max, prev)
+	values := getRandomValuesWithPrevious(c, NUMBER_OF_QUESTIONS, max, prev)
+	c.Infof("New values = %v", values)
 	for i, value := range values {
 		keys[i], _ = getKeyForIndex(c, value)
 	}
@@ -72,14 +75,21 @@ func GetQuestionsWithPrevious(c appengine.Context, prev []int) ([]Question, []*d
 }
 
 func GetQuestionsWithID(c appengine.Context, ids []int) ([]Question, error) {
-	question := make([]Question, 5, 10)
-	keys := make([]*datastore.Key, 5, 10)
+	question := make([]Question, NUMBER_OF_QUESTIONS)
+	keys := make([]*datastore.Key, NUMBER_OF_QUESTIONS)
 	for i, value := range ids {
-		keys[i], _ = getKeyForIndex(c, value)
+		key, err2 := getKeyForIndex(c, value)
+		if err2 != nil {
+			return question, err2
+		} else {
+			keys[i] = key
+		}
 	}
 	err := datastore.GetMulti(c, keys, question)
-
-	return question, err
+	if err != nil {
+		return question, err
+	}
+	return question, nil
 
 }
 
@@ -161,33 +171,4 @@ func getKeyForIndex(c appengine.Context, id int) (*datastore.Key, error) {
 	} else {
 		return nil, err
 	}
-}
-
-func AddSomeQuestionsForTesting(c appengine.Context) {
-	a := Question{1, 2, 30, "hehe1"}
-	b := Question{2, 21, 31, "hehe2"}
-	cc := Question{3, 22, 32, "hehe3"}
-	d := Question{4, 23, 33, "hehe4"}
-	e := Question{5, 24, 34, "hehe5"}
-	f := Question{6, 25, 35, "hehe6"}
-	g := Question{7, 26, 36, "hehe7"}
-	h := Question{8, 27, 37, "hehe8"}
-	i := Question{9, 28, 38, "hehe9"}
-	j := Question{0, 29, 39, "hehe99"}
-	k := Question{10, 30, 40, "hehe999"}
-	l := Question{11, 31, 41, "hehe9999"}
-
-	SaveQuestion(c, a)
-	SaveQuestion(c, b)
-	SaveQuestion(c, cc)
-	SaveQuestion(c, d)
-	SaveQuestion(c, e)
-	SaveQuestion(c, f)
-	SaveQuestion(c, g)
-	SaveQuestion(c, h)
-	SaveQuestion(c, i)
-	SaveQuestion(c, j)
-	SaveQuestion(c, k)
-	SaveQuestion(c, l)
-
 }
