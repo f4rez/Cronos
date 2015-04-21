@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import com.example.awesomeness.awesomeness.Items.Friend;
+import com.example.awesomeness.awesomeness.Items.RoundItem;
 import com.example.awesomeness.awesomeness.Match.GamesOverview;
 import com.example.awesomeness.awesomeness.Question.Question;
 
@@ -73,5 +74,31 @@ public class Decode {
             e.printStackTrace();
         }
         return list;
+    }
+
+
+    public RoundItem decodeRoundItems(String in) {
+        RoundItem r = null;
+        JSONObject json = null;
+         try {
+            json = new JSONObject(in);
+             r = new RoundItem(json.getString("FID"),json.getString("FName"), json.getString("FPic"),
+                    json.getString("SID"), json.getString("SName"), json.getString("SPic"),json.getInt("NumberOfTurns"),json.getBoolean("Turn"));
+
+             JSONArray j = json.getJSONArray("Round");
+             for(int i = 0; i< j.length();i++) {
+                 JSONObject obj = j.getJSONObject(i);
+                 RoundItem.Round round = new RoundItem.Round();
+                 round.playerOneScore = obj.getInt("PlayerOnePoints");
+                 round.playerTwoScore = obj.getInt("PlayerTwoPoints");
+                 r.addRound(round);
+             }
+        } catch (JSONException e) {
+             e.printStackTrace();
+         }
+
+
+
+        return r;
     }
 }

@@ -84,9 +84,11 @@ public class MainPageFragment extends BaseFragment {
         r.execute("RegisterUser");
     }
     public void doneRegister(){
-        Request r = new Request(this,mainActivity.net);
-        r.execute("StartMess");
+        Request r = new Request(this, mainActivity.net);
+        r.execute("StartMessage");
     }
+
+
 
     public void showMatches(String jsonString) {
         Log.d("mainActivity", " ENterd showMatches json = " + jsonString);

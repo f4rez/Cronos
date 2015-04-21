@@ -39,9 +39,6 @@ public class RoundAdapter extends ArrayAdapter<RoundItem> {
         RoundItem r = getItem(position);
 
 
-
-
-
         return v;
 
     }
