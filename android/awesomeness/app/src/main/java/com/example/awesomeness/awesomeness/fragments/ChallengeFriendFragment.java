@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.awesomeness.awesomeness.Adapters.FriendAdapter;
 import com.example.awesomeness.awesomeness.Items.Friend;
@@ -24,8 +26,8 @@ public class ChallengeFriendFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_question, container, false);
-
+        View rootView = inflater.inflate(R.layout.challenge_friend_fragment, container, false);
+        setTargetFragment(this,0);
 
         mainActivity = (MainActivity)getActivity();
         Request r = new Request(this, mainActivity.net);
@@ -46,5 +48,18 @@ public class ChallengeFriendFragment extends BaseFragment {
         FriendAdapter f = new FriendAdapter(getActivity(),R.layout.challenge_friend_griditem);
         f.addAll(friends);
         gridView.setAdapter(f);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MainActivity m = (MainActivity) getActivity();
+                FriendAdapter f = (FriendAdapter) parent.getAdapter();
+                Request r = new Request(getTargetFragment(),m.net );
+                r.execute("FriendChallenge", f.getItem(position).Id);
+            }
+        });
+    }
+
+    public void challengedFriend(){
+        Toast.makeText(getActivity(), "Challenged Friend", Toast.LENGTH_SHORT);
     }
 }

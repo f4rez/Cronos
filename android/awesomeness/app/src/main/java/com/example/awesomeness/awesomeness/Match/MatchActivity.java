@@ -10,10 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-import com.example.awesomeness.awesomeness.Adapters.DynamicListView;
-import com.example.awesomeness.awesomeness.Adapters.MatchAdapter;
+
 import com.example.awesomeness.awesomeness.MainActivity;
-import com.example.awesomeness.awesomeness.Net.GameRequests;
 import com.example.awesomeness.awesomeness.Net.NetRequests;
 import com.example.awesomeness.awesomeness.R;
 import com.example.awesomeness.awesomeness.fragments.BaseFragment;
@@ -29,7 +27,6 @@ import com.example.awesomeness.awesomeness.fragments.MatchFragment;
 public class MatchActivity extends ActionBarActivity{
 
     public NetRequests net;
-    int gameID;
     private CharSequence mTitle;
 
 

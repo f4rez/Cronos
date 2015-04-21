@@ -193,6 +193,51 @@ public class NetRequests {
         return "";
 
     }
+    public String search(String action, String parameter) {
 
+        try {
+            url = new URL("http://" +host +"/search?type=" + action+"&search=" + parameter);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader r = new BufferedReader(new InputStreamReader(in));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line);
+            }
+            return total.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally{
+            urlConnection.disconnect();
+        }
+        return "";
+
+    }
+
+
+    public String friend(String action, String id) {
+
+        try {
+            url = new URL("http://" +host +"/friend?action=" + action+"&friend_id=" + id);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader r = new BufferedReader(new InputStreamReader(in));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line);
+            }
+            return total.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally{
+            urlConnection.disconnect();
+        }
+        return "";
+
+    }
 
  }

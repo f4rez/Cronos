@@ -16,13 +16,13 @@ import (
 )
 
 type Game struct {
-	FID, SID, FName, SName string
-	GID                    int
-	Rounds                 []Round `datastore:"-"`
-	NumberOfTurns          int
-	RoundsJson             []byte
-	Turn                   bool
-	Created                time.Time
+	FID, SID, FName, SName, FPic, SPic string
+	GID                                int
+	Rounds                             []Round `datastore:"-"`
+	NumberOfTurns                      int
+	RoundsJson                         []byte `json:"-"`
+	Turn                               bool
+	Created                            time.Time `json:"-"`
 }
 
 type Round struct {
@@ -286,6 +286,38 @@ func JoinGame(w http.ResponseWriter, r *http.Request) {
 	}
 	mGame.SaveGame(c)
 	GetStartPageMessage(w, r)
+}
+
+func GetGameInfo(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+		c.Infof("Not logged in")
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	id, pErr := strconv.ParseInt(r.FormValue("game_id"), 10, 32)
+	if pErr != nil {
+		c.Infof("Error parseing int: %v", pErr)
+		http.Error(w, pErr.Error(), http.StatusInternalServerError)
+		return
+	}
+	mGame, _, err := GetGame(c, int(id))
+	if err != nil {
+		c.Infof("Error getting game: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	mess, jErr := json.Marshal(mGame)
+	if jErr != nil {
+		c.Infof("Error json marshal: %v", jErr)
+		http.Error(w, jErr.Error(), http.StatusInternalServerError)
+		return
+	}
+	fmt.Fprintf(w, string(mess))
+
 }
 
 func ChallengerHandler(w http.ResponseWriter, r *http.Request) {

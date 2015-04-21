@@ -4,6 +4,7 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"appengine/user"
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -166,6 +167,69 @@ func ChallengeFriend(c appengine.Context, mOid, fOid string) error {
 		return nil
 	} else {
 		return err
+	}
+
+}
+
+func findUsersByName(c appengine.Context, name string) ([]Users, error) {
+	mUser := make([]Users, 1, 10)
+	qn := datastore.NewQuery("Users").
+		Ancestor(UserKey(c)).
+		Limit(10).
+		Filter("Name =", name)
+	if key, err := qn.GetAll(c, &mUser); len(key) > 0 {
+		c.Infof("Fetched User: %v", mUser[1].Name)
+		return mUser, nil
+	} else {
+
+		return mUser, err
+	}
+}
+
+func SearchUsers(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	c.Infof("A")
+	if u == nil {
+		c.Infof("Not logged in")
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	typee := r.FormValue("type")
+	parameter := r.FormValue("search")
+
+	switch typee {
+	case "Name":
+		users, err := findUsersByName(c, parameter)
+		if err != nil {
+			c.Infof("Error : %v", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		ret, err2 := json.Marshal(users)
+		if err2 != nil {
+			c.Infof("Error marshal: %v", err2)
+			http.Error(w, err2.Error(), http.StatusInternalServerError)
+			return
+		}
+		fmt.Fprintf(w, string(ret))
+		break
+	case "ID":
+		users, _, err := GetUser(c, parameter)
+		if err != nil {
+			c.Infof("Error : %v", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		ret, err2 := json.Marshal(users)
+		if err2 != nil {
+			c.Infof("Error marshal: %v", err2)
+			http.Error(w, err2.Error(), http.StatusInternalServerError)
+			return
+		}
+		fmt.Fprintf(w, string(ret))
+		break
 	}
 
 }

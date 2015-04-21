@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.MatchActivity;
 import com.example.awesomeness.awesomeness.fragments.ChallengeFriendFragment;
+import com.example.awesomeness.awesomeness.fragments.FindUsersFragment;
 import com.example.awesomeness.awesomeness.fragments.MainPageFragment;
 import com.example.awesomeness.awesomeness.fragments.MatchFragment;
 
@@ -47,6 +48,12 @@ public class Request extends AsyncTask<String, Void, String> {
                 return net.startPage();
             case "FriendList":
                 return net.friendList();
+            case "Search":
+                return net.search(string[1], string[2]);
+            case "FriendAdd":
+                return net.friend("add", string[1]);
+            case "FriendChallenge":
+                return net.friend("challenge", string[1]);
         }
         return "error";
     }
@@ -73,6 +80,17 @@ public class Request extends AsyncTask<String, Void, String> {
             case "FriendList":
                 ChallengeFriendFragment c = (ChallengeFriendFragment) caller;
                 c.showFriends(returned);
+                break;
+            case "Search":
+                FindUsersFragment f = (FindUsersFragment) caller;
+                f.showResult(returned);
+
+            case "FriendAdd":
+                FindUsersFragment f2 = (FindUsersFragment) caller;
+                f2.addedFriend();
+            case "FriendChallenge":
+                ChallengeFriendFragment f1 = (ChallengeFriendFragment) caller;
+                f1.challengedFriend();
         }
 
     }

@@ -138,14 +138,17 @@ public class MainPageFragment extends BaseFragment {
                 switch (position) {
                     case 0:
                         m.changeFragment(m.CHALLENGE_FRIEND);
+                        dialog.dismiss();
                         break;
                     case 1:
                         Request r = new Request(dialogAdapter.caller, m.net);
                         r.execute("JoinGame");
+                        dialog.dismiss();
                         break;
 
                     case 2:
                         m.changeFragment(m.FIND_FRIEND);
+                        dialog.dismiss();
                         break;
                 }
             }

@@ -26,6 +26,7 @@ func init() {
 	http.HandleFunc("/store", store)
 	http.HandleFunc("/match", matchHandler)
 	http.HandleFunc("/challenger", challengerHandler)
+	http.HandleFunc("/search", searchUsers)
 }
 
 // Init function.
@@ -136,4 +137,8 @@ func startPageMessage(w http.ResponseWriter, r *http.Request) {
 
 func challengerHandler(w http.ResponseWriter, r *http.Request) {
 	game.ChallengerHandler(w, r)
+}
+
+func searchUsers(w http.ResponseWriter, r *http.Request) {
+	users.SearchUsers(w, r)
 }
