@@ -1,6 +1,5 @@
 package com.example.awesomeness.awesomeness.Adapters;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,22 +9,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.awesomeness.awesomeness.Items.DrawerItem;
+import com.example.awesomeness.awesomeness.Items.Friend;
 import com.example.awesomeness.awesomeness.R;
 
-
 /**
- * Created by Josef on 2015-04-20.
+ * Created by josef on 2015-04-21.
  */
-public class DrawerAdapter extends ArrayAdapter<DrawerItem>{
+public class FriendAdapter extends ArrayAdapter<Friend> {
+    private Context mContext;
 
-    Context mContext;
 
-    public DrawerAdapter(Context context, int resource) {
+    public FriendAdapter(Context context, int resource) {
         super(context, resource);
         mContext = context;
-
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -39,7 +36,7 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem>{
 
         }
 
-        DrawerItem p = getItem(position);
+        Friend p = getItem(position);
 
         if (p != null) {
 
@@ -48,11 +45,11 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem>{
 
 
             if (img != null) {
-                img.setImageDrawable(mContext.getResources().getDrawable(p.picID));
+                img.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_action_new));
             }
             if (tt1 != null) {
 
-                tt1.setText(p.name);
+                tt1.setText(p.Name);
             }
 
         }
@@ -60,4 +57,5 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem>{
         return v;
 
     }
+
 }

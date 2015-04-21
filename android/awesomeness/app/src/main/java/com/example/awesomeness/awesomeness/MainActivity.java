@@ -1,21 +1,30 @@
 package com.example.awesomeness.awesomeness;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Point;
+import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
@@ -40,7 +49,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public NetRequests net;
 
 
-
+    public static final String APP_TITLE = "Appen";
     public static String TAG = "Zinister";
     public static boolean DEBUG = true;
     public static final int MAINPAGE = 100;
@@ -55,7 +64,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
-        net = new NetRequests("192.168.0.37:8080");
+        net = new NetRequests("192.168.43.87:8080");
     }
 
 
@@ -152,6 +161,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             actionBar.setTitle(mTitle);
         }
     }
+
+
 
 
 

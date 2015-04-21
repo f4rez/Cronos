@@ -12,16 +12,16 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="9dp"
-
+        android:layout_centerVertical="true"
         android:scaleType="fitStart"
-        android:id="@+id/drawerPicture"
-       />
+        android:id="@+id/picture"
+        />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/selectionText"
         android:paddingLeft="25dp"
-
+        android:layout_centerVertical="true"
         android:paddingTop="17dp"
         android:paddingBottom="17dp"
         android:textSize="14sp"

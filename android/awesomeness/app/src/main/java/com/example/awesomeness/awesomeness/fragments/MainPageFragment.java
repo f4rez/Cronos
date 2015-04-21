@@ -1,17 +1,29 @@
 package com.example.awesomeness.awesomeness.fragments;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
+import com.example.awesomeness.awesomeness.Adapters.DrawerAdapter;
 import com.example.awesomeness.awesomeness.Adapters.StartPageAdapter;
+import com.example.awesomeness.awesomeness.Items.DrawerItem;
 import com.example.awesomeness.awesomeness.Json.Decode;
 import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.GamesOverview;
@@ -44,7 +56,7 @@ public class MainPageFragment extends BaseFragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    joinGame();
+                    showRateDialog(getActivity(), getActivity().getSharedPreferences("", 0).edit());
                 }
             });
         }
@@ -102,4 +114,20 @@ public class MainPageFragment extends BaseFragment {
         mListView.setAdapter(mAdapter);
 
     }
+    public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.setTitle("Betygsätt " );
+
+
+        dialog.setContentView(R.layout.new_game_dialog);
+        ListView newGameListView = (ListView) dialog.findViewById(R.id.newGameListView);
+        DrawerItem d1 = new DrawerItem("", "Utmana en vän",R.drawable.ic_action_new);
+        DrawerItem d2 = new DrawerItem("","Slumpad motståndare",R.drawable.ic_action_overflow);
+        DrawerAdapter adapter = new DrawerAdapter(dialog.getContext(),R.layout.new_game_listview_item);
+        adapter.add(d1);
+        adapter.add(d2);
+        newGameListView.setAdapter(adapter);
+        dialog.show();
+    }
+
 }
