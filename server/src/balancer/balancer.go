@@ -1,23 +1,43 @@
 package balancer
 
 import (
-	"net/http"
-	"appengine"
+//	"net/http"
+//	"appengine"
 	"question"
+//	"errors"
+	"users"
+//	"appengine/datastore"
 )
 
-
-func Balancer (r *http.Request, QID []int, FID string, SID string, Turn bool, answers []int) {
+/*
+func Balancer (r *http.Request, QID []int, FID string, SID string, Turn bool, answers []int) (error) {
 	c := appengine.NewContext(r)
+	var user users.Users
 
 	questions, err := question.GetQuestionsWithID(c, QID)
 	if err != nil {
 		c.Infof("Error getting questions")
 	}
 
-	stupidQuestionBalancer(questions, answers) // TODO: Write the answer to datastore
-}
+	// Get the current user
+	if(Turn) { // TODO: Är det rätt håll??
+		user,_,err = users.GetUser(c, FID)
+	} else {
+		user,_,err = users.GetUser(c, SID)
+	}
 
+	if(err != nil) {
+		// Fallback to the stupid one.
+		stupidQuestionBalancer(questions, answers) // TODO: Write the answer to datastore, it is returned here but does not go anywhere...
+		return errors.New("No user was found.")
+	}
+
+	userMaxLevel, questionMaxLevel := getMaxLevels(r)
+	humbleQuestionBalancer(questions, answers, user, userMaxLevel, questionMaxLevel) // TODO: Write the answer to datastore, it is returned here but does not go anywhere...
+
+	return nil
+}
+*/
 
 // Changes the difficulty level of each question based on the current answer.
 //
@@ -27,69 +47,54 @@ func Balancer (r *http.Request, QID []int, FID string, SID string, Turn bool, an
 // Returns the same five questions with adjusted level.
 func stupidQuestionBalancer(questions []question.Question, answers []int) ([]question.Question, error) {
 
-	for i,q := range questions {
+	for i,_ := range questions {
 		if(answers[i] == 0) {
 			return questions, nil
 		} else if(answers[i] == 1) {
 			// Wrong answer
-			q.Level = q.Level+10
+			questions[i].Level = questions[i].Level+10
 		} else if(answers[i] == 2) {
 			// Right answer
-			q.Level = q.Level-10
+			questions[i].Level = questions[i].Level-10
 		}
 	}
 
 	return questions, nil
 }
 
-/*
+
 // Changes the difficulty level of each question based on:
 // - the current answer
 // - in relation to the other questions. (???)
 // - the users difficulty level.
 // - The distance to other questions. (???)
-func humbleQuestionBalancer(Questions []Question, FID string, SID string, Turn bool, answers []int, r *http.Request) ([]Question, error) {
-	user := nil
+func humbleQuestionBalancer(questions []question.Question, answers []int, user users.Users, userMaxLevel float64, questionMaxLevel float64) ([]question.Question, error) {
 	upDiff := 10
 	downDiff := 10
 
-	if(Turn) { // TODO: Är det rätt håll??
-		user,_,err = users.getUser(c, FID)
-	} else {
-		user,_,err = users.getUser(c, SID)
-	}
-
-	if(err != nil) {
-		// Fallback to the stupid one.
-		stupidQuestionBalancer(QID, answers, r)
-		return nil, errors.New("No user was found.")
-	}
-
-	userMaxLevel, questionMaxLevel := getMaxLevels(r)
-
 	userRatio := float64(user.Level) / userMaxLevel
 
-	for i,q := range questions {
+	for i,_ := range questions {
 		if(answers[i] == 0) {
 			return questions,nil
 		}
 
-		questionRatio := float64(q.Level) / questionMaxLevel
+		questionRatio := float64(questions[i].Level) / questionMaxLevel
 
 		// An advanced user does not affect the questions as much as an beginner if the answer is correct.
 		downDiff = int((1.0-(userRatio*questionRatio))*10.0)
 
 		if(answers[i] == 1) {
 			// Wrong answer
-			q.Level = q.Level+upDiff
+			questions[i].Level = questions[i].Level+upDiff
 		} else if(answers[i] == 2) {
 			// Right answer
-			q.Level = q.Level-downDiff
+			questions[i].Level = questions[i].Level-downDiff
 		}
 	}
 	return questions, nil
 }
-
+/*
 // Get the current max of userLevel and questionLevel
 func getMaxLevels(r *http.Request) (float64, float64){
 	c := appengine.NewContext(r)
@@ -98,18 +103,18 @@ func getMaxLevels(r *http.Request) (float64, float64){
 	Order("-Level").
 	Limit(1)
 
-	var values[]maxUser	// TODO: Correct?
+	var values []users.Users	// TODO: Correct?
 	qn.getAll(c, &values)
 	userMaxLevel := values[0].Level
 
-	qn := datastore.NewQuery("Questions").
+	qn = datastore.NewQuery("Questions").
 	Order("-Level").
 	Limit(1)
-
-	var values[]maxUser	// TODO: Correct?
+	
 	qn.getAll(c, &values)
 	questionMaxLevel := values[0].Level
 
+	return userMaxLevel, questionMaxLevel
 }
 
 
@@ -122,5 +127,4 @@ func countUsers(r *http.Request) int {
 		c.Infof("Error getting users count")
 	}
 	return countUsers
-}
-*/
+}*/
