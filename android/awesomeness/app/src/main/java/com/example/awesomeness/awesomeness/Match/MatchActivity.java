@@ -27,6 +27,7 @@ import com.example.awesomeness.awesomeness.fragments.MatchFragment;
 public class MatchActivity extends ActionBarActivity{
 
     public NetRequests net;
+    public static int gameID;
     private CharSequence mTitle;
 
 
@@ -37,6 +38,8 @@ public class MatchActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
+        Bundle extras = getIntent().getExtras();
+        gameID = extras.getInt("gameID");
         net = new NetRequests("192.168.43.87:8080",false);
         BaseFragment b = selectFragment(MATCHPAGE);
         openFragment(b);

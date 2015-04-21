@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/player1_scoreboard"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="45dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/player1_photo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="52dp"
+            android:layout_marginStart="52dp"
+            android:contentDescription="player1_photo"
+            android:src="@drawable/ic_action_new"
+            android:layout_marginBottom="5dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/player1_nameTag"
+            android:layout_below="@id/player1_photo"
+            android:text="PLAYER 1 NAME"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/player2_scoreboard"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="45dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/player2_photo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="52dp"
+            android:layout_marginStart="52dp"
+            android:contentDescription="player2_photo"
+            android:src="@drawable/ic_action_new"
+            android:layout_marginBottom="5dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/player2_nameTag"
+            android:layout_below="@+id/player2_photo"
+            android:text="PLAYER 2 NAME"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="52 - 25"
+        android:textSize="30dp"
+        android:id="@+id/totalScore"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scoreContainer"
+        android:layout_below="@+id/player1_scoreboard"
+        android:paddingBottom="65dp">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/score_list">
+        </ListView>
+    </LinearLayout>
+
+</RelativeLayout>

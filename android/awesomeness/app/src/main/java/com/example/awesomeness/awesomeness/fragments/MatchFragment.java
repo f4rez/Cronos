@@ -34,13 +34,9 @@ public class MatchFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.match_fragment, container, false);
-        Bundle extras = getActivity().getIntent().getExtras();
-        gameID = extras.getInt("gameID");
-        if (MainActivity.DEBUG)Log.d(MainActivity.TAG,"gameID: " + gameID);
-        extras.remove("gameID");
         matchActivity = (MatchActivity)getActivity();
         Request req = new Request(this,matchActivity.net);
-        req.execute("GetQuestions", String.valueOf(gameID));
+        req.execute("GetQuestions", String.valueOf(matchActivity.gameID));
 
         return rootView;
     }
