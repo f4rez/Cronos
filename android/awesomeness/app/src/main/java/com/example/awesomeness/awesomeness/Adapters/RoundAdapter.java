@@ -38,21 +38,9 @@ public class RoundAdapter extends ArrayAdapter<RoundItem> {
 
         RoundItem r = getItem(position);
 
-        if (p != null) {
-
-            ImageView img = (ImageView) v.findViewById(R.id.picture);
-            TextView tt1 = (TextView) v.findViewById(R.id.selectionText);
 
 
-            if (img != null) {
-                img.setImageDrawable(caller.getActivity().getResources().getDrawable(p.picID));
-            }
-            if (tt1 != null) {
 
-                tt1.setText(p.name);
-            }
-
-        }
 
         return v;
 
