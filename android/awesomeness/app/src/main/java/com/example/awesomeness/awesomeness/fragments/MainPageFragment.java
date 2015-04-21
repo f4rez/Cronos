@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.example.awesomeness.awesomeness.Adapters.DialogAdapter;
 import com.example.awesomeness.awesomeness.Adapters.DrawerAdapter;
 import com.example.awesomeness.awesomeness.Adapters.StartPageAdapter;
 import com.example.awesomeness.awesomeness.Items.DrawerItem;
@@ -114,7 +115,7 @@ public class MainPageFragment extends BaseFragment {
         mListView.setAdapter(mAdapter);
 
     }
-    public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
+    public void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
         final Dialog dialog = new Dialog(mContext);
         dialog.setTitle("Betygsätt " );
 
@@ -123,10 +124,32 @@ public class MainPageFragment extends BaseFragment {
         ListView newGameListView = (ListView) dialog.findViewById(R.id.newGameListView);
         DrawerItem d1 = new DrawerItem("", "Utmana en vän",R.drawable.ic_action_new);
         DrawerItem d2 = new DrawerItem("","Slumpad motståndare",R.drawable.ic_action_overflow);
-        DrawerAdapter adapter = new DrawerAdapter(dialog.getContext(),R.layout.new_game_listview_item);
+        DrawerItem d3 = new DrawerItem("","Sök spelare",R.drawable.ic_launcher);
+        DialogAdapter adapter = new DialogAdapter(this,R.layout.new_game_listview_item);
         adapter.add(d1);
         adapter.add(d2);
+        adapter.add(d3);
         newGameListView.setAdapter(adapter);
+        newGameListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DialogAdapter dialogAdapter = (DialogAdapter) parent.getAdapter();
+                MainActivity m = (MainActivity)dialogAdapter.caller.getActivity();
+                switch (position) {
+                    case 0:
+                        m.changeFragment(m.CHALLENGE_FRIEND);
+                        break;
+                    case 1:
+                        Request r = new Request(dialogAdapter.caller, m.net);
+                        r.execute("JoinGame");
+                        break;
+
+                    case 2:
+                        m.changeFragment(m.FIND_FRIEND);
+                        break;
+                }
+            }
+        });
         dialog.show();
     }
 

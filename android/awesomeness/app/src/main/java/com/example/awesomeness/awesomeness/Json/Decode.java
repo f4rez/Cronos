@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import com.example.awesomeness.awesomeness.Items.Friend;
 import com.example.awesomeness.awesomeness.Match.GamesOverview;
 import com.example.awesomeness.awesomeness.Question.Question;
 
@@ -47,6 +48,24 @@ public class Decode {
                 GamesOverview q = new GamesOverview(object.getInt("GID"),object.getInt("MPoints"),
                         object.getInt("OPoints"),object.getInt("Turn"),object.getString("OppName"),
                         object.getString("OppID"), object.getBoolean("MyTurn"));
+                list.add(q);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+
+    public ArrayList <Friend> decodeFriendList(String in) {
+        ArrayList<Friend> list = new ArrayList<>();
+        JSONArray json = null;
+        try {
+            json = new JSONArray(in);
+            for (int i = 0; i < json.length(); i++) {
+                JSONObject object = (JSONObject) json.get(i);
+                Friend q = new Friend(object.getString("Name"),object.getString("Oid"),"");
                 list.add(q);
             }
 

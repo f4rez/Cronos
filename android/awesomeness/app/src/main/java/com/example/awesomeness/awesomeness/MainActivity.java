@@ -1,41 +1,25 @@
 package com.example.awesomeness.awesomeness;
 
-import android.app.Dialog;
-import android.app.Fragment;
+
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Point;
-import android.net.Uri;
+
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Display;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 
-import java.util.ArrayList;
 
-import com.example.awesomeness.awesomeness.Adapters.StartPageAdapter;
-import com.example.awesomeness.awesomeness.Json.Decode;
-import com.example.awesomeness.awesomeness.Match.GamesOverview;
-import com.example.awesomeness.awesomeness.Match.MatchActivity;
 import com.example.awesomeness.awesomeness.Net.NetRequests;
-import com.example.awesomeness.awesomeness.Net.Request;
 import com.example.awesomeness.awesomeness.fragments.BaseFragment;
+import com.example.awesomeness.awesomeness.fragments.ChallengeFriendFragment;
+import com.example.awesomeness.awesomeness.fragments.FindUsersFragment;
 import com.example.awesomeness.awesomeness.fragments.MainPageFragment;
 
 
@@ -53,9 +37,9 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public static String TAG = "Zinister";
     public static boolean DEBUG = true;
     public static final int MAINPAGE = 100;
-    public static final int CASE_OFFERS = 101;
-    public static final int CASE_MAP = 102;
-    public static final int CASE_SCHEDULE = 103;
+    public static final int CHALLENGE_FRIEND = 101;
+    public static final int FIND_FRIEND = 102;
+
 
 
     @Override
@@ -127,10 +111,20 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             case MAINPAGE:
                 baseFragment = new MainPageFragment();
                 break;
-
+            case CHALLENGE_FRIEND:
+                baseFragment = new ChallengeFriendFragment();
+                break;
+            case FIND_FRIEND:
+                baseFragment = new FindUsersFragment();
+                break;
 
         }
         return baseFragment;
+    }
+
+    public void changeFragment(int i) {
+        BaseFragment b = selectFragment(i);
+        openFragment(b);
     }
 
     public void onSectionAttached(int number) {
@@ -139,14 +133,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             case MAINPAGE:
                 mTitle = getString(R.string.title_section1);
                 break;
-            case CASE_MAP:
+            case CHALLENGE_FRIEND:
                 mTitle = getString(R.string.title_section2);
-                break;
-            case CASE_OFFERS:
-                mTitle = getString(R.string.title_section3);
-                break;
-            case CASE_SCHEDULE:
-                mTitle = getString(R.string.title_section4);
                 break;
         }
         restoreActionBar();

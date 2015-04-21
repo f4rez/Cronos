@@ -13,7 +13,7 @@ type Users struct {
 	Name          string
 	FriendList    []string `json:"-"`
 	ChallengeList []string `json:"-"`
-	Games         []int
+	Games         []int    `json:"-"`
 }
 
 func UserKey(c appengine.Context) *datastore.Key {

@@ -171,5 +171,28 @@ public class NetRequests {
 
     }
 
+    public String friendList() {
+
+        try {
+            url = new URL("http://" +host +"/friendlist");
+            urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader r = new BufferedReader(new InputStreamReader(in));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line);
+            }
+            return total.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally{
+            urlConnection.disconnect();
+        }
+        return "";
+
+    }
+
 
  }

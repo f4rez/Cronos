@@ -2,6 +2,10 @@ package com.example.awesomeness.awesomeness.fragments;
 
 
 import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 
 /**
@@ -18,6 +22,9 @@ public abstract class BaseFragment extends Fragment {
         if (titleResId != TITLE_NONE)
             getActivity().setTitle(getTitleResourceId());
     }
+
+    public abstract View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                             Bundle savedInstanceState);
 
     public abstract int getTitleResourceId();
 

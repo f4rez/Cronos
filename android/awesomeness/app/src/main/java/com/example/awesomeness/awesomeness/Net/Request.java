@@ -7,7 +7,9 @@ import android.util.Log;
 
 import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.MatchActivity;
+import com.example.awesomeness.awesomeness.fragments.ChallengeFriendFragment;
 import com.example.awesomeness.awesomeness.fragments.MainPageFragment;
+import com.example.awesomeness.awesomeness.fragments.MatchFragment;
 
 import java.util.Objects;
 
@@ -30,19 +32,21 @@ public class Request extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... string) {
         action = string[0];
         switch (action){
-         case "GetQuestions":
-             String id = string[1];
-             return net.getQuestions(id);
-         case "JoinGame":
-             return net.joinGame();
-         case "AnswerQuestions":
-             return net.answerQuestions(Integer.parseInt(string[1]),string[2],string[3],string[4],string[5],string[6]);
-         case "RegisterUser":
-             return net.registerUSer();
-         case "Login":
-             return net.login();
+            case "GetQuestions":
+                String id = string[1];
+                return net.getQuestions(id);
+            case "JoinGame":
+                return net.joinGame();
+            case "AnswerQuestions":
+                return net.answerQuestions(Integer.parseInt(string[1]),string[2],string[3],string[4],string[5],string[6]);
+            case "RegisterUser":
+                return net.registerUSer();
+            case "Login":
+                return net.login();
             case "StartMessage":
-             return net.startPage();
+                return net.startPage();
+            case "FriendList":
+                return net.friendList();
         }
         return "error";
     }
@@ -62,6 +66,13 @@ public class Request extends AsyncTask<String, Void, String> {
                 MainPageFragment m1 = (MainPageFragment) caller;
                 m1.doneRegister();
                 break;
+            case "GetQuestions":
+                MatchFragment matchFragment = (MatchFragment) caller;
+                matchFragment.showQuestions(returned);
+                break;
+            case "FriendList":
+                ChallengeFriendFragment c = (ChallengeFriendFragment) caller;
+                c.showFriends(returned);
         }
 
     }

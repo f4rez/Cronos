@@ -74,7 +74,7 @@ func friendlist(w http.ResponseWriter, r *http.Request) {
 	}
 	friendList, _ := users.GetFriendList(c, u.ID)
 	fString, _ := json.Marshal(friendList)
-	fmt.Fprintf(w, "Game id: "+string(fString)+"\nThe friend list")
+	fmt.Fprintf(w, string(fString))
 }
 
 // Handle single friends (add, remove, challenge etc)

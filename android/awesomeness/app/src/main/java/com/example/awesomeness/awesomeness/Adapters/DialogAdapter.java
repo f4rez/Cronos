@@ -1,6 +1,5 @@
 package com.example.awesomeness.awesomeness.Adapters;
 
-
 import android.app.Fragment;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,17 +12,16 @@ import android.widget.TextView;
 import com.example.awesomeness.awesomeness.Items.DrawerItem;
 import com.example.awesomeness.awesomeness.R;
 
-
 /**
- * Created by Josef on 2015-04-20.
+ * Created by josef on 2015-04-21.
  */
-public class DrawerAdapter extends ArrayAdapter<DrawerItem>{
+public class DialogAdapter extends ArrayAdapter<DrawerItem> {
 
-    public Context mContext;
+    public Fragment caller;
 
-    public DrawerAdapter(Context context, int resource) {
-        super(context, resource);
-        mContext = context;
+    public DialogAdapter(Fragment fragment, int resource) {
+        super(fragment.getActivity(), resource);
+        caller = fragment;
 
     }
 
@@ -49,7 +47,7 @@ public class DrawerAdapter extends ArrayAdapter<DrawerItem>{
 
 
             if (img != null) {
-                img.setImageDrawable(mContext.getResources().getDrawable(p.picID));
+                img.setImageDrawable(caller.getActivity().getResources().getDrawable(p.picID));
             }
             if (tt1 != null) {
 
