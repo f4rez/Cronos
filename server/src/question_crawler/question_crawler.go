@@ -14,7 +14,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"html/template"
 	"net/http"
-	"src/question"
+	"question"
 	"strconv"
 	"strings"
 )

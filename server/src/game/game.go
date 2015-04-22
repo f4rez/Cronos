@@ -7,10 +7,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"messages"
 	"net/http"
-	"src/messages"
-	"src/question"
-	"src/users"
+	"question"
+	"users"
+
 	"strconv"
 	"time"
 )
@@ -423,6 +424,8 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 
 		// Do some balancing!
 		//TODO: goroutine eller annan thread?
+		//go question.Balancer(r, game.getNewestRound(c).QuestionSID, game.FID, game.SID, game.Turn, []int{int(a1),int(a2),int(a3),int(a4),int(a5)})
+
 		//go question.Balancer(r, game.getNewestRound(c).QuestionSID, game.FID, game.SID, game.Turn, []int{int(a1), int(a2), int(a3), int(a4), int(a5)})
 
 		points := calculatePoints(a1, a2, a3, a4, a5)

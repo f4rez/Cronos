@@ -4,6 +4,7 @@ package com.example.awesomeness.awesomeness;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -33,7 +34,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public NetRequests net;
 
 
-    public static final String APP_TITLE = "Appen";
     public static String TAG = "Zinister";
     public static boolean DEBUG = true;
     public static final int MAINPAGE = 100;
@@ -48,7 +48,20 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
-        net = new NetRequests("192.168.43.87:8080");
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+
+
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        net = new NetRequests("192.168.0.37:8080");
     }
 
 
@@ -136,6 +149,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             case CHALLENGE_FRIEND:
                 mTitle = getString(R.string.title_section2);
                 break;
+            case FIND_FRIEND:
+                mTitle = getString(R.string.title_section3);
         }
         restoreActionBar();
     }

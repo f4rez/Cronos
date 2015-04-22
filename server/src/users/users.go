@@ -14,7 +14,8 @@ type Users struct {
 	Name          string
 	FriendList    []string `json:"-"`
 	ChallengeList []string `json:"-"`
-	Games         []int    `json:"-"`
+	Level         int
+	Games         []int `json:"-"`
 }
 
 func UserKey(c appengine.Context) *datastore.Key {
@@ -230,6 +231,54 @@ func SearchUsers(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprintf(w, string(ret))
 		break
+	}
+
+}
+
+func GetFriendListHandler(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	friendList, err := GetFriendList(c, u.ID)
+	if err != nil {
+		c.Infof("Error marshal: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fString, _ := json.Marshal(friendList)
+	fmt.Fprintf(w, string(fString))
+}
+
+func FriendHandler(w http.ResponseWriter, r *http.Request) {
+	friend_id := r.FormValue("friend_id")
+	action := r.FormValue("action") // add, remove, challenge
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u != nil {
+		var err error
+		switch action {
+		case "add":
+			err = AddFriend(c, u.ID, friend_id)
+		case "remove":
+			err = RemoveFriend(c, u.ID, friend_id)
+		case "challenge":
+			err = ChallengeFriend(c, u.ID, friend_id)
+		}
+		if err != nil {
+			c.Infof("Error preforming action: %v, Error: %v", action, err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		} else {
+			fmt.Fprintf(w, "ID: "+u.ID+"\nFriend id: "+friend_id+"\nAction: "+action+"\nThe friend list")
+		}
+	} else {
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
 	}
 
 }

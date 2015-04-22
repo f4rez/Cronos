@@ -98,15 +98,14 @@ public class NavigationDrawerFragment extends Fragment {
 
         mDrawerListView = (ListView) toolbar.findViewById(R.id.NavBarListView);
         DrawerAdapter drawerAdapter = new DrawerAdapter(getActivity(), R.id.NavBarListView);
-        DrawerItem d1 = new DrawerItem("", "Nyheter", R.drawable.ic_launcher);
-        DrawerItem d2 = new DrawerItem("", "Erbjudanen", R.drawable.ic_launcher);
-        DrawerItem d3 = new DrawerItem("", "Karta", R.drawable.ic_launcher);
-        DrawerItem d4 = new DrawerItem("", "Schema", R.drawable.ic_launcher);
+        DrawerItem d1 = new DrawerItem("", "Matcher", R.drawable.ic_launcher);
+        DrawerItem d2 = new DrawerItem("", "Statistik", R.drawable.ic_launcher);
+        DrawerItem d3 = new DrawerItem("", "Inställnigar", R.drawable.ic_launcher);
+
 
         drawerAdapter.add(d1);
         drawerAdapter.add(d2);
         drawerAdapter.add(d3);
-        drawerAdapter.add(d4);
         if (mDrawerListView != null)
             mDrawerListView.setAdapter(drawerAdapter);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

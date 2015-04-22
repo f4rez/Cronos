@@ -40,7 +40,7 @@ public class MatchActivity extends ActionBarActivity{
         setContentView(R.layout.activity_match);
         Bundle extras = getIntent().getExtras();
         gameID = extras.getInt("gameID");
-        net = new NetRequests("192.168.43.87:8080",false);
+        net = new NetRequests("192.168.0.37:8080",false);
         BaseFragment b = selectFragment(MATCHPAGE);
         openFragment(b);
     }

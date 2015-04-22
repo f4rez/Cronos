@@ -45,7 +45,7 @@ public class FindUsersFragment extends BaseFragment {
 
     @Override
     public int getTitleResourceId() {
-        return 0;
+        return MainActivity.FIND_FRIEND;
     }
 
 
