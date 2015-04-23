@@ -28,7 +28,6 @@ public class ChallengeFriendFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.challenge_friend_fragment, container, false);
         setTargetFragment(this,0);
-
         mainActivity = (MainActivity)getActivity();
         Request r = new Request(this, mainActivity.net);
         r.execute("FriendList");

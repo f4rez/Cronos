@@ -40,7 +40,7 @@ public class MatchActivity extends ActionBarActivity{
         setContentView(R.layout.activity_match);
         Bundle extras = getIntent().getExtras();
         gameID = extras.getInt("gameID");
-        net = new NetRequests("192.168.0.37:8080",false);
+        net = new NetRequests("192.168.43.87:8080",false);
         BaseFragment b = selectFragment(MATCHPAGE);
         openFragment(b);
     }
@@ -50,21 +50,6 @@ public class MatchActivity extends ActionBarActivity{
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_question, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 
