@@ -6,32 +6,27 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage[backend=biber]{biblatex}
 \addbibresource{cites.bib}
-\usepackage[style=numeric]{biblatex}
 
 \author{Alfred Yrelin\\Josef Svensson\\Philip Åkerfeldt}
 \title{Är du en historiemästare?}
 \begin{document}
 \maketitle
 \newpage
-\begin{abstract}Vem vill inte kunna säga: ``Jag är bäst på...''? Att tävla är något som många säkerligen tycker är roligare och mer socialt än att spela ensam. Detta är en av anledningarna till att vi tror att spel som Quizkampen och Wordfeud har blivit så populära. I tidigare nämnda spel har man möjlighet att se vem som är bäst på många olika spelplaner. Vi vill skapa ett spel som passar bra i denna kategorin. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. Spelet utvecklas till Android med en back-end som drar nytta av Google app-engines skalbarhet för att ge applikationen möjlighet för att växa i takt med användarantalet. 
 
-\end{abstract}
-\pagebreak
+\section{Inledning}
+Vem vill inte kunna säga: ``Jag är bäst på...''? Att tävla är något som många säkerligen tycker är roligare och mer socialt än att spela ensam. Detta är en av anledningarna till att vi tror att spel som Quizkampen och Wordfeud har blivit så populära\cite{quiz}. I tidigare nämnda spel har man möjlighet att se vem som är bäst på många olika spelplaner. Vi vill skapa ett spel som passar bra i denna kategorin. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. Spelet utvecklas till Android med en backend som drar nytta av Google appengines skalbarhet för att ge applikationen möjlighet för att växa i takt med användarantalet. 
 \section{Förutsättningar}
 \subsection{Bakgrund}
-
-Applikationsutveckling för mobila enheter är ett spännande område som växer\cite{trendforce} och det operativsystem som sålde mest enheter under första kvartalet av 2015 var Android. För utveckling av Androidapplikationer krävs kunskaper om Java och gränssnittsdesign, men det är inte allt som krävs i ett mer avancerat projekt. Många applikationer interagerar på något vis med internet eller med andra klienter. När sådan funktionalitet önskas så behövs en server för att att data ska kunna delas och kommunikation mellan det olika enheterna upprättas. I det här projektet sker också viss automatisk hämtning av information varvid kunskap om utveckling av ett smart system som filtrerar data behövs.
-
-
+Applikationsutveckling för mobila enheter är ett spännande område som växer\cite{trendforce} och det operativsystem som sålde mest enheter under första kvartalet av 2015 var Android. 
 
 \subsubsection{Turbaserade multiplayerspel för mobil}
-Wordfeud och Quizkampen är två populära turbaserade multiplayer spel där Quizkampen har 45 miljoner användare globalt (REFERNES: http://www.quizkampen.se/) och Wordfeud har mellan 10-50 miljoner nerladdningar på enbart Android Spelen gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare har sin omgång får hens motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar. \cite{r}
+Wordfeud och Quizkampen är två populära turbaserade multiplayer spel där Quizkampen har 45 miljoner användare globalt\cite{quiz} och Wordfeud har mellan 10-50 miljoner nerladdningar på enbart Android Spelen gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare har sin omgång får hens motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
 
 
 \subsection{Syfte}
 Det är projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter. I det här projektet ska en applikation utvecklas som ger flera användare möjlighet att interagera med varandra.
 
-Spelet som ska utvecklas går ut på att två användare får tävla om vem som har bäst koll på när olika historiska händelser ägde rum. Varje spelare får ett antal händelser som denne sedan ska sortera i kronologisk ordning. Spelaren som sorterar flest händelser rätt vinner. Förutom rent nöje så ger spelet också användaren möjlighet att få bättre koll på historien, applikationen kan alltså också användas i utbildningssammanhang.
+Spelet som utvecklats går ut på att två användare får tävla om vem som har bäst koll på när olika historiska händelser ägde rum. Varje spelare får ett antal händelser som denne sedan ska sortera i kronologisk ordning. Spelaren som sorterar flest händelser rätt vinner. Förutom rent nöje så ger spelet också användaren möjlighet att få bättre koll på historien, applikationen kan alltså också användas i utbildningssammanhang.
 
 \subsection{Mål}
 Det finns tre stora delar i det här projektet som kan ses som projektets mål:
@@ -145,3 +140,4 @@ Ett bra samarbete i gruppen kommer vara nödvändigt för att alla gruppmedlemma
 
 \newpage
 \printbibliography[title={Referenser}]
+\end{document}
