@@ -1,18 +1,14 @@
 package question_crawler
 
 import (
-	"log"
-	//"fmt"
-	//"io/ioutil"
 	"appengine"
 	"appengine/urlfetch"
-	//"regexp"
-	//"encoding/xml"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"html/template"
+	"log"
 	"net/http"
 	"question"
 	"strconv"
@@ -29,7 +25,7 @@ func Main(w http.ResponseWriter, r *http.Request) {
 	// Sample question, should be retrieved from a database
 	q := question.Question{ID: 1, Level: 0, Question: "Hämta sida först", Year: 0000}
 
-	t, err := template.ParseFiles("src/question_crawler/crawler.html")
+	t, err := template.ParseFiles("question_crawler/crawler.html")
 	if err != nil {
 		log.Fatal(err)
 	}
