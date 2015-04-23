@@ -83,7 +83,6 @@ public class FindUsersFragment extends BaseFragment {
                 TextView textView = (TextView) view.findViewById(R.id.selectionText);
                 TransitionSet transitionSet = new TransitionSet();
                 transitionSet.addTransition(new ChangeImageTransform());
-                transitionSet.addTransition(new ChangeBounds());
                 transitionSet.setDuration(300);
 
                 Fragment fragment2 = new FriendFragment();
