@@ -100,7 +100,7 @@ public class NavigationDrawerFragment extends Fragment {
         DrawerAdapter drawerAdapter = new DrawerAdapter(getActivity(), R.id.NavBarListView);
         DrawerItem d1 = new DrawerItem("", "Matcher", R.drawable.ic_launcher);
         DrawerItem d2 = new DrawerItem("", "Statistik", R.drawable.ic_launcher);
-        DrawerItem d3 = new DrawerItem("", "Inst‰llnigar", R.drawable.ic_launcher);
+        DrawerItem d3 = new DrawerItem("", "Inst√§llnigar", R.drawable.ic_launcher);
 
 
         drawerAdapter.add(d1);

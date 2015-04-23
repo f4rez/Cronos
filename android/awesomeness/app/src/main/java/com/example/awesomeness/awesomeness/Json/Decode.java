@@ -22,6 +22,7 @@ public class Decode {
 
     public ArrayList<Question> decodeQuestions(String in) {
         ArrayList<Question> list = new ArrayList<>();
+        if (in == "error") return list;
         JSONArray json = null;
         Log.d("Decode","string: " + in);
         try {
@@ -41,6 +42,7 @@ public class Decode {
 
     public ArrayList<GamesOverview> decodeGamesOverview(String in) {
         ArrayList<GamesOverview> list = new ArrayList<>();
+        if (in == "error") return list;
         JSONArray json = null;
         try {
             json = new JSONArray(in);
@@ -61,6 +63,7 @@ public class Decode {
 
     public ArrayList <Friend> decodeFriendList(String in) {
         ArrayList<Friend> list = new ArrayList<>();
+        if (in == "error") return list;
         JSONArray json = null;
         try {
             json = new JSONArray(in);
@@ -79,6 +82,7 @@ public class Decode {
 
     public RoundItem decodeRoundItems(String in) {
         RoundItem r = null;
+        if (in == "error") return r;
         JSONObject json = null;
          try {
             json = new JSONObject(in);

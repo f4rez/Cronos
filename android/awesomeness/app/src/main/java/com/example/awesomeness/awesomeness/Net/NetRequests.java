@@ -1,6 +1,7 @@
 package com.example.awesomeness.awesomeness.Net;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -93,7 +94,8 @@ public class NetRequests {
         } catch (IOException e) {
             e.printStackTrace();
         } finally{
-            urlConnection.disconnect();
+            if (urlConnection != null)
+                urlConnection.disconnect();
         }
         return "error";
     }
@@ -117,7 +119,8 @@ public class NetRequests {
         } catch (IOException e) {
             e.printStackTrace();
         } finally{
-            urlConnection.disconnect();
+            if (urlConnection != null)
+                urlConnection.disconnect();
         }
         return "error";
     }
@@ -140,7 +143,8 @@ public class NetRequests {
         } catch (IOException e) {
             e.printStackTrace();
         } finally{
-            urlConnection.disconnect();
+            if (urlConnection != null)
+                urlConnection.disconnect();
         }
         return "error";
 
@@ -164,7 +168,8 @@ public class NetRequests {
             Log.d("hehe","ssss");
             e.printStackTrace();
         } finally{
-            urlConnection.disconnect();
+            if (urlConnection != null)
+                urlConnection.disconnect();
         }
         Log.d("hehe","slut");
         return "error";
@@ -188,7 +193,8 @@ public class NetRequests {
         } catch (IOException e) {
             e.printStackTrace();
         } finally{
-            urlConnection.disconnect();
+            if (urlConnection != null)
+                urlConnection.disconnect();
         }
         return "error";
 
@@ -210,7 +216,8 @@ public class NetRequests {
         } catch (IOException e) {
             e.printStackTrace();
         } finally{
-            urlConnection.disconnect();
+            if (urlConnection != null)
+                urlConnection.disconnect();
         }
         return "error";
 
@@ -234,7 +241,8 @@ public class NetRequests {
         } catch (IOException e) {
             e.printStackTrace();
         } finally{
-            urlConnection.disconnect();
+             if (urlConnection != null)
+                 urlConnection.disconnect();
         }
         return "error";
 
