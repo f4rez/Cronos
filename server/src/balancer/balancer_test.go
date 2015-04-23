@@ -49,8 +49,8 @@ func TestHumbleQuestionBalancer(t *testing.T) {
 	// This is a more advanced user.
 	userAdv := users.Users{"", "", nil, nil, nil, 2000}
 
-	userMaxLevel := 1000.0
-	questionMaxLevel := 1000.0
+	userMaxLevel := 1000
+	questionMaxLevel := 1000
 
 	questionsEasy, err := humbleQuestionBalancer(questions, answers, userEasy, userMaxLevel, questionMaxLevel)
 	questionsAdv, err := humbleQuestionBalancer(questions, answers, userAdv, userMaxLevel, questionMaxLevel)

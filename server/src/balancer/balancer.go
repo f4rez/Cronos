@@ -1,15 +1,15 @@
 package balancer
 
 import (
-//	"net/http"
-//	"appengine"
+	"net/http"
+	"appengine"
 	"question"
-//	"errors"
+	"errors"
 	"users"
-//	"appengine/datastore"
+	"appengine/datastore"
 )
 
-/*
+
 func Balancer (r *http.Request, QID []int, FID string, SID string, Turn bool, answers []int) (error) {
 	c := appengine.NewContext(r)
 	var user users.Users
@@ -37,7 +37,7 @@ func Balancer (r *http.Request, QID []int, FID string, SID string, Turn bool, an
 
 	return nil
 }
-*/
+
 
 // Changes the difficulty level of each question based on the current answer.
 //
@@ -68,9 +68,12 @@ func stupidQuestionBalancer(questions []question.Question, answers []int) ([]que
 // - in relation to the other questions. (???)
 // - the users difficulty level.
 // - The distance to other questions. (???)
-func humbleQuestionBalancer(questions []question.Question, answers []int, user users.Users, userMaxLevel float64, questionMaxLevel float64) ([]question.Question, error) {
+func humbleQuestionBalancer(questions []question.Question, answers []int, user users.Users, userMaxLevelint int, questionMaxLevelint int) ([]question.Question, error) {
 	upDiff := 10
 	downDiff := 10
+
+	userMaxLevel := float64(userMaxLevelint)
+	questionMaxLevel := float64(userMaxLevelint)
 
 	userRatio := float64(user.Level) / userMaxLevel
 
@@ -94,24 +97,27 @@ func humbleQuestionBalancer(questions []question.Question, answers []int, user u
 	}
 	return questions, nil
 }
-/*
+
 // Get the current max of userLevel and questionLevel
-func getMaxLevels(r *http.Request) (float64, float64){
+func getMaxLevels(r *http.Request) (int, int){
 	c := appengine.NewContext(r)
 	// Get the current max level. TODO: Det här görs för ofta.
 	qn := datastore.NewQuery("Users").
 	Order("-Level").
 	Limit(1)
 
-	var values []users.Users	// TODO: Correct?
-	qn.getAll(c, &values)
+	var values []users.Users
+
+	t := qn.Run(c)
+	t.Next(values)
 	userMaxLevel := values[0].Level
 
 	qn = datastore.NewQuery("Questions").
 	Order("-Level").
 	Limit(1)
 	
-	qn.getAll(c, &values)
+	t = qn.Run(c)
+	t.Next(values)
 	questionMaxLevel := values[0].Level
 
 	return userMaxLevel, questionMaxLevel
@@ -122,9 +128,9 @@ func getMaxLevels(r *http.Request) (float64, float64){
 func countUsers(r *http.Request) int {
 	c := appengine.NewContext(r)
 
-	countUsers, err = users.GetCountUsers(c)
+	count, err := users.GetCountUsers(c)
 	if err != nil {
 		c.Infof("Error getting users count")
 	}
-	return countUsers
-}*/
+	return count
+}
