@@ -4,15 +4,19 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"appengine/user"
+	"encoding/json"
+	"fmt"
+	"net/http"
 )
 
 type Users struct {
 	Oid           string
 	Name          string
+	Picture       string
 	FriendList    []string `json:"-"`
 	ChallengeList []string `json:"-"`
-	Games         []int
-	Level		  int
+	Level         int
+	Games         []int `json:"-"`
 }
 
 func UserKey(c appengine.Context) *datastore.Key {
@@ -35,7 +39,7 @@ func (users *Users) UpdateUser(c appengine.Context, key *datastore.Key) {
 	}
 }
 
-func (users *Users) addGame(c appengine.Context, gid int) {
+func (users *Users) AddGame(gid int) {
 	users.Games = append(users.Games, gid)
 }
 
@@ -59,7 +63,7 @@ func GetUser(c appengine.Context, Oid string) (Users, *datastore.Key, error) {
 		Limit(1).
 		Filter("Oid =", Oid)
 	if key, err := qn.GetAll(c, &mUser); len(key) > 0 {
-		c.Infof("Fetched User:", mUser[1].Name)
+		c.Infof("Fetched User: %v", mUser[1].Name)
 		return mUser[1], key[0], nil
 	} else {
 		u := new(Users)
@@ -96,16 +100,6 @@ func GetCountUsers(c appengine.Context) (int, error) {
 		KeysOnly()
 	count, err := query.Count(c)
 	return count, err
-}
-
-func JoinGame(c appengine.Context, id string, gID int) error {
-	user, key, err := GetUser(c, id)
-	if err != nil {
-		return err
-	}
-	user.addGame(c, gID)
-	user.UpdateUser(c, key)
-	return nil
 }
 
 func GetFriendList(c appengine.Context, id string) ([]Users, error) {
@@ -177,6 +171,152 @@ func ChallengeFriend(c appengine.Context, mOid, fOid string) error {
 		return err
 	}
 
+}
+
+func findUsersByName(c appengine.Context, name string) ([]Users, error) {
+	mUser := make([]Users, 0, 10)
+	qn := datastore.NewQuery("Users").
+		Ancestor(UserKey(c)).
+		Limit(10).
+		Filter("Name =", name)
+	if key, err := qn.GetAll(c, &mUser); len(key) > 0 {
+		return mUser, nil
+	} else {
+
+		return mUser, err
+	}
+}
+
+func SearchUsers(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	c.Infof("A")
+	if u == nil {
+		c.Infof("Not logged in")
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	c.Infof("B")
+	typee := r.FormValue("type")
+	parameter := r.FormValue("search")
+
+	switch typee {
+	case "Name":
+		c.Infof("C")
+		users, err := findUsersByName(c, parameter)
+		if err != nil {
+			c.Infof("Error : %v", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		ret, err2 := json.Marshal(users)
+		if err2 != nil {
+			c.Infof("Error marshal: %v", err2)
+			http.Error(w, err2.Error(), http.StatusInternalServerError)
+			return
+		}
+		c.Infof("Sending: %v", string(ret))
+		fmt.Fprintf(w, string(ret))
+		break
+	case "ID":
+		c.Infof("D")
+		users, _, err := GetUser(c, parameter)
+		if err != nil {
+			c.Infof("Error : %v", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		ret, err2 := json.Marshal(users)
+		if err2 != nil {
+			c.Infof("Error marshal: %v", err2)
+			http.Error(w, err2.Error(), http.StatusInternalServerError)
+			return
+		}
+		c.Infof("Sending: %v", string(ret))
+		fmt.Fprintf(w, string(ret))
+		break
+	}
+
+}
+
+func GetFriendListHandler(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	friendList, err := GetFriendList(c, u.ID)
+	if err != nil {
+		c.Infof("Error marshal: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fString, _ := json.Marshal(friendList)
+	fmt.Fprintf(w, string(fString))
+}
+
+func FriendHandler(w http.ResponseWriter, r *http.Request) {
+	friend_id := r.FormValue("friend_id")
+	action := r.FormValue("action") // add, remove, challenge
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u != nil {
+		var err error
+		switch action {
+		case "add":
+			err = AddFriend(c, u.ID, friend_id)
+		case "remove":
+			err = RemoveFriend(c, u.ID, friend_id)
+		case "challenge":
+			err = ChallengeFriend(c, u.ID, friend_id)
+		}
+		if err != nil {
+			c.Infof("Error preforming action: %v, Error: %v", action, err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		} else {
+			fmt.Fprintf(w, "ID: "+u.ID+"\nFriend id: "+friend_id+"\nAction: "+action+"\nThe friend list")
+		}
+	} else {
+		url, _ := user.LoginURL(c, "/")
+		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+
+}
+
+func RegisterUser(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+
+	u := user.Current(c)
+	qn := datastore.NewQuery("Users").
+		Ancestor(UserKey(c)).
+		Limit(1).
+		Filter("Oid =", u.ID)
+	count, err := qn.Count(c)
+	if err != nil {
+		c.Infof("Error : %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	c.Infof("count = %v", c)
+	if count > 0 {
+		return
+	} else {
+		users, _ := MakeUser(c)
+		if users.Oid != "" {
+			c.Infof("Saving user on registring ID = %v", users.Oid)
+			users.SaveUser(c)
+			return
+		} else {
+			c.Infof("Error login: %v", users)
+			url, _ := user.LoginURL(c, "/registerNewUser")
+			fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		}
+	}
 }
 
 func (u *Users) AddFriend(Oid string) {
