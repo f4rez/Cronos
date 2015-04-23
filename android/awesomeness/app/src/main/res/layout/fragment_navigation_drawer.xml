@@ -25,7 +25,7 @@
         android:paddingTop="5dp"
         android:divider="@null"
         android:dividerHeight="0dp"
-        ></ListView>
+        />
 
 
 

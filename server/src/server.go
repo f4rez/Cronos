@@ -24,6 +24,7 @@ func init() {
 	http.HandleFunc("/match", matchHandler)
 	http.HandleFunc("/challenger", challengerHandler)
 	http.HandleFunc("/search", searchUsers)
+	http.HandleFunc("/test", test)
 }
 
 // Init function.
@@ -85,4 +86,39 @@ func challengerHandler(w http.ResponseWriter, r *http.Request) {
 
 func searchUsers(w http.ResponseWriter, r *http.Request) {
 	users.SearchUsers(w, r)
+}
+func test(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := new(users.Users)
+	u.Oid = "1234567"
+	u.Name = "Nils nilsson"
+	u.SaveUser(c)
+	u.Oid = "1"
+	u.Name = "Erik Fransson"
+	u.SaveUser(c)
+	u.Oid = "12"
+	u.Name = "Erik Olsson"
+	u.SaveUser(c)
+	u.Oid = "13"
+	u.Name = "Jonas Fransson"
+	u.SaveUser(c)
+	u.Oid = "14"
+	u.Name = "Josef Svensson"
+	u.SaveUser(c)
+	u.Oid = "15"
+	u.Name = "Erik "
+	u.SaveUser(c)
+	u.Oid = "16"
+	u.Name = "Fransson"
+	u.SaveUser(c)
+	u.Oid = "17"
+	u.Name = "Olsson"
+	u.SaveUser(c)
+	u.Oid = "18"
+	u.Name = "Nils"
+	u.SaveUser(c)
+	u.Oid = "19"
+	u.Name = "Johanna"
+	u.SaveUser(c)
+
 }
