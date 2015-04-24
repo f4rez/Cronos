@@ -1,10 +1,12 @@
-\documentclass[swedish,12pt,a4paper]{article}
+\documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
 \usepackage[hidelinks]{hyperref}
-\usepackage[backend=biber]{biblatex}
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
 \addbibresource{cites.bib}
 
 \author{Alfred Yrelin\\Josef Svensson\\Philip Åkerfeldt}
@@ -12,16 +14,24 @@
 \begin{document}
 \maketitle
 \newpage
+\tableofcontents
+\pagebreak
 
 \section{Inledning}
 Vem vill inte kunna säga: ``Jag är bäst på...''? Att tävla är något som många säkerligen tycker är roligare och mer socialt än att spela ensam. Detta är en av anledningarna till att vi tror att spel som Quizkampen och Wordfeud har blivit så populära\cite{quiz}. I tidigare nämnda spel har man möjlighet att se vem som är bäst på många olika spelplaner. Vi vill skapa ett spel som passar bra i denna kategorin. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. Spelet utvecklas till Android med en backend som drar nytta av Google appengines skalbarhet för att ge applikationen möjlighet för att växa i takt med användarantalet. 
+
 \section{Förutsättningar}
+
 \subsection{Bakgrund}
 Applikationsutveckling för mobila enheter är ett spännande område som växer\cite{trendforce} och det operativsystem som sålde mest enheter under första kvartalet av 2015 var Android. 
 
 \subsubsection{Turbaserade multiplayerspel för mobil}
 Wordfeud och Quizkampen är två populära turbaserade multiplayer spel där Quizkampen har 45 miljoner användare globalt\cite{quiz} och Wordfeud har mellan 10-50 miljoner nerladdningar på enbart Android Spelen gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare har sin omgång får hens motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
 
+\textbf{KÄLLA PÅ PÅSTÅENDE:} "mellan 10-50 miljoner nerladdningar på enbart Android"
+
+\subsubsection{Turbaserade brädspel}
+Kanske skriva lite om turbaserade spel. Typ "när-då-då?"
 
 \subsection{Syfte}
 Det är projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter. I det här projektet ska en applikation utvecklas som ger flera användare möjlighet att interagera med varandra.
@@ -29,12 +39,8 @@ Det är projektets syfte är att utveckla och distribuera en spelapplikation fö
 Spelet som utvecklats går ut på att två användare får tävla om vem som har bäst koll på när olika historiska händelser ägde rum. Varje spelare får ett antal händelser som denne sedan ska sortera i kronologisk ordning. Spelaren som sorterar flest händelser rätt vinner. Förutom rent nöje så ger spelet också användaren möjlighet att få bättre koll på historien, applikationen kan alltså också användas i utbildningssammanhang.
 
 \subsection{Mål}
-Det finns tre stora delar i det här projektet som kan ses som projektets mål:
-\begin{itemize}
-\item En mobilapplikation
-\item En server
-\item Automatisk informationshämtning
-\end{itemize}
+Det finns tre stora delar i det här projektet som kan ses som projektets primära mål. Målet vi ser framför oss är en mobilapplikation i form av ett spel som kommer köras på en server som kommer sköta all kommunikation mellan klienten och sig själv. Målet vi har innefattar även en automatisk informationshämtning som ska har som syfte att fylla på vår databas med nya frågor. Informationshämtningen kommer inte säkert vara helt automatiskt utan kanske mer semi-automatiskt där ett steg i informationshämtningen kommer kräva ett mänskligt interagerande. Detta för att godkänna frågorna till databasen. 
+
 
 \subsubsection{Mobilapplikation}
 En mobilapplikation till först och främst Android ska utvecklas. Om det finns tid kommer också en version för iOS att utvecklas. Mobilapplikationen är det enda som användaren i slutändan kommer se, därför är gränssnittet extra viktigt i den här delen. 
@@ -47,12 +53,12 @@ För att flera spelare ska kunna interagera med varandra så behövs det en serv
 Servermjukvaran skrivs i programspråket Go och körs på Googles molntjänst App engine.
 
 \subsubsection{Google App Engine} 
-Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för moltjänster. Det bygger på att användaren bygger en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programet man bygger i App Engine körs på googles infrastruktur och är uppbyggt så att man kan utöka antalet användare närmast obegränsat. Flera stora företag har använt sig av App Engine när de lanserat prdukter bland annat Coca Cola, Rovio och Best Buy REFERENS: https://cloud.google.com/customers/
+Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för moltjänster. Det bygger på att användaren bygger en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programet man bygger i App Engine körs på googles infrastruktur och är uppbyggt så att man kan utöka antalet användare närmast obegränsat. Flera stora företag har använt sig av App Engine när de lanserat produkter bland annat Coca Cola, Rovio och Best Buy. \cite{googleappenginecustomers}
 
 \subsubsection{Automatisk informationshämtning}
 För att göra spelet så intressant som möjligt behövs det många frågor. Ett sätt att skapa många frågor är att utveckla mjukvara som kan hämta information och sätta ihop frågor automatiskt. 
 
-Målet med den automatiska informationshämtningen är ett delsystem som läser in delar av Wikipedia och kopplar samman årtal och händelser automatiskt. Det här systemet behöver också ett administrativt gränssnitt så att en administratör på ett snabbt vis kan korrekturläsa frågorna innan de används.
+Målet med den automatiska informationshämtningen är ett delsystem som läser in delar av Wikipedia eller andra källor och kopplar samman årtal och händelser automatiskt. Det här systemet behöver också ett administrativt gränssnitt så att en administratör på ett snabbt vis kan korrekturläsa frågorna innan de används.
 
 \subsection{Motivation}
 Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på applikationer är Quizkampen, Wordfeud och Wordbase. Det är tydligt att spel där två personer kan mötas för att vinna över den andre, genom att svara på frågor eller lägga ord, är populära. Det spel som den här rapporten handlar om kombinerar koncepten från tidigare nämnda spel, med att både svara på frågor och lägga in dem på rätt plats. 
@@ -60,7 +66,7 @@ Det finns många mobilspel som handlar om att två personer möts och mäter sin
 En liknande version av det här spelet har också visat sig vara populär i sällskapsspelsform (\textit{När-då-då?})\cite{nardada}, därför är hoppet högt om att också den här applikationen kan bli populär. Just nu finns det inte heller någon variant av det här spelkonceptet till Android, vilket är en lucka som kan täckas av det här projektet.
 
 \subsection{Lägesbeskrivning}
-Det finns ett spel för ios, \textit{Historiekampen}\cite{historiekampen} som också handlar om att lägga in händelser på en tidslinje. Genom en ytlig granskning av deras gränssnitt har det konstaterats att det går att göra bättre. Utan större kännedom om detaljerna i spelmekaniken så är också förhoppningen att den här applikationen ska bli roligare att spela. En nackdel som den befintliga ios-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
+Det finns ett spel för iOS, \textit{Historiekampen}\cite{historiekampen} som också handlar om att lägga in händelser på en tidslinje. Genom en ytlig granskning av deras gränssnitt har det konstaterats att det går att göra bättre. Utan större kännedom om detaljerna i spelmekaniken så är också förhoppningen att den här applikationen ska bli roligare att spela. En nackdel som den befintliga iOS-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
 Spelet vi kommer utveckla kommer vara likt Historiekampen rent konceptuellt. Spelmekaniken kommer vara annorlunda då vi kommer behandla varje match och varje runda under matchens gång annorlunda. Vår app kommer även vara annorlunda om man ser från utvecklingspotentialen och skalbarheten. Med den semi-automatiska frågehämtaren som kan anpassas för olika informationskällor kommer det vara relativt enkelt att hämta nya frågor. Vår app kommer även balanseras under spelets gång och på så sätt göra att alla spelare kommer kunna känna sig bekväma med frågorna som kan ställas. Balanseringen i spelet kan även byggas ut och göras mer avancerad om användarna skulle ge kritik på hur frågorna kategoriseras. Det finns egentligen inga gränser för hur avancerad balansering kan göras vilket är ett stort plus som skiljer oss från konkurrenterna.  
 
 
@@ -79,22 +85,13 @@ Det finns vissa delar i det här systemet som blir mer avancerade att lösa än 
 \section{Genomförande}
 
 \subsection{Metoder}
-\begin{itemize}
-\item Android Studio används för androidutveckling och simulering. Detta är ett smidigt verktyg som, nämn tidigare, enkelt kan simulera appen i olika valbara miljöer i form av layouts för olika mobiltelefoner. 
-\item Google App Engine används lokalt för simulering av serverapplikationen. I skarpt läge kommer också App Engine att användas, men då i Googles moln.
-\item Wikipedia används som informationskälla för frågorna som spelet presenterar för användarna. Denna informationskälla används primärt under utvecklingsfasen och kommer mer stor sannolikhet att bytas ut mot andra informationskällor.
-\item Git används för att synkronisera projektet. Ett privat repo på Bitbucket\footnote{http://www.bitbucket.org} används till detta.
-\item Google Hangouts används för kommunikation när gruppmedlemmarna är på olika fysiska platser.
-\end{itemize}
+Ett antal olika verktyg kommer att användas för att möjliggöra detta projekt. För utvecklingen och simulering av android-applikationen kommer Android Studio användas. Detta är ett kraftfullt verktyg som på ett smidigt sätt kan simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner. \cite{androidstudio}\\
+Google App Engine används lokalt för att simulera serverapplikationen. I skarpt läge kommer App Engine även användas, men då i Googles moln. App engine är ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjuds när man utvecklar och körs sina applikationer via denna motor är otroligt värdefulla. Det är bland annat lätt att underhålla applikationen och skala när trafiken och datan kräver det. \cite{googleappengine}\\
+Wikipedia används som informationskälla för frågorna som spelet presenterar för användarna. Denna informationskälla används primärt under utvecklingsfasen och kommer mer stor sannolikhet att bytas ut mot andra informationskällor vid ett senare skede alternativt innan produkten färdigställs.\\
+Git används för att synkronisera projektets filer mellan utvecklarna. Ett privat repo på Bitbucket\footnote{http://www.bitbucket.org} används till detta.\\
+Google Hangouts används för kommunikation när gruppmedlemmarna är på olika fysiska platser.
 
 \subsection{Systemstruktur}
-
-\begin{figure}[hb]
-\centering
-
-\end{figure} 
-
-
 
 *-------------------------------------------------*
 
@@ -103,22 +100,22 @@ Det finns vissa delar i det här systemet som blir mer avancerade att lösa än 
 
 
 *-------------------------------------------------*
-\begin{itemize}
-\item Databas, i App Engine med biblioteket \textit{datastore}.
-\item Server, körs i App Engine och skriven i Go.
-\item Klient, Androidapplikation
-\item Crawler, informationssökare, en del av servern.
-\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.2]{systemstruktur.jpg} 
+\end{figure} 
 
+Androidapplikationen, klienten, är spelet som utvecklats och som kommer vara den del som användaren interagerar med och är närmast relaterad till. Klienten kommunicera med en server som körs i \footnote{ App engine} och är som är utvecklad i språket \footnote{ GO}. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen som skickar frågorna till servern som i sin tur skickar vidare till klienten. Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. \\Servern sköter inte bara kommunikation utan används även av crawlern som är den automatiska informationshämtaren. Crawlern använder sig av ett webinterface som har som syfte att ge administratörerna möjligheten att avgöra den hämtade informationens kvalitet och för att bestämma en initial svårighetsgrad på den. Om informationen godkänns kommer den att lagras i databasen, som nämndes tidigare, och är då redo för att användas i spelet.
+\\
 Systemet är uppbyggt kring http förfrågningar, när applikationen skickar en förfrågan finns det i servern flera oilka handlers som tar han om olika förfrågningar. Vill man lägga till nya frågor får man via webinterfacet ange vilken sida man vill gå igenom för att hitta frågor och får sedan från crawlern tillbaka frågor som man i interfacet får gå igenom för att ge en initial svårighetsgrad och sedan spara in i databasen om den håller tillräckligt hög klass.
 
 
 
 \subsection{Avgränsningar}
-En applikation för ios prioriteras inte i första hand. Skulle det bli tid över och resten av systemet anses tillräckligt klart så kommer detta att utvecklas, men annars inte. Någon applikation för Windows finns inte heller med i planeringen. Spelet kommer troligtvis ha ett par kategorier som ska finnas med i spelet, men dessa är ännu inte valda.
+En applikation för iOS prioriteras inte i första hand. Skulle det bli tid över och resten av systemet anses tillräckligt klart så kommer detta att utvecklas, men annars inte. Någon applikation för Windows finns inte heller med i planeringen. Spelet kommer troligtvis ha ett par kategorier som ska finnas med i spelet, men dessa är ännu inte valda.
 
 \subsection{Krav}
-Systemet ska klara många spelare samtidigt, dock bara två per spel. Någon speciell siffra är inte bestämd ännu men med tanke på den otroligt bra grunden för skalbarhet som projektet står på kommer en siffra för antal spelare ganska snart kunna bestämmas. Eftersom App Engine används för servern så kommer det inte bli något problem, det är en tjänst som automatiskt skalar beroende på belastning.
+Systemet ska klara många spelare samtidigt, dock bara två per spel. Någon speciell siffra är inte bestämd ännu men med tanke på den otroligt bra grunden för skalbarhet som projektet står på kommer en siffra för antal spelare ganska snart kunna bestämmas. Eftersom App Engine används för servern så kommer det inte bli något problem med den enkla förklaringen att det är en tjänst som automatiskt skalar med hänsyn på belastning. \cite{appenginescalability}
 
 Informationssökaren ska tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. En hög kvalitet betyder frågor som är relevanta och som följer den strukturen vi har tänkt oss. Frågorna ska vara lätta att läsa och förstå och samtidigt befinna sig i det breda spektrumet av svårighetsgrader vi kommer ha i spelet. Sökaren för frågorna ska också vara så pass bra att den administrativa kontrollen går fort och att så lite som möjligt behöver korrigeras efter att frågorna har samlats.
 
@@ -129,8 +126,12 @@ Gränssnittet och användandet av applikationen kommer också att utvärderas me
 \appendix
 
 \section{Tidsplan}
-
-\textbf{\href{http://www.gantt-chart.com//?td=550c7506aa5a1dd480bd4c8d-845131}{Tidsplan i form av Gantt-diagram}}\\
+Detta är en representation av vår tidsplan i form av ett gantt-diagram.
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.55\textwidth, angle =90]{gantt.jpg}
+\end{figure} 
+\pagebreak
 
 \section{Kursmål}
 
