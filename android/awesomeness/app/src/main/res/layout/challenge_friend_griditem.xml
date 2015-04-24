@@ -12,7 +12,6 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:background="#ffffffff"
         android:transitionName="pp"/>
 
     <TextView
@@ -23,7 +22,6 @@
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:id="@+id/selectionText"
-        android:background="#ffffffff"
         android:transitionName="gridName"
         android:textSize="17sp"/>
 

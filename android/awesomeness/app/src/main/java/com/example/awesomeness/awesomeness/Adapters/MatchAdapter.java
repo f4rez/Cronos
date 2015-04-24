@@ -65,5 +65,11 @@ public class MatchAdapter extends ArrayAdapter<Question> {
     public boolean hasStableIds() {
         return true;
     }
+
+
+    public void addItem(Question q ) {
+        //add(q);
+        mIdMap.put(q,mIdMap.size());
+    }
 }
 

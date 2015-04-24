@@ -35,7 +35,7 @@ import java.util.ArrayList;
 /**
  * Created by Josef on 2015-02-05.
  */
-public class MainPageFragment extends BaseFragment {
+public class StartPageFragment extends BaseFragment {
     public ListView mListView;
     private MainActivity mainActivity;
     public StartPageAdapter mAdapter;
@@ -97,13 +97,14 @@ public class MainPageFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GamesOverview g = (GamesOverview) parent.getItemAtPosition(position);
-                if (g.myTurn) {
+
                     StartPageAdapter s = (StartPageAdapter) parent.getAdapter();
+                    if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "GameID in intent = " + g.gameID);
                     Intent n = new Intent(s.c, MatchActivity.class);
                     n.putExtra("gameID", g.gameID);
                     s.c.startActivity(n);
                 }
-            }
+
         });
         mListView.setAdapter(mAdapter);
     }

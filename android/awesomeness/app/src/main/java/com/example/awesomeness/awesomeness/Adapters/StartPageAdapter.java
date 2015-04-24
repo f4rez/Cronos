@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.GamesOverview;
 import com.example.awesomeness.awesomeness.R;
 
@@ -53,13 +54,19 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
             TextView tt2 = (TextView) v.findViewById(R.id.score);
             if (tt1 != null) {
                 if(q.myTurn)
+                    if(q.opponentName != null)
                 tt1.setText("Det är din tur mot " + q.opponentName + " i omgång " + q.numberOfTurns);
+                    else tt1.setText("Det är din tur mot slumpad spelare i omgång " + q.numberOfTurns);
                 else
+                    if (q.opponentName != null)
                     tt1.setText("Det är " + q.opponentName + "s tur" + " i omgång " + q.numberOfTurns);
+                else  tt1.setText("Det är slumpad spelares tur i omgång " + q.numberOfTurns);
             }
 
             if (tt2 != null)  {
-                tt2.setText("Mitt namn " + q.myPoint + " - " + q.opponentName +  " "+  q.opponentName);
+                if (q.opponentName != null)
+                tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - " + q.opponentPoint +  " "+  q.opponentName);
+                else tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - 0 slumpad spelare");
 
             }
 

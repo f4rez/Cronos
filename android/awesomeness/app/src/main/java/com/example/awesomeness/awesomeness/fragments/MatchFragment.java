@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.example.awesomeness.awesomeness.Adapters.DynamicListView;
 import com.example.awesomeness.awesomeness.Adapters.MatchAdapter;
+import com.example.awesomeness.awesomeness.Items.Game;
 import com.example.awesomeness.awesomeness.Json.Decode;
 import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.MatchActivity;
@@ -29,15 +30,16 @@ public class MatchFragment extends BaseFragment {
     public DynamicListView mListView;
     private MatchActivity matchActivity;
     public static int gameID;
+    private ArrayList<Question> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.match_fragment, container, false);
         matchActivity = (MatchActivity)getActivity();
+        gameID = matchActivity.gameID;
         Request req = new Request(this,matchActivity.net);
         req.execute("GetQuestions", String.valueOf(matchActivity.gameID));
-
         return rootView;
     }
 
@@ -49,61 +51,67 @@ public class MatchFragment extends BaseFragment {
     }
 
 
-    public void checkAnswer() {
+    public int checkAnswer() {
         String id = String.valueOf(gameID);
         switch(mAdapter.getCount()) {
             case 2:
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1))){
-                    addNextQuestion();
+                    addNextQuestion(2);
                 } else {
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"1","0","0","0","0");
+                    return 0;
                 }
                 break;
             case 3:
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2))){
-                    addNextQuestion();
+                    addNextQuestion(3);
                 } else {
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","1","0","0","0");
+                    return 1;
                 }
                 break;
             case 4:
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3))){
-                    addNextQuestion();
+                    addNextQuestion(4);
                 } else {
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","1","0","0");
+                    return 2;
                 }
                 break;
             case 5:
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3),mAdapter.getItem(4))){
-                    Log.d("MatchActivity", "Allarätt");
-                    Request r = new Request(this,matchActivity.net);
-                    r.execute("AnswerQuestions",id,"2","2","2","2","2");
+                    addNextQuestion(5);
                 } else {
                     Log.d("MatchActivity","inte alla rätt");
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","2","1","0");
+                    return 3;
                 }
                 break;
             case 6:
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3),mAdapter.getItem(4),mAdapter.getItem(5))){
-                    Log.d("MatchActivity","Allarätt");
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","2","2","2");
+                    return 6;
                 } else {
-                    Log.d("MatchActivity","inte alla rätt");
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","2","2","1");
+                    return 5;
                 }
-                break;
+
         }
+        return -1;
     }
 
 
-    public void addNextQuestion() {
-        //Adapter.add(mAdapter.mQuestions.get(mAdapter.getCount()));
+    public void addNextQuestion(int pos) {
+        if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "Add new question: " + pos);
+        mAdapter.addItem(list.get(pos));
+        mListView.addToList(0,list.get(pos));
+        mAdapter.notifyDataSetChanged();
     }
 
 
@@ -131,23 +139,45 @@ public class MatchFragment extends BaseFragment {
     public void showQuestions(String json) {
 
         Decode d = new Decode();
-        ArrayList<Question> list = d.decodeQuestions(json);
-        if (mAdapter == null) {
-            mAdapter = new MatchAdapter(matchActivity, R.layout.list_item, list);
-        }
-        if(mListView == null) {
-            mListView = (DynamicListView) getView().findViewById(R.id.questionList);
-            mListView.setAdapter(mAdapter);
-            mListView.setCheeseList(list);
-            mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        }
+        list = d.decodeQuestions(json);
+        ArrayList <Question> tmp = new ArrayList<>();
+        tmp.add(list.get(0));
+        tmp.add(list.get(1));
+
+
+        mAdapter = new MatchAdapter(matchActivity, R.layout.list_item, tmp);
+
+
+        mListView = (DynamicListView) getView().findViewById(R.id.questionList);
+        mListView.setAdapter(mAdapter);
+        mListView.setCheeseList(tmp);
+        mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
 
         FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
         fab.attachToListView(mListView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer();
+                int points = checkAnswer();
+                if (points > 0) {
+                    MatchActivity m = (MatchActivity) getActivity();
+
+                    Game.Round r = m.game.rounds.get(m.game.rounds.size()-1);
+                    if(r.oppRoundScore == -1) {
+                        r.myRoundScore = points;
+                        m.game.turn = !m.game.turn;
+                    }
+                    else {
+                        Game.Round round = new Game.Round();
+                        round.myRoundScore = points;
+                        m.game.addRound(round);
+
+                    }
+
+                    m.changeFragment(MatchActivity.STATISTICS);
+                }
+
             }
         });
 

@@ -78,6 +78,7 @@ func CreateGame(c appengine.Context, user users.Users, uKey *datastore.Key) (Gam
 	g.Created = time.Now()
 	g.Rounds = append(g.Rounds, FirstRound(c))
 	g.NumberOfTurns = 1
+	g.Turn = false
 	id, err := getHighesMatchID(c)
 	if err != nil {
 		return *new(Game), err
@@ -217,8 +218,8 @@ func FirstRound(c appengine.Context) Round {
 	padding[0] = 1
 	round.PlayerOneAnswers = padding
 	round.PlayerTwoAnswerss = padding
-	round.PlayerTwoPoints = 1
-	round.PlayerOnePoints = 1
+	round.PlayerTwoPoints = -1
+	round.PlayerOnePoints = -1
 	questions, _, err := question.GetQuestions(c)
 	if err != nil {
 		c.Infof("Error making firstROund: %v", err)
@@ -242,6 +243,8 @@ func (g *Game) AddNewRound(c appengine.Context) {
 	} else {
 		round := new(Round)
 		round.QuestionSID = getIDs(questions)
+		round.PlayerTwoPoints = -1
+		round.PlayerOnePoints = -1
 		g.Rounds = append(g.Rounds, *round)
 		g.NumberOfTurns++
 	}
@@ -429,10 +432,12 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 		//go question.Balancer(r, game.getNewestRound(c).QuestionSID, game.FID, game.SID, game.Turn, []int{int(a1), int(a2), int(a3), int(a4), int(a5)})
 
 		points := calculatePoints(a1, a2, a3, a4, a5)
+		one, two := CalculateScore(game)
 		ParseRoundData(c, u.ID, game, key, int(a1), int(a2), int(a3), int(a4), int(a5), points)
 		c.Infof("Points: %v", points)
+
 		if game.NumberOfTurns >= 5 {
-			one, two := CalculateScore(game)
+
 			if one > two {
 				fmt.Fprintf(w, "Winner is %v with %v points, loser is %v with %v points", game.FID, one, game.SID, two)
 			} else {

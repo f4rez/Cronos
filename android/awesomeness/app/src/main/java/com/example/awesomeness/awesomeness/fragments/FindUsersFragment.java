@@ -1,6 +1,7 @@
 package com.example.awesomeness.awesomeness.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,8 +11,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.transition.ArcMotion;
 import android.transition.ChangeBounds;
 import android.transition.ChangeImageTransform;
+import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.TransitionSet;
 import android.util.Log;
@@ -19,6 +22,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -40,13 +44,14 @@ import java.util.ArrayList;
  * Created by josef on 2015-04-21.
  */
 public class FindUsersFragment extends BaseFragment {
+    EditText e;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.find_users_fragment, container, false);
-        ActionBar a= ((MainActivity)getActivity()).getSupportActionBar();
-        ((MainActivity)getActivity()).setmToolbarTransperent();
+
         setTargetFragment(this, 0);
-        EditText e = (EditText)rootView.findViewById(R.id.searchFriends);
+        e = (EditText)rootView.findViewById(R.id.searchFriends);
         e.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -83,6 +88,8 @@ public class FindUsersFragment extends BaseFragment {
                 TextView textView = (TextView) view.findViewById(R.id.selectionText);
                 TransitionSet transitionSet = new TransitionSet();
                 transitionSet.addTransition(new ChangeImageTransform());
+                transitionSet.addTransition(new ChangeBounds());
+                transitionSet.addTransition(new Explode());
                 transitionSet.setDuration(300);
 
                 Fragment fragment2 = new FriendFragment();
@@ -103,6 +110,9 @@ public class FindUsersFragment extends BaseFragment {
                 byte[] b = baos.toByteArray();
                 i.putExtra("FriendPicture",b);
                 i.putExtra("FriendId",friend.Id);
+
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(e.getWindowToken(), 0);
 
 
                 getFragmentManager().beginTransaction()

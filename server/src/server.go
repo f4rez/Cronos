@@ -25,6 +25,7 @@ func init() {
 	http.HandleFunc("/challenger", challengerHandler)
 	http.HandleFunc("/search", searchUsers)
 	http.HandleFunc("/test", test)
+	http.HandleFunc("/getGameInfo", getGameInfo)
 }
 
 // Init function.
@@ -86,6 +87,10 @@ func challengerHandler(w http.ResponseWriter, r *http.Request) {
 
 func searchUsers(w http.ResponseWriter, r *http.Request) {
 	users.SearchUsers(w, r)
+}
+
+func getGameInfo(w http.ResponseWriter, r *http.Request) {
+	game.GetGameInfo(w, r)
 }
 func test(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)

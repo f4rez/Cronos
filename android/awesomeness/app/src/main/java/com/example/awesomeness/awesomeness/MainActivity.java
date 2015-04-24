@@ -1,8 +1,6 @@
 package com.example.awesomeness.awesomeness;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
@@ -15,16 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewAnimationUtils;
 
 
 import com.example.awesomeness.awesomeness.Net.NetRequests;
 import com.example.awesomeness.awesomeness.fragments.BaseFragment;
 import com.example.awesomeness.awesomeness.fragments.ChallengeFriendFragment;
 import com.example.awesomeness.awesomeness.fragments.FindUsersFragment;
-import com.example.awesomeness.awesomeness.fragments.MainPageFragment;
+import com.example.awesomeness.awesomeness.fragments.StartPageFragment;
 
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -42,6 +37,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public static final int MAINPAGE = 100;
     public static final int CHALLENGE_FRIEND = 101;
     public static final int FIND_FRIEND = 102;
+
+
+    public static final String MY_NAME = "Josef@s.se";
+    public static final String HOST = "192.168.43.87:8080";
 
 
 
@@ -64,7 +63,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        net = new NetRequests("192.168.43.87:8080");
+        net = new NetRequests(HOST);
     }
 
 
@@ -110,7 +109,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         switch (position) {
             case MAINPAGE:
-                baseFragment = new MainPageFragment();
+                baseFragment = new StartPageFragment();
                 break;
             case CHALLENGE_FRIEND:
                 baseFragment = new ChallengeFriendFragment();

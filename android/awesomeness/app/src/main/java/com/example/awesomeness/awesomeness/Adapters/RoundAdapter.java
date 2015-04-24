@@ -5,17 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.awesomeness.awesomeness.Items.DrawerItem;
-import com.example.awesomeness.awesomeness.Items.RoundItem;
+import com.example.awesomeness.awesomeness.Items.Game;
 import com.example.awesomeness.awesomeness.R;
 
 /**
  * Created by enigma on 2015-04-21.
  */
-public class RoundAdapter extends ArrayAdapter<RoundItem> {
+public class RoundAdapter extends ArrayAdapter<Game.Round> {
 
 
     public RoundAdapter(Context context, int resource) {
@@ -32,11 +30,23 @@ public class RoundAdapter extends ArrayAdapter<RoundItem> {
 
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.drawer_list_item, null);
+            v = vi.inflate(R.layout.matchstatistics_item, null);
 
         }
 
-        RoundItem r = getItem(position);
+        TextView p1r = (TextView) v.findViewById(R.id.player1_roundNumber);
+        TextView rsb = (TextView) v.findViewById(R.id.round_scoreBox);
+        TextView p2r = (TextView) v.findViewById(R.id.player2_roundNumber);
+
+        Game.Round r = getItem(position);
+        if (p1r != null) p1r.setText("Runda " + (position+1));
+        if (p2r != null) p2r.setText("Runda " + (position+1));
+        if (rsb != null) {
+            if (r.myRoundScore == -1 && r.oppRoundScore == -1) rsb.setText("0 - 0");
+            if (r.myRoundScore > -1 && r.oppRoundScore == -1) rsb.setText( r.myRoundScore + " - 0");
+            if (r.myRoundScore == -1 && r.oppRoundScore > -1) rsb.setText( "0 - " + r.oppRoundScore);
+            if (r.myRoundScore > -1 && r.oppRoundScore > -1) rsb.setText( r.myRoundScore + " - " + r.oppRoundScore);
+        }
 
 
         return v;

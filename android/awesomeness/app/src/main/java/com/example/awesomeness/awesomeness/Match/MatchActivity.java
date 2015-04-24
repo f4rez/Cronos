@@ -10,15 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-
+import com.example.awesomeness.awesomeness.Items.Game;
+import com.example.awesomeness.awesomeness.Json.Decode;
 import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Net.NetRequests;
 import com.example.awesomeness.awesomeness.R;
 import com.example.awesomeness.awesomeness.fragments.BaseFragment;
 import com.example.awesomeness.awesomeness.fragments.MatchFragment;
-
-
-
+import com.example.awesomeness.awesomeness.fragments.MatchStatistics;
 
 
 /**
@@ -29,9 +28,11 @@ public class MatchActivity extends ActionBarActivity{
     public NetRequests net;
     public static int gameID;
     private CharSequence mTitle;
+    public Game game;
 
 
     public static final int MATCHPAGE = 100;
+    public static final int STATISTICS = 101;
 
 
     @Override
@@ -40,8 +41,10 @@ public class MatchActivity extends ActionBarActivity{
         setContentView(R.layout.activity_match);
         Bundle extras = getIntent().getExtras();
         gameID = extras.getInt("gameID");
-        net = new NetRequests("192.168.43.87:8080",false);
-        BaseFragment b = selectFragment(MATCHPAGE);
+        if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "GameID in MatchActivity: " + gameID);
+        net = new NetRequests(MainActivity.HOST,false);
+
+        BaseFragment b = selectFragment(STATISTICS);
         openFragment(b);
     }
 
@@ -52,6 +55,14 @@ public class MatchActivity extends ActionBarActivity{
         return true;
     }
 
+
+    public void changeFragment(int position) {
+        // update the main content by replacing fragments
+        if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "enterd onNavigationDrawerItemSelected");
+        BaseFragment baseFragment = selectFragment(position);
+        if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "before open fragment");
+        openFragment(baseFragment);
+    }
 
 
 
@@ -82,10 +93,10 @@ public class MatchActivity extends ActionBarActivity{
         switch (position) {
             case MATCHPAGE:
                 baseFragment = new MatchFragment();
-
                 break;
-
-
+            case STATISTICS:
+                baseFragment = new MatchStatistics();
+                break;
         }
         return baseFragment;
     }
@@ -95,6 +106,9 @@ public class MatchActivity extends ActionBarActivity{
         switch (number) {
             case MATCHPAGE:
                 mTitle = getString(R.string.title_section1);
+                break;
+            case STATISTICS:
+                mTitle = getString(R.string.title_section4);
                 break;
         }
         restoreActionBar();

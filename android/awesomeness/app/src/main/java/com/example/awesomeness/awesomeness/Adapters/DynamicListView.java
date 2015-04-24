@@ -513,6 +513,9 @@ public class DynamicListView extends ListView {
     public void setCheeseList(ArrayList<Question> cheeseList) {
         mCheeseList = cheeseList;
     }
+    public void addToList(int index,Question q ) {
+        mCheeseList.add(q);
+    }
 
     /**
      * This scroll listener is added to the listview in order to handle cell swapping

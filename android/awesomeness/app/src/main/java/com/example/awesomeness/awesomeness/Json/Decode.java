@@ -9,7 +9,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import com.example.awesomeness.awesomeness.Items.Friend;
-import com.example.awesomeness.awesomeness.Items.RoundItem;
+import com.example.awesomeness.awesomeness.Items.Game;
+import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.GamesOverview;
 import com.example.awesomeness.awesomeness.Question.Question;
 
@@ -17,8 +18,6 @@ import com.example.awesomeness.awesomeness.Question.Question;
  * Created by josef on 2015-04-13.
  */
 public class Decode {
-
-
 
     public ArrayList<Question> decodeQuestions(String in) {
         ArrayList<Question> list = new ArrayList<>();
@@ -80,21 +79,23 @@ public class Decode {
     }
 
 
-    public RoundItem decodeRoundItems(String in) {
-        RoundItem r = null;
+    public Game decodeGame(String in) {
+        Game r = null;
         if (in == "error") return r;
+        if (MainActivity.DEBUG) Log.d(MainActivity.TAG, in);
         JSONObject json = null;
          try {
             json = new JSONObject(in);
-             r = new RoundItem(json.getString("FID"),json.getString("FName"), json.getString("FPic"),
+             if (MainActivity.DEBUG) Log.d(MainActivity.TAG, json.getString("FName"));
+             r = new Game(json.getString("FID"),json.getString("FName"), json.getString("FPic"),
                     json.getString("SID"), json.getString("SName"), json.getString("SPic"),json.getInt("NumberOfTurns"),json.getBoolean("Turn"));
 
-             JSONArray j = json.getJSONArray("Round");
+             JSONArray j = json.getJSONArray("Rounds");
              for(int i = 0; i< j.length();i++) {
                  JSONObject obj = j.getJSONObject(i);
-                 RoundItem.Round round = new RoundItem.Round();
-                 round.playerOneScore = obj.getInt("PlayerOnePoints");
-                 round.playerTwoScore = obj.getInt("PlayerTwoPoints");
+                 Game.Round round = new Game.Round();
+                 round.myRoundScore = obj.getInt("PlayerOnePoints");
+                 round.oppRoundScore = obj.getInt("PlayerTwoPoints");
                  r.addRound(round);
              }
         } catch (JSONException e) {

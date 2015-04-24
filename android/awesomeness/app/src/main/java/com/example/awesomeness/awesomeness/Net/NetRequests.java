@@ -3,6 +3,8 @@ package com.example.awesomeness.awesomeness.Net;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.awesomeness.awesomeness.MainActivity;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class NetRequests {
 
     public String login() {
         try {
-            url = new URL("http://"+ host + "/_ah/login?email=philip%40example.com&action=Login&continue=http://"+host);
+            url = new URL("http://"+ host + "/_ah/login?email="+ MainActivity.MY_NAME+"&action=Login&continue=http://"+host);
             urlConnection = (HttpURLConnection) url.openConnection();
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -243,6 +245,30 @@ public class NetRequests {
         } finally{
              if (urlConnection != null)
                  urlConnection.disconnect();
+        }
+        return "error";
+
+    }
+
+    public String game(String id) {
+
+        try {
+            url = new URL("http://" +host +"/getGameInfo?game_id=" + id);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader r = new BufferedReader(new InputStreamReader(in));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line);
+            }
+            return total.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally{
+            if (urlConnection != null)
+                urlConnection.disconnect();
         }
         return "error";
 

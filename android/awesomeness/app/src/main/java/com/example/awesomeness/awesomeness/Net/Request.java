@@ -1,18 +1,13 @@
 package com.example.awesomeness.awesomeness.Net;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.example.awesomeness.awesomeness.MainActivity;
-import com.example.awesomeness.awesomeness.Match.MatchActivity;
 import com.example.awesomeness.awesomeness.fragments.ChallengeFriendFragment;
 import com.example.awesomeness.awesomeness.fragments.FindUsersFragment;
-import com.example.awesomeness.awesomeness.fragments.MainPageFragment;
+import com.example.awesomeness.awesomeness.fragments.StartPageFragment;
 import com.example.awesomeness.awesomeness.fragments.MatchFragment;
-
-import java.util.Objects;
+import com.example.awesomeness.awesomeness.fragments.MatchStatistics;
 
 /**
  * Created by josef on 2015-04-13.
@@ -54,6 +49,8 @@ public class Request extends AsyncTask<String, Void, String> {
                 return net.friend("add", string[1]);
             case "FriendChallenge":
                 return net.friend("challenge", string[1]);
+            case "GetGame":
+                return net.game(string[1]);
         }
         return "error";
     }
@@ -62,15 +59,15 @@ public class Request extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String returned) {
         switch (action){
             case "JoinGame":
-                MainPageFragment m2 = (MainPageFragment) caller;
+                StartPageFragment m2 = (StartPageFragment) caller;
                 m2.showMatches(returned);
                 break;
             case "Login":
-                MainPageFragment mainActivity = (MainPageFragment) caller;
+                StartPageFragment mainActivity = (StartPageFragment) caller;
                 mainActivity.doneLogin();
                 break;
             case "RegisterUser":
-                MainPageFragment m1 = (MainPageFragment) caller;
+                StartPageFragment m1 = (StartPageFragment) caller;
                 m1.doneRegister();
                 break;
             case "GetQuestions":
@@ -94,8 +91,12 @@ public class Request extends AsyncTask<String, Void, String> {
                 f1.challengedFriend();
                 break;
             case "StartMessage":
-                MainPageFragment pageFragment = (MainPageFragment) caller;
+                StartPageFragment pageFragment = (StartPageFragment) caller;
                 pageFragment.showMatches(returned);
+                break;
+            case "GetGame":
+                MatchStatistics matchStatistics = (MatchStatistics) caller;
+                matchStatistics.saveGame(returned);
                 break;
         }
 
