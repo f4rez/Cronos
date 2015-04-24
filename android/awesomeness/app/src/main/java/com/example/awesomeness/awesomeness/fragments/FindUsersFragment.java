@@ -107,6 +107,7 @@ public class FindUsersFragment extends BaseFragment {
 
                 getFragmentManager().beginTransaction()
                         .replace(R.id.container, fragment2)
+                        .addToBackStack("Stack")
                         .addSharedElement(imageView, "profilePicture2")
                         .addSharedElement(textView,"friendName")
                         .commit();

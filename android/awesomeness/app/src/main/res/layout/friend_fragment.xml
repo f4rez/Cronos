@@ -11,7 +11,8 @@
         android:scaleType="centerCrop"
         android:src="@drawable/aws"
         android:id="@+id/profilePicture"
-        android:transitionName="profilePicture2"/>
+        android:transitionName="profilePicture2"
+        android:layout_alignParentBottom="true"/>
 
     <com.melnykov.fab.FloatingActionButton
         android:layout_width="wrap_content"
