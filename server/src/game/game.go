@@ -449,6 +449,8 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 					}
 				}
 			}
+
+			// Call balancer here!
 		}
 		fmt.Fprintf(w, "Dina svar har registrerats")
 		break
