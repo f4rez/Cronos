@@ -117,7 +117,7 @@ Klienten kommunicera med en server som körs i App Engine och är som är utveck
 \textbf{Databas}\\
 Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Databasen utvecklas ej av projektutvecklarna utan används som externt utvecklat verktyg. \\
 \textbf{Crawler}\\
-Crawler \footnote{Vad är en crawler} är den automatiska informationshämtaren som använder sig av ett webinterface vars syfte är att ge administratörerna möjligheten att avgöra den hämtade informationens kvalitet och för att bestämma en initial svårighetsgrad. Om informationen godkänns kommer den att lagras i databasen, som nämndes tidigare, och är då redo för att användas i spelet.
+Crawler \footnote{Vad är en crawler} är den automatiska informationshämtaren som använder sig av ett webinterface vars syfte är att ge administratörerna möjligheten att avgöra den hämtade informationens kvalitet och för att bestämma en initial svårighetsgrad. Om informationen godkänns kommer den att lagras i databasen som nämndes tidigare och är då redo för att användas i spelet.
 \\
 Systemet är uppbyggt kring http förfrågningar vilket betyder att när applikationen skickar en förfrågan finns det i servern flera olika handlers \footnote{ En handler är en funktion i servern som hanterar en förfrågning från klienter.} som tar han om olika förfrågningar. Vill man lägga till nya frågor får man via webinterfacet ange vilken sida man vill gå igenom för att hitta frågor och får sedan från crawlern tillbaka frågor som man i interfacet får gå igenom för att ge en initial svårighetsgrad och sedan spara in i databasen om den håller tillräckligt hög klass.
 
