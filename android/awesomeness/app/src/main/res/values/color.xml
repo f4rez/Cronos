@@ -7,8 +7,8 @@
     <color name="light_gray">#ffb0b0b0</color>
     <color name="grey_text">#ff787878</color>
     <color name="dark_grey_text">#ff4f4f4f</color>
-    <color name="primary_color">#fd7800</color>
-    <color name="primary_darkercolor">#ffe47800</color>
+    <color name="primary_color">#166201</color>
+    <color name="primary_darkercolor">#154e03</color>
     <color name="accent_color_ea">#c5d30c</color>
     <color name="accent_color_ea_transperacy">#92c5d30c</color>
     <color name="app_drawer_color">#fff5f5f5</color>

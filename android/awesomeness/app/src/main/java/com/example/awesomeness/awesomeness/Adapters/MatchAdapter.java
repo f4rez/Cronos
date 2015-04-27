@@ -19,38 +19,42 @@ import java.util.HashMap;
  */
 public class MatchAdapter extends ArrayAdapter<Question> {
 
-        Context mContext;
-        final int INVALID_ID = -1;
-        public HashMap<Question, Integer> mIdMap = new HashMap<Question, Integer>();
+    Context mContext;
+    final int INVALID_ID = -1;
+    public HashMap<Question, Integer> mIdMap = new HashMap<Question, Integer>();
 
-        public MatchAdapter(Context context, int resource,ArrayList<Question> q) {
-            super(context, resource,q);
-            mContext = context;
-            for (int i = 0; i < q.size(); ++i) {
-                mIdMap.put(q.get(i), i);
+    public MatchAdapter(Context context, int resource, ArrayList<Question> q) {
+        super(context, resource, q);
+        mContext = context;
+        for (int i = 0; i < q.size(); ++i) {
+            mIdMap.put(q.get(i), i);
+        }
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v = convertView;
+        if (v == null) {
+            LayoutInflater vi;
+            vi = LayoutInflater.from(getContext());
+            v = vi.inflate(R.layout.list_item, null);
+        }
+        Question q = getItem(position);
+        if (q != null) {
+            TextView tt1 = (TextView) v.findViewById(R.id.question);
+            TextView year = (TextView) v.findViewById(R.id.year);
+            if (tt1 != null) {
+
+                tt1.setText(q.question);
+            }
+            if (year != null) {
+                year.setText(q.year.toString());
+                year.setVisibility(View.INVISIBLE);
             }
         }
+        return v;
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View v = convertView;
-            if (v == null) {
-                LayoutInflater vi;
-                vi = LayoutInflater.from(getContext());
-                v = vi.inflate(R.layout.list_item, null);
-            }
-            Question q = getItem(position);
-            if (q != null) {
-                TextView tt1 = (TextView) v.findViewById(R.id.question);
-
-                if (tt1 != null) {
-
-                    tt1.setText(q.question + " - " + q.year);
-                }
-            }
-            return v;
-
-        }
+    }
 
     @Override
     public long getItemId(int position) {
@@ -67,9 +71,8 @@ public class MatchAdapter extends ArrayAdapter<Question> {
     }
 
 
-    public void addItem(Question q ) {
+    public void addItem(Question q) {
         //add(q);
-        mIdMap.put(q,mIdMap.size());
+        mIdMap.put(q, mIdMap.size());
     }
 }
-

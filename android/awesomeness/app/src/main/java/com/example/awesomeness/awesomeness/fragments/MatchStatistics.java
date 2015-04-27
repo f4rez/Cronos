@@ -5,6 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -98,8 +102,11 @@ public class MatchStatistics extends BaseFragment {
 
     }
     public void buildGUI(View root){
-
-
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setDuration(1000);
+        AnimationSet animation = new AnimationSet(false); //change to false
+        animation.addAnimation(fadeIn);
         ImageView playerOnePic =(ImageView) root.findViewById(R.id.player1_photo);
         ImageView playerTwoPic =(ImageView) root.findViewById(R.id.player2_photo);
         TextView playerOneName =(TextView) root.findViewById(R.id.player1_nameTag);
@@ -124,11 +131,21 @@ public class MatchStatistics extends BaseFragment {
             });
             fab.setImageResource(R.drawable.ic_action_overflow);
         }
-        if (playerOneName != null) playerOneName.setText(game.myName);
-        if (playerTwoName != null) playerTwoName.setText(game.oppName);
+        if (playerOneName != null) {
+            playerOneName.setText(game.myName);
+            playerOneName.setAnimation(animation);
+            playerOneName.startAnimation(animation);
+        }
+        if (playerTwoName != null) {
+            playerTwoName.setText(game.oppName);
+            playerTwoName.setAnimation(animation);
+            playerTwoName.startAnimation(animation);
+        }
         if (totalScore != null) {
             game.calcTotalScore();
             totalScore.setText(game.myScore + " - " + game.oppScore);
+            totalScore.setAnimation(animation);
+            totalScore.startAnimation(animation);
         }
 
 
@@ -136,18 +153,19 @@ public class MatchStatistics extends BaseFragment {
             RoundAdapter adapter = new RoundAdapter(getActivity(),R.layout.matchstatistics_item);
             adapter.addAll(game.rounds);
             scoreBoard.setAdapter(adapter);
+            scoreBoard.setAnimation(animation);
+            scoreBoard.startAnimation(animation);
         }
 
 
     }
 
-
-
     public void saveGame(String in){
         game = d.decodeGame(in);
         MatchActivity m = (MatchActivity) getActivity();
-        m.game = game;
-        buildGUI();
-
+        if (m != null) {
+            m.game = game;
+            buildGUI();
+        }
     }
 }

@@ -24,7 +24,6 @@
             android:layout_marginLeft="52dp"
             android:layout_marginStart="52dp"
             android:contentDescription="player1_photo"
-            android:src="@drawable/ic_action_new"
             android:layout_marginBottom="5dp"
             />
         <TextView
@@ -32,7 +31,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/player1_nameTag"
             android:layout_below="@id/player1_photo"
-            android:text="PLAYER 1 NAME"
             android:layout_centerHorizontal="true"
             />
     </RelativeLayout>
@@ -55,7 +53,6 @@
             android:layout_marginLeft="52dp"
             android:layout_marginStart="52dp"
             android:contentDescription="player2_photo"
-            android:src="@drawable/ic_action_new"
             android:layout_marginBottom="5dp"
             />
         <TextView
@@ -63,7 +60,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/player2_nameTag"
             android:layout_below="@+id/player2_photo"
-            android:text="PLAYER 2 NAME"
             android:layout_centerHorizontal="true"
             />
     </RelativeLayout>
@@ -71,8 +67,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="52 - 25"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:id="@+id/totalScore"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

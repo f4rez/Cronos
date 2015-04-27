@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
 
     public static final String MY_NAME = "Josef@s.se";
-    public static final String HOST = "192.168.43.87:8080";
+    public static final String HOST = "192.168.0.37:8080";
 
 
 
@@ -53,7 +53,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,

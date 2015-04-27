@@ -21,6 +21,10 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.view.CardView;
+import it.gmariotti.cardslib.library.view.CardViewNative;
+
 /**
  * Created by josef on 2015-04-21.
  */
@@ -31,6 +35,7 @@ public class MatchFragment extends BaseFragment {
     private MatchActivity matchActivity;
     public static int gameID;
     private ArrayList<Question> list;
+    private Boolean hasSeenYears = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,6 +139,13 @@ public class MatchFragment extends BaseFragment {
     }
 
 
+    public void showYears() {
+        for (int i = 0; i < mListView.getCount(); i++){
+            mListView.getViewForID(mAdapter.getItemId(i)).findViewById(R.id.year).setVisibility(View.VISIBLE);
+        }
+        hasSeenYears = true;
+    }
+
 
 
     public void showQuestions(String json) {
@@ -154,30 +166,45 @@ public class MatchFragment extends BaseFragment {
         mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 
+        Card card = new Card(getActivity());
+
+        //Set the card inner text
+        card.setTitle("My Title");
+
+
+        //Set card in the cardView
+        CardViewNative cardView = (CardViewNative) getActivity().findViewById(R.id.card);
+        cardView.setCard(card);
+
+
+
         FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
         fab.attachToListView(mListView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int points = checkAnswer();
-                if (points > 0) {
+                if (!hasSeenYears) {
+                    int points = checkAnswer();
+                    if (points > 0) {
+                        MatchActivity m = (MatchActivity) getActivity();
+
+                        Game.Round r = m.game.rounds.get(m.game.rounds.size() - 1);
+                        if (r.oppRoundScore == -1) {
+                            r.myRoundScore = points;
+                            m.game.turn = !m.game.turn;
+                        } else {
+                            Game.Round round = new Game.Round();
+                            round.myRoundScore = points;
+                            m.game.addRound(round);
+
+                        }
+                        showYears();
+                    }
+                }
+                else {
                     MatchActivity m = (MatchActivity) getActivity();
-
-                    Game.Round r = m.game.rounds.get(m.game.rounds.size()-1);
-                    if(r.oppRoundScore == -1) {
-                        r.myRoundScore = points;
-                        m.game.turn = !m.game.turn;
-                    }
-                    else {
-                        Game.Round round = new Game.Round();
-                        round.myRoundScore = points;
-                        m.game.addRound(round);
-
-                    }
-
                     m.changeFragment(MatchActivity.STATISTICS);
                 }
-
             }
         });
 
