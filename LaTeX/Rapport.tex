@@ -8,6 +8,8 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
 \addbibresource{cites.bib}
+\usepackage{caption}
+\captionsetup[figure]{name=Figur}
 
 \author{Alfred Yrelin\\Josef Svensson\\Philip Åkerfeldt}
 \title{Är du en historiemästare?}
@@ -49,7 +51,7 @@ Applikationen till Android skrivs i Java och gränssnittet skrivs med hjälp av 
 \subsubsection{Server}
 För att flera spelare ska kunna interagera med varandra så behövs det en server. En server gör också att frågorna som finns i spelet kommer kunna uppdateras kontinuerligt.
 
-Servermjukvaran skrivs i programspråket Go och körs på Googles molntjänst App engine.
+Servermjukvaran skrivs i programspråket Go \cite{golang} och körs på Googles molntjänst App engine.
 
 \subsubsection{Google App Engine} 
 Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för moltjänster. Det bygger på att användaren bygger en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programet man bygger i App Engine körs på googles infrastruktur och är uppbyggt så att man kan utöka antalet användare närmast obegränsat. Flera stora företag har använt sig av App Engine när de lanserat produkter bland annat Coca Cola, Rovio och Best Buy. \cite{googleappenginecustomers}
@@ -101,21 +103,23 @@ Google Hangouts används för kommunikation när gruppmedlemmarna är på olika 
 
 \subsection{Systemstruktur}
 
-*-------------------------------------------------*
-
-
-                 SKRIV UT DENNA DEL
-
-
-*-------------------------------------------------*
 \begin{figure}[H]
-\centering
-\includegraphics[scale=0.2]{systemstruktur.jpg} 
+	\begin{centering}
+	\includegraphics[scale=0.2]{systemstruktur.jpg} 
+	\end{centering}
+	\caption{\textit{Illustration av systemstrukturen}}
 \end{figure} 
 
-Androidapplikationen, klienten, är spelet som utvecklats och som kommer vara den del som användaren interagerar med och är närmast relaterad till. Klienten kommunicera med en server som körs i \footnote{ App engine} och är som är utvecklad i språket \footnote{ GO}. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen som skickar frågorna till servern som i sin tur skickar vidare till klienten. Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. \\Servern sköter inte bara kommunikation utan används även av crawlern som är den automatiska informationshämtaren. Crawlern använder sig av ett webinterface som har som syfte att ge administratörerna möjligheten att avgöra den hämtade informationens kvalitet och för att bestämma en initial svårighetsgrad på den. Om informationen godkänns kommer den att lagras i databasen, som nämndes tidigare, och är då redo för att användas i spelet.
+\textbf{Androidapplikationen}\\
+Androidapplikationen, klienten, är spelet som utvecklats och som kommer vara den del som användaren interagerar med och är närmast relaterad till. \\
+\textbf{Server}\\
+Klienten kommunicera med en server som körs i App Engine och är som är utvecklad i språket Go (Golang) \cite{golang}. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen som skickar frågorna till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra crawlern som är den automatiska informationshämtaren. \\
+\textbf{Databas}\\
+Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Databasen utvecklas ej av projektutvecklarna utan används som externt utvecklat verktyg. \\
+\textbf{Crawler}\\
+Crawler \footnote{Vad är en crawler} är den automatiska informationshämtaren som använder sig av ett webinterface vars syfte är att ge administratörerna möjligheten att avgöra den hämtade informationens kvalitet och för att bestämma en initial svårighetsgrad. Om informationen godkänns kommer den att lagras i databasen, som nämndes tidigare, och är då redo för att användas i spelet.
 \\
-Systemet är uppbyggt kring http förfrågningar, när applikationen skickar en förfrågan finns det i servern flera oilka handlers som tar han om olika förfrågningar. Vill man lägga till nya frågor får man via webinterfacet ange vilken sida man vill gå igenom för att hitta frågor och får sedan från crawlern tillbaka frågor som man i interfacet får gå igenom för att ge en initial svårighetsgrad och sedan spara in i databasen om den håller tillräckligt hög klass.
+Systemet är uppbyggt kring http förfrågningar vilket betyder att när applikationen skickar en förfrågan finns det i servern flera olika handlers \footnote{ En handler är en funktion i servern som hanterar en förfrågning från klienter.} som tar han om olika förfrågningar. Vill man lägga till nya frågor får man via webinterfacet ange vilken sida man vill gå igenom för att hitta frågor och får sedan från crawlern tillbaka frågor som man i interfacet får gå igenom för att ge en initial svårighetsgrad och sedan spara in i databasen om den håller tillräckligt hög klass.
 
 
 
