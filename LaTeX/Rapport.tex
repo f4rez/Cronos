@@ -18,20 +18,19 @@
 \pagebreak
 
 \section{Inledning}
-Vem vill inte kunna säga: ``Jag är bäst på...''? Att tävla är något som många säkerligen tycker är roligare och mer socialt än att spela ensam. Detta är en av anledningarna till att vi tror att spel som Quizkampen och Wordfeud har blivit så populära\cite{quiz}. I tidigare nämnda spel har man möjlighet att se vem som är bäst på många olika spelplaner. Vi vill skapa ett spel som passar bra i denna kategorin. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. Spelet utvecklas till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet för att växa i takt med användarantalet. 
+Vem vill inte kunna säga: ``Jag är bäst på...''? Att tävla är något som många säkerligen tycker är roligare och mer socialt än att spela ensam. Detta är en av anledningarna till att vi tror att spel som Quizkampen och Wordfeud har blivit så populära\cite{quiz}. I tidigare nämnda spel har man möjlighet att se vem som är bäst på många olika spelplaner. Vi vill skapa ett till spel i samma kategori. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. Spelet utvecklas till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med användarantalet. 
 
 \section{Förutsättningar}
 
 \subsection{Bakgrund}
 Applikationsutveckling för mobila enheter är ett spännande område som växer\cite{trendforce} och det operativsystem som sålde mest enheter under första kvartalet av 2015 var Android. 
 
-\subsubsection{Turbaserade multiplayerspel för mobil}
-Wordfeud och Quizkampen är två populära turbaserade multiplayer spel där Quizkampen har 45 miljoner användare globalt\cite{quiz} och Wordfeud har mellan 10-50 miljoner nedladdningar enbart på Android plattformen. Dessa spel gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare spelar omgång får dess motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
+\subsubsection{Turbaserade multiplayerspel för mobiltelefoner}
+Wordfeud och Quizkampen är två populära turbaserade multiplayerspel där Quizkampen har 45 miljoner användare globalt\cite{quiz} och Wordfeud har mellan 10-50 miljoner nedladdningar enbart på Androidplattformen\cite{wordfeud}. Dessa spel gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare spelar sin omgång får dess motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
 
-\textbf{KÄLLA PÅ PÅSTÅENDE:} "mellan 10-50 miljoner nerladdningar på enbart Android"
+\subsubsection{Turbaserade sällskapsspel}
 
-\subsubsection{Turbaserade brädspel}
-Kanske skriva lite om turbaserade spel. Typ "när-då-då?"
+Frågesportspel i sällskapsspelsform är och har länge varit ett populärt sätt att umgås på\cite{tp}. Det är många som till exempel har spelat \textit{Trivial Pursuit} (TP) (kanske speciellt 84-års utgåva, som återfinns lite här och där). Sällskapsspelet \textit{När då då?} är ett spel som liknar TP på det sättet att den spelare som först svarar rätt på flest frågor förmodligen vinner. Det är ett väldigt enkelt spelkoncept men det utnyttjar också en ganska fundamental egenskap: spelarens vilja att visa sig smartast. Det är förmodligen detta som gör den här typen av spel så populära.
 
 \subsection{Syfte}
 Det är projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter. I det här projektet ska en applikation utvecklas som ger flera användare möjlighet att interagera med varandra.
@@ -66,13 +65,18 @@ Det finns många mobilspel som handlar om att två personer möts och mäter sin
 En liknande version av det här spelet har också visat sig vara populär i form av sällskapsspel (\textit{När-då-då?})\cite{nardada}, därför är hoppet högt om att också den här applikationen ska bli populär. Det finns för tillfället ingen variant av det här spelkonceptet till Android vilket ses som en bra chans att ta enligt utvecklingsteamet.
 
 \subsection{Lägesbeskrivning}
-Det finns ett spel för iOS, \textit{Historiekampen}\cite{historiekampen} som också handlar om att lägga in händelser korrekt på en tidslinje. Genom en ytlig granskning av deras gränssnitt har det konstaterats att det går att göra bättre. Med goda kunskaper om detaljerna i spelmekaniken hos dessa spel så är det också ett delmål att den här applikationen ska bli roligare att spela. En nackdel som den befintliga iOS-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
+Det finns ett spel för iOS, \textit{Historiekampen}\cite{historiekampen} som också handlar om att lägga in händelser korrekt på en tidslinje. En nackdel som den befintliga iOS-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
 
+Historiekampen är ett spel som mekaniskt sett liknar sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur går till så att denne får en fråga som ska placeras på spelarens tidslinje. Vid första frågan finns det en årtalsreferens utlagd, vid nästa fråga finns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare. I Historiekampen kan en spelare välja att antingen lägga en fråga till, eller avsluta sin runda och därmed låsa frågorna. Skulle spelaren svara fel på en fråga förlorar denne alla frågor som har placerats den rundan.
 
 \textbf{vad vi ska göra (varför vi är bättre än dom andra):} 
 OKLART VART DENNA SKA LIGGA
 
-Spelet vi kommer utveckla kommer vara likt Historiekampen rent konceptuellt. Spelmekaniken kommer vara annorlunda då vi kommer behandla varje match och varje runda under matchens gång annorlunda. Vår app kommer även vara annorlunda om man ser från utvecklingspotentialen och skalbarheten. Med den semi-automatiska frågehämtaren som kan anpassas för olika informationskällor kommer det vara relativt enkelt att hämta nya frågor. Vår app kommer även balanseras under spelets gång och på så sätt göra att alla spelare kommer kunna känna sig bekväma med frågorna som kan ställas. Balanseringen i spelet kan även byggas ut och göras mer avancerad om användarna skulle ge kritik på hur frågorna kategoriseras. Det finns egentligen inga gränser för hur avancerad balansering kan göras vilket är ett stort plus som skiljer oss från konkurrenterna.
+Spelet som utvecklats liknar Historiekampen rent konceptuellt. Spelmekaniken är dock annorlunda då varje match och varje runda behandlas annorlunda. I \textbf{VÅRT SPEL} får varje spelare ett paket med fem frågor (som visas en i taget) vilket spelaren ska placera i rätt ordning. oavsett om spelaren lyckas eller inte så går turen efter fem frågor över till motståndaren. När fem rundor har spelats vinner den spelare som har svarat rätt på flest frågor totalt. 
+
+En viktig detalj som skiljer det här spelet från Historiekampen är faktumet att spelaren ser beskrivningen av händelserna som denne placerat, och inte årtalen. \textbf{VÅRT SPEL} handlar alltså mer om att relatera händelser till varandra (dog Palme efter andra världskriget?) än att veta vilket årtal det skedde.
+
+Med den semi-automatiska frågehämtaren som kan anpassas för olika informationskällor är det relativt enkelt att hämta nya frågor. Vår app balanseras också under spelets gång och på så sätt kan alla spelare känna sig bekväma med frågorna som ställs. Balanseringen i spelet kan även byggas ut och göras mer avancerad om användarna skulle ge kritik på hur frågorna kategoriseras. Det finns egentligen inga gränser för hur avancerad balansering kan göras vilket är ett stort plus som skiljer oss från konkurrenterna.
 
 \subsection{Frågeställningar}
 
@@ -133,7 +137,6 @@ Gränssnittet och användandet av applikationen kommer också att utvärderas me
 Detta är en representation av vår tidsplan i form av ett gantt-diagram.
 \begin{figure}[H]
 \centering
-\includegraphics[width=1.55\textwidth, angle =90]{gantt.jpg}
 \end{figure} 
 \pagebreak
 
