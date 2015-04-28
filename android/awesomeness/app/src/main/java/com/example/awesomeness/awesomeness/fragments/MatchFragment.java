@@ -16,6 +16,7 @@ import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.MatchActivity;
 import com.example.awesomeness.awesomeness.Net.Request;
 import com.example.awesomeness.awesomeness.Question.Question;
+import com.example.awesomeness.awesomeness.Question.QuestionCard;
 import com.example.awesomeness.awesomeness.R;
 import com.melnykov.fab.FloatingActionButton;
 
@@ -36,6 +37,8 @@ public class MatchFragment extends BaseFragment {
     public static int gameID;
     private ArrayList<Question> list;
     private Boolean hasSeenYears = false;
+    private QuestionCard card;
+    private FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,8 +117,11 @@ public class MatchFragment extends BaseFragment {
 
     public void addNextQuestion(int pos) {
         if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "Add new question: " + pos);
-        mAdapter.addItem(list.get(pos));
-        mListView.addToList(0,list.get(pos));
+        Question q = list.get(pos);
+        mAdapter.addItem(q);
+        mListView.addToList(0, list.get(pos));
+        card.question = q.question;
+        card.notifyDataSetChanged();
         mAdapter.notifyDataSetChanged();
     }
 
@@ -143,6 +149,7 @@ public class MatchFragment extends BaseFragment {
         for (int i = 0; i < mListView.getCount(); i++){
             mListView.getViewForID(mAdapter.getItemId(i)).findViewById(R.id.year).setVisibility(View.VISIBLE);
         }
+        fab.setImageResource(R.drawable.ic_action_back);
         hasSeenYears = true;
     }
 
@@ -166,26 +173,26 @@ public class MatchFragment extends BaseFragment {
         mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 
-        Card card = new Card(getActivity());
+        card = new QuestionCard(getActivity());
 
         //Set the card inner text
-        card.setTitle("My Title");
-
-
+        card.question = tmp.get(0).question;
         //Set card in the cardView
-        CardViewNative cardView = (CardViewNative) getActivity().findViewById(R.id.card);
+        CardView cardView = (CardView) getActivity().findViewById(R.id.card);
         cardView.setCard(card);
+        cardView.setVisibility(View.VISIBLE);
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
+        fab = (FloatingActionButton) getView().findViewById(R.id.fab);
         fab.attachToListView(mListView);
+        fab.setImageResource(R.drawable.ic_action_accept);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!hasSeenYears) {
                     int points = checkAnswer();
-                    if (points > 0) {
+                    if (points > -1) {
                         MatchActivity m = (MatchActivity) getActivity();
 
                         Game.Round r = m.game.rounds.get(m.game.rounds.size() - 1);

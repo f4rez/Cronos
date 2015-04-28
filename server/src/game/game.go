@@ -120,6 +120,18 @@ func GetGames(c appengine.Context, ids []int) ([]Game, []*datastore.Key, error) 
 		c.Infof("Error getting games: %v, keys: %v", err, keys)
 		return games, keys, err
 	}
+
+	for i, g := range games {
+		temp := make([]Round, 5, 5)
+		temp2 := g.RoundsJson
+		err2 := json.Unmarshal(temp2, &temp)
+		if err2 != nil {
+			c.Infof("Error converting Json %v", err2)
+			return games, nil, err2
+		}
+		g.Rounds = temp
+		games[i] = g
+	}
 	return games, keys, nil
 
 }
@@ -287,8 +299,9 @@ func JoinGame(w http.ResponseWriter, r *http.Request) {
 	mGame, _, err := FindFreeGame(c)
 	if err != nil {
 		c.Infof("Error joingGame: %v", err)
+	} else {
+		mGame.SaveGame(c)
 	}
-	mGame.SaveGame(c)
 	GetStartPageMessage(w, r)
 }
 
@@ -396,7 +409,6 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	action := r.FormValue("action")
-	c.Infof("Game = %s", game.RoundsJson)
 	switch action {
 	case "getQuestions":
 		q, err4 := question.GetQuestionsWithID(c, game.getNewestRound(c).QuestionSID)
@@ -436,8 +448,12 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 		ParseRoundData(c, u.ID, game, key, int(a1), int(a2), int(a3), int(a4), int(a5), points)
 		c.Infof("Points: %v", points)
 
-		if game.NumberOfTurns >= 5 {
-
+		if game.NumberOfTurns >= 5 && game.SID == u.ID {
+			uErr := users.RemoveGames(c, game.GID, game.FID, game.SID)
+			if uErr != nil {
+				fmt.Fprintf(w, "error getting users to remove Game")
+				http.Error(w, uErr.Error(), http.StatusInternalServerError)
+			}
 			if one > two {
 				fmt.Fprintf(w, "Winner is %v with %v points, loser is %v with %v points", game.FID, one, game.SID, two)
 			} else {
@@ -551,6 +567,8 @@ func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
 		g.MyTurn = mGame.IsUsersTurn(u.ID)
 		g.Turn = mGame.NumberOfTurns
 		pointOne, pointTwo := CalculateScore(mGame)
+		c.Infof("score %v - %v", pointOne, pointTwo)
+		c.Infof("%v", mGame.Rounds)
 		if u.ID == mGame.FID {
 			g.MPoints = pointOne
 			g.OPoints = pointTwo

@@ -7,14 +7,16 @@
     android:layout_marginTop="30dp">
 
 
-    <it.gmariotti.cardslib.library.view.CardViewNative
+    <it.gmariotti.cardslib.library.view.CardView
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        card:card_layout_resourceID="@layout/card_layout"
-        android:layout_marginTop="12dp"/>
+        card:card_layout_resourceID="@layout/list_item.xml"
+        android:layout_marginTop="12dp"
+        android:visibility="invisible"
+        />
 
 <com.example.awesomeness.awesomeness.Adapters.DynamicListView
         android:layout_width="match_parent"

@@ -5,17 +5,19 @@
     android:layout_height="match_parent">
 
 
-        <include
-            android:id="@+id/toolbar_actionbar"
-            layout="@layout/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="100dp" />
 
-        <FrameLayout
-            android:id="@+id/matchContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true" />
+
+    <FrameLayout
+        android:id="@+id/matchContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        />
 
 
 </RelativeLayout>

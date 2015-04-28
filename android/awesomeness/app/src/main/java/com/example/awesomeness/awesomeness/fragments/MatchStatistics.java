@@ -28,7 +28,12 @@ import com.melnykov.fab.FloatingActionButton;
 public class MatchStatistics extends BaseFragment {
     private Game game;
     public Decode d= new Decode();
-
+    ImageView playerOnePic;
+    ImageView playerTwoPic;
+    TextView playerOneName;
+    TextView playerTwoName ;
+    TextView totalScore;
+    ListView scoreBoard;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.match_statistics, container, false);
@@ -60,12 +65,12 @@ public class MatchStatistics extends BaseFragment {
         View root = getView();
 
 
-        ImageView playerOnePic =(ImageView) root.findViewById(R.id.player1_photo);
-        ImageView playerTwoPic =(ImageView) root.findViewById(R.id.player2_photo);
-        TextView playerOneName =(TextView) root.findViewById(R.id.player1_nameTag);
-        TextView playerTwoName =(TextView) root.findViewById(R.id.player2_nameTag);
-        TextView totalScore = (TextView) root.findViewById(R.id.totalScore);
-        ListView scoreBoard = (ListView) root.findViewById(R.id.score_list);
+         playerOnePic =(ImageView) root.findViewById(R.id.player1_photo);
+         playerTwoPic =(ImageView) root.findViewById(R.id.player2_photo);
+         playerOneName =(TextView) root.findViewById(R.id.player1_nameTag);
+         playerTwoName =(TextView) root.findViewById(R.id.player2_nameTag);
+         totalScore = (TextView) root.findViewById(R.id.totalScore);
+         scoreBoard = (ListView) root.findViewById(R.id.score_list);
         FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
         if (game.turn) {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -102,17 +107,13 @@ public class MatchStatistics extends BaseFragment {
 
     }
     public void buildGUI(View root){
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        fadeIn.setDuration(1000);
-        AnimationSet animation = new AnimationSet(false); //change to false
-        animation.addAnimation(fadeIn);
-        ImageView playerOnePic =(ImageView) root.findViewById(R.id.player1_photo);
-        ImageView playerTwoPic =(ImageView) root.findViewById(R.id.player2_photo);
-        TextView playerOneName =(TextView) root.findViewById(R.id.player1_nameTag);
-        TextView playerTwoName =(TextView) root.findViewById(R.id.player2_nameTag);
-        TextView totalScore = (TextView) root.findViewById(R.id.totalScore);
-        ListView scoreBoard = (ListView) root.findViewById(R.id.score_list);
+
+         playerOnePic =(ImageView) root.findViewById(R.id.player1_photo);
+         playerTwoPic =(ImageView) root.findViewById(R.id.player2_photo);
+         playerOneName =(TextView) root.findViewById(R.id.player1_nameTag);
+         playerTwoName =(TextView) root.findViewById(R.id.player2_nameTag);
+         totalScore = (TextView) root.findViewById(R.id.totalScore);
+         scoreBoard = (ListView) root.findViewById(R.id.score_list);
         FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
         if (game.turn) {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -129,23 +130,23 @@ public class MatchStatistics extends BaseFragment {
                     getActivity().onBackPressed();
                 }
             });
-            fab.setImageResource(R.drawable.ic_action_overflow);
+            fab.setImageResource(R.drawable.ic_action_back);
         }
         if (playerOneName != null) {
+
             playerOneName.setText(game.myName);
-            playerOneName.setAnimation(animation);
-            playerOneName.startAnimation(animation);
+
         }
         if (playerTwoName != null) {
+
             playerTwoName.setText(game.oppName);
-            playerTwoName.setAnimation(animation);
-            playerTwoName.startAnimation(animation);
+
         }
         if (totalScore != null) {
             game.calcTotalScore();
+
             totalScore.setText(game.myScore + " - " + game.oppScore);
-            totalScore.setAnimation(animation);
-            totalScore.startAnimation(animation);
+
         }
 
 
@@ -153,8 +154,6 @@ public class MatchStatistics extends BaseFragment {
             RoundAdapter adapter = new RoundAdapter(getActivity(),R.layout.matchstatistics_item);
             adapter.addAll(game.rounds);
             scoreBoard.setAdapter(adapter);
-            scoreBoard.setAnimation(animation);
-            scoreBoard.startAnimation(animation);
         }
 
 
@@ -168,4 +167,6 @@ public class MatchStatistics extends BaseFragment {
             buildGUI();
         }
     }
+
+
 }

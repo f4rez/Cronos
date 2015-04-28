@@ -1,17 +1,25 @@
 package com.example.awesomeness.awesomeness.Match;
 
+import android.content.ClipData;
+
 /**
  * Created by josef on 2015-04-14.
  */
-public class GamesOverview implements Comparable {
+public class GamesOverview {
 
-   public Integer gameID;
-   public int myPoint;
-   public int opponentPoint;
-   public int numberOfTurns;
-   public String opponentName;
-   public String opponentID;
-   public boolean myTurn;
+    public Integer gameID;
+    public int myPoint;
+    public int opponentPoint;
+    public int numberOfTurns;
+    public String opponentName;
+    public String opponentID;
+    public boolean myTurn;
+    public int type;
+
+
+    public GamesOverview(int type) {
+        this.type = type;
+    }
 
 
     public GamesOverview(int g, int m, int o, int n, String oName,String oID, boolean turn) {
@@ -22,7 +30,7 @@ public class GamesOverview implements Comparable {
         opponentName = oName;
         opponentID = oID;
         myTurn = turn;
-
+        type = 1;
     }
 
 
@@ -37,11 +45,4 @@ public class GamesOverview implements Comparable {
 
     }
 
-
-
-    @Override
-    public int compareTo(Object another) {
-        GamesOverview g= (GamesOverview) another;
-        return gameID.compareTo(g.gameID);
-    }
 }

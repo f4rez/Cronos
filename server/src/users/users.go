@@ -187,6 +187,22 @@ func findUsersByName(c appengine.Context, name string) ([]Users, error) {
 	}
 }
 
+func RemoveGames(c appengine.Context, GID int, FID, SID string) error {
+	usr1, key1, err1 := GetUser(c, FID)
+	usr2, key2, err2 := GetUser(c, SID)
+	if err1 != nil {
+		return err1
+	}
+	if err2 != nil {
+		return err2
+	}
+	usr1.RemoveGame(GID)
+	usr2.RemoveGame(GID)
+	usr1.UpdateUser(c, key1)
+	usr2.UpdateUser(c, key2)
+	return nil
+}
+
 func SearchUsers(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	u := user.Current(c)
@@ -333,6 +349,16 @@ func (u *Users) RemoveFriend(Oid string) {
 	u.FriendList = append(first, second...)
 }
 
+func (u *Users) RemoveGame(Oid int) {
+	mpos := posInt(u.Games, Oid)
+	if mpos < 0 {
+		return
+	}
+	first := u.Games[0:mpos]
+	second := u.Games[(mpos + 1):len(u.Games)]
+	u.Games = append(first, second...)
+}
+
 func (u *Users) ChallengeFrom(Oid string) {
 	u.ChallengeList = append(u.ChallengeList, Oid)
 }
@@ -348,6 +374,15 @@ func (u *Users) RemoveChallenge(Oid string) {
 }
 
 func pos(slice []string, value string) int {
+	for p, v := range slice {
+		if v == value {
+			return p
+		}
+	}
+	return -1
+}
+
+func posInt(slice []int, value int) int {
 	for p, v := range slice {
 		if v == value {
 			return p

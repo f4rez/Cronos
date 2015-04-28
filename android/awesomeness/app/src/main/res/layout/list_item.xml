@@ -18,9 +18,9 @@
         android:layout_centerVertical="true"
         />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:orientation="vertical"
         android:layout_toRightOf="@+id/drawerPicture"
         android:layout_toEndOf="@+id/drawerPicture"
@@ -31,10 +31,10 @@
         android:id="@+id/question"
         android:layout_marginLeft="25dp"
         android:layout_marginStart="25dp"
-        android:paddingTop="17dp"
-        android:paddingBottom="5dp"
         android:textSize="14sp"
-        android:text="titel"
+        android:paddingEnd="40dp"
+        android:paddingRight="40dp"
+        android:layout_centerVertical="true"
         android:textColor="@color/dark_grey_text"
         android:textStyle="bold"
         />
@@ -42,10 +42,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1990"
         android:layout_marginLeft="25dp"
         android:layout_marginStart="25dp"
-        android:paddingBottom="17dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:id="@+id/year"/>
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

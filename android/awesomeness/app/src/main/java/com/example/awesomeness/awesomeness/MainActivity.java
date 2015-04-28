@@ -1,6 +1,7 @@
 package com.example.awesomeness.awesomeness;
 
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
@@ -81,6 +82,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         if (DEBUG) Log.d(TAG, "before open fragment");
         openFragment(baseFragment);
     }
+
+
 
 
     private void openFragment(BaseFragment baseFragment) {

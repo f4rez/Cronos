@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,8 @@ public class MatchActivity extends ActionBarActivity{
     public static int gameID;
     private CharSequence mTitle;
     public Game game;
+    private Toolbar mToolbar;
+
 
 
     public static final int MATCHPAGE = 100;
@@ -39,6 +42,14 @@ public class MatchActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+        }
+        ActionBar a = getSupportActionBar();
+        a.setHomeButtonEnabled(true);
+        a.setDisplayHomeAsUpEnabled(true);
+        a.setDisplayHomeAsUpEnabled(true);
         Bundle extras = getIntent().getExtras();
         gameID = extras.getInt("gameID");
         if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "GameID in MatchActivity: " + gameID);

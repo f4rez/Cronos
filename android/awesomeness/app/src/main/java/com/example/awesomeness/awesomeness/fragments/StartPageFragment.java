@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +36,12 @@ import java.util.ArrayList;
 /**
  * Created by Josef on 2015-02-05.
  */
-public class StartPageFragment extends BaseFragment {
+public class StartPageFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     public ListView mListView;
     private MainActivity mainActivity;
     public StartPageAdapter mAdapter;
     public Decode decode = new Decode();
+    private SwipeRefreshLayout swipeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +62,11 @@ public class StartPageFragment extends BaseFragment {
         mainActivity = (MainActivity)getActivity();
         Request r = new Request(this, mainActivity.net);
         r.execute("Login");
+
+        swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.ptr_layout);
+        // Set the color scheme of the SwipeRefreshLayout by providing 4 color resource ids
+        swipeLayout.setOnRefreshListener(this);
+
         return rootView;
     }
 
@@ -67,6 +74,12 @@ public class StartPageFragment extends BaseFragment {
     public int getTitleResourceId() {
         return MainActivity.MAINPAGE;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        doneRegister();
+    }
+
 
     public void doneLogin(){
         Request r = new Request(this,mainActivity.net);
@@ -78,11 +91,37 @@ public class StartPageFragment extends BaseFragment {
     }
 
 
+    public ArrayList <GamesOverview> sort(ArrayList<GamesOverview> list) {
+        ArrayList <GamesOverview> newList = new ArrayList<>();
+        boolean my = false;
+        boolean opp = false;
+            for(GamesOverview g:list) {
+                if(!my && g.myTurn) {
+                    GamesOverview section = new GamesOverview(0);
+                    newList.add(section);
+                    my = !my;
+                }
+                if(g.myTurn) newList.add(g);
+            }
+            for(GamesOverview g:list) {
+                if(!opp && !g.myTurn) {
+                    GamesOverview section = new GamesOverview(2);
+                    newList.add(section);
+                    opp = !opp;
+                }
+                if(!g.myTurn) newList.add(g);
+            }
+        return newList;
+    }
+
+
 
     public void showMatches(String jsonString) {
         Log.d("mainActivity", " ENterd showMatches json = " + jsonString);
+        if (swipeLayout != null) swipeLayout.setRefreshing(false);
         Decode d = new Decode();
         ArrayList<GamesOverview> gamesOverviews = d.decodeGamesOverview(jsonString);
+        gamesOverviews = sort(gamesOverviews);
         if (mAdapter == null) {
             mAdapter = new StartPageAdapter(getActivity(), R.layout.game_overview, gamesOverviews);
         } else {
@@ -198,7 +237,9 @@ public class StartPageFragment extends BaseFragment {
     }
 
 
-
-
-
+    @Override
+    public void onRefresh() {
+        Request r = new Request(this, mainActivity.net);
+        r.execute("StartMessage");
+    }
 }

@@ -4,6 +4,7 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"math/rand"
+	"time"
 )
 
 var NUMBER_OF_QUESTIONS = 6
@@ -95,6 +96,7 @@ func GetQuestionsWithID(c appengine.Context, ids []int) ([]Question, error) {
 
 func getRandomValues(c appengine.Context, numberOfValues, maxValue int) []int {
 	numbers := make([]int, numberOfValues)
+	rand.Seed(time.Now().UTC().UnixNano())
 	for i, _ := range numbers {
 
 		numbers[i] = rand.Intn(maxValue)
@@ -108,6 +110,7 @@ func getRandomValues(c appengine.Context, numberOfValues, maxValue int) []int {
 
 func getRandomValuesWithPrevious(c appengine.Context, numberOfValues, maxValue int, prev []int) []int {
 	numbers := make([]int, numberOfValues)
+	rand.Seed(time.Now().UTC().UnixNano())
 	for i, _ := range numbers {
 
 		numbers[i] = getRandomValue(c, prev, maxValue)
