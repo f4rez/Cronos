@@ -7,33 +7,46 @@ import (
 	"errors"
 	"users"
 	"appengine/datastore"
+	"game"
 )
 
 
-func Balancer (r *http.Request, QID []int, FID string, SID string, Turn bool, answers []int) (error) {
+func Balancer (r *http.Request, game game.Game) error {
 	c := appengine.NewContext(r)
-	var user users.Users
-
-	questions, err := question.GetQuestionsWithID(c, QID)
-	if err != nil {
-		c.Infof("Error getting questions")
-	}
-
-	// Get the current user
-	if(Turn) { // TODO: Är det rätt håll??
-		user,_,err = users.GetUser(c, FID)
-	} else {
-		user,_,err = users.GetUser(c, SID)
-	}
-
-	if(err != nil) {
-		// Fallback to the stupid one.
-		stupidQuestionBalancer(questions, answers) // TODO: Write the answer to datastore, it is returned here but does not go anywhere...
-		return errors.New("No user was found.")
-	}
 
 	userMaxLevel, questionMaxLevel := getMaxLevels(r)
-	humbleQuestionBalancer(questions, answers, user, userMaxLevel, questionMaxLevel) // TODO: Write the answer to datastore, it is returned here but does not go anywhere...
+
+	for _,round := range game.Rounds {
+		QID := round.QuestionSID
+
+		questions, err := question.GetQuestionsWithID(c, QID)
+		if err != nil {
+			c.Infof("Error getting questions")
+		}
+
+		i := 0;
+		for i<2 {
+			var user users.Users;
+			var answers []int;
+
+			// Balance according to each user, one at the time.
+			if (i == 0) {
+				user, _, err = users.GetUser(c, game.FID)
+				answers = round.PlayerOneAnswers
+			} else {
+				user, _, err = users.GetUser(c, game.SID)
+				answers = round.PlayerTwoAnswerss
+			}
+
+			if (err != nil) {
+				return errors.New("No user was found.")
+			}
+
+			humbleQuestionBalancer(questions, answers, user, userMaxLevel, questionMaxLevel) // TODO: Write the answer to datastore, it is returned here but does not go anywhere...
+
+			i++;
+		}
+	}
 
 	return nil
 }
@@ -84,14 +97,18 @@ func humbleQuestionBalancer(questions []question.Question, answers []int, user u
 
 		questionRatio := float64(questions[i].Level) / questionMaxLevel
 
-		// An advanced user does not affect the questions as much as an beginner if the answer is correct.
-		downDiff = int((1.0-(userRatio*questionRatio))*10.0)
-
 		if(answers[i] == 1) {
 			// Wrong answer
+
+			// An advanced user affects the questions more than a beginner if the answer is wrong.
+			upDiff = int((userRatio*questionRatio)*10.0)
 			questions[i].Level = questions[i].Level+upDiff
+
 		} else if(answers[i] == 2) {
 			// Right answer
+
+			// An advanced user does not affect the questions as much as a beginner if the answer is correct.
+			downDiff = int((1.0-(userRatio*questionRatio))*10.0)
 			questions[i].Level = questions[i].Level-downDiff
 		}
 	}

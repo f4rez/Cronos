@@ -105,23 +105,45 @@ Google Hangouts används för kommunikation när gruppmedlemmarna är på olika 
 
 \begin{figure}[H]
 	\begin{centering}
-	\includegraphics[scale=0.2]{systemstruktur.jpg} 
+	\includegraphics[width = \textwidth]{systemstruktur.jpg} 
 	\end{centering}
 	\caption{\textit{Illustration av systemstrukturen}}
 \end{figure} 
 
-\textbf{Androidapplikationen}\\
-Androidapplikationen, klienten, är spelet som utvecklats och som kommer vara den del som användaren interagerar med och är närmast relaterad till. \\
-\textbf{Server}\\
-Klienten kommunicera med en server som körs i App Engine och är som är utvecklad i språket Go (Golang) \cite{golang}. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen som skickar frågorna till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra crawlern som är den automatiska informationshämtaren. \\
-\textbf{Databas}\\
-Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Databasen utvecklas ej av projektutvecklarna utan används som externt utvecklat verktyg. \\
-\textbf{Crawler}\\
-Crawler \footnote{Vad är en crawler} är den automatiska informationshämtaren som använder sig av ett webinterface vars syfte är att ge administratörerna möjligheten att avgöra den hämtade informationens kvalitet och för att bestämma en initial svårighetsgrad. Om informationen godkänns kommer den att lagras i databasen som nämndes tidigare och är då redo för att användas i spelet.
-\\
-Systemet är uppbyggt kring http förfrågningar vilket betyder att när applikationen skickar en förfrågan finns det i servern flera olika handlers \footnote{ En handler är en funktion i servern som hanterar en förfrågning från klienter.} som tar han om olika förfrågningar. Vill man lägga till nya frågor får man via webinterfacet ange vilken sida man vill gå igenom för att hitta frågor och får sedan från crawlern tillbaka frågor som man i interfacet får gå igenom för att ge en initial svårighetsgrad och sedan spara in i databasen om den håller tillräckligt hög klass.
+\subsubsection{Androidapplikationen}
+Androidapplikationen, vilket är klienten i systemet, är spelet som utvecklats. Det här är den del av systemet som användaren direkt ser och använder.
 
+När det är den aktuella spelarens tur får denne en chunk med fem frågor och dess svar (årtal). Det är sedan klienten som rättar frågorna och därefter skickas svaren tillbaka till servern.
+\subsubsection{Server}
+Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang) \cite{golang}. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen som skickar frågorna till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra crawlern som är den automatiska informationshämtaren. Servern har också till uppgift att med jämna mellanrum köra fråge- och användarbalanseringssystemet som justerar svårighetsgraden på frågorna respektive spelarna i systemet. 
+\subsubsection{Databas}
+Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Datastore är Google App Engines egna hantering av data, systemet hanterar datalagring med både SQL och noSQL.
+\subsubsection{Crawler}
+Inbyggt i servern finns en form av crawler som hanterar semi-automatisk informationshämtning av frågematerial. Hela systemet syftar till att via en given länk läsa igenom den länkade sidan och dess undersidor för att hitta information som passar som frågor för spelet. 
 
+Sidor som har visat sig vara relativt enkla att läsa in är Wikipedias undersidor av typen listningssidor. Den här typen av sidor har en punktlista med årtal samt en beskrivande mening av det årtalet inom den kategori som Wikipediasidan handlar om. Ett exempel är sidan som listar datorspelsår: \url{http://sv.wikipedia.org/wiki/Lista_%C3%B6ver_datorspels%C3%A5r}. Vid inläsning av den här typen av sida separeras helt enkelt varje <li>-element där ett bindestreck eller kolon förekommer och därefter sparas varje kombination av årtal och händelse i ett temporärt cache.
+
+När alla  händelser har lästs in i cachet presenteras de inlästa händelserna en i taget i ett webinterface. Webinterfacet visar ett årtal, en fråga samt fyra knappar. Knapparna anger svårighetsgrad lätt, medel eller svår samt ett alternativ för att ta bort den aktuella frågan helt.
+
+\begin{figure}[H]
+	\begin{centering}
+	\includegraphics[width=\textwidth]{crawler} 
+	\end{centering}
+	\caption{\textit{Webinterface för crawlern}}
+\end{figure}
+
+De fyra knapparna är mappade till siffrorna 1-4 på tangentbordet för att det ska gå snabbt att klicka igenom frågorna. Texten är också redigerbar för att administratören snabbt ska kunna justera grammatiska fel.
+
+\subsubsection{Balanseringssystemet}
+Balanseringssystemet syftar till två saker, dels till att justera svårighetsgraden på frågorna som finns i databasen och dels till att justera spelarnas nivå. Efter varje avslutad match skickas alla frågor som var med i matchen samt båda spelarnas svar på respektive frågor. Utifrån detta justeras sedan nivåerna.
+
+Om en spelare med låg nivå svarar rätt på en fråga så justeras frågans svårighetsgrad ner, ju högre nivå frågan har, desto större nedjustering sker. En spelare med hög nivå påverkar inte frågorna lika mycket som en spelare med låg nivå. Det här beror på att om en spelare med låg nivå svarar rätt på en svår fråga så är nivån på frågan förmodligen mycket mer felaktig än om en avancerad spelare svarat rätt på samma fråga. 
+
+\begin{verbatim}
+downDiff = int((1.0-(userRatio*questionRatio))*10.0)
+\end{verbatim}
+
+Kodsnutten ovan är ett exempel på en justering som sker om en spelare svarat rätt på den aktuella frågan. userRatio är ett värde mellan 0-1 på spelarens nivå (0 är nybörjare, 1 är avancerad). questionratio är ett värde mellan 0-1 på frågans nivå. downDiff är det värde som frågans nivå sänks med (mellan 0-10). 
 
 \subsection{Avgränsningar}
 En applikation för iOS prioriteras inte i första hand. Skulle det bli tid över och resten av systemet anses tillräckligt klart så kommer detta att utvecklas, men annars inte. Någon applikation för Windows finns inte heller med i planeringen. Spelet kommer troligtvis ha ett par kategorier som ska finnas med i spelet, men dessa är ännu inte valda.
