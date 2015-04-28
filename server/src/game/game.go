@@ -450,7 +450,7 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			// Call balancer here!
+			// Call balancer here! pass "game"
 		}
 		fmt.Fprintf(w, "Dina svar har registrerats")
 		break
