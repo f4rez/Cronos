@@ -1,5 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[swedish]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -20,7 +21,9 @@
 \pagebreak
 
 \section{Inledning}
-Vem vill inte kunna säga: ``Jag är bäst på...''? Att tävla är något som många säkerligen tycker är roligare och mer socialt än att spela ensam. Detta är en av anledningarna till att vi tror att spel som Quizkampen och Wordfeud har blivit så populära\cite{quiz}. I tidigare nämnda spel har man möjlighet att se vem som är bäst på många olika spelplaner. Vi vill skapa ett till spel i samma kategori. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. Spelet utvecklas till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med användarantalet. 
+Vem vill inte kunna avgöra diskussioner med sina vänner med argumentet "Jag är i alla fall bäst på ..."? 
+Att tävla är något som de allra flesta säkerligen tycker är både roligt och socialt; om målet är att vinna eller bara ha kul varierar men tävlingskänslan finns kvar oavsett agenda. Att kunna ha denna tävlingskänsla och en källa för nöje så förmånligt i sin telefon är något som vi tror att spel som Quizkampen\cite{quiz} och Wordfeud har blivit så populära. Vi eftersträvar att skapa ett spel som kan framkalla samma tävlingskänsla och nöje som tidigare nämnda spel. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. Spelet utvecklas till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med användarantalet. Automatisk frågehämtare och balansering är bara några av de sakerna som kommer karaktärisera spelet.
+
 
 \section{Förutsättningar}
 
@@ -29,6 +32,9 @@ Applikationsutveckling för mobila enheter är ett spännande område som växer
 
 \subsubsection{Turbaserade multiplayerspel för mobiltelefoner}
 Wordfeud och Quizkampen är två populära turbaserade multiplayerspel där Quizkampen har 45 miljoner användare globalt\cite{quiz} och Wordfeud har mellan 10-50 miljoner nedladdningar enbart på Androidplattformen\cite{wordfeud}. Dessa spel gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare spelar sin omgång får dess motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
+\paragraph{Quizkampen}
+är ett frågesports-spel där spelarna svarar på frågor under 6 ronder med tre frågor i varje rond. Spelarna svarar på samma frågor och spelarna väljer en av tre slumpade kategorier varannan rond. Matchen avslutas när sista rundan är spelad och det är även då  en vinnare avgörs. \cite{aboutquiz}
+
 
 \subsubsection{Turbaserade sällskapsspel}
 
