@@ -152,30 +152,21 @@ downDiff = int((1.0-(userRatio*questionRatio))*10.0)
 Kodsnutten ovan är ett exempel på en justering som sker om en spelare svarat rätt på den aktuella frågan. userRatio är ett värde mellan 0-1 på spelarens nivå (0 är nybörjare, 1 är avancerad). questionratio är ett värde mellan 0-1 på frågans nivå. downDiff är det värde som frågans nivå sänks med (mellan 0-10). 
 
 \subsection{Avgränsningar}
-En applikation för iOS prioriteras inte i första hand. Skulle det bli tid över och resten av systemet anses tillräckligt klart så kommer detta att utvecklas, men annars inte. Någon applikation för Windows finns inte heller med i planeringen. Spelet kommer troligtvis ha ett par kategorier som ska finnas med i spelet, men dessa är ännu inte valda.
+En applikation för iOS prioriteras inte i första hand. Skulle det bli tid över och resten av systemet anses tillräckligt klart så kommer detta att utvecklas, men annars inte. Någon applikation för Windows finns inte heller med i planeringen. Spelet kommer troligtvis ha ett par kategorier som ska finnas med i spelet, men dessa är ännu inte valda. 
+
+I applikationen finns det många funktioner som skulle vara roliga och användbara, men inför projektet hade vi några funktioner som ansågs vara viktiga att ha med. Den viktigaste funktionen är att kunna hitta och spela en match. En funktion för att hitta och hantera vänner man har i spelet och även kunna se statistik över matcherna man spelat mot en vän. Dessa funktioner behöver så klart även implementeras på server.
 
 \subsection{Krav}
 Systemet ska klara många spelare samtidigt, dock bara två per spel. Någon speciell siffra är inte bestämd ännu men med tanke på den otroligt bra grunden för skalbarhet som projektet står på kommer en siffra för antal spelare ganska snart kunna bestämmas. Eftersom App Engine används för servern så kommer det inte bli något problem med den enkla förklaringen att det är en tjänst som automatiskt skalar med hänsyn på belastning. \cite{appenginescalability}
 
-Informationssökaren ska tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. En hög kvalitet betyder frågor som är relevanta och som följer den strukturen vi har tänkt oss. Frågorna ska vara lätta att läsa och förstå och samtidigt befinna sig i det breda spektrumet av svårighetsgrader vi kommer ha i spelet. Sökaren för frågorna ska också vara så pass bra att den administrativa kontrollen går fort och att så lite som möjligt behöver korrigeras efter att frågorna har samlats.
+Informationssökaren ska tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. En hög kvalitet betyder frågor som är relevanta och som följer den strukturen vi har tänkt oss. Frågorna ska vara lätta att läsa och förstå och samtidigt befinna sig i det breda spektrumet av svårighetsgrader vi kommer ha i spelet. Sökaren för frågorna ska också vara så pass bra att den administrativa kontrollen går fort och att så lite som möjligt behöver korrigeras efter att frågorna har samlats. För att applikationen inte ska kännas allderless för repititiv ska det finnas många frågor och av varierande art, det ska minst finnas 1000 frågor.
+
+Designen av applikationen är något som är viktigt för oss, kravet i början var att han en inuitiv, responsiv och snygg design. Eftersom applikationen gjordes för Android skulle den också följa dess designmönster Material Design \cite{MaterialDesign}.
 
 \subsection{Utvärdering}
 Planen är att en fungerande beta eller alfaversion av systemet ska färdigställas ett tag innan projektets slut. I den här versionen ska användare ha möjlighet att ge feedback och att testa applikationen. Så många fel som möjligt ska sedan justeras innan den skarpa versionen släpps.
 
 Gränssnittet och användandet av applikationen kommer också att utvärderas med hjälp av metoder från Människa-data-interaktionsområdet.
-\appendix
-
-\section{Tidsplan}
-Detta är en representation av vår tidsplan i form av ett gantt-diagram.
-\begin{figure}[H]
-\centering
-\end{figure} 
-\pagebreak
-
-\section{Kursmål}
-Genom att utveckla en relativt komplicerad produkt med många olika komponenter som alla måste fungera tillsammans som en enda enhet. För att detta ska kunna ske utan större komplikationer kommer det kräva båda en djup förståelse för hur dom olika delarna ska fungera men också ett ingenjörsmässigt tänk för att kunna nå målet som satts upp.
-Ett bra samarbete i gruppen kommer vara nödvändigt för att alla gruppmedlemmar ska kunna bidra med sina områden av expertis. Detta samarbete kommer underlätta informationssökning och utveckling under projektets gång.\\
-
 
 \newpage
 \printbibliography[title={Referenser}]
