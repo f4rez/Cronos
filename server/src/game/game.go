@@ -10,10 +10,9 @@ import (
 	"messages"
 	"net/http"
 	"question"
-	"users"
-
 	"strconv"
 	"time"
+	"users"
 )
 
 type Game struct {
@@ -263,6 +262,20 @@ func (g *Game) AddNewRound(c appengine.Context) {
 
 }
 
+func (g *Game) findPrevAndAddQuestions(c appengine.Context) {
+	prev := make([]int, 1, 10)
+	for _, round := range g.Rounds {
+		prev = append(prev, round.QuestionSID...)
+	}
+	c.Infof("previous numbers in add new Round: %v", prev)
+	questions, _, err := question.GetQuestionsWithPrevious(c, prev)
+	if err != nil {
+		c.Infof("Error getting questionsWithPrev : %v", err)
+	} else {
+		g.getNewestRound(c).QuestionSID = getIDs(questions)
+	}
+}
+
 func (g *Game) IsUsersTurn(id string) bool {
 	if id == g.FID {
 		return !g.Turn
@@ -411,11 +424,19 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 	action := r.FormValue("action")
 	switch action {
 	case "getQuestions":
+		c.Infof("game %v", game)
 		q, err4 := question.GetQuestionsWithID(c, game.getNewestRound(c).QuestionSID)
 		if err4 != nil {
-			c.Infof("Error getting questions: %v", err4)
-			http.Error(w, err4.Error(), http.StatusInternalServerError)
-			return
+			if len(game.getNewestRound(c).QuestionSID) < 5 {
+				game.findPrevAndAddQuestions(c)
+				q, err4 = question.GetQuestionsWithID(c, game.getNewestRound(c).QuestionSID)
+				if err4 != nil {
+					c.Infof("Error getting questions: %v", err4)
+					http.Error(w, err4.Error(), http.StatusInternalServerError)
+					return
+				}
+			}
+
 		}
 		mess, errJson := json.Marshal(q)
 		if errJson != nil {
@@ -449,7 +470,8 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 		c.Infof("Points: %v", points)
 
 		if game.NumberOfTurns >= 5 && game.SID == u.ID {
-			uErr := users.RemoveGames(c, game.GID, game.FID, game.SID)
+
+			uErr := users.GameEnded(c, game.GID, game.FID, game.SID, one, two)
 			if uErr != nil {
 				fmt.Fprintf(w, "error getting users to remove Game")
 				http.Error(w, uErr.Error(), http.StatusInternalServerError)
@@ -559,9 +581,11 @@ func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
 
 	games, _, gErr := GetGames(c, users.Games)
 	if gErr != nil {
-		c.Infof("Error getting users: %v", gErr)
+		c.Infof("Error getting games: %v", gErr)
 		http.Error(w, gErr.Error(), http.StatusInternalServerError)
 	}
+
+	startMess := new(messages.StartMessage)
 	mess := make([]messages.GamesMessage, len(games))
 	for i, mGame := range games {
 		g := new(messages.GamesMessage)
@@ -584,7 +608,29 @@ func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
 		}
 		mess[i] = *g
 	}
-	m, err := json.Marshal(mess)
+	startMess.Games = mess
+	finished := make([]messages.FinishedGame, len(users.FinishedGames))
+	for i, fGame := range users.FinishedGames {
+		f := new(messages.FinishedGame)
+		f.GID = fGame.GID
+		f.MyScore = fGame.MyScore
+		f.OppScore = fGame.OppScore
+		f.OppName = fGame.OppName
+		finished[i] = *f
+	}
+	c.Infof("Finished %v", finished)
+	startMess.Finished = finished
+
+	chall := make([]messages.ChallengeMessage, len(users.ChallengeList))
+	for i, challenge := range users.ChallengeList {
+		f := new(messages.ChallengeMessage)
+		f.OppName = challenge.OppName
+		f.OppID = challenge.OppID
+		chall[i] = *f
+	}
+	startMess.Challenges = chall
+
+	m, err := json.Marshal(startMess)
 	fmt.Fprintf(w, string(m))
 
 }

@@ -10,13 +10,26 @@ import (
 )
 
 type Users struct {
-	Oid           string
-	Name          string
-	Picture       string
-	FriendList    []string `json:"-"`
-	ChallengeList []string `json:"-"`
-	Level         int
-	Games         []int `json:"-"`
+	Oid, Name, Picture     string
+	FriendList             []Friend       `json:"-"`
+	ChallengeList          []Challange    `json:"-"`
+	Games                  []int          `json:"-"`
+	FinishedGames          []FinishedGame `json:"-"`
+	Won, Draw, Lost, Level int
+}
+
+type FinishedGame struct {
+	GID, MyScore, OppScore int
+	OppName                string
+}
+
+type Friend struct {
+	Won, Lost, Draw int
+	Name, FriendID  string
+}
+
+type Challange struct {
+	OppName, OppID string
 }
 
 func UserKey(c appengine.Context) *datastore.Key {
@@ -41,6 +54,14 @@ func (users *Users) UpdateUser(c appengine.Context, key *datastore.Key) {
 
 func (users *Users) AddGame(gid int) {
 	users.Games = append(users.Games, gid)
+}
+func (users *Users) AddFinishedGame(gid int, opName string, myScore, oppScore int) {
+	f := new(FinishedGame)
+	f.GID = gid
+	f.OppName = opName
+	f.MyScore = myScore
+	f.OppScore = oppScore
+	users.FinishedGames = append(users.FinishedGames, *f)
 }
 
 func MakeUser(c appengine.Context) (Users, error) {
@@ -72,12 +93,12 @@ func GetUser(c appengine.Context, Oid string) (Users, *datastore.Key, error) {
 
 }
 
-func getUsers(c appengine.Context, ids []string) ([]Users, []*datastore.Key, error) {
+func getUsers(c appengine.Context, ids []Friend) ([]Users, []*datastore.Key, error) {
 	c.Infof("ids: %v", ids)
 	friends := make([]Users, len(ids), 100)
 	keys := make([]*datastore.Key, len(ids), 100)
 	for i, value := range ids {
-		key, err2 := getKeyForIndex(c, value)
+		key, err2 := getKeyForIndex(c, value.FriendID)
 		keys[i] = key
 		if err2 != nil {
 			c.Infof("Error getUsers1: %v", err2)
@@ -132,17 +153,19 @@ func getKeyForIndex(c appengine.Context, id string) (*datastore.Key, error) {
 func AddFriend(c appengine.Context, mOid, fOid string) error {
 	c.Infof("Adding Oid: %v to %v friendlist", fOid, mOid)
 	mUser, mKey, err := GetUser(c, mOid)
+	fUser, _, err2 := GetUser(c, fOid)
 	if mKey == nil {
 		c.Infof("Error adding friend: %v", err)
 		return err
-
-	} else {
-		c.Infof("Adding friend to %v", mUser)
-		mUser.AddFriend(fOid)
-		mUser.UpdateUser(c, mKey)
-		return nil
 	}
-
+	if err2 != nil {
+		c.Infof("Error adding friend: %v", err2)
+		return err2
+	}
+	c.Infof("Adding friend to %v", mUser)
+	mUser.AddFriend(fUser)
+	mUser.UpdateUser(c, mKey)
+	return nil
 }
 
 func RemoveFriend(c appengine.Context, mOid, fOid string) error {
@@ -161,10 +184,10 @@ func RemoveFriend(c appengine.Context, mOid, fOid string) error {
 }
 
 func ChallengeFriend(c appengine.Context, mOid, fOid string) error {
-	c.Infof("Chalenging Oid: %v, mOid = %v", fOid, mOid)
+	u := user.Current(c)
 	mUser, mKey, err := GetUser(c, fOid)
 	if err != nil {
-		mUser.ChallengeFrom(mOid)
+		mUser.ChallengeFrom(mOid, u.String())
 		mUser.UpdateUser(c, mKey)
 		return nil
 	} else {
@@ -187,7 +210,7 @@ func findUsersByName(c appengine.Context, name string) ([]Users, error) {
 	}
 }
 
-func RemoveGames(c appengine.Context, GID int, FID, SID string) error {
+func GameEnded(c appengine.Context, GID int, FID, SID string, one, two int) error {
 	usr1, key1, err1 := GetUser(c, FID)
 	usr2, key2, err2 := GetUser(c, SID)
 	if err1 != nil {
@@ -198,9 +221,44 @@ func RemoveGames(c appengine.Context, GID int, FID, SID string) error {
 	}
 	usr1.RemoveGame(GID)
 	usr2.RemoveGame(GID)
+	usr1.AddFinishedGame(GID, usr2.Name, one, two)
+	usr2.AddFinishedGame(GID, usr1.Name, two, one)
+	if one > two {
+		usr1.Won++
+		usr2.Lost++
+	} else if two > one {
+		usr2.Won++
+		usr1.Lost++
+	} else {
+		usr1.Draw++
+		usr2.Draw++
+	}
+	ChangeFriendStatIfFriends(usr1, usr2, one, two)
 	usr1.UpdateUser(c, key1)
 	usr2.UpdateUser(c, key2)
 	return nil
+}
+
+func ChangeFriendStatIfFriends(usr1, usr2 Users, one, two int) {
+	for _, f := range usr1.FriendList {
+		if one > two {
+			f.Won++
+		} else if two > one {
+			f.Lost++
+		} else {
+			f.Draw++
+		}
+	}
+	for _, f2 := range usr2.FriendList {
+		if one > two {
+			f2.Lost++
+		} else if two > one {
+			f2.Won++
+		} else {
+			f2.Draw++
+		}
+	}
+
 }
 
 func SearchUsers(w http.ResponseWriter, r *http.Request) {
@@ -335,12 +393,18 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (u *Users) AddFriend(Oid string) {
-	u.FriendList = append(u.FriendList, Oid)
+func (u *Users) AddFriend(us Users) {
+	friend := new(Friend)
+	friend.FriendID = us.Oid
+	friend.Name = us.Name
+	friend.Draw = 0
+	friend.Won = 0
+	friend.Lost = 0
+	u.FriendList = append(u.FriendList, *friend)
 }
 
 func (u *Users) RemoveFriend(Oid string) {
-	mpos := pos(u.FriendList, Oid)
+	mpos := posFriend(u.FriendList, Oid)
 	if mpos < 0 {
 		return
 	}
@@ -359,12 +423,25 @@ func (u *Users) RemoveGame(Oid int) {
 	u.Games = append(first, second...)
 }
 
-func (u *Users) ChallengeFrom(Oid string) {
-	u.ChallengeList = append(u.ChallengeList, Oid)
+func (u *Users) RemoveFinishedGame(Oid int) {
+	mpos := posFinishedGame(u.FinishedGames, Oid)
+	if mpos < 0 {
+		return
+	}
+	first := u.FinishedGames[0:mpos]
+	second := u.FinishedGames[(mpos + 1):len(u.FinishedGames)]
+	u.FinishedGames = append(first, second...)
+}
+
+func (u *Users) ChallengeFrom(Oid, Name string) {
+	challange := *new(Challange)
+	challange.OppName = Name
+	challange.OppID = Oid
+	u.ChallengeList = append(u.ChallengeList, challange)
 }
 
 func (u *Users) RemoveChallenge(Oid string) {
-	mpos := pos(u.ChallengeList, Oid)
+	mpos := posChall(u.ChallengeList, Oid)
 	if mpos < 0 {
 		return
 	}
@@ -385,6 +462,33 @@ func pos(slice []string, value string) int {
 func posInt(slice []int, value int) int {
 	for p, v := range slice {
 		if v == value {
+			return p
+		}
+	}
+	return -1
+}
+
+func posFinishedGame(slice []FinishedGame, value int) int {
+	for p, v := range slice {
+		if v.GID == value {
+			return p
+		}
+	}
+	return -1
+}
+
+func posFriend(slice []Friend, value string) int {
+	for p, v := range slice {
+		if v.FriendID == value {
+			return p
+		}
+	}
+	return -1
+}
+
+func posChall(slice []Challange, value string) int {
+	for p, v := range slice {
+		if v.OppID == value {
 			return p
 		}
 	}

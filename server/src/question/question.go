@@ -15,7 +15,6 @@ type Question struct {
 }
 
 func QuestionKey(c appengine.Context) *datastore.Key {
-	// The string "default_guestbook" here could be varied to have multiple guestbooks.
 	return datastore.NewKey(c, "Question", "default_question", 0, nil)
 }
 

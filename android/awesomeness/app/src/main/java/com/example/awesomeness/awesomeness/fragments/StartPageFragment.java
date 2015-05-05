@@ -21,6 +21,7 @@ import android.widget.ListView;
 import com.example.awesomeness.awesomeness.Adapters.DialogAdapter;
 import com.example.awesomeness.awesomeness.Adapters.StartPageAdapter;
 import com.example.awesomeness.awesomeness.Items.DrawerItem;
+import com.example.awesomeness.awesomeness.Items.StartpageMessage;
 import com.example.awesomeness.awesomeness.Json.Decode;
 import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.GamesOverview;
@@ -95,22 +96,31 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
         ArrayList <GamesOverview> newList = new ArrayList<>();
         boolean my = false;
         boolean opp = false;
-            for(GamesOverview g:list) {
-                if(!my && g.myTurn) {
-                    GamesOverview section = new GamesOverview(0);
-                    newList.add(section);
-                    my = !my;
-                }
-                if(g.myTurn) newList.add(g);
+        boolean fin = false;
+        for(GamesOverview g:list) {
+            if(!my && g.myTurn && g.type != 4) {
+                GamesOverview section = new GamesOverview(0);
+                newList.add(section);
+                my = !my;
             }
-            for(GamesOverview g:list) {
-                if(!opp && !g.myTurn) {
-                    GamesOverview section = new GamesOverview(2);
-                    newList.add(section);
-                    opp = !opp;
-                }
-                if(!g.myTurn) newList.add(g);
+            if(g.myTurn && g.type != 4) newList.add(g);
+        }
+        for(GamesOverview g:list) {
+            if(!opp && !g.myTurn && g.type != 4) {
+                GamesOverview section = new GamesOverview(2);
+                newList.add(section);
+                opp = !opp;
             }
+            if(!g.myTurn && g.type != 4) newList.add(g);
+        }
+        for(GamesOverview g:list) {
+            if(!fin && g.type == 4) {
+                GamesOverview section = new GamesOverview(3);
+                newList.add(section);
+                fin = !fin;
+            }
+            if(g.type == 4) newList.add(g);
+        }
         return newList;
     }
 
@@ -120,7 +130,8 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
         Log.d("mainActivity", " ENterd showMatches json = " + jsonString);
         if (swipeLayout != null) swipeLayout.setRefreshing(false);
         Decode d = new Decode();
-        ArrayList<GamesOverview> gamesOverviews = d.decodeGamesOverview(jsonString);
+        StartpageMessage startpageMessage = d.decodeGamesOverview(jsonString);
+        ArrayList<GamesOverview> gamesOverviews = startpageMessage.games;
         gamesOverviews = sort(gamesOverviews);
         if (mAdapter == null) {
             mAdapter = new StartPageAdapter(getActivity(), R.layout.game_overview, gamesOverviews);
@@ -137,12 +148,12 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GamesOverview g = (GamesOverview) parent.getItemAtPosition(position);
 
-                    StartPageAdapter s = (StartPageAdapter) parent.getAdapter();
-                    if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "GameID in intent = " + g.gameID);
-                    Intent n = new Intent(s.c, MatchActivity.class);
-                    n.putExtra("gameID", g.gameID);
-                    s.c.startActivity(n);
-                }
+                StartPageAdapter s = (StartPageAdapter) parent.getAdapter();
+                if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "GameID in intent = " + g.gameID);
+                Intent n = new Intent(s.c, MatchActivity.class);
+                n.putExtra("gameID", g.gameID);
+                s.c.startActivity(n);
+            }
 
         });
         mListView.setAdapter(mAdapter);

@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.awesomeness.awesomeness.MainActivity;
@@ -27,9 +29,11 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
     private static final int TYPE_SECTION_MY_TURN = 0;
     private static final int TYPE_GAME = 1;
     private static final int TYPE_SECTION_OPP_TURN = 2;
+    private static final int TYPE_SECTION_FINISHED_GAME = 3;
+    private static final int TYPE_FINISHED_GAME = 4;
 
     // since you only have 2 types
-    private static final int TYPE_MAX_COUNT = 3;
+    private static final int TYPE_MAX_COUNT = 5;
 
     @Override
     public int getItemViewType(int position) {
@@ -41,6 +45,10 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
                 return TYPE_SECTION_MY_TURN;
             case TYPE_SECTION_OPP_TURN:
                 return TYPE_SECTION_OPP_TURN;
+            case TYPE_SECTION_FINISHED_GAME:
+                return TYPE_SECTION_FINISHED_GAME;
+            case TYPE_FINISHED_GAME:
+                return TYPE_FINISHED_GAME;
         }
         return -1;
     }
@@ -79,6 +87,48 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
                 TextView textView2 = (TextView)v.findViewById(R.id.section);
                 textView2.setText(c.getString(R.string.opp_turn));
                 return v;
+
+            case TYPE_FINISHED_GAME:
+                if (v == null) {
+
+                    LayoutInflater vi;
+                    vi = LayoutInflater.from(getContext());
+                    v = vi.inflate(R.layout.game_overview, null);
+
+                }
+                GamesOverview q = getItem(position);
+
+                if (q != null) {
+                    TextView tt1 = (TextView) v.findViewById(R.id.mainText);
+                    TextView tt2 = (TextView) v.findViewById(R.id.score);
+                    if (tt1 != null && tt2 != null) {
+                        if (q.opponentPoint>q.myPoint) {
+                            tt1.setText(q.opponentName + " vann mot dig");
+                        }
+                        if (q.myPoint>q.opponentPoint) {
+                            tt1.setText("Du vann mot " + q.opponentName);
+                        }
+                        if (q.opponentPoint == q.myPoint) tt1.setText("Det blev oavgjort mellan dig och " + q.opponentName);
+                        tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - " + q.opponentPoint + " " + q.opponentName);
+                    }
+                }
+
+
+                return v;
+
+            case TYPE_SECTION_FINISHED_GAME:
+                if (v == null) {
+                    LayoutInflater vi;
+                    vi = LayoutInflater.from(getContext());
+                    v = vi.inflate(R.layout.start_page_section_divider, null);
+                }
+                TextView textView3 = (TextView)v.findViewById(R.id.section);
+                textView3.setText(c.getString(R.string.finished_games));
+
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)textView3.getLayoutParams();
+                params.setMargins(16, 30, 0, 0); //substitute parameters for left, top, right, bottom
+                textView3.setLayoutParams(params);
+                return v;
             case TYPE_GAME:
 
                 if (v == null) {
@@ -88,7 +138,7 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
                     v = vi.inflate(R.layout.game_overview, null);
 
                 }
-                GamesOverview q = getItem(position);
+                q = getItem(position);
 
                 if (q != null) {
 
@@ -107,9 +157,16 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
                     }
 
                     if (tt2 != null)  {
-                        if (q.opponentName != null)
-                            tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - " + q.opponentPoint +  " "+  q.opponentName);
-                        else tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - 0 slumpad spelare");
+                        if (q.opponentName != null) {
+                            if (q.myPoint == -1 && q.opponentPoint == -1) tt2.setText(MainActivity.MY_NAME +  "0 - 0 " + q.opponentName);
+                            if (q.myPoint == -1 && q.opponentPoint > -1) tt2.setText(MainActivity.MY_NAME + " 0 - " + q.opponentPoint + " " + q.opponentName);
+                            if (q.myPoint > -1 && q.opponentPoint == -1) tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - 0 " + q.opponentName);
+                            if (q.myPoint > -1 && q.opponentPoint > -1) tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - " + q.opponentPoint + " " + q.opponentName);
+                        }
+                        else {
+                            if (q.myPoint > -1) tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - 0 slumpad spelare");
+                            else tt2.setText(MainActivity.MY_NAME + " 0 - 0 slumpad spelare");
+                        }
 
                     }
 

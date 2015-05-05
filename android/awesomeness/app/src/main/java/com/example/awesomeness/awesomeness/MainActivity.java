@@ -1,7 +1,6 @@
 package com.example.awesomeness.awesomeness;
 
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 
@@ -23,7 +22,7 @@ import com.example.awesomeness.awesomeness.fragments.FindUsersFragment;
 import com.example.awesomeness.awesomeness.fragments.StartPageFragment;
 
 
-public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks  {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
@@ -38,10 +37,11 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public static final int MAINPAGE = 100;
     public static final int CHALLENGE_FRIEND = 101;
     public static final int FIND_FRIEND = 102;
+    public static final int FRIEND = 103;
 
 
     public static final String MY_NAME = "Josef@s.se";
-    public static final String HOST = "192.168.0.37:8080";
+    public static final String HOST = "192.168.43.87:8080";
 
 
 
@@ -81,6 +81,25 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         BaseFragment baseFragment = selectFragment(position);
         if (DEBUG) Log.d(TAG, "before open fragment");
         openFragment(baseFragment);
+    }
+
+    @Override
+    public void onBackPressed(){
+       BaseFragment b = (BaseFragment)getFragmentManager().findFragmentById(R.id.container);
+        switch (b.getTitleResourceId()) {
+            case MAINPAGE:
+                super.onBackPressed();
+                break;
+            case CHALLENGE_FRIEND:
+                onNavigationDrawerItemSelected(MAINPAGE);
+                break;
+            case FIND_FRIEND:
+                onNavigationDrawerItemSelected(MAINPAGE);
+                break;
+            case FRIEND:
+                onNavigationDrawerItemSelected(FIND_FRIEND);
+        }
+
     }
 
 
@@ -146,10 +165,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(true);
-            //actionBar.setDisplayShowHomeEnabled(false);
             actionBar.setTitle(mTitle);
         }
     }
@@ -158,4 +175,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         mToolbar.getBackground().setAlpha(0);
 
     }
+
+
 }

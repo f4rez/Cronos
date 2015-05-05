@@ -21,7 +21,7 @@ public class MatchAdapter extends ArrayAdapter<Question> {
 
     Context mContext;
     final int INVALID_ID = -1;
-    public HashMap<Question, Integer> mIdMap = new HashMap<Question, Integer>();
+    public HashMap<Question, Integer> mIdMap = new HashMap<>();
 
     public MatchAdapter(Context context, int resource, ArrayList<Question> q) {
         super(context, resource, q);
@@ -72,7 +72,6 @@ public class MatchAdapter extends ArrayAdapter<Question> {
 
 
     public void addItem(Question q) {
-        //add(q);
         mIdMap.put(q, mIdMap.size());
     }
 }

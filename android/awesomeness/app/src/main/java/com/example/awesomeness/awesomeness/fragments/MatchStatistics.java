@@ -124,13 +124,7 @@ public class MatchStatistics extends BaseFragment {
                 }
             });
         } else {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getActivity().onBackPressed();
-                }
-            });
-            fab.setImageResource(R.drawable.ic_action_back);
+            fab.setVisibility(View.INVISIBLE);
         }
         if (playerOneName != null) {
 

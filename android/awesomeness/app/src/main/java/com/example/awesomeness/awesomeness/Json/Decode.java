@@ -8,8 +8,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import com.example.awesomeness.awesomeness.Adapters.StartPageAdapter;
+import com.example.awesomeness.awesomeness.Items.Challenge;
 import com.example.awesomeness.awesomeness.Items.Friend;
 import com.example.awesomeness.awesomeness.Items.Game;
+import com.example.awesomeness.awesomeness.Items.StartpageMessage;
 import com.example.awesomeness.awesomeness.MainActivity;
 import com.example.awesomeness.awesomeness.Match.GamesOverview;
 import com.example.awesomeness.awesomeness.Question.Question;
@@ -39,24 +42,45 @@ public class Decode {
     }
 
 
-    public ArrayList<GamesOverview> decodeGamesOverview(String in) {
-        ArrayList<GamesOverview> list = new ArrayList<>();
-        if (in == "error") return list;
-        JSONArray json = null;
+    public StartpageMessage decodeGamesOverview(String in) {
+        StartpageMessage startpageMessage = new StartpageMessage();
+        if (in == "error") return startpageMessage;
+        JSONObject json = null;
+        ArrayList<GamesOverview> gamesOverviews = new ArrayList<>();
+        ArrayList<Challenge> challenges = new ArrayList<>();
         try {
-            json = new JSONArray(in);
-            for (int i = 0; i < json.length(); i++) {
-                JSONObject object = (JSONObject) json.get(i);
+            json = new JSONObject(in);
+            JSONArray games = json.getJSONArray("Games");
+            for (int i = 0; i < games.length(); i++) {
+                JSONObject object = (JSONObject) games.get(i);
                 GamesOverview q = new GamesOverview(object.getInt("GID"),object.getInt("MPoints"),
                         object.getInt("OPoints"),object.getInt("Turn"),object.getString("OppName"),
                         object.getString("OppID"), object.getBoolean("MyTurn"));
-                list.add(q);
+                gamesOverviews.add(q);
             }
+            JSONArray finished = json.getJSONArray("Finished");
+            for (int i = 0; i < finished.length(); i++) {
+                JSONObject object = (JSONObject) finished.get(i);
+                GamesOverview q = new GamesOverview(4);
+                q.myPoint = object.getInt("MyScore");
+                q.gameID = object.getInt("GID");
+                q.opponentPoint = object.getInt("OppScore");
+                q.opponentName = object.getString("OppName");
+                gamesOverviews.add(q);
+            }
+            startpageMessage.games = gamesOverviews;
+            JSONArray challenge = json.getJSONArray("Challenges");
+            for (int i = 0; i < challenge.length(); i++) {
+                JSONObject object = (JSONObject) challenge.get(i);
+                Challenge q = new Challenge(object.getString("OppID"),object.getString("OppName"));
+                challenges.add(q);
+            }
+            startpageMessage.challenges = challenges;
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return list;
+        return startpageMessage;
     }
 
 
