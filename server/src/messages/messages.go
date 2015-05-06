@@ -1,8 +1,7 @@
 package messages
 
-type GameInitMessage struct {
-	GID              int
-	Opp_name, Opp_ID string
+type ChallengeMessage struct {
+	OppName, OppID string
 }
 
 type GamesMessage struct {
@@ -11,7 +10,13 @@ type GamesMessage struct {
 	MyTurn                      bool
 }
 
+type FinishedGame struct {
+	GID, MyScore, OppScore int
+	OppName                string
+}
+
 type StartMessage struct {
 	Games      []GamesMessage
-	Challenges []GameInitMessage
+	Challenges []ChallengeMessage
+	Finished   []FinishedGame
 }

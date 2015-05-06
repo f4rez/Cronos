@@ -72,7 +72,7 @@ public class DynamicListView extends ListView {
 
     private final int SMOOTH_SCROLL_AMOUNT_AT_EDGE = 15;
     private final int MOVE_DURATION = 150;
-    private final int LINE_THICKNESS = 15;
+    private final int LINE_THICKNESS = 5;
 
     public ArrayList<Question> mCheeseList;
 

@@ -16,5 +16,6 @@
     <string name="action_music">Scener</string>
     <string name="my_turn">Din tur</string>
     <string name="opp_turn">Motståndarens tur</string>
+    <string name="finished_games">Avslutade Spel</string>
 
 </resources>

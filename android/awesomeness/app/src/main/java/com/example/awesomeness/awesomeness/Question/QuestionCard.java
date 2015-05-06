@@ -45,9 +45,6 @@ public class QuestionCard  extends Card {
         //Retrieve elements
         TextView mTitle = (TextView) parent.findViewById(R.id.question);
 
-
-
-
         if (mTitle!=null)
             mTitle.setText(question);
 

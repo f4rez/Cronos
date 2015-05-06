@@ -201,9 +201,8 @@ public class MatchFragment extends BaseFragment {
                             m.game.turn = !m.game.turn;
                         } else {
                             Game.Round round = new Game.Round();
-                            round.myRoundScore = points;
+                            r.myRoundScore = points;
                             m.game.addRound(round);
-
                         }
                         showYears();
                     }
