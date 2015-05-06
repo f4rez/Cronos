@@ -58,8 +58,15 @@ func Balancer(r *http.Request, game Game) error {
 			i++;
 		}
 
-		// Do the Elo user balancing TODO save to db
-		userBalancer(user1.Level, user2.Level, round.PlayerOnePoints, round.PlayerTwoPoints)
+		// Do the Elo user balancing
+		new1, new2, err := userBalancer(user1.Level, user2.Level, round.PlayerOnePoints, round.PlayerTwoPoints)
+		
+		if(err != nil) {
+			c.Infof("Error balancing users")
+		}
+
+		user1.UpdateLevel(new1)
+		user2.UpdateLevel(new2)
 	}
 
 	return nil
