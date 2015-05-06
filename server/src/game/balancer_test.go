@@ -1,4 +1,4 @@
-package balancer
+package game
 
 import (
 	"testing"
@@ -107,3 +107,26 @@ func TestHumbleQuestionBalancer(t *testing.T) {
 		t.Errorf("The easier the user is, the less it should affect an incorrect answer")
 	}
 }
+
+/*
+func testBalancer(t *testing.T) {
+	inst, err := aetest.NewInstance(nil)
+	if err != nil {
+		t.Fatalf("Could not create instance of aetest.")
+	}
+
+	req, err := inst.NewRequest("GET", "/", nil)
+	if err != nil {
+		t.Fatalf("Could not create new request.")
+	}
+
+	theGame := game.Game{
+
+	}
+
+	err := Balancer(req, theGame)
+
+	if err != nil  {
+		t.Errorf("Could not run Balancer.")
+	}
+}*/
