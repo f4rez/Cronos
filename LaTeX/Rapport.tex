@@ -14,8 +14,16 @@
 \usepackage{caption}
 \captionsetup[figure]{name=Figur}
 
-\author{Alfred Yrelin\\Josef Svensson\\Philip Åkerfeldt}
+\begin{titlepage}
+\author{Alfred Yrelin, Josef Svensson, Philip Åkerfeldt\\
+\textup{Dept. of Information Technology}\\
+\textup{Uppsala University}\\
+\textup{Uppsala Sweden}\\
+}
 \title{Historiekunskapsspel med semiautomatisk frågehämtning och ett balanseringssystem för frågor}
+\date{\today}
+\end{titlepage}
+
 \begin{document}
 \maketitle
 \newpage
@@ -26,7 +34,7 @@
 Vem vill inte kunna avgöra diskussioner med sina vänner med argumentet "Jag är i alla fall bäst på ..."? 
 Att tävla är något som de allra flesta säkerligen tycker är både roligt och socialt, om målet är att vinna eller bara ha kul varierar men tävlingskänslan finns kvar oavsett agenda. Att kunna ha denna tävlingskänsla och en källa för nöje så förmånligt i sin telefon är något som vi tror att spel som Quizkampen\cite{quiz} och Wordfeud\cite{wordfeud} har blivit så populära. Vi eftersträvar att skapa ett spel som kan framkalla samma tävlingskänsla och nöje som tidigare nämnda spel. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. 
 
-Applikationsutveckling för mobila enheter är ett spännande område som växer \cite{IDC}, under sista kvartalet av 2014 hade Android 81,5\% av marknaden och av de enheter som såldes hade 76,6\% Android som operativsystem.   Enligt \cite{revenue} var även Android operativsystemet som gav högst intäkter för utvecklare som placerat sina applikation i någon form av applikationsmarknad, även om intäkter per nerladdning i iOS fortfarande var större. 
+Applikationsutveckling för mobila enheter är ett spännande område som växer \cite{IDC}, under sista kvartalet av 2014 hade Android 81,5\% av marknaden och av de enheter som såldes hade 76,6\% Android som operativsystem. Enligt Digi-Capital-Found\cite{revenue} var även Android operativsystemet som gav högst intäkter för utvecklare som placerat sina applikation i någon form av applikationsmarknad, även om intäkter per nerladdning i iOS fortfarande var större. 
 
 Spelet utvecklas till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med användarantalet. För att inte behöva söka och manuellt lägga in frågor ett stort antal frågor skapades en semiautomatisk frågehämtare. Detta gör att spelet inte på samma sätt känns repetitivt och tråkigt eftersom fler frågor kan läggas in utan att utvecklaren behöver lägga mycket tid på det. En annan sak som gjordes för att spelet skulle vara roligare för alla var att skapa ett balanseringssystem som gör att händelserna som ges till spelaren är anpassade efter hens nuvarande nivå.
 
@@ -61,7 +69,7 @@ Det finns fyra stora delar i det här projektet som kan ses som projektets prim�
 \subsubsection{Mobilapplikation}
 Vi strävar mot att utveckla en mobilapplikation till Android. Applikationen är det enda som användaren i slutändan kommer se, därför finner vi att gränssnittet är extra viktigt i den här delen av utvecklingen. 
 
-Applikationen till Android skrivs i Java och gränssnittet skrivs med hjälp av XML. \cite{xml}
+Applikationen till Android skrivs i Java och gränssnittet skrivs med hjälp av XML \cite{xml}. 
 
 \subsubsection{Server}
 För att flera spelare ska kunna interagera med varandra så behövs det en server. En server möjliggör också att frågorna som finns i spelet kommer kunna uppdateras kontinuerligt.
@@ -69,7 +77,7 @@ För att flera spelare ska kunna interagera med varandra så behövs det en serv
 Servermjukvaran skrivs i programspråket Go \cite{golang} och körs på Googles molntjänst App engine.
 
 \subsubsection{Google App Engine} 
-Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att användaren bygger en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programmet man bygger i App Engine körs på googles infrastruktur och är uppbyggt så att man kan utöka antalet användare närmast obegränsat. Flera stora företag har använt sig av App Engine när de lanserat produkter bland annat Coca Cola, Rovio och Best Buy. \cite{googleappenginecustomers}
+Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att användaren bygger en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programmet man bygger i App Engine körs på googles infrastruktur och är uppbyggt så att man kan utöka antalet användare närmast obegränsat. Flera stora företag har använt sig av App Engine när de lanserat produkter bland annat Coca Cola, Rovio och Best Buy \cite{googleappenginecustomers}. 
 
 \subsubsection{Automatisk informationshämtning}
 För att göra spelet så intressant som möjligt behövs det många frågor. Ett sätt att skapa många frågor är att utveckla mjukvara som kan hämta information och sätta ihop frågor automatiskt. 
@@ -111,7 +119,7 @@ Det finns vissa delar i det här systemet som blir mer avancerade att lösa än 
 
 \subsection{Metoder}
 Ett antal olika verktyg kommer att användas för att möjliggöra detta projekt. För utvecklingen och simulering av Android-applikationen kommer Android Studio\cite{androidstudio} användas. Detta är ett kraftfullt verktyg som på ett smidigt sätt kan simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
-Google App Engine används lokalt för att simulera serverapplikationen. I skarpt läge kommer App Engine även användas, men då i Googles moln. App engine är ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjuds när man utvecklar och körs sina applikationer via denna motor är otroligt värdefulla. Det är bland annat lätt att underhålla applikationen och skala när trafiken och datan kräver det. \cite{googleappengine}\\
+Google App Engine används lokalt för att simulera serverapplikationen. I skarpt läge kommer App Engine även användas, men då i Googles moln. App engine är ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjuds när man utvecklar och körs sina applikationer via denna motor är otroligt värdefulla. Det är bland annat lätt att underhålla applikationen och skala när trafiken och datan kräver det \cite{googleappengine}.\\
 Wikipedia används som informationskälla för frågorna som spelet presenterar för användarna. Denna informationskälla används primärt under utvecklingsfasen och kommer mer stor sannolikhet att bytas ut mot andra informationskällor vid ett senare skede alternativt innan produkten färdigställs.\\
 
 \subsection{Systemstruktur}
@@ -134,7 +142,8 @@ Databasen som servern kommunicerar med körs, likt servern, i App engine med bib
 \subsubsection{Crawler}
 Inbyggt i servern finns en form av crawler som hanterar semi-automatisk informationshämtning av frågematerial. Hela systemet syftar till att via en given länk läsa igenom den länkade sidan och dess undersidor för att hitta information som passar som frågor för spelet. 
 
-Sidor som har visat sig vara relativt enkla att läsa in är Wikipedias undersidor av typen listningssidor. Den här typen av sidor har en punktlista med årtal samt en beskrivande mening av det årtalet inom den kategori som Wikipediasidan handlar om. Ett exempel är sidan som listar datorspelsår: \url{http://sv.wikipedia.org/wiki/Lista_%C3%B6ver_datorspels%C3%A5r}. Vid inläsning av den här typen av sida separeras helt enkelt varje <li>-element där ett bindestreck eller kolon förekommer och därefter sparas varje kombination av årtal och händelse i ett temporärt cache.
+Sidor som har visat sig vara relativt enkla att läsa in är Wikipedias undersidor av typen listningssidor. Den här typen av sidor har en punktlista med årtal samt en beskrivande mening av det årtalet inom den kategori som Wikipediasidan handlar om. Ett exempel är sidan som listar datorspelsår: Som återfinns vid denna  \textbf{\href{http://sv.wikipedia.org/wiki/Lista_\%C3\%B6ver_datorspels\%C3\%A5r}{länk.}} 
+Vid inläsning av den här typen av sida separeras helt enkelt varje $<$li$>$-element där ett bindestreck eller kolon förekommer och därefter sparas varje kombination av årtal och händelse i ett temporärt cache.
 
 När alla  händelser har lästs in i cachet presenteras de inlästa händelserna en i taget i ett webinterface. Webinterfacet visar ett årtal, en fråga samt fyra knappar. Knapparna anger svårighetsgrad lätt, medel eller svår samt ett alternativ för att ta bort den aktuella frågan helt.
 
