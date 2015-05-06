@@ -70,6 +70,7 @@ func MakeUser(c appengine.Context) (Users, error) {
 	if u != nil {
 		users.Oid = u.ID
 		users.Name = u.String()
+		users.Level = 1000
 		return *users, nil
 	} else {
 		err := new(error)

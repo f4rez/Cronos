@@ -6,6 +6,33 @@ import (
 	"users"
 )
 
+func TestUserBalancer(t *testing.T) {
+	// Test if the most andvanced user wins
+	u1, u2, err := userBalancer(1300, 1000, 5, 1)
+	u3, u4, err := userBalancer(1200, 1000, 5, 1)
+
+	// Test if the opposit
+	u1o, _, err := userBalancer(1300, 1000, 1, 4)
+	//u3o, u4o, err := userBalancer(1200, 1000, 1, 4)
+
+	if(err != nil) {
+		t.Errorf("could not run userBalancer")
+	}
+
+	if(u1 < u3) {
+		t.Errorf("Expected u1 < u3, is ", u1, u3)
+	}
+
+	if(u2 < u4) {
+		t.Errorf("Expected u2 < u4, is ", u2, u4)
+	}
+
+	if(u1 < u1o) {
+		t.Errorf("Expected u1 < u1o, is ", u1, u1o)
+	}
+}
+
+
 func TestStupidQuestionBalancer(t *testing.T) {
 	questions := []question.Question{
 		question.Question{1, 1000, 500, "The question"},
@@ -32,6 +59,7 @@ func TestStupidQuestionBalancer(t *testing.T) {
 	}
 }
 
+
 func TestHumbleQuestionBalancer(t *testing.T) {
 	questions := []question.Question{
 		question.Question{1, 700, 500, "The question"},
@@ -54,13 +82,13 @@ func TestHumbleQuestionBalancer(t *testing.T) {
 	answers2 := []int{2,1,2,2,2}
 
 	// Easy to advanced users
-	user500 := users.Users{"", "", "", nil, nil, 500, nil}
-	user750 := users.Users{"", "", "", nil, nil, 750, nil}
-	user1000 := users.Users{"", "", "", nil, nil, 1000, nil}
-	user1100 := users.Users{"", "", "", nil, nil, 1100, nil}
-	user1300 := users.Users{"", "", "", nil, nil, 1300, nil}
-	user1700 := users.Users{"", "", "", nil, nil, 1700, nil}
-	user2000 := users.Users{"", "", "", nil, nil, 2000, nil}
+	user500 := users.Users{"", "", "", nil, nil, nil, nil, 0, 0, 0, 500}
+	user750 := users.Users{"", "", "", nil, nil, nil, nil, 0, 0, 0, 750}
+	user1000 := users.Users{"", "", "", nil, nil, nil, nil, 0, 0, 0, 1000}
+	user1100 := users.Users{"", "", "", nil, nil, nil, nil, 0, 0, 0, 1100}
+	user1300 := users.Users{"", "", "", nil, nil, nil, nil, 0, 0, 0, 1300}
+	user1700 := users.Users{"", "", "", nil, nil, nil, nil, 0, 0, 0, 1700}
+	user2000 := users.Users{"", "", "", nil, nil, nil, nil, 0, 0, 0, 2000}
 
 	userMaxLevel := 2000
 	questionMaxLevel := 1000
