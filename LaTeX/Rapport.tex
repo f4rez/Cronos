@@ -1,6 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-%%\usepackage[swedish]{babel}
+\usepackage[swedish]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -15,7 +15,7 @@
 \captionsetup[figure]{name=Figur}
 
 \author{Alfred Yrelin\\Josef Svensson\\Philip Åkerfeldt}
-\title{Är du en historiemästare?}
+\title{Historiekunskapsspel med semiautomatisk frågehämtning och ett balanseringssystem för frågor}
 \begin{document}
 \maketitle
 \newpage
@@ -24,22 +24,18 @@
 
 \section{Inledning}
 Vem vill inte kunna avgöra diskussioner med sina vänner med argumentet "Jag är i alla fall bäst på ..."? 
-Att tävla är något som de allra flesta säkerligen tycker är både roligt och socialt, om målet är att vinna eller bara ha kul varierar men tävlingskänslan finns kvar oavsett agenda. Att kunna ha denna tävlingskänsla och en källa för nöje så förmånligt i sin telefon är något som vi tror att spel som Quizkampen\cite{quiz} och Wordfeud har blivit så populära. Vi eftersträvar att skapa ett spel som kan framkalla samma tävlingskänsla och nöje som tidigare nämnda spel. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. 
+Att tävla är något som de allra flesta säkerligen tycker är både roligt och socialt, om målet är att vinna eller bara ha kul varierar men tävlingskänslan finns kvar oavsett agenda. Att kunna ha denna tävlingskänsla och en källa för nöje så förmånligt i sin telefon är något som vi tror att spel som Quizkampen\cite{quiz} och Wordfeud\cite{wordfeud} har blivit så populära. Vi eftersträvar att skapa ett spel som kan framkalla samma tävlingskänsla och nöje som tidigare nämnda spel. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. 
 
-Applikationsutveckling för mobila enheter är ett spännande område som växer \cite{IDC}, under sista kvartalet av 2014 hade android 81,5\% av marknaden och av de enheter som såldes hade 76,6\% Android som operativsystem.   Enligt \cite{revenue}
+Applikationsutveckling för mobila enheter är ett spännande område som växer \cite{IDC}, under sista kvartalet av 2014 hade Android 81,5\% av marknaden och av de enheter som såldes hade 76,6\% Android som operativsystem.   Enligt \cite{revenue} var även Android operativsystemet som gav högst intäkter för utvecklare som placerat sina applikation i någon form av applikationsmarknad, även om intäkter per nerladdning i iOS fortfarande var större. 
 
-Spelet utvecklas till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med användarantalet. 
-
-
- Automatisk frågehämtare och balansering är bara några av de sakerna som kommer karaktärisera spelet.
+Spelet utvecklas till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med användarantalet. För att inte behöva söka och manuellt lägga in frågor ett stort antal frågor skapades en semiautomatisk frågehämtare. Detta gör att spelet inte på samma sätt känns repetitivt och tråkigt eftersom fler frågor kan läggas in utan att utvecklaren behöver lägga mycket tid på det. En annan sak som gjordes för att spelet skulle vara roligare för alla var att skapa ett balanseringssystem som gör att händelserna som ges till spelaren är anpassade efter hens nuvarande nivå.
 
 
 \section{Förutsättningar}
 
 \subsection{Bakgrund}
 
-
-\subsubsection{Turbaserade multiplayerspel för mobiltelefoner}
+\subsubsection{kunskapsspel för mobiltelefoner}
 Wordfeud och Quizkampen är två populära turbaserade multiplayerspel där Quizkampen har 45 miljoner användare globalt\cite{quiz} och Wordfeud har mellan 10-50 miljoner nedladdningar enbart på Androidplattformen\cite{wordfeud}. Dessa spel gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare spelar sin omgång får dess motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
 
 \paragraph{Quizkampen \newline} 
@@ -48,7 +44,7 @@ Quizkampen \cite{aboutquiz} är ett frågesports-spel där spelarna svarar på f
 \paragraph{Wordfeud \newline}
 Wordfeud \cite{aboutwordfeud} är ett spel där en match utspelas mellan två personer. Varje spelare får en liten mängd bokstäver som är gömd för motspelaren. Spelet går sedan ut på att fläta samman ord på det givna spelbrädet med hjälp av bokstäverna. Målet är att få så många poäng som möjligt och detta kan man uppnå tack vare att varje bokstav är värd en viss poäng. På så sätt kan man genom att använda svårare bokstäver och skapa längre ord få mer poäng. 
 
-\subsubsection{Turbaserade sällskapsspel}
+\subsubsection{Kunskapssällskapsspel}
 
 Sällskapsspelsform är och har länge varit ett populärt sätt att umgås på\cite{bradspel}. Sällskapsspelet \textit{När då då?}\cite{nardada} är ett spel har bygger på ett relativt enkelt koncept. Spelarna turas om att placera ut händelser på en tidslinje i förhållande till varandra och får poäng om dessa är korrekt utplacerade. Den spelaren som har flest poäng vid en slutet av matchen vinner. \\
 Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att spelet tilltalar vissa egenskaper hos spelarna: man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är något som tilltalar oss när vi spelar brädspel\cite{psykologi}. Det är förmodligen detta som gör den här typen av spel så populära.
@@ -73,7 +69,7 @@ För att flera spelare ska kunna interagera med varandra så behövs det en serv
 Servermjukvaran skrivs i programspråket Go \cite{golang} och körs på Googles molntjänst App engine.
 
 \subsubsection{Google App Engine} 
-Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för moltjänster. Det bygger på att användaren bygger en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programmet man bygger i App Engine körs på googles infrastruktur och är uppbyggt så att man kan utöka antalet användare närmast obegränsat. Flera stora företag har använt sig av App Engine när de lanserat produkter bland annat Coca Cola, Rovio och Best Buy. \cite{googleappenginecustomers}
+Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att användaren bygger en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programmet man bygger i App Engine körs på googles infrastruktur och är uppbyggt så att man kan utöka antalet användare närmast obegränsat. Flera stora företag har använt sig av App Engine när de lanserat produkter bland annat Coca Cola, Rovio och Best Buy. \cite{googleappenginecustomers}
 
 \subsubsection{Automatisk informationshämtning}
 För att göra spelet så intressant som möjligt behövs det många frågor. Ett sätt att skapa många frågor är att utveckla mjukvara som kan hämta information och sätta ihop frågor automatiskt. 
@@ -114,11 +110,9 @@ Det finns vissa delar i det här systemet som blir mer avancerade att lösa än 
 \section{Genomförande}
 
 \subsection{Metoder}
-Ett antal olika verktyg kommer att användas för att möjliggöra detta projekt. För utvecklingen och simulering av android-applikationen kommer Android Studio användas. Detta är ett kraftfullt verktyg som på ett smidigt sätt kan simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner. \cite{androidstudio}\\
+Ett antal olika verktyg kommer att användas för att möjliggöra detta projekt. För utvecklingen och simulering av Android-applikationen kommer Android Studio\cite{androidstudio} användas. Detta är ett kraftfullt verktyg som på ett smidigt sätt kan simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
 Google App Engine används lokalt för att simulera serverapplikationen. I skarpt läge kommer App Engine även användas, men då i Googles moln. App engine är ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjuds när man utvecklar och körs sina applikationer via denna motor är otroligt värdefulla. Det är bland annat lätt att underhålla applikationen och skala när trafiken och datan kräver det. \cite{googleappengine}\\
 Wikipedia används som informationskälla för frågorna som spelet presenterar för användarna. Denna informationskälla används primärt under utvecklingsfasen och kommer mer stor sannolikhet att bytas ut mot andra informationskällor vid ett senare skede alternativt innan produkten färdigställs.\\
-Git används för att synkronisera projektets filer mellan utvecklarna. Ett privat repo på Bitbucket\footnote{http://www.bitbucket.org} används till detta.\\
-Google Hangouts används för kommunikation när gruppmedlemmarna är på olika fysiska platser.
 
 \subsection{Systemstruktur}
 
