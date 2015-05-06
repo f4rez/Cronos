@@ -13,7 +13,6 @@ import (
 	"users"
 	"strconv"
 	"time"
-	"users"
 )
 
 type Game struct {
