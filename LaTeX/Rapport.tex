@@ -194,7 +194,37 @@ Administratörerna är ansvariga för underhållet och utvecklingen av systemet.
 Spelarna är den typen av användare som har en begränsad åtkomst till systemet. Spelarna kan endast komma åt systemet genom klienten och kan interagera med själva spelet. Detta betyder att en vanlig spelare inte kan finna information som ligger \textit{under huven} på systemet. Detta är delvis en säkerhetsåtgärd som är till för att den vanliga användaren inte, av misstag, eller med flit kunna komma åt systemets vitala delar och alternera dessa. Användaren kan kommunicera med administratörerna genom att skicka felrapporter om spelet skulle bete sig konstigt eller om några buggar har funnits.
 
 \subsubsection{Balanseringssystemet}
-Balanseringssystemet syftar till två saker, dels till att justera svårighetsgraden på frågorna som finns i databasen och dels till att justera spelarnas nivå. Efter varje avslutad match skickas alla frågor som var med i matchen samt båda spelarnas svar på respektive frågor. Utifrån detta justeras sedan nivåerna.
+Balanseringssystemet syftar till två saker, dels till att justera svårighetsgraden på frågorna som finns i databasen och dels till att justera spelarnas svårighetsnivå. 
+
+Det finns alltså två separata nivåsystem i applikationen. Varje fråga i databasen har ett siffervärde för dess svårighetsgrad, ju högre siffra, desto svårare fråga. På liknande vis har också varje användare en svårighetsgrad som lagras som ett siffervärde i spelarens profil. Syftet med dessa poäng är i det stora perspektivet att få spelet att servera så rättvisa och roliga matcher som möjligt för spelarna. 
+
+Frågornas svårighetsnivå justeras beroende på hur spelarna i matchen svarar på frågan. En fråga som det ofta svaras fel på ökar i svårighetsnivå allt eftersom fler spelare svarar fel. Svårighetsnivån är helt bunden till frågan i sig och finns alltså kvar mellan matcherna.
+
+En frågas svårighetsnivå har ingenting med någon form av poängräkning att göra. Svårighetsnivån på frågorna finns till för att vid en matchstart kunna jämföras mot spelarnas svårighetsnivå, på så vis avgör spelet om frågan ska skickas till spelarna eller inte. Det handlar alltså helt och hållet om att spelet ska presentera frågor som är lagom svåra för spelarna, så att spelet blir lagom utmanande och maximalt roligt.
+
+Spelarnas svårighetsnivåer justeras också efter avslutad match. Den här balanseringen går i stora drag till så att den vinnande spelaren tar poäng av den förlorande spelaren. Om den vinnande spelaren redan ligger på högre nivå än den förlorande så tar denne väldigt lite poäng från den förlorande. I det motsatta fallet tar istället den vinnande spelaren mycket poäng från den förlorande. Hur mycket poäng som faktiskt tas baseras på skillnaden i nivå mellan spelarna. 
+
+Inspiration till den här sortens balansering kommer bland annat från Counter-strike: GO \cite{cs} som använder sig av ett system kallat Elo\cite{elo}. Elo är ett system som förutser hur stor del av en mängd spelade matcher som bör vinnas av vardera spelare, baserat på en den svårighetsnivå respektive spelare har. Det här systemet justerar, efter en match, poängen enligt beskrivningen ovan. Eftersom en lägre rankad spelare får fler poäng vid vinst mot en högre rättar systemet på sikt sig självt, vilket innebär att spelarna faktiskt får den nivå de förtjänar.
+
+Elosystemet fungerar enligt följande. Varje spelare får en initial Elopoäng på 1000. Denna justeras sedan beroende på utfallet av en match i förhållande till det förväntade utfallet. Det förväntade utfallet beräknas:
+
+$$E_A = \frac{1}{1+10^{(R_B-R_A)/400}}$$
+
+Där $E_A$ är den förväntade andelen matcher som spelare A borde vinna. Är värdet till exempel 0.84 så innebär det att 84\% av matcherna borde vinnas av spelare A enligt nuvarande Elopoäng. $R_B$ är spelare B:s nuvarande Elopoäng och $R_A$ är spelare A:s nuvarande poäng.
+
+När det förväntade utfallet har beräknats så justeras sedan spelarnas Elopoäng enligt formeln:
+
+$$R'_A = R_A + K(S_A-E_A)$$
+
+Där $R'_A$ är spelare A:s nya Elopoäng, $R_A$ är spelare A:s Elopoäng innan matchen, $S_A$ är det faktiska utfallet av matchen och $E_A$ är det förväntade utfallet. K-värdet är en skalningsfaktor som justerar hur mycket poängen justeras vid varje vinst/förlust.
+
+Ett räkneexempel med spelare A, 1300 poäng, och spelare B 1000 poäng, där A vinner:
+
+$$0.849 = \frac{1}{1+10^{(1000-1300)/400}}$$
+$$ R'_A = 1300 + 16(1-0.849) = 1302.416 $$
+$$ R'_B = 1000 + 16(0-0.849) = 997.584 $$
+
+Efter varje avslutad match skickas alla frågor som var med i matchen samt båda spelarnas svar på respektive frågor. Utifrån detta justeras sedan nivåerna.
 
 Om en spelare med låg nivå svarar rätt på en fråga så justeras frågans svårighetsgrad ner, ju högre nivå frågan har, desto större nedjustering sker. En spelare med hög nivå påverkar inte frågorna lika mycket som en spelare med låg nivå. Det här beror på att om en spelare med låg nivå svarar rätt på en svår fråga så är nivån på frågan förmodligen mycket mer felaktig än om en avancerad spelare svarat rätt på samma fråga. 
 
