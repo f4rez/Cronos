@@ -1,38 +1,67 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[a4paper, 11pt]{article}
+\usepackage{fullpage}
+
 \usepackage[utf8]{inputenc}
 \usepackage[swedish]{babel}
+
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{fontenc}
+
 \usepackage[hidelinks]{hyperref}
-\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+
 \usepackage{titlesec}
 \setcounter{secnumdepth}{4}
+
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
 \addbibresource{cites.bib}
+
 \usepackage{caption}
 \captionsetup[figure]{name=Figur}
 
-\begin{titlepage}
-\author{Alfred Yrelin, Josef Svensson, Philip Åkerfeldt\\
+
+
+\title{Historiekunskapsspel med semiautomatisk frågehämtning och ett balanseringssystem för frågor}
+
+\author{
+Alfred Yrelin \\
 \textup{Dept. of Information Technology}\\
 \textup{Uppsala University}\\
 \textup{Uppsala Sweden}\\
+\textup{Alfred.Yrelin.2125@student.uu.se}
+\and 
+Josef Svensson \\
+\textup{Dept. of Information Technology}\\
+\textup{Uppsala University}\\
+\textup{Uppsala Sweden}\\
+\textup{Josef.Svensson.8440@student.uu.se}
+\and
+Philip Åkerfeldt \\
+\textup{Dept. of Information Technology}\\
+\textup{Uppsala University}\\
+\textup{Uppsala Sweden}\\
+\textup{Philip.Akerfeldt.4987@student.uu.se}
 }
-\title{Historiekunskapsspel med semiautomatisk frågehämtning och ett balanseringssystem för frågor}
+
 \date{\today}
-\end{titlepage}
 
 \begin{document}
 \maketitle
+\newpage
+\section{Förord}
+\textit{Tack till}
 \newpage
 \tableofcontents
 \pagebreak
 
 \section{Inledning}
 Vem vill inte kunna avgöra diskussioner med sina vänner med argumentet "Jag är i alla fall bäst på ..."? 
-Att tävla är något som de allra flesta säkerligen tycker är både roligt och socialt, om målet är att vinna eller bara ha kul varierar men tävlingskänslan finns kvar oavsett agenda. Att kunna ha denna tävlingskänsla och en källa för nöje så förmånligt i sin telefon är något som vi tror att spel som Quizkampen\cite{quiz} och Wordfeud\cite{wordfeud} har blivit så populära. Vi eftersträvar att skapa ett spel som kan framkalla samma tävlingskänsla och nöje som tidigare nämnda spel. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. 
+Att tävla är både roligt och socialt. Oavsett om målet är att vinna eller bara ha kul så ger spel oss en tävlingskänsla oavsett individen personliga agenda. Att kunna ha denna tävlingskänsla och en källa för nöje så förmånligt i sin telefon är något som vi tror är något att eftersträva i mobila spel. Spel som exempelvis Quizkampen\cite{quiz} och Wordfeud\cite{wordfeud} besitter båda denna egenskap och det är en faktorerna som vi tror har gjort dessa spel populära på marknaden. Vi eftersträvar att skapa ett spel som kan framkalla samma tävlingskänsla och nöje som Quizkampen och Wordfeud. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. 
 
 Applikationsutveckling för mobila enheter är ett spännande område som växer \cite{IDC}, under sista kvartalet av 2014 hade Android 81,5\% av marknaden och av de enheter som såldes hade 76,6\% Android som operativsystem. Enligt Digi-Capital-Found\cite{revenue} var även Android operativsystemet som gav högst intäkter för utvecklare som placerat sina applikation i någon form av applikationsmarknad, även om intäkter per nerladdning i iOS fortfarande var större. 
 
@@ -47,15 +76,15 @@ Spelet utvecklas till Android med en backend som drar nytta av Google App Engine
 Wordfeud och Quizkampen är två populära turbaserade multiplayerspel där Quizkampen har 45 miljoner användare globalt\cite{quiz} och Wordfeud har mellan 10-50 miljoner nedladdningar enbart på Androidplattformen\cite{wordfeud}. Dessa spel gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare spelar sin omgång får dess motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
 
 \paragraph{Quizkampen \newline} 
-Quizkampen \cite{aboutquiz} är ett frågesports-spel där spelarna svarar på frågor under 6 ronder med tre frågor i varje rond. Spelarna svarar på samma frågor och spelarna väljer en av tre slumpade kategorier varannan rond. Matchen avslutas när sista rundan är spelad och det är även då  en vinnare avgörs . 
+Quizkampen \cite{aboutquiz} är ett frågesports-spel där spelarna svarar på frågor under 6 rundor med tre frågor i varje runda. Spelarna svarar på samma frågor varje runda.  Inför varje runda slumpas tre kategorier fram där endast en kategori väljas för den aktuella rundan. Detta är något som spelarna turas om att göra varannan runda. Matchen avslutas när sista rundan är spelad och det är även då en vinnare koras beroende på vem som har flest poäng. 
 
 \paragraph{Wordfeud \newline}
 Wordfeud \cite{aboutwordfeud} är ett spel där en match utspelas mellan två personer. Varje spelare får en liten mängd bokstäver som är gömd för motspelaren. Spelet går sedan ut på att fläta samman ord på det givna spelbrädet med hjälp av bokstäverna. Målet är att få så många poäng som möjligt och detta kan man uppnå tack vare att varje bokstav är värd en viss poäng. På så sätt kan man genom att använda svårare bokstäver och skapa längre ord få mer poäng. 
 
 \subsubsection{Kunskapssällskapsspel}
 
-Sällskapsspelsform är och har länge varit ett populärt sätt att umgås på\cite{bradspel}. Sällskapsspelet \textit{När då då?}\cite{nardada} är ett spel har bygger på ett relativt enkelt koncept. Spelarna turas om att placera ut händelser på en tidslinje i förhållande till varandra och får poäng om dessa är korrekt utplacerade. Den spelaren som har flest poäng vid en slutet av matchen vinner. \\
-Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att spelet tilltalar vissa egenskaper hos spelarna: man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är något som tilltalar oss när vi spelar brädspel\cite{psykologi}. Det är förmodligen detta som gör den här typen av spel så populära.
+Sällskapsspelsform har länge varit och är än idag ett populärt sätt att umgås på\cite{bradspelspop}. Sällskapsspelet \textit{När då då?} är ett spel har bygger på ett relativt enkelt koncept. Spelarna turas om att placera ut händelser på en tidslinje i förhållande till varandra och får poäng om dessa är korrekt utplacerade. Den spelaren som har flest poäng vid en slutet av matchen vinner\cite{nardada}. \\
+Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att spelet tilltalar vissa egenskaper hos spelarna: man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är något som tilltalar oss när vi spelar brädspel. Detta är en faktor som gör den här typen av spel så populära \cite{psykologi}.
 
 \subsection{Syfte}
 Det är projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter. I det här projektet ska en applikation utvecklas som ger flera användare möjlighet att interagera med varandra.
@@ -63,7 +92,7 @@ Det är projektets syfte är att utveckla och distribuera en spelapplikation fö
 Spelet som utvecklats går ut på att två användare får tävla om vem som har bäst koll på när olika historiska händelser ägde rum. Varje spelare får ett antal händelser som denne sedan ska sortera i kronologisk ordning. Spelaren som sorterar flest händelser rätt vinner. Förutom rent nöje så ger spelet också användaren möjlighet att få bättre koll på historien, applikationen kan alltså också användas i utbildningssyfte.
 
 \subsection{Mål}
-Det finns fyra stora delar i det här projektet som kan ses som projektets primära mål. Målet vi ser framför oss är en mobilapplikation i form av ett spel som kommer köras på en server som kommer sköta all kommunikation mellan klienten och sig själv. En av fokuspunkterna för spelet är att även implementera en automatisk informationshämtare som ska har som syfte att fylla på vår databas med nya frågor. Informationshämtningen kommer inte, med stor säkerhet, vara helt automatiskt utan kanske mer semi-automatiskt där ett steg i informationshämtningen kommer kräva ett mänskligt interagerande; detta för att godkänna frågorna till databasen. 
+Det finns fyra stora delar i det här projektet som kan ses som projektets primära mål. Målet vi ser framför oss är en mobilapplikation i form av ett spel som kommer köras på en server som kommer sköta all kommunikation mellan klienten och sig själv. En av fokuspunkterna för spelet är att även implementera en semi-automatisk informationshämtare som ska har som syfte att fylla på vår databas med nya frågor. Informationshämtningen kommer vara semi-automatiskt i den meningen att ett steg i informationshämtningen kommer kräva ett mänskligt interagerande. Interaktionen krävs för att godkänna frågorna till databasen och detta är en uppgift som administratörerna (se avsnitt \ref{admins}) utför. 
 
 
 \subsubsection{Mobilapplikation}
@@ -85,7 +114,7 @@ För att göra spelet så intressant som möjligt behövs det många frågor. Et
 Målet med den automatiska informationshämtningen är att skapa ett delsystem som läser in delar av Wikipedia, eller andra källor, och kopplar samman årtal och händelser automatiskt. Det här systemet behöver också ett administrativt gränssnitt så att en administratör på ett snabbt sätt kan korrekturläsa frågorna innan de godkänns och är redo för spelet.
 
 \subsection{Motivation}
-Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på applikationer är Quizkampen och Wordfeud är toppar säljlistorna för Androidspel \cite{appsalesrating}. Dessa spel följer en ganska enkel struktur och den bygger på att två personer kan möta varandra, svara på frågor eller lägga ord och på så sätt få poäng som sen kommer avgöra en vinnare mellan de tävlande. Enligt säljstatistiken som nämndes tidigare är detta koncept något som är attraktivt för många användare. Spelet, vars utveckling beskrivs i rapporten, kommer kombinerar koncepten från tidigare nämnda spel; med att både svara på frågor samt att lägga in saker på sin rätta plats. 
+Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på applikationer är Quizkampen och Wordfeud är toppar säljlistorna för Androidspel \cite{appsalesrating}. Dessa spel följer en ganska enkel struktur och den bygger på att två personer kan möta varandra, svara på frågor eller lägga ord och på så sätt få poäng som sen kommer avgöra en vinnare mellan de tävlande. Enligt säljstatistiken \cite{appsalesrating} är detta koncept något som är attraktivt för många användare. Spelet, vars utveckling beskrivs i rapporten, kommer kombinerar koncepten från tidigare Quizkampen och Wordfeud i den mening att spelare ska svara på frågor samt att lägga in saker på sin rätta plats. 
 
 En liknande version av det här spelet har också visat sig vara populär i form av sällskapsspel (\textit{När-då-då?})\cite{nardada}, därför är hoppet högt om att också den här applikationen ska bli populär. Det finns för tillfället ingen variant av det här spelkonceptet till Android vilket ses som en bra chans att ta enligt utvecklingsteamet.
 
@@ -94,6 +123,7 @@ Det finns ett spel för iOS, \textit{Historiekampen}\cite{historiekampen} som oc
 
 Historiekampen är ett spel som mekaniskt sett liknar sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur går till så att denne får en fråga som ska placeras på spelarens tidslinje. Vid första frågan finns det en årtalsreferens utlagd, vid nästa fråga finns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare. I Historiekampen kan en spelare välja att antingen lägga en fråga till, eller avsluta sin runda och därmed låsa frågorna. Skulle spelaren svara fel på en fråga förlorar denne alla frågor som har placerats den rundan.
 
+\subsection{Hur vår applikation skiljer sig från konkurrenterna}
 \textbf{vad vi ska göra (varför vi är bättre än dom andra):} 
 OKLART VART DENNA SKA LIGGA
 
@@ -155,6 +185,13 @@ När alla  händelser har lästs in i cachet presenteras de inlästa händelsern
 \end{figure}
 
 De fyra knapparna är mappade till siffrorna 1-4 på tangentbordet för att det ska gå snabbt att klicka igenom frågorna. Texten är också redigerbar för att administratören snabbt ska kunna justera grammatiska fel.
+
+\subsubsection{Användare}
+Det finns två sorters användare som kan interagera med systemet.\\
+\textbf{Administratörer} \label{admins} \\
+Administratörerna är ansvariga för underhållet och utvecklingen av systemet. Administratörerna har den högsta typen av tillgång till systemet för att kunna utföra dessa uppgifter. I underhåll innefattas att felsöka och åtgärda funna fel men också uppföljning av rapporterade fel som skickas in av spelare. En vital uppgift som administratörerna har förutom den allmänna underhållet och utvecklingen av systemet är att godkänna informationen som hämtas av crawlern. Detta är för att se till att frågorna följer den struktur som administratörerna finner lämplig. \\
+\textbf{Spelare}\\
+Spelarna är den typen av användare som har en begränsad åtkomst till systemet. Spelarna kan endast komma åt systemet genom klienten och kan interagera med själva spelet. Detta betyder att en vanlig spelare inte kan finna information som ligger \textit{under huven} på systemet. Detta är delvis en säkerhetsåtgärd som är till för att den vanliga användaren inte, av misstag, eller med flit kunna komma åt systemets vitala delar och alternera dessa. Användaren kan kommunicera med administratörerna genom att skicka felrapporter om spelet skulle bete sig konstigt eller om några buggar har funnits.
 
 \subsubsection{Balanseringssystemet}
 Balanseringssystemet syftar till två saker, dels till att justera svårighetsgraden på frågorna som finns i databasen och dels till att justera spelarnas svårighetsnivå. 
