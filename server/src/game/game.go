@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"question"
 	"users"
-
 	"strconv"
 	"time"
 )
@@ -437,12 +436,6 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, errA2.Error(), http.StatusInternalServerError)
 		}
 
-		// Do some balancing!
-		//TODO: goroutine eller annan thread?
-		//go question.Balancer(r, game.getNewestRound(c).QuestionSID, game.FID, game.SID, game.Turn, []int{int(a1),int(a2),int(a3),int(a4),int(a5)})
-
-		//go question.Balancer(r, game.getNewestRound(c).QuestionSID, game.FID, game.SID, game.Turn, []int{int(a1), int(a2), int(a3), int(a4), int(a5)})
-
 		points := calculatePoints(a1, a2, a3, a4, a5)
 		one, two := CalculateScore(game)
 		ParseRoundData(c, u.ID, game, key, int(a1), int(a2), int(a3), int(a4), int(a5), points)
@@ -466,7 +459,8 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			// Call balancer here! pass "game"
+			// Call balancer here!
+			Balancer(r, game)
 		}
 		fmt.Fprintf(w, "Dina svar har registrerats")
 		break

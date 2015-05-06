@@ -1,4 +1,4 @@
-package balancer
+package game
 
 import (
 	"net/http"
@@ -7,15 +7,15 @@ import (
 	"errors"
 	"users"
 	"appengine/datastore"
-	"game"
 )
 
 
-func Balancer (r *http.Request, game game.Game) error {
+func Balancer (r *http.Request, game Game) error {
 	c := appengine.NewContext(r)
 
 	userMaxLevel, questionMaxLevel := getMaxLevels(r)
 
+	// Loop over each game round
 	for _,round := range game.Rounds {
 		QID := round.QuestionSID
 
@@ -24,6 +24,7 @@ func Balancer (r *http.Request, game game.Game) error {
 			c.Infof("Error getting questions")
 		}
 
+		// Loop over both users (always two)
 		i := 0;
 		for i<2 {
 			var user users.Users;
@@ -42,7 +43,15 @@ func Balancer (r *http.Request, game game.Game) error {
 				return errors.New("No user was found.")
 			}
 
-			humbleQuestionBalancer(questions, answers, user, userMaxLevel, questionMaxLevel) // TODO: Write the answer to datastore, it is returned here but does not go anywhere...
+			updatedQuestions, err := humbleQuestionBalancer(questions, answers, user, userMaxLevel, questionMaxLevel) // TODO: Write the answer to datastore, it is returned here but does not go anywhere...
+
+			if (err != nil) {
+				return errors.New("Some error updating questions.")
+			}
+
+			for _,q := range updatedQuestions {
+				question.UpdateQuestion(c, q)
+			}
 
 			i++;
 		}
