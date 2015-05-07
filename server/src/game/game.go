@@ -4,11 +4,13 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"appengine/user"
+	"appengine/taskqueue"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"messages"
 	"net/http"
+	"net/url"
 	"question"
 	"users"
 	"strconv"
@@ -483,8 +485,15 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 			// Call balancer here!
-			Balancer(r, game)
+			//Balancer(r, game)
+
+			t := taskqueue.NewPOSTTask("/balancer", url.Values{
+			    "gameID": {string(game.GID)},
+			})
+			taskqueue.Add(c, t, "") // add t to the default queue; c is appengine.Context
+		
 		}
+		
 		fmt.Fprintf(w, "Dina svar har registrerats")
 		break
 

@@ -5,10 +5,11 @@ import (
 	"appengine/user"
 	"fmt"
 	"net/http"
-
 	"game"
 	"question_crawler"
 	"users"
+	"balancer"
+	"strconv"
 )
 
 func init() {
@@ -26,6 +27,7 @@ func init() {
 	http.HandleFunc("/search", searchUsers)
 	http.HandleFunc("/test", test)
 	http.HandleFunc("/getGameInfo", getGameInfo)
+	http.HandleFunc("/balancer", runBalancer)
 }
 
 // Init function.
@@ -92,6 +94,13 @@ func searchUsers(w http.ResponseWriter, r *http.Request) {
 func getGameInfo(w http.ResponseWriter, r *http.Request) {
 	game.GetGameInfo(w, r)
 }
+
+func runBalancer(w http.ResponseWriter, r *http.Request) {
+
+	gameID,_ := strconv.Atoi(r.FormValue("gameID"))
+	balancer.Balancer(r, gameID)
+}
+
 func test(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	u := new(users.Users)
