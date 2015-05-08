@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:card="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="80dp">
+
+
+    <it.gmariotti.cardslib.library.view.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        card:card_layout_resourceID="@layout/list_item.xml"
+        android:layout_marginTop="12dp"
+        android:visibility="invisible"
+        />
+
+<se.zinister.timeline.Adapters.DynamicListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/questionList"
+        android:layout_below="@+id/card"/>
+
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_launcher"
+        fab:fab_colorNormal="@color/primary_color"
+        fab:fab_colorPressed="@color/primary_darkercolor"
+        fab:fab_colorRipple="@color/accent_color_ea" />
+</RelativeLayout>
