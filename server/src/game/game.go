@@ -4,15 +4,17 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"appengine/user"
+	"appengine/taskqueue"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"messages"
 	"net/http"
+	"net/url"
 	"question"
+	"users"
 	"strconv"
 	"time"
-	"users"
 )
 
 type Game struct {
@@ -458,12 +460,6 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, errA2.Error(), http.StatusInternalServerError)
 		}
 
-		// Do some balancing!
-		//TODO: goroutine eller annan thread?
-		//go question.Balancer(r, game.getNewestRound(c).QuestionSID, game.FID, game.SID, game.Turn, []int{int(a1),int(a2),int(a3),int(a4),int(a5)})
-
-		//go question.Balancer(r, game.getNewestRound(c).QuestionSID, game.FID, game.SID, game.Turn, []int{int(a1), int(a2), int(a3), int(a4), int(a5)})
-
 		points := calculatePoints(a1, a2, a3, a4, a5)
 		one, two := CalculateScore(game)
 		ParseRoundData(c, u.ID, game, key, int(a1), int(a2), int(a3), int(a4), int(a5), points)
@@ -488,8 +484,16 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			// Call balancer here! pass "game"
+			// Call balancer here!
+			//Balancer(r, game)
+
+			t := taskqueue.NewPOSTTask("/balancer", url.Values{
+			    "gameID": {string(game.GID)},
+			})
+			taskqueue.Add(c, t, "") // add t to the default queue; c is appengine.Context
+		
 		}
+		
 		fmt.Fprintf(w, "Dina svar har registrerats")
 		break
 

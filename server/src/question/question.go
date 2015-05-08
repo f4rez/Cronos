@@ -26,6 +26,16 @@ func SaveQuestion(c appengine.Context, question Question) {
 	}
 }
 
+// Update a existing question
+func UpdateQuestion(c appengine.Context, question Question) {
+	key, _ := getKeyForIndex(c, question.ID)
+
+	_, err := datastore.Put(c, key, &question)
+	if err != nil {
+		c.Infof("Error in saving question: ", err)
+	}
+}
+
 // Return true if there exist a question with the same text in datastore.
 func HasQuestion(c appengine.Context, qu Question) bool {
 	q := datastore.NewQuery("Question").Filter("Question =", qu.Question)

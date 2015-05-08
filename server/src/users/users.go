@@ -55,6 +55,7 @@ func (users *Users) UpdateUser(c appengine.Context, key *datastore.Key) {
 func (users *Users) AddGame(gid int) {
 	users.Games = append(users.Games, gid)
 }
+
 func (users *Users) AddFinishedGame(gid int, opName string, myScore, oppScore int) {
 	f := new(FinishedGame)
 	f.GID = gid
@@ -64,12 +65,17 @@ func (users *Users) AddFinishedGame(gid int, opName string, myScore, oppScore in
 	users.FinishedGames = append(users.FinishedGames, *f)
 }
 
+func (users *Users) UpdateLevel(newLevel int) {
+	users.Level = newLevel
+}
+
 func MakeUser(c appengine.Context) (Users, error) {
 	users := new(Users)
 	u := user.Current(c)
 	if u != nil {
 		users.Oid = u.ID
 		users.Name = u.String()
+		users.Level = 1000
 		return *users, nil
 	} else {
 		err := new(error)

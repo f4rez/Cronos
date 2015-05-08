@@ -7,15 +7,30 @@ import (
 	"errors"
 	"users"
 	"appengine/datastore"
+	"math"
 	"game"
 )
 
 
-func Balancer (r *http.Request, game game.Game) error {
+//func Balancer(r *http.Request, game Game) error {
+func Balancer(r *http.Request, gameID int) error {
 	c := appengine.NewContext(r)
+	game,_,err := game.GetGame(c, gameID)
+	
+	if err != nil {
+		c.Infof("Could not get the game")
+	}
+	
+	var user users.Users
+	var answers []int
 
 	userMaxLevel, questionMaxLevel := getMaxLevels(r)
 
+	// Get the users
+	user1,_,_ := users.GetUser(c, game.FID)
+	user2,_,_ := users.GetUser(c, game.SID)
+
+	// Loop over each game round
 	for _,round := range game.Rounds {
 		QID := round.QuestionSID
 
@@ -24,31 +39,73 @@ func Balancer (r *http.Request, game game.Game) error {
 			c.Infof("Error getting questions")
 		}
 
+		// Loop over both users (always two)
 		i := 0;
 		for i<2 {
-			var user users.Users;
-			var answers []int;
 
 			// Balance according to each user, one at the time.
 			if (i == 0) {
-				user, _, err = users.GetUser(c, game.FID)
+				user = user1
 				answers = round.PlayerOneAnswers
 			} else {
-				user, _, err = users.GetUser(c, game.SID)
+				user = user2
 				answers = round.PlayerTwoAnswerss
 			}
 
+			updatedQuestions, err := humbleQuestionBalancer(questions, answers, user, userMaxLevel, questionMaxLevel) // TODO: Write the answer to datastore, it is returned here but does not go anywhere...
+
 			if (err != nil) {
-				return errors.New("No user was found.")
+				return errors.New("Some error updating questions.")
 			}
 
-			humbleQuestionBalancer(questions, answers, user, userMaxLevel, questionMaxLevel) // TODO: Write the answer to datastore, it is returned here but does not go anywhere...
+			for _,q := range updatedQuestions {
+				question.UpdateQuestion(c, q)
+			}
 
 			i++;
 		}
+
+		// Do the Elo user balancing
+		new1, new2, err := userBalancer(user1.Level, user2.Level, round.PlayerOnePoints, round.PlayerTwoPoints)
+		
+		if(err != nil) {
+			c.Infof("Error balancing users")
+		}
+
+		user1.UpdateLevel(new1)
+		user2.UpdateLevel(new2)
 	}
 
 	return nil
+}
+
+
+func userBalancer(u1 int, u2 int, user1points int, user2points int) (int, int, error){
+	// Scale factor
+	K := 16.0
+	var new1 float64
+	var new2 float64
+
+	user1 := float64(u1)
+	user2 := float64(u2)
+
+	// expected percentage for user1 to win
+	est1 := 1.0 / (1.0 + math.Pow(10, (user2 - user1) / 400.0))
+
+	if (user1points > user2points) {
+		// If user1 won
+		new1 = user1 + K * (1.0 - est1)
+		new2 = user2 + K * (0 - (1.0 - est1))
+
+	} else if (user1points < user2points) {
+		// If user2 won
+		new1 = user1 + K * (0 - est1)
+		new2 = user2 + K * (1 - (1 - est1))		
+	} else {
+		// If draw TODO
+	}
+
+	return int(new1), int(new2), nil
 }
 
 
