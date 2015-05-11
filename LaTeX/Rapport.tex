@@ -82,11 +82,11 @@
 
 \section{Inledning}
 Vem vill inte kunna avgöra diskussioner med sina vänner med argumentet "Jag är i alla fall bäst på ..."? 
-Att tävla är både en rolig och en social aktivitet. Oavsett om målet är att vinna eller bara ha kul så fyller spel oss med en tävlingskänsla. Att kunna få denna tävlingskänsla och samtidigt en källa för nöje så förmånligt i sin telefon är något som vi tror är något att eftersträva i mobila spel. Spel som exempelvis Quizkampen \cite{quiz} och Wordfeud \cite{wordfeud} besitter båda denna egenskap och det är därför vi tror att dessa spel har blivit så populära på marknaden \cite{appsalesrating}. Vi eftersträvar att skapa ett spel som kan framkalla samma tävlingskänsla och nöje som Quizkampen och Wordfeud. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. 
+Att tävla är både en rolig och en social aktivitet. Oavsett om målet är att vinna eller bara ha kul så bidrar spel ofta med någon form av tävlingskänsla. Att kunna få denna tävlingskänsla och samtidigt en källa för nöje så förmånligt i sin telefon är något som vi tror är något att eftersträva i mobila spel. Spel som exempelvis Quizkampen \cite{quiz} och Wordfeud \cite{wordfeud} besitter båda denna egenskap och det är därför vi tror att dessa spel har blivit så populära på marknaden \cite{appsalesrating}. Vi eftersträvar att skapa ett spel som kan framkalla samma tävlingskänsla och nöje som Quizkampen och Wordfeud. Ett spel som går ut på att ordna historiska händelser relativt till andra händelser. 
 
-Applikationsutveckling för mobila enheter är ett spännande område som växer \cite{IDC}, under sista kvartalet av 2014 hade Android 81,5\% av marknaden och av de enheter som såldes hade 76,6\% Android som operativsystem. Enligt Digi-Capital-Found \cite{revenue} var även Android operativsystemet som gav högst intäkter för utvecklare som placerat sina applikation i någon form av applikationsmarknad, även om intäkter per nerladdning i iOS fortfarande var större. 
+Applikationsutveckling för mobila enheter är ett spännande område som växer \cite{IDC}, under sista kvartalet av 2014 hade Android 81,5\% av marknaden och av de enheter som såldes hade 76,6\% Android som operativsystem. Enligt Digi-Capital-Found \cite{revenue} var även Android operativsystemet som gav högst intäkter för utvecklare som placerat sina applikation i någon form av applikationsmarknad, även om intäkter per nerladdning i iOS fortfarande var större. \\
 
-Spelet utvecklas till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med användarantalet. För att inte behöva söka och manuellt lägga in frågor ett stort antal frågor skapades en semi-automatisk frågehämtare. Detta gör att spelet inte på samma sätt känns repetitivt och tråkigt eftersom fler frågor kan läggas in utan att utvecklarna behöver lägga mycket tid på det. En annan sak som gjordes för att spelet skulle vara roligare för alla var att skapa ett balanseringssystem som gör att händelserna som ges till spelaren är anpassade efter hens nuvarande nivå.
+VÅRT SPEL utvecklas till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med användarantalet. För att inte behöva söka och manuellt lägga in ett stort antal frågor utvecklas en semi-automatisk frågehämtare. Detta bidrar till att VÅRT SPEL inte blir repetitivt och tråkigt för användarna. Frågehämtaren möjliggör att frågorna kan läggas in utan att utvecklarna behöver lägga mycket tid på det. En annan sak som gjordes för att spelet skulle vara roligare för alla var att skapa ett balanseringssystem som gör att händelserna som ges till spelarna är anpassade efter hens kunskapsnivå.
 
 
 \section{Förutsättningar}
@@ -102,56 +102,54 @@ Quizkampen \cite{aboutquiz} är ett frågesports-spel där spelarna svarar på f
 \paragraph{Wordfeud \newline}
 Wordfeud \cite{aboutwordfeud} är ett spel där en match utspelas mellan två personer. Varje spelare får en liten mängd bokstäver som är gömd för motspelaren. Spelet går sedan ut på att fläta samman ord på det givna spelbrädet med hjälp av bokstäverna. Målet är att få så många poäng som möjligt och detta kan man uppnå tack vare att varje bokstav är värd en viss poäng. På så sätt kan man genom att använda svårare bokstäver och skapa längre ord få mer poäng. 
 
-\subsubsection{Kunskapssällskapsspel}
+\subsubsection{Sällskapsspel med fokus på kunskap}
 Sällskapsspel har länge varit och är än idag ett populärt sätt att umgås på \cite{bradspelspop}. Sällskapsspelet \textit{När då då?} \cite{nardada} är ett spel har bygger på ett relativt enkelt koncept. Spelarna turas om att placera ut händelser på en tidslinje i förhållande till varandra och får poäng om dessa är korrekt utplacerade. Den spelaren som har flest poäng vid en slutet av matchen vinner. \\
 Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att det främjar vissa begär hos spelarna. Ett av begären är att man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är en av faktorerna som gör den typen av spel så populära \cite{psykologi}.
 
 \subsection{Syfte}
-Det är projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter som använder plattformen Android. I det här projektet ska en applikation utvecklas som ska ge flera användare möjlighet att interagera med varandra.
+Det är projektets syfte är att utveckla och distribuera en spelapplikation för mobila enheter som använder plattformen Android. I det här projektet ska en applikation utvecklas som ska ge flera användare möjlighet att interagera och spela med varandra.
 
 Spelet som utvecklats går ut på att två användare får tävla om vem som har bäst koll på när olika historiska händelser ägde rum. Varje spelare får ett antal händelser som hen sedan ska sortera i kronologisk ordning. Spelaren som sorterar flest händelser rätt vinner. Förutom rent nöje så kan spelet användas i utbildningssyfte. Detta i den meningen att det ger användaren en ypperlig möjlighet att förbättra sina kunskaper om historien.
 
 \subsection{Mål}
-Det finns fyra stora delar i det här projektet som kan ses som projektets primära mål. Målet vi ser framför oss är en mobilapplikation i form av ett spel som kommer köras på en server som kommer sköta all kommunikation mellan klienten och sig själv. En av fokuspunkterna för spelet är att även implementera en semi-automatisk informationshämtare som har som syfte att fylla på vår databas med nya frågor. Informationshämtningen kommer vara semi-automatiskt på det sättet att ett steg i informationshämtningen kommer kräva mänsklig interaktion. Interaktionen krävs för att godkänna frågorna till databasen och detta är en uppgift som administratörerna (se avsnitt \ref{admins}) utför. 
+Det finns fyra stora delar i det här projektet som kan ses som projektets primära fokuspunkter. Målet vi har för avsikt att uppnå är en mobilapplikation i form av ett spel. Spelet skall köras på en server som ska sköta all kommunikation mellan klienten och sig själv. En av de primära fokuspunkterna för spelet är att implementera en semi-automatisk informationshämtare som har som ska fylla på spelets databas med nya frågor. Att informationshämtningen är semi-automatiskt betyder att ett steg i informationshämtningen kräver mänsklig interaktion. Interaktionen krävs för att godkänna frågorna till databasen och detta är en uppgift som administratörerna (se avsnitt \ref{admins}) utför. 
 
 
 \subsubsection{Mobilapplikation}
-Vi strävar mot att utveckla en mobilapplikation till Android. Applikationen är det enda som användaren i slutändan kommer se, därför finner vi att gränssnittet är extra viktigt i den här delen av utvecklingen. 
+Vi strävar mot att utveckla en mobilapplikation till Android. Applikationen är det enda som användaren i slutändan ser och därför finner vi att kvaliteten av gränssnittet är extra viktigt i utvecklingen. 
 
 Applikationen till Android skrivs i Java och gränssnittet skrivs med hjälp av XML \cite{xml}. 
 
 \subsubsection{Server}
-För att flera spelare ska kunna interagera med varandra så behövs det en server. En server möjliggör också att frågorna som finns i spelet kommer kunna uppdateras kontinuerligt.
+För att flera spelare ska kunna interagera med varandra så behövs det en server. En server möjliggör även att frågorna i spelet kan uppdateras kontinuerligt under applikationens exekvering.
 
 Servermjukvaran skrivs i programspråket Go \cite{golang} och körs på Googles molntjänst App Engine.
 
 \subsubsection{Google App Engine} 
-Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att användaren bygger en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programmet man bygger i App Engine körs på googles infrastruktur och är uppbyggt så att man kan utöka antalet användare närmast obegränsat. Flera stora företag har använt sig av App Engine när de lanserat produkter bland annat Coca Cola, Rovio och Best Buy \cite{googleappenginecustomers}. 
+Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att användaren skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programmet man bygger i App Engine körs på Googles infrastruktur och är uppbyggt så att man kan utöka antalet användare obegränsat. Flera stora företag har använt sig av App Engine när de lanserat produkter bland annat Coca Cola, Rovio och Best Buy \cite{googleappenginecustomers}. 
 
 \subsubsection{Automatisk informationshämtning}
-För att göra spelet så intressant som möjligt behövs det många frågor. Ett sätt att skapa många frågor är att utveckla mjukvara som kan hämta information och sätta ihop frågor automatiskt. 
+För att göra spelet så intressant som möjligt behövas en stor bredd på frågorna som finns lagrade i spelets tillhörande databas. Ett sätt att skapa många frågor snabbt är att utveckla mjukvara som kan hämta information och från denna informationen skapa nya frågor automatiskt. 
 
-Målet med den automatiska informationshämtningen är att skapa ett delsystem som läser in delar av Wikipedia, eller andra källor, och kopplar samman årtal och händelser automatiskt. Det här systemet behöver också ett administrativt gränssnitt så att en administratör på ett snabbt sätt kan korrekturläsa frågorna innan de godkänns och är redo för spelet.
+Målet med den automatiska informationshämtningen är att skapa ett delsystem som läser in delar av en hemsida, som följer en viss struktur, för att hitta nödvändig information. Systemet koppla sedan samman årtalen och händelserna från hemsidan automatiskt. Det här systemet behöver också ett gränssnitt för att ge administratörerna ett snabbt sätt att korrekturläsa frågorna innan de godkänns och skickas vidare till spelet. För mer detaljerad information om mjukvarans design se avsnitt \ref{crawler}.
 
 \subsection{Motivation}
-Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på applikationer är Quizkampen och Wordfeud är toppar säljlistorna för Androidspel \cite{appsalesrating}. Dessa spel följer en ganska enkel struktur och den bygger på att två personer kan möta varandra, svara på frågor eller lägga ord korrekt och på så sätt få poäng som sen kommer avgöra en vinnare mellan de tävlande. Enligt säljstatistiken \cite{appsalesrating} är detta koncept något som är attraktivt för många användare. Spelet, vars utveckling beskrivs i rapporten, kommer kombinerar koncepten från Quizkampen och Wordfeud i den mening att spelare ska svara på frågor samt att lägga in saker på sin rätta plats. 
+Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på sådana applikationer är Quizkampen och Wordfeud som båda toppar säljlistorna för Androidspel \cite{appsalesrating}. Dessa spel följer en ganska enkel struktur och den bygger på att två personer kan möta varandra, svara på frågor eller lägga ord korrekt. På detta sätt får spelarna poäng som sen avgör vinnaren mellan de tävlande. Enligt säljstatistiken \cite{appsalesrating} är detta koncept något som är attraktivt för många användare. Spelet, vars utveckling beskrivs i rapporten, kombinerar koncepten från Quizkampen och Wordfeud i den mening att spelare ska svara på frågor samt att lägga in saker på sin rätta plats. 
 
-En liknande version av det här spelet har också visat sig vara populär i form av sällskapsspel (\textit{När-då-då?}) \cite{nardada}. Detta är en av anledningarna till att hoppet är stort att även den här applikationen ska bli populär. Det finns för tillfället ingen variant av det här spelkonceptet till Android vilket ses som en bra chans att ta enligt utvecklingsteamet.
+En liknande version av det här spelet har också visat sig vara populär i form av sällskapsspel (\textit{När-då-då?}) \cite{nardada}. Detta är en av anledningarna till att hoppet är stort att även den här applikationen ska bli populär på marknaden. Det finns för tillfället ingen variant av det här spelkonceptet till Android vilket ses som en bra chans att ta enligt utvecklingsteamet.
 
 \subsection{Lägesbeskrivning}
 Det finns ett spel för iOS, \textit{Historiekampen} \cite{historiekampen} som också handlar om att lägga in händelser korrekt på en tidslinje. En nackdel som den befintliga iOS-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
 
-Historiekampen är ett spel som mekaniskt sett liknar sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur går till så att denne får en fråga som ska placeras på spelarens tidslinje. Vid första frågan finns det en årtalsreferens utlagd, vid nästa fråga finns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare. I Historiekampen kan en spelare välja att antingen lägga en fråga till, eller avsluta sin runda och därmed låsa frågorna. Skulle spelaren svara fel på en fråga förlorar denne alla frågor som har placerats den rundan.
+Historiekampen är ett spel som konceptuellt sett liknar sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur går till så att denne får en fråga som ska placeras på spelarens tidslinje. Vid första frågan finns det en årtalsreferens utlagd, vid nästa fråga finns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare. I Historiekampen kan en spelare välja att antingen lägga en fråga till, eller avsluta sin runda och därmed låsa frågorna. Skulle spelaren svara fel på en fråga förlorar denne alla frågor som har placerats den rundan.
 
-\subsection{Hur vår applikation skiljer sig från konkurrenterna}
-\textbf{vad vi ska göra (varför vi är bättre än dom andra):} 
-OKLART VART DENNA SKA LIGGA
+\subsection{Faktorer som gör VÅRT SPEL unikt i förhållande till konkurrenterna}
+VÅRT SPEL liknar Historiekampen rent konceptuellt. Uppgiften som spelarna ska utföra liknar varandra mycket. I båda spelen är det spelarens uppgift att placera händelser på en tidslinje. Spelmekaniken är dock annorlunda då varje match och varje runda behandlas annorlunda. I \textbf{VÅRT SPEL} får varje spelare ett paket med fem frågor varje runda. Frågorna visas en i taget och spelaren ska sen placera dessa i rätt ordning. Oavsett om spelaren lyckas med detta eller inte så går turen efter fem frågor över till motståndaren. När fem rundor har spelats vinner den spelare som har svarat rätt på flest frågor totalt.  
 
-Spelet som utvecklats liknar Historiekampen rent konceptuellt. Uppgiften som spelarna ska utföra liknar varandra mycket. I båda spelen är det spelarens uppgift att placera händelser på en tidslinje. Spelmekaniken är dock annorlunda då varje match och varje runda behandlas annorlunda. I \textbf{VÅRT SPEL} får varje spelare ett paket med fem frågor varje runda. Frågorna visas en i taget och spelaren ska sen placera dessa i rätt ordning. Oavsett om spelaren lyckas med detta eller inte så går turen efter fem frågor över till motståndaren. När fem rundor har spelats vinner den spelare som har svarat rätt på flest frågor totalt.  
+En viktig detalj som skiljer VÅRT SPEL från Historiekampen är faktumet att spelaren ser beskrivningen av händelserna som hen placerat, och inte årtalen. Vid avslutad runda visas även de korrekta årtalen för händelserna så att spelaren vet vilken ordning som hade varit rätt. \textbf{VÅRT SPEL} handlar mer om att relatera händelser till varandra (dog Palme efter andra världskriget?) istället för att veta vilket årtal det skedde.
 
-En viktig detalj som skiljer det här spelet från Historiekampen är faktumet att spelaren ser beskrivningen av händelserna som hen placerat, och inte årtalen. Vid avslutad runda visas även de korrekta årtalen för händelserna s att spelaren vet vilken ordning som hade varit rätt. \textbf{VÅRT SPEL} handlar mer om att relatera händelser till varandra (dog Palme efter andra världskriget?) istället för att veta vilket årtal det skedde.
-
-Med den semi-automatiska frågehämtaren som kan anpassas för olika informationskällor är det enkelt för utvecklarna att hämta nya frågor. Frågorna i applikationen balanseras också under spelets gång och på så sätt kan alla spelare få frågor som passar deras aktuella kunskapsnivå. Balanseringen i spelet kan även byggas ut och göras mer avancerad om användarna skulle ge kritik på hur frågorna rankas. Det finns egentligen inga gränser för hur avancerad balansering kan göras vilket är ett stort plus som skiljer oss från konkurrenterna.
+Med den semi-automatiska frågehämtaren som kan anpassas för olika informationskällor är det enkelt för utvecklarna att hämta nya frågor. Databasen med frågor kan på så sätt expandera snabbt vid behov. \\
+Frågorna i applikationen balanseras kontinuerligt efter varje match vilket bidrar till att alla spelare borde få frågor som passar deras aktuella kunskapsnivå. Balanseringen i spelet kan även byggas ut och göras mer avancerad om användarna skulle ge kritik på hur frågorna rankas. Det finns egentligen inga gränser för hur avancerad balansering kan göras vilket är en stor fördel som skiljer oss från konkurrenterna. För att läsa mer om balanseringen se avsnitt \ref{balanseringssystemet}.
 
 \subsection{Frågeställningar}
 
@@ -168,9 +166,10 @@ Det finns vissa delar i det här systemet som blir mer avancerade att lösa än 
 \section{Genomförande}
 
 \subsection{Metoder}
-Ett antal olika verktyg kommer att användas för att möjliggöra detta projekt. För utvecklingen och simulering av Android-applikationen kommer Android Studio \cite{androidstudio} användas. Detta är ett kraftfullt verktyg som på ett smidigt sätt kan simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
+Ett antal olika verktyg används för att möjliggöra detta projekt. För utvecklingen och simulering av Android-applikationen kommer Android Studio \cite{androidstudio} användas. Detta är ett kraftfullt verktyg som på ett smidigt sätt kan simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
 Google App Engine används lokalt för att simulera serverapplikationen. I skarpt läge kommer App Engine även användas, men då i Googles moln. App engine är ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjuds när man utvecklar och körs sina applikationer via denna motor är otroligt värdefulla. Det är bland annat lätt att underhålla applikationen och skala när trafiken och datan kräver det  \cite{googleappengine}.\\
-Den primära källan för information till frågorna har under utvecklingsfasen varit Wikipedia men denna kommer att bytas ut mot andra informationskällor vid ett senare skede. Detta skulle exempelvis vara innan produkten färdigställs.\\
+Den primära källan för information till frågorna har under utvecklingsfasen varit Wikipedia men denna ska bytas ut mot andra informationskällor vid ett senare skede. Detta skulle exempelvis vara innan produkten färdigställs.\\ 
+Valet att inte använda Wikipedia som informationskälla i den slutgiltiga versionen av applikationen beror på dess tvivelaktiga roll som en pålitlig källa. Wikipedia trovärdighet har länge diskuterats och det finns många rapporter som har undersökt dess trovärdighet. Faktumet att processen för att skapa och redigera artiklar på Wikipedia idag anses vara något osäker. Detta beror mycket på att hemsidan följer strukturen \textit{editable-by-all} vilket betyder att vem som helst kan ändra artiklar och på så sätt vinkla artikeln innehåll. Detta betyder såklart inte att alla artiklar har råkat ut för detta öde men det bidrar till en viss osäkerhet vid användande av denna hemsida som källa vid vetenskapliga rapporter \cite{wikipediacred}.\\
 
 \subsection{Systemstruktur}
 
@@ -185,11 +184,14 @@ Den primära källan för information till frågorna har under utvecklingsfasen 
 Androidapplikationen, vilket är klienten i systemet, är spelet som utvecklats. Det här är den del av systemet som användaren interagerar med båda visuellt och funktionellt.
 
 När det är den aktuella spelarens tur får denne en chunk med fem frågor och dess svar (årtal). Det är sedan klienten som rättar frågorna och därefter skickas resultaten tillbaka till servern.
+
 \subsubsection{Server}
 Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang) \cite{golang}. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen som skickar frågorna till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra crawlern som är den automatiska informationshämtaren. Servern har också till uppgift att med jämna mellanrum köra fråge- och användarbalanseringssystemet som justerar svårighetsgraden på frågorna respektive spelarna i systemet. 
+
 \subsubsection{Databas}
 Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Datastore är Google App Engines egna bibliotek för hantering av data där systemet hanterar datalagring med både SQL och noSQL.
-\subsubsection{Crawler}
+
+\subsubsection{Crawler} \label{crawler}
 Inbyggt i servern finns en form av crawler som hanterar semi-automatisk informationshämtning av frågematerial. Hela systemet syftar till att via en given länk läsa igenom den länkade sidan och dess undersidor för att hitta information som passar som frågor för spelet. 
 
 Sidor som har visat sig vara relativt enkla att läsa in är Wikipedias undersidor av typen listningssidor. Den här typen av sidor har en punktlista med årtal samt en beskrivande mening av det årtalet inom den kategori som Wikipediasidan handlar om. Ett exempel är sidan som listar datorspelsår: Som återfinns vid denna  \textbf{\href{http://sv.wikipedia.org/wiki/Lista_\%C3\%B6ver_datorspels\%C3\%A5r}{länk.}} 
@@ -208,12 +210,14 @@ De fyra knapparna är mappade till siffrorna 1-4 på tangentbordet för att det 
 
 \subsubsection{Användare}
 Det finns två sorters användare som kan interagera med systemet.\\
-\textbf{Administratörer} \label{admins} \\
-Administratörerna är ansvariga för underhållet och utvecklingen av systemet. Administratörerna har den högsta typen av tillgång till systemet för att kunna utföra dessa uppgifter. I underhåll innefattas att felsöka och åtgärda funna fel men också uppföljning av rapporterade fel som skickas in av spelare. En vital uppgift som administratörerna har förutom den allmänna underhållet och utvecklingen av systemet är att godkänna informationen som hämtas av crawlern. Detta är för att se till att frågorna följer den struktur som administratörerna finner lämplig. \\
+\newline
+\textbf{Administratörer} \label{admins}
+Administratörerna är ansvariga för underhållet och utvecklingen av systemet. Administratörerna har den högsta typen av tillgång till systemet för att kunna utföra dessa uppgifter. I underhåll innefattas att felsöka och åtgärda funna fel men också uppföljning av rapporterade fel som skickas in av spelare. En vital uppgift som administratörerna har förutom den allmänna underhållet och utvecklingen av systemet är att godkänna informationen som hämtas av crawlern. Detta är för att se till att frågorna följer den struktur som administratörerna finner lämplig.\\
+\newline
 \textbf{Spelare}\\
 Spelarna är den typen av användare som har en begränsad åtkomst till systemet. Spelarna kan endast komma åt systemet genom klienten och kan interagera med själva spelet. Detta betyder att en vanlig spelare inte kan finna information som ligger \textit{under huven} på systemet. Detta är delvis en säkerhetsåtgärd som är till för att den vanliga användaren inte, av misstag, eller med flit kunna komma åt systemets vitala delar och alternera dessa. Användaren kan kommunicera med administratörerna genom att skicka felrapporter om spelet skulle bete sig konstigt eller om några buggar har funnits.
 
-\subsubsection{Balanseringssystemet}
+\subsubsection{Balanseringssystemet} \label{balanseringssystemet}
 Balanseringssystemet syftar till två saker, dels till att justera svårighetsgraden på frågorna som finns i databasen och dels till att justera spelarnas svårighetsnivå. 
 
 Det finns alltså två separata nivåsystem i applikationen. Varje fråga i databasen har ett siffervärde för dess svårighetsgrad, ju högre siffra, desto svårare fråga. På liknande vis har också varje användare en svårighetsgrad som lagras som ett siffervärde i spelarens profil. Syftet med dessa poäng är i det stora perspektivet att få spelet att servera så rättvisa och roliga matcher som möjligt för spelarna. 
