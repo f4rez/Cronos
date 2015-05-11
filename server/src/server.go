@@ -28,6 +28,7 @@ func init() {
 	http.HandleFunc("/test", test)
 	http.HandleFunc("/getGameInfo", getGameInfo)
 	http.HandleFunc("/balancer", runBalancer)
+	http.HandleFunc("/testmax", testMaxLevels)
 }
 
 // Init function.
@@ -135,4 +136,9 @@ func test(w http.ResponseWriter, r *http.Request) {
 	u.Name = "Johanna"
 	u.SaveUser(c)
 
+}
+
+func testMaxLevels(w http.ResponseWriter, r *http.Request) {
+	userMax, qMax := balancer.GetMaxLevels(r)
+	fmt.Fprintf(w,"Usermax is: %s and Questionmax is %s", strconv.Itoa(userMax), strconv.Itoa(qMax))
 }

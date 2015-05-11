@@ -9,6 +9,7 @@ import (
 	"appengine/datastore"
 	"math"
 	"game"
+	"strconv"
 )
 
 
@@ -24,7 +25,7 @@ func Balancer(r *http.Request, gameID int) error {
 	var user users.Users
 	var answers []int
 
-	userMaxLevel, questionMaxLevel := getMaxLevels(r)
+	userMaxLevel, questionMaxLevel := GetMaxLevels(r)
 
 	// Get the users
 	user1,_,_ := users.GetUser(c, game.FID)
@@ -173,26 +174,38 @@ func humbleQuestionBalancer(questions []question.Question, answers []int, user u
 }
 
 // Get the current max of userLevel and questionLevel
-func getMaxLevels(r *http.Request) (int, int){
+func GetMaxLevels(r *http.Request) (int, int){
 	c := appengine.NewContext(r)
 	// Get the current max level. TODO: Det här görs för ofta.
 	qn := datastore.NewQuery("Users").
 	Order("-Level").
 	Limit(1)
 
-	var values []users.Users
+	dbUsers := make([]users.Users, 1, 1)
 
-	t := qn.Run(c)
-	t.Next(values)
-	userMaxLevel := values[0].Level
+	_, err := qn.GetAll(c, &dbUsers)
+	
+	if err != nil {
+		c.Infof("error getting users")
+	}
+
+	c.Infof("length %s", strconv.Itoa(len(dbUsers)))
+
+	userMaxLevel := dbUsers[0].Level
 
 	qn = datastore.NewQuery("Questions").
 	Order("-Level").
 	Limit(1)
 	
-	t = qn.Run(c)
-	t.Next(values)
-	questionMaxLevel := values[0].Level
+	dbQuestions := make([]question.Question, 1, 1)
+
+	_, err = qn.GetAll(c, &dbQuestions)
+
+	if err != nil {
+		c.Infof("error getting questions")
+	}
+	c.Infof(dbUsers[0].Name)
+	questionMaxLevel := dbQuestions[0].Level
 
 	return userMaxLevel, questionMaxLevel
 }
