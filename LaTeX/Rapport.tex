@@ -138,12 +138,39 @@ Det finns många mobilspel som handlar om att två personer möts och mäter sin
 
 En liknande version av det här spelet har också visat sig vara populär i form av sällskapsspel (\textit{När-då-då?}) \cite{nardada}. Detta är en av anledningarna till att hoppet är stort att även den här applikationen ska bli populär på marknaden. Det finns för tillfället ingen variant av det här spelkonceptet till Android vilket ses som en bra chans att ta enligt utvecklingsteamet.
 
-\subsection{Lägesbeskrivning}
+\subsection{Relaterat arbete}
 Det finns ett spel för iOS, \textit{Historiekampen} \cite{historiekampen} som också handlar om att lägga in händelser korrekt på en tidslinje. En nackdel som den befintliga iOS-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
 
 \subsubsection{Historiekampen}
 Historiekampen är ett spel som konceptuellt sett liknar sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur går till så att denne först får en händelse som ska placeras på spelarens tidslinje. När första frågan presenteras finns det en årtalsreferens utlagd på tidslinjen som den första händelsen ska placeras före eller efter. När nästa fråga presenteras finns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare.\\ 
-Historiekampen har valt att använda konceptet med kombinations-poäng vilket betyder att spelaren kan få flera poäng under en runda om hen placerar ut flera händelser korrekt efter varandra. Spelaren måste placera minst \underline{en} händelse och kan få maximalt tio händelser att placera ut. Om spelaren placerar första händelsen fel är rundan avslutad men om spelaren placerar händelsen rätt ställs hen inför ett val med två alternativ: antingen avsluta sin runda och på så sätt låsa sina poäng, eller fortsätta att få händelser att placera ut i förhållande till de tidigare händelserna. Detta val gör spelaren efter varje rätt placerad händelse. Spelaren kan med andra ord välja själv om den vågar fortsätta eller om den vill vara försiktig och behålla sina välförtjänta poäng. En duktig spelare kan välja det senare alternativet och bygga upp sin kombo fram tills dess att den femte frågan är ställd. När den femte frågan är ställd får hen en fråga om \underline{när} den femte händelsen ägde rum. Om spelarens svar är nära det rätta årtalet får hen fortsätta rundan med sin uppbyggda kombo av poäng. Om årtalet är fel förlorar spelaren sina tidigare poäng men kan fortsätta få händelser att placera ut till de tidigare händelserna. Vid en perfekt runda kan en spelare få totalt tio poäng. 
+Historiekampen har valt att använda konceptet med kombinations-poäng vilket betyder att spelaren kan få flera poäng under en runda om hen placerar ut flera händelser korrekt efter varandra. Spelaren måste placera minst \underline{en} händelse och kan få maximalt tio händelser att placera ut. Om spelaren placerar första händelsen fel är rundan avslutad men om spelaren placerar händelsen rätt ställs hen inför ett val med två alternativ: antingen avsluta sin runda och på så sätt låsa sina poäng, eller fortsätta att få händelser att placera ut i förhållande till de tidigare händelserna. Detta val gör spelaren efter varje rätt placerad händelse. Spelaren kan med andra ord välja själv om den vågar fortsätta eller om den vill vara försiktig och behålla sina välförtjänta poäng. En duktig spelare kan välja det senare alternativet och bygga upp sin kombo fram tills dess att den femte frågan är ställd. När den femte frågan är ställd får hen en fråga om \underline{när} den femte händelsen ägde rum. Om spelarens svar är nära det rätta årtalet får hen fortsätta rundan med sin uppbyggda kombo av poäng. Om årtalet är fel förlorar spelaren sina tidigare poäng men kan fortsätta få händelser att placera ut till de tidigare händelserna. Vid en perfekt runda kan en spelare få totalt tio poäng.
+
+\subsubsection{Balanseringsteori}
+En viktig aspekt i det här projektet är att rangordna spelare i förhållande till varandra för att med hjälp av det skapa mer rättvisa matcher. Den här problematiken finns det redan många som har funderat på och de flesta större spel använder sig också av något system för detta. Två etablerade system är Elo och Glicko, varav Elo är det som har implementerats i det här projektet.
+
+Elo är ett system som förutser hur stor del av en mängd spelade matcher som bör vinnas av vardera spelare, baserat på en den svårighetsnivå respektive spelare har. Det här systemet justerar, efter en match, poängen enligt beskrivningen ovan. Eftersom en lägre rankad spelare får fler poäng vid vinst mot en högre rättar systemet på sikt sig självt, vilket innebär att spelarna faktiskt får den nivå de förtjänar.
+
+Elo-systemet fungerar enligt följande. Varje spelare får en initial Elo-poäng på 1000. Denna justeras sedan beroende på utfallet av en match i förhållande till det förväntade utfallet. Det förväntade utfallet beräknas:
+
+$$E_A = \frac{1}{1+10^{(R_B-R_A)/400}}$$
+
+Där $E_A$ är den förväntade andelen matcher som spelare A borde vinna. Är värdet till exempel 0.84 så innebär det att 84\% av matcherna borde vinnas av spelare A enligt nuvarande Elo-poäng. $R_B$ är spelare B:s nuvarande Elo-poäng och $R_A$ är spelare A:s nuvarande poäng.
+
+När det förväntade utfallet har beräknats så justeras sedan spelarnas Elo-poäng enligt formeln:
+
+$$R'_A = R_A + K(S_A-E_A)$$
+
+Där $R'_A$ är spelare A:s nya Elo-poäng, $R_A$ är spelare A:s Elo-poäng innan matchen, $S_A$ är det faktiska utfallet av matchen och $E_A$ är det förväntade utfallet. K-värdet är en skalningsfaktor som justerar hur mycket poängen justeras vid varje vinst/förlust.
+
+Ett räkneexempel med spelare A, 1300 poäng, och spelare B 1000 poäng, där A vinner:
+
+$$0.849 = \frac{1}{1+10^{(1000-1300)/400}}$$
+$$ R'_A = 1300 + 16(1-0.849) = 1302.416 $$
+$$ R'_B = 1000 + 16(0-0.849) = 997.584 $$
+
+I det implementerade balanseringssystemet används Elo-modellen för att beräkna spelarnas erfarenhetspoäng. Elo är ett system som utvecklades av Arpad Elo och började användas redan på 60-talet\cite{elo}. Systemet var först och främst utvecklat för att ranka schackspelare, men har sedan dess uppkomst även applicerats på många andra spel. Eftersom Elo-systemet är förhållandevis gammalt och möjligheten till datoriserade beräkningar blivit större sedan 60-talet, finns det mer avancerade system att använda sig av idag. Ett annat system som utvecklades i syfte att vara en förbättring av Elo-systemet är ett system kallat Glicko\cite{chessratings}. Skillnaden mellan Elo och Glicko är att Glicko också har ett värde för hur väl uppdaterad spelarens erfarenhetspoäng är. Det här innebär att spelaren har ett erfarenhetspoäng, säg 2000, samt ett trovärdighetspoäng, till exempel 100. Ju högre trovärdighetspoäng spelaren har, desto mindre exakt är erfarenhetspoängen. Erfarenhetspoängen har enligt systemet en +/- diff på dubbla trovärdighetspoängen. I nyss nämnda exempel innebär detta att spelaren har en erfarenhetspoäng på 1800-2200. Trovärdighetspoängen justeras bland annat baserat på hur länge sedan det var spelaren spelade förra gången, samt hur många matcher spelaren spelat totalt. Ju fler matcher totalt och ju närmare i tid förra matchen var, desto lägre trovärdighetspoäng har spelaren.
+
+Både Elo och Glicko används idag och det verkar vara svårt att avgöra om Glicko verkligen är bättre än Elo\cite{stackchess}. Ett faktum som finns är i alla fall att Glicko kräver mer information för att kunna fungera. En faktor som Glicko behöver men inte Elo är en tidsvariabel som har reda på hur länge sedan det var spelaren spelade sin förra match\cite{glickoex}. Det här gör att mer data behöver lagras i databasen, vilket är negativt ur kapacitetsperspektiv.
 
 \subsection{Faktorer som gör VÅRT SPEL unikt i förhållande till konkurrenterna}
 VÅRT SPEL liknar Historiekampen och \textit{När då då?} rent konceptuellt. Uppgiften som spelarna ska utföra i vår applikation liknar varandra mycket. I både Historiekampen och VÅRT SPEL är det spelarens uppgift att placera ut händelser rätt på en tidslinje. Spelmekaniken är dock annorlunda i vår applikation då varje match och varje runda behandlas annorlunda. I \textbf{VÅRT SPEL} får varje spelare ett paket med sex frågor varje runda. En av dessa sex frågor kommer agera som referenshändelse på tidlinjen. Frågorna presenteras för spelaren en i taget och det är sedan spelarens uppgift att placera dessa i rätt ordning. En spelare får ett poäng per korrekt utplacerad händelse och kan på så sätt på maximalt fem poäng från de korrekt placerade händelserna. Om en spelare skulle lyckas få en perfekt runda, där alla händelser placerades rätt, får hen ett extra poäng vilket skulle resultera i en total summa av sex poäng. Likt Historiekampen avslutas en runda när en spelare har placerat en händelse fel. Det som skiljer vår applikation i denna aspekt är vid fallet då en spelare har tjänat ihop poäng från tidigare händelser. I Historiekampen förlorar spelaren alla sina tidigare poäng om hen svarar fel medan i vår applikation får spelaren behålla sina poäng. Oavsett om spelaren lyckas placera ut alla händelser rätt eller inte så går turen, efter fem frågor, över till motståndaren. När fem rundor har spelats vinner den spelare som har svarat rätt på flest frågor totalt.  
@@ -225,37 +252,21 @@ Balanseringssystemet syftar till två saker, dels till att justera svårighetsgr
 
 Det finns alltså två separata nivåsystem i applikationen. Varje fråga i databasen har ett siffervärde för dess svårighetsgrad, ju högre siffra, desto svårare fråga. På liknande vis har också varje användare en svårighetsgrad som lagras som ett siffervärde i spelarens profil. Syftet med dessa poäng är i det stora perspektivet att få spelet att servera så rättvisa och roliga matcher som möjligt för spelarna. 
 
+\paragraph{Balansering av frågorna}
+
 Frågornas svårighetsnivå justeras beroende på hur spelarna i matchen svarar på frågan. En fråga som det ofta svaras fel på ökar i svårighetsnivå allt eftersom fler spelare svarar fel. Svårighetsnivån är helt bunden till frågan i sig och finns alltså kvar mellan matcherna.
 
 En frågas svårighetsnivå har ingenting med någon form av poängräkning att göra. Svårighetsnivån på frågorna finns till för att vid en matchstart kunna jämföras mot spelarnas svårighetsnivå, på så vis avgör spelet om frågan ska skickas till spelarna eller inte. Det handlar alltså helt och hållet om att spelet ska presentera frågor som är lagom svåra för spelarna, så att spelet blir lagom utmanande och maximalt roligt.
 
 Om en spelare med låg nivå svarar rätt på en fråga så justeras frågans svårighetsgrad ner, ju högre nivå frågan har, desto större nedjustering sker. En spelare med hög nivå påverkar inte frågorna lika mycket som en spelare med låg nivå. Det här beror på att om en spelare med låg nivå svarar rätt på en svår fråga så är nivån på frågan förmodligen mycket mer felaktig än om en avancerad spelare svarat rätt på samma fråga. 
 
+\paragraph{Balansering av spelarna}
+
 Spelarnas svårighetsnivåer justeras också efter avslutad match. Den här balanseringen går i stora drag till så att den vinnande spelaren tar poäng av den förlorande spelaren. Om den vinnande spelaren redan ligger på högre nivå än den förlorande så tar denne väldigt lite poäng från den förlorande. I det motsatta fallet tar istället den vinnande spelaren mycket poäng från den förlorande. Hur mycket poäng som faktiskt tas baseras på skillnaden i nivå mellan spelarna. 
 
-Inspiration till den här sortens balansering kommer bland annat från Counter-strike: GO \cite{cs} som använder sig av ett system kallat Elo\cite{elo}. Elo är ett system som förutser hur stor del av en mängd spelade matcher som bör vinnas av vardera spelare, baserat på en den svårighetsnivå respektive spelare har. Det här systemet justerar, efter en match, poängen enligt beskrivningen ovan. Eftersom en lägre rankad spelare får fler poäng vid vinst mot en högre rättar systemet på sikt sig självt, vilket innebär att spelarna faktiskt får den nivå de förtjänar.
+Inspiration till den här sortens balansering kommer bland annat från Counter-strike: GO \cite{cs} som använder sig av Elo\cite{elo}. 
 
-Elo-systemet fungerar enligt följande. Varje spelare får en initial Elo-poäng på 1000. Denna justeras sedan beroende på utfallet av en match i förhållande till det förväntade utfallet. Det förväntade utfallet beräknas:
-
-$$E_A = \frac{1}{1+10^{(R_B-R_A)/400}}$$
-
-Där $E_A$ är den förväntade andelen matcher som spelare A borde vinna. Är värdet till exempel 0.84 så innebär det att 84\% av matcherna borde vinnas av spelare A enligt nuvarande Elo-poäng. $R_B$ är spelare B:s nuvarande Elo-poäng och $R_A$ är spelare A:s nuvarande poäng.
-
-När det förväntade utfallet har beräknats så justeras sedan spelarnas Elo-poäng enligt formeln:
-
-$$R'_A = R_A + K(S_A-E_A)$$
-
-Där $R'_A$ är spelare A:s nya Elo-poäng, $R_A$ är spelare A:s Elo-poäng innan matchen, $S_A$ är det faktiska utfallet av matchen och $E_A$ är det förväntade utfallet. K-värdet är en skalningsfaktor som justerar hur mycket poängen justeras vid varje vinst/förlust.
-
-Ett räkneexempel med spelare A, 1300 poäng, och spelare B 1000 poäng, där A vinner:
-
-$$0.849 = \frac{1}{1+10^{(1000-1300)/400}}$$
-$$ R'_A = 1300 + 16(1-0.849) = 1302.416 $$
-$$ R'_B = 1000 + 16(0-0.849) = 997.584 $$
-
-I det implementerade balanseringssystemet används Elo-modellen för att beräkna spelarnas erfarenhetspoäng. Elo är ett system som utvecklades av Arpad Elo och började användas redan på 60-talet\cite{elo}. Systemet var först och främst utvecklat för att ranka schackspelare, men har sedan dess uppkomst även applicerats på många andra spel. Eftersom Elo-systemet är förhållandevis gammalt och möjligheten till datoriserade beräkningar blivit större sedan 60-talet, finns det mer avancerade system att använda sig av idag. Ett annat system som utvecklades i syfte att vara en förbättring av Elo-systemet är ett system kallat Glicko\cite{chessratings}. Skillnaden mellan Elo och Glicko är att Glicko också har ett värde för hur väl uppdaterad spelarens erfarenhetspoäng är. Det här innebär att spelaren har ett erfarenhetspoäng, säg 2000, samt ett trovärdighetspoäng, till exempel 100. Ju högre trovärdighetspoäng spelaren har, desto mindre exakt är erfarenhetspoängen. Erfarenhetspoängen har enligt systemet en +/- diff på dubbla trovärdighetspoängen. I nyss nämnda exempel innebär detta att spelaren har en erfarenhetspoäng på 1800-2200. Trovärdighetspoängen justeras bland annat baserat på hur länge sedan det var spelaren spelade förra gången, samt hur många matcher spelaren spelat totalt. Ju fler matcher totalt och ju närmare i tid förra matchen var, desto lägre trovärdighetspoäng har spelaren.
-
-Både Elo och Glicko används idag och det verkar vara svårt att bevisa om Glicko garanterat är bättre än Elo\cite{stackchess}. Ett faktum som finns är i alla fall att Glicko kräver mer information för att kunna fungera. En faktor som Glicko behöver men inte Elo är en tidsvariabel som har reda på hur länge sedan det var spelaren spelade sin förra match\cite{glickoex}. Det här gör att mer data behöver lagras i databasen, vilket är negativt ur kapacitetsperspektiv. Balanseringen i \textbf{VÅRT SPEL} ansågs vara tillräckligt bra med Elo för att användningen av Glicko skulle uteslutas. Det är också förmodligen så att ett spel som schack eller CS behöver mer frekvent träning för att spelaren ska behålla sin nivå än ett frågesportspel som \textbf{VÅRT SPEL}. Allmänkunskap och historiekunskap är någonting som lättare förbättras i vardagen, än till exempel schacktaktik. 
+Balanseringen i \textbf{VÅRT SPEL} ansågs vara tillräckligt bra med Elo för att användningen av Glicko skulle uteslutas. Det är också förmodligen så att ett spel som schack eller Counter Strike behöver mer frekvent träning för att spelaren ska behålla sin nivå än ett frågesportspel som \textbf{VÅRT SPEL}. Allmänkunskap och historiekunskap är någonting som lättare förbättras i vardagen, än till exempel schacktaktik. 
 
 I \textbf{VÅRT SPEL} sker balanseringen efter en avslutad match. När hela matchen är avslutad finns alla frågor från matchen samt respektive spelares svar i serverns cache. Efter att en vinnare har utsetts anropas balanseringssystemet och både frågenivåerna och spelarnivåerna justeras utifrån matchens utfall.
 
