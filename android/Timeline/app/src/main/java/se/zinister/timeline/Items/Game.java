@@ -25,7 +25,8 @@ public class Game {
     public boolean turn;
     public ArrayList <Round> rounds = new ArrayList<>();
 
-    public Game(String playerOneID, String playerOneName, String playerOnePic, String playerTwoID, String playerTwoName, String playerTwoPic, int round, boolean turn) {
+    public Game(String playerOneID, String playerOneName, String playerOnePic,
+                String playerTwoID, String playerTwoName, String playerTwoPic, int round, boolean turn) {
         String name = MainActivity.MY_NAME;
         if(name != null) {
             if (name.equals(playerOneName)) {
