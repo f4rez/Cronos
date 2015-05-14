@@ -144,8 +144,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public void doneRegister(String json){
         Decode decode = new Decode();
         User u = decode.decodeUser(json);
+
+        SharedPreferences.Editor e = userDetails.edit();
         if (u != null) {
-            SharedPreferences.Editor e = userDetails.edit();
             e.putString("MY_NAME", u.name);
             e.commit();
             MY_NAME = u.name;
