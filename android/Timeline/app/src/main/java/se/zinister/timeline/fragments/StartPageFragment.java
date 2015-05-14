@@ -73,16 +73,14 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
                     showDialog();
                 }
             });
-
         }
         mainActivity = (MainActivity)getActivity();
-        Request r = new Request(this, mainActivity.net);
-        r.execute("Login");
-
         swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.ptr_layout);
         // Set the color scheme of the SwipeRefreshLayout by providing 4 color resource ids
         swipeLayout.setOnRefreshListener(this);
-        //doneLogin();
+
+
+
         return rootView;
     }
 

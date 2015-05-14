@@ -50,7 +50,7 @@ public class MatchActivity extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
         gameID = extras.getInt("gameID");
         if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "GameID in MatchActivity: " + gameID);
-        net = new NetRequests(MainActivity.HOST,false);
+        net = new NetRequests(MainActivity.HOST);
 
         BaseFragment b = selectFragment(STATISTICS);
         openFragment(b);

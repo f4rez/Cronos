@@ -4,16 +4,24 @@ package se.zinister.timeline;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 
+import java.net.HttpCookie;
+import java.net.HttpURLConnection;
+
+import se.zinister.timeline.Items.User;
+import se.zinister.timeline.Json.Decode;
 import se.zinister.timeline.Net.NetRequests;
+import se.zinister.timeline.Net.Request;
 import se.zinister.timeline.fragments.BaseFragment;
 import se.zinister.timeline.fragments.ChallengeFriendFragment;
 import se.zinister.timeline.fragments.FindUsersFragment;
@@ -39,9 +47,12 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public static final int FRIEND = 103;
     public static final int LOGIN = 104;
 
+    public SharedPreferences userDetails;
 
-    public static final String MY_NAME = "Jos@s.se";
+
+    public static String MY_NAME;
     public static final String HOST = "calcium-firefly-93808.appspot.com";
+
 
 
 
@@ -49,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userDetails = getSharedPreferences("userdetails", MODE_PRIVATE);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -64,8 +76,18 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         net = new NetRequests(HOST);
-        Intent n = new Intent(this, LoginActivity.class);
-        startActivity(n);
+
+        String cookies = android.webkit.CookieManager.getInstance().getCookie("www." + HOST);
+        if(cookies != null) {
+            if(DEBUG) Log.d(TAG,"cookies = " + cookies);
+            Intent n = new Intent(this, LoginActivity.class);
+            startActivity(n);
+        }
+        String tmp = userDetails.getString("MY_NAME", "noName");
+        if (tmp != "noName") MY_NAME = tmp;
+        else {
+            new Request(this,net).execute("RegisterUser");
+        }
 
     }
 
@@ -107,6 +129,15 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 break;
         }
 
+    }
+
+    public void doneRegister(String json){
+        Decode decode = new Decode();
+        User u = decode.decodeUser(json);
+        SharedPreferences.Editor e = userDetails.edit();
+        e.putString("MY_NAME", u.name);
+        e.commit();
+        MY_NAME = u.name;
     }
 
 

@@ -12,6 +12,7 @@ import se.zinister.timeline.Items.Challenge;
 import se.zinister.timeline.Items.Friend;
 import se.zinister.timeline.Items.Game;
 import se.zinister.timeline.Items.StartpageMessage;
+import se.zinister.timeline.Items.User;
 import se.zinister.timeline.MainActivity;
 import se.zinister.timeline.Match.GamesOverview;
 import se.zinister.timeline.Question.Question;
@@ -129,5 +130,17 @@ public class Decode {
 
 
         return r;
+    }
+
+    public User decodeUser(String in) {
+        User u = null;
+        try {
+            JSONObject json = new JSONObject(in);
+            u = new User(json.getString("Oid"), json.getString("Name"), json.getString("Picture"), json.getString("Token"), json.getInt("Won"), json.getInt("Draw"), json.getInt("Lost"), json.getInt("Level"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return u;
     }
 }

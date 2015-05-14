@@ -13,6 +13,8 @@ import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -73,8 +75,23 @@ public class NetRequests {
         try {
             url = new URL("https://" + host + "/joinGame");
             String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
-            Log.d("COKIES", "All the cookies in a string from url "+url.toString()+ ": " + cookies);
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
+
+            }
+
             urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
+            }
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
             BufferedReader r = new BufferedReader(new InputStreamReader(in));
@@ -87,6 +104,8 @@ public class NetRequests {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         } finally{
                 if (urlConnection != null)
                 urlConnection.disconnect();
@@ -98,7 +117,24 @@ public class NetRequests {
         URL url;
         try {
             url = new URL("https://"+ host +"/match?action=getQuestions&game_id=" + gameID);
+            String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
+
+            }
+
             urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
+            }
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader r = new BufferedReader(new InputStreamReader(in));
             StringBuilder total = new StringBuilder();
@@ -109,6 +145,8 @@ public class NetRequests {
             return total.toString();
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         } finally{
             if (urlConnection != null)
@@ -123,7 +161,24 @@ public class NetRequests {
         try {
             url = new URL( "https://" + host +"/match?action=answerQuestions&game_id=" + gameID + "&a1=" + a1 +
                     "&a2=" + a2 + "&a3=" + a3 + "&a4=" + a4 + "&a5=" + a5);
+            String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
+
+            }
+
             urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
+            }
             urlConnection.setRequestProperty("Cookie",
                     TextUtils.join(",", cookieManager.getCookieStore().getCookies()));
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -136,6 +191,8 @@ public class NetRequests {
             return total.toString();
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         } finally{
             if (urlConnection != null)
@@ -151,17 +208,27 @@ public class NetRequests {
 
             url = new URL("https://" +host +"/registerNewUser");
             String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
-            Log.d("COKIES", "cookies from url "+url.toString()+ ": " + cookies);
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
 
-            Map <String, List<String>> f = urlConnection.getHeaderFields();
-            for(Map.Entry<String,List<String>> x: f.entrySet()){
-                String key = x.getKey();
-                for (String list:x.getValue()) {
-                    Log.d("MINsss", key + " " + list);
-                }
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                Log.d("COKIES", "0 =" + c[0] + ", 1 = " + c[1]);
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
+
             }
 
-            urlConnection.setDoOutput(true);
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
+            }
+
 
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader r = new BufferedReader(new InputStreamReader(in));
@@ -174,6 +241,8 @@ public class NetRequests {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         } finally{
             if (urlConnection != null)
                 urlConnection.disconnect();
@@ -183,19 +252,26 @@ public class NetRequests {
     }
 
     public String startPage() {
-
+        if (urlConnection != null) urlConnection.disconnect();
         try {
             url = new URL("https://" +host +"/startMess");
             String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
-            Log.d("COKIES", "All the cookies in a string from url "+url.toString()+ ": " + cookies);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            Map <String, List<String>> f = urlConnection.getHeaderFields();
-            for(Map.Entry<String,List<String>> x: f.entrySet()){
-                String key = x.getKey();
-                for (String list:x.getValue()) {
-                    Log.d("MINsss", key + " " + list);
-                }
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
 
+            }
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
             }
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader r = new BufferedReader(new InputStreamReader(in));
@@ -208,6 +284,8 @@ public class NetRequests {
 
         } catch (IOException e) {
             Log.d("hehe","ssss");
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         } finally{
             if (urlConnection != null)
@@ -222,7 +300,24 @@ public class NetRequests {
 
         try {
             url = new URL("https://" +host +"/friendlist");
+            String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
+
+            }
+
             urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
+            }
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader r = new BufferedReader(new InputStreamReader(in));
             StringBuilder total = new StringBuilder();
@@ -232,7 +327,7 @@ public class NetRequests {
             }
             return total.toString();
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         } finally{
             if (urlConnection != null)
@@ -245,7 +340,24 @@ public class NetRequests {
 
         try {
             url = new URL("https://" +host +"/search?type=" + action+"&search=" + parameter);
+            String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
+
+            }
+
             urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
+            }
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader r = new BufferedReader(new InputStreamReader(in));
             StringBuilder total = new StringBuilder();
@@ -255,7 +367,7 @@ public class NetRequests {
             }
             return total.toString();
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         } finally{
             if (urlConnection != null)
@@ -270,7 +382,24 @@ public class NetRequests {
 
         try {
             url = new URL("https://" +host +"/friend?action=" + action+"&friend_id=" + id);
+            String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
+
+            }
+
             urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
+            }
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader r = new BufferedReader(new InputStreamReader(in));
             StringBuilder total = new StringBuilder();
@@ -280,7 +409,7 @@ public class NetRequests {
             }
             return total.toString();
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         } finally{
              if (urlConnection != null)
@@ -294,7 +423,25 @@ public class NetRequests {
 
         try {
             url = new URL("https://" +host +"/getGameInfo?game_id=" + id);
+            String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "Cookiemanager = " +cookieManager); //+ ", Cookiestore = " + cookieManager.getCookieStore() + ", cookie = " + cookie);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
+
+            }
+
             urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
+            }
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader r = new BufferedReader(new InputStreamReader(in));
             StringBuilder total = new StringBuilder();
@@ -305,6 +452,8 @@ public class NetRequests {
             return total.toString();
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         } finally{
             if (urlConnection != null)

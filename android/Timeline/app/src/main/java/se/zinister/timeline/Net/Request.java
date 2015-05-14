@@ -3,6 +3,7 @@ package se.zinister.timeline.Net;
 import android.app.Fragment;
 import android.os.AsyncTask;
 
+import se.zinister.timeline.MainActivity;
 import se.zinister.timeline.fragments.ChallengeFriendFragment;
 import se.zinister.timeline.fragments.FindUsersFragment;
 import se.zinister.timeline.fragments.MatchFragment;
@@ -15,7 +16,8 @@ import se.zinister.timeline.fragments.StartPageFragment;
  */
 public class Request extends AsyncTask<String, Void, String> {
 
-    private final Fragment caller;
+    private Fragment caller = null;
+    private MainActivity c = null;
     NetRequests net;
     String action;
 
@@ -24,6 +26,10 @@ public class Request extends AsyncTask<String, Void, String> {
         this.net = net;
     }
 
+    public  Request(MainActivity caller, NetRequests net) {
+        this.c = caller;
+        this.net = net;
+    }
 
     @Override
     protected String doInBackground(String... string) {
@@ -68,8 +74,8 @@ public class Request extends AsyncTask<String, Void, String> {
                 mainActivity.doneLogin(returned);
                 break;
             case "RegisterUser":
-                StartPageFragment m1 = (StartPageFragment) caller;
-                m1.doneRegister();
+                MainActivity m1 = c;
+                m1.doneRegister(returned);
                 break;
             case "GetQuestions":
                 MatchFragment matchFragment = (MatchFragment) caller;

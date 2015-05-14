@@ -4,17 +4,13 @@
     android:layout_height="match_parent"
     android:id="@+id/ee">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/ptr_layout"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        android:layout_below="@+id/sign_in_button">
+        android:layout_marginTop="0dp">
 
         <ListView
             android:layout_width="match_parent"

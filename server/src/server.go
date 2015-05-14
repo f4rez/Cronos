@@ -3,13 +3,13 @@ package server
 import (
 	"appengine"
 	"appengine/user"
-	"fmt"
-	"net/http"
-	"game"
-	"question_crawler"
-	"users"
 	"balancer"
+	"fmt"
+	"game"
+	"net/http"
+	"question_crawler"
 	"strconv"
+	"users"
 )
 
 func init() {
@@ -25,7 +25,6 @@ func init() {
 	http.HandleFunc("/match", matchHandler)
 	http.HandleFunc("/challenger", challengerHandler)
 	http.HandleFunc("/search", searchUsers)
-	http.HandleFunc("/test", test)
 	http.HandleFunc("/getGameInfo", getGameInfo)
 	http.HandleFunc("/balancer", runBalancer)
 	http.HandleFunc("/testmax", testMaxLevels)
@@ -98,47 +97,11 @@ func getGameInfo(w http.ResponseWriter, r *http.Request) {
 
 func runBalancer(w http.ResponseWriter, r *http.Request) {
 
-	gameID,_ := strconv.Atoi(r.FormValue("gameID"))
+	gameID, _ := strconv.Atoi(r.FormValue("gameID"))
 	balancer.Balancer(r, gameID)
-}
-
-func test(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	u := new(users.Users)
-	u.Oid = "1234567"
-	u.Name = "Nils nilsson"
-	u.SaveUser(c)
-	u.Oid = "1"
-	u.Name = "Erik Fransson"
-	u.SaveUser(c)
-	u.Oid = "12"
-	u.Name = "Erik Olsson"
-	u.SaveUser(c)
-	u.Oid = "13"
-	u.Name = "Jonas Fransson"
-	u.SaveUser(c)
-	u.Oid = "14"
-	u.Name = "Josef Svensson"
-	u.SaveUser(c)
-	u.Oid = "15"
-	u.Name = "Erik "
-	u.SaveUser(c)
-	u.Oid = "16"
-	u.Name = "Fransson"
-	u.SaveUser(c)
-	u.Oid = "17"
-	u.Name = "Olsson"
-	u.SaveUser(c)
-	u.Oid = "18"
-	u.Name = "Nils"
-	u.SaveUser(c)
-	u.Oid = "19"
-	u.Name = "Johanna"
-	u.SaveUser(c)
-
 }
 
 func testMaxLevels(w http.ResponseWriter, r *http.Request) {
 	userMax, qMax := balancer.GetMaxLevels(r)
-	fmt.Fprintf(w,"Usermax is: %s and Questionmax is %s", strconv.Itoa(userMax), strconv.Itoa(qMax))
+	fmt.Fprintf(w, "Usermax is: %s and Questionmax is %s", strconv.Itoa(userMax), strconv.Itoa(qMax))
 }

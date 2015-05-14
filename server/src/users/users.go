@@ -394,6 +394,13 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		if users.Oid != "" {
 			c.Infof("Saving user on registring ID = %v", users.Oid)
 			users.SaveUser(c)
+			mess, jErr := json.Marshal(users)
+			if jErr != nil {
+				c.Infof("Error : %v", jErr)
+				http.Error(w, jErr.Error(), http.StatusInternalServerError)
+				return
+			}
+			fmt.Fprintf(w, string(mess))
 			return
 		} else {
 			c.Infof("Error login: %v", users)
