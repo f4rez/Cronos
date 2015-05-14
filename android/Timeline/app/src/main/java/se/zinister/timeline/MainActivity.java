@@ -78,17 +78,27 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         net = new NetRequests(HOST);
 
         String cookies = android.webkit.CookieManager.getInstance().getCookie("www." + HOST);
-        if(cookies != null) {
+        if(cookies == null) {
             if(DEBUG) Log.d(TAG,"cookies = " + cookies);
             Intent n = new Intent(this, LoginActivity.class);
-            startActivity(n);
-        }
-        String tmp = userDetails.getString("MY_NAME", "noName");
-        if (tmp != "noName") MY_NAME = tmp;
-        else {
-            new Request(this,net).execute("RegisterUser");
+            startActivityForResult(n, LOGIN);
         }
 
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        if (DEBUG) Log.d(TAG, "onActivityResult requestcode" + requestCode + ", resultcode " + resultCode );
+        if (requestCode == LOGIN) {
+            if (resultCode == RESULT_CANCELED) {
+                String tmp = userDetails.getString("MY_NAME", "noName");
+                if (tmp != "noName") MY_NAME = tmp;
+                else {
+                    new Request(this,net).execute("RegisterUser");
+                }
+            }
+        }
     }
 
     @Override
@@ -134,10 +144,12 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public void doneRegister(String json){
         Decode decode = new Decode();
         User u = decode.decodeUser(json);
-        SharedPreferences.Editor e = userDetails.edit();
-        e.putString("MY_NAME", u.name);
-        e.commit();
-        MY_NAME = u.name;
+        if (u != null) {
+            SharedPreferences.Editor e = userDetails.edit();
+            e.putString("MY_NAME", u.name);
+            e.commit();
+            MY_NAME = u.name;
+        }
     }
 
 

@@ -27,26 +27,30 @@ public class Game {
 
     public Game(String playerOneID, String playerOneName, String playerOnePic, String playerTwoID, String playerTwoName, String playerTwoPic, int round, boolean turn) {
         String name = MainActivity.MY_NAME;
-        if (name.equals(playerOneName)) {
-            if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "Firstplayer" + name +  " - " + playerOneName);
-            this.myId = playerOneID;
-            this.myName = playerOneName;
-            this.myPic = playerOnePic;
-            this.oppId = playerTwoID;
-            this.oppName = playerTwoName;
-            this.oppPic = playerTwoPic;
-            this.turn = !turn;
-        } else {
-            if (MainActivity.DEBUG) Log.d(MainActivity.TAG,"Secondplayer " + name +  " - " + playerOneName);
-            this.myId = playerTwoID;
-            this.myName = playerTwoName;
-            this.myPic = playerTwoPic;
-            this.oppId = playerOneID;
-            this.oppName = playerOneName;
-            this.oppPic = playerOnePic;
-            this.turn = turn;
+        if(name != null) {
+            if (name.equals(playerOneName)) {
+                if (MainActivity.DEBUG)
+                    Log.d(MainActivity.TAG, "Firstplayer" + name + " - " + playerOneName);
+                this.myId = playerOneID;
+                this.myName = playerOneName;
+                this.myPic = playerOnePic;
+                this.oppId = playerTwoID;
+                this.oppName = playerTwoName;
+                this.oppPic = playerTwoPic;
+                this.turn = !turn;
+            } else {
+                if (MainActivity.DEBUG)
+                    Log.d(MainActivity.TAG, "Secondplayer " + name + " - " + playerOneName);
+                this.myId = playerTwoID;
+                this.myName = playerTwoName;
+                this.myPic = playerTwoPic;
+                this.oppId = playerOneID;
+                this.oppName = playerOneName;
+                this.oppPic = playerOnePic;
+                this.turn = turn;
+            }
+            this.round = round;
         }
-        this.round = round;
     }
 
 
