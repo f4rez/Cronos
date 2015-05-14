@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         net = new NetRequests(HOST);
 
         String cookies = android.webkit.CookieManager.getInstance().getCookie("www." + HOST);
-        if(cookies != null) {
+        if(cookies == null) {
             if(DEBUG) Log.d(TAG,"cookies = " + cookies);
             Intent n = new Intent(this, LoginActivity.class);
             startActivity(n);
@@ -135,9 +135,11 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         Decode decode = new Decode();
         User u = decode.decodeUser(json);
         SharedPreferences.Editor e = userDetails.edit();
-        e.putString("MY_NAME", u.name);
-        e.commit();
-        MY_NAME = u.name;
+        if (u != null) {
+            e.putString("MY_NAME", u.name);
+            e.commit();
+            MY_NAME = u.name;
+        }
     }
 
 
