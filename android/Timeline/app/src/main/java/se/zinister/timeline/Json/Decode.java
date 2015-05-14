@@ -112,15 +112,24 @@ public class Decode {
          try {
             json = new JSONObject(in);
              if (MainActivity.DEBUG) Log.d(MainActivity.TAG, json.getString("FName"));
-             r = new Game(json.getString("FID"),json.getString("FName"), json.getString("FPic"),
-                    json.getString("SID"), json.getString("SName"), json.getString("SPic"),json.getInt("NumberOfTurns"),json.getBoolean("Turn"));
+             String fName = json.getString("FName");
+             r = new Game(json.getString("FID"),fName, json.getString("FPic"),
+                    json.getString("SID"), json.getString("SName"), json.getString("SPic"),
+                     json.getInt("NumberOfTurns"),json.getBoolean("Turn"));
 
              JSONArray j = json.getJSONArray("Rounds");
+             boolean first = false;
+             if (fName.equals(MainActivity.MY_NAME)) first = true;
              for(int i = 0; i< j.length();i++) {
                  JSONObject obj = j.getJSONObject(i);
                  Game.Round round = new Game.Round();
-                 round.myRoundScore = obj.getInt("PlayerOnePoints");
-                 round.oppRoundScore = obj.getInt("PlayerTwoPoints");
+                 if(first) {
+                     round.myRoundScore = obj.getInt("PlayerOnePoints");
+                     round.oppRoundScore = obj.getInt("PlayerTwoPoints");
+                 } else {
+                     round.myRoundScore = obj.getInt("PlayerTwoPoints");
+                     round.oppRoundScore = obj.getInt("PlayerOnePoints");
+                 }
                  r.addRound(round);
              }
         } catch (JSONException e) {
