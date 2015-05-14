@@ -10,6 +10,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 
 import java.io.IOException;
 
+import se.zinister.timeline.LoginActivity;
 import se.zinister.timeline.fragments.ChallengeFriendFragment;
 import se.zinister.timeline.fragments.FindUsersFragment;
 import se.zinister.timeline.fragments.MatchFragment;
@@ -20,11 +21,11 @@ import se.zinister.timeline.fragments.StartPageFragment;
  * Created by josef on 2015-05-07.
  */
 public class GetUsernameTask extends AsyncTask<Void, Void, String> {
-    Activity mActivity;
+    LoginActivity mActivity;
     String mScope;
     String mEmail;
 
-    public GetUsernameTask(Activity activity, String name, String scope) {
+    public GetUsernameTask(LoginActivity activity, String name, String scope) {
         this.mActivity = activity;
         this.mScope = scope;
         this.mEmail = name;
@@ -37,12 +38,13 @@ public class GetUsernameTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... params) {
         try {
-            Log.d("AAAAAAAAAAAAAAAA", "aaa");
+            Log.d("LoginTask", "Trying to fetch token");
             String token = fetchToken();
             if (token != null) {
-                Log.d("AAAAAAAAAAAAAAAA", "aaa");
-                // Insert the good stuff here.
-                // Use the token to access the user's Google data.
+                Log.d("LoginTask", "token =" + token);
+
+            } else  {
+                Log.d("LoginTask", "Couldn't fetch token");
             }
         } catch (IOException e) {
             // The fetchToken() method handles Google-specific exceptions,
@@ -60,13 +62,10 @@ public class GetUsernameTask extends AsyncTask<Void, Void, String> {
     protected String fetchToken() throws IOException {
         try {
             return GoogleAuthUtil.getToken(mActivity, mEmail, mScope);
-        } catch (UserRecoverableAuthException userRecoverableException) {
-            // GooglePlayServices.apk is either old, disabled, or not present
-            // so we need to show the user some UI in the activity to recover.
-            //mActivity.handleException(userRecoverableException);
         } catch (GoogleAuthException fatalException) {
             // Some other type of unrecoverable exception has occurred.
             // Report and log the error as appropriate for your app.
+           // mActivity.handleException(fatalException);
         }
         return null;
     }

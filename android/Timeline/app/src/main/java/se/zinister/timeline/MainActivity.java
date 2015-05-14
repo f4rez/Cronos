@@ -1,7 +1,6 @@
 package se.zinister.timeline;
 
 
-import android.accounts.AccountManager;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -9,15 +8,11 @@ import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Toast;
 
-import com.google.android.gms.common.AccountPicker;
-
-import se.zinister.timeline.Net.GetUsernameTask;
 import se.zinister.timeline.Net.NetRequests;
 import se.zinister.timeline.fragments.BaseFragment;
 import se.zinister.timeline.fragments.ChallengeFriendFragment;
@@ -26,7 +21,7 @@ import se.zinister.timeline.fragments.StartPageFragment;
 
 
 
-public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks  {
+public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks  {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
@@ -42,10 +37,11 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public static final int CHALLENGE_FRIEND = 101;
     public static final int FIND_FRIEND = 102;
     public static final int FRIEND = 103;
+    public static final int LOGIN = 104;
 
 
     public static final String MY_NAME = "Jos@s.se";
-    public static final String HOST = "192.168.43.215:8080";
+    public static final String HOST = "calcium-firefly-93808.appspot.com";
 
 
 
@@ -68,13 +64,14 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         net = new NetRequests(HOST);
+        Intent n = new Intent(this, LoginActivity.class);
+        startActivity(n);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        pickUserAccount();
 
     }
 
@@ -88,9 +85,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        if (DEBUG) Log.d(TAG, "enterd onNavigationDrawerItemSelected");
         BaseFragment baseFragment = selectFragment(position);
-        if (DEBUG) Log.d(TAG, "before open fragment");
         openFragment(baseFragment);
     }
 
@@ -109,53 +104,14 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 break;
             case FRIEND:
                 onNavigationDrawerItemSelected(FIND_FRIEND);
+                break;
         }
 
     }
 
-    static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
-
-    public void pickUserAccount() {
-        String[] accountTypes = new String[]{"com.google"};
-        if (DEBUG) Log.d(TAG, "in pickUserAccount");
-        Intent intent = AccountPicker.newChooseAccountIntent(null, null,
-                accountTypes, false, null, null, null, null);
-        startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
-    }
 
 
-    String mEmail; // Received from newChooseAccountIntent(); passed to getToken()
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
-            // Receiving a result from the AccountPicker
-
-            if (resultCode == RESULT_OK) {
-                if (DEBUG) Log.d(TAG, "in onActivityResult OK ");
-                mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-                // With the account name acquired, go get the auth token
-                getUsername();
-            } else if (resultCode == RESULT_CANCELED) {
-                if (DEBUG) Log.d(TAG, "in onActivityResult not OK ");
-                // The account picker dialog closed without selecting an account.
-                // Notify users that they must pick an account to proceed.
-                Toast.makeText(this, R.string.my_turn, Toast.LENGTH_SHORT).show();
-            }
-        }
-        // Later, more code will go here to handle the result from some exceptions...
-    }
-    private static final String SCOPE =
-            "oauth2:https://www.googleapis.com/auth/userinfo.profile";
-
-    private void getUsername() {
-        if (mEmail == null) {
-            pickUserAccount();
-        } else {
-            GetUsernameTask g = new GetUsernameTask(this, mEmail, SCOPE);
-            g.execute();
-        }
-    }
 
 
 
@@ -192,7 +148,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             case FIND_FRIEND:
                 baseFragment = new FindUsersFragment();
                 break;
-
         }
         return baseFragment;
     }
@@ -227,7 +182,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     public void setmToolbarTransperent() {
         mToolbar.getBackground().setAlpha(0);
-
     }
 
 

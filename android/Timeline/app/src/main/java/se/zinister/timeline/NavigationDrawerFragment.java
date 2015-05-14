@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -101,11 +102,14 @@ public class NavigationDrawerFragment extends Fragment {
         DrawerItem d1 = new DrawerItem("", "Matcher", R.drawable.ic_launcher);
         DrawerItem d2 = new DrawerItem("", "Statistik", R.drawable.ic_launcher);
         DrawerItem d3 = new DrawerItem("", "Inställnigar", R.drawable.ic_launcher);
-
+        DrawerItem d4 = new DrawerItem("", "något annat", R.drawable.ic_launcher);
+        DrawerItem d5 = new DrawerItem("", "LOGIN", R.drawable.ic_launcher);
 
         drawerAdapter.add(d1);
         drawerAdapter.add(d2);
         drawerAdapter.add(d3);
+        drawerAdapter.add(d4);
+        drawerAdapter.add(d5);
         if (mDrawerListView != null)
             mDrawerListView.setAdapter(drawerAdapter);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -136,7 +140,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
 
-        ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         //actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(false);

@@ -10,12 +10,12 @@ import (
 )
 
 type Users struct {
-	Oid, Name, Picture     string
-	FriendList             []Friend       `json:"-"`
-	ChallengeList          []Challange    `json:"-"`
-	Games                  []int          `json:"-"`
-	FinishedGames          []FinishedGame `json:"-"`
-	Won, Draw, Lost, Level int
+	Oid, Name, Picture, Token string
+	FriendList                []Friend       `json:"-"`
+	ChallengeList             []Challange    `json:"-"`
+	Games                     []int          `json:"-"`
+	FinishedGames             []FinishedGame `json:"-"`
+	Won, Draw, Lost, Level    int
 }
 
 type FinishedGame struct {
@@ -370,8 +370,12 @@ func FriendHandler(w http.ResponseWriter, r *http.Request) {
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
+	header := r.Header
+
+	c.Infof("Header = %v", header)
 
 	u := user.Current(c)
+	c.Infof("User: ", u)
 	qn := datastore.NewQuery("Users").
 		Ancestor(UserKey(c)).
 		Limit(1).

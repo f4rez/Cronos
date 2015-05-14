@@ -65,7 +65,7 @@ public class Request extends AsyncTask<String, Void, String> {
                 break;
             case "Login":
                 StartPageFragment mainActivity = (StartPageFragment) caller;
-                mainActivity.doneLogin();
+                mainActivity.doneLogin(returned);
                 break;
             case "RegisterUser":
                 StartPageFragment m1 = (StartPageFragment) caller;

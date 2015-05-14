@@ -18,5 +18,8 @@
     <string name="opp_turn">Motståndarens tur</string>
     <string name="finished_games">Avslutade Spel</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="not_online">Inte online</string>
+
 
 </resources>

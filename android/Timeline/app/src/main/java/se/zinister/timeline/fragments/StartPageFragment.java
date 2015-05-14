@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -33,6 +37,9 @@ import se.zinister.timeline.Net.Request;
 import se.zinister.timeline.R;
 
 
+
+
+
 /**
  * Created by Josef on 2015-02-05.
  */
@@ -40,8 +47,17 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
     public ListView mListView;
     private MainActivity mainActivity;
     public StartPageAdapter mAdapter;
-    public Decode decode = new Decode();
     private SwipeRefreshLayout swipeLayout;
+
+    /* Request code used to invoke sign in user interactions. */
+    private static final int RC_SIGN_IN = 0;
+
+
+
+    /* A flag indicating that a PendingIntent is in progress and prevents
+     * us from starting further intents.
+     */
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +82,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
         swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.ptr_layout);
         // Set the color scheme of the SwipeRefreshLayout by providing 4 color resource ids
         swipeLayout.setOnRefreshListener(this);
-
+        //doneLogin();
         return rootView;
     }
 
@@ -80,8 +96,8 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
         doneRegister();
     }
 
-
-    public void doneLogin(){
+    public void doneLogin(String returned){
+        Log.d(MainActivity.TAG,"Returned login value = " + returned);
         Request r = new Request(this,mainActivity.net);
         r.execute("RegisterUser");
     }
@@ -263,9 +279,14 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
 
+
+
+
     @Override
     public void onRefresh() {
         Request r = new Request(this, mainActivity.net);
         r.execute("StartMessage");
     }
+
+
 }
