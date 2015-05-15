@@ -5,10 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
+import java.util.Objects;
 
 import se.zinister.timeline.MainActivity;
 import se.zinister.timeline.Match.GamesOverview;
@@ -101,6 +105,12 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
                 if (q != null) {
                     TextView tt1 = (TextView) v.findViewById(R.id.mainText);
                     TextView tt2 = (TextView) v.findViewById(R.id.score);
+                    ImageView img = (ImageView) v.findViewById(R.id.oppPicture);
+                    q.changePicSize(150);
+                    if (img != null && q.opponentPic != null) {
+                        Picasso.with(getContext()).load(q.opponentPic).placeholder(R.mipmap.ic_launcher).into(img);
+                    }
+
                     if (tt1 != null && tt2 != null) {
                         if (q.opponentPoint>q.myPoint) {
                             tt1.setText(q.opponentName + " vann mot dig");
@@ -145,20 +155,28 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
 
                     TextView tt1 = (TextView) v.findViewById(R.id.mainText);
                     TextView tt2 = (TextView) v.findViewById(R.id.score);
+                    ImageView img = (ImageView) v.findViewById(R.id.oppPicture);
+                    q.changePicSize(150);
+                    if (img != null) {
+                        if (q.opponentPic.equals("")) {
+                            img.setImageDrawable(c.getResources().getDrawable(R.mipmap.ic_launcher));
+                        } else
+                        Picasso.with(getContext()).load(q.opponentPic).placeholder(R.mipmap.ic_launcher).into(img);
+                    }
                     if (tt1 != null) {
                         if(q.myTurn)
-                            if(q.opponentName != null)
+                            if(!q.opponentName.equals(""))
                                 tt1.setText("Det är din tur mot " + q.opponentName + " i omgång " + q.numberOfTurns);
                             else tt1.setText("Det är din tur mot slumpad spelare i omgång " + q.numberOfTurns);
                         else
-                        if (q.opponentName != null)
+                        if (!q.opponentName.equals(""))
                             tt1.setText("Det är " + q.opponentName + "s tur" + " i omgång " + q.numberOfTurns);
                         else  tt1.setText("Det är slumpad spelares tur i omgång " + q.numberOfTurns);
                     }
 
                     if (tt2 != null)  {
-                        if (q.opponentName != null) {
-                            if (q.myPoint == -1 && q.opponentPoint == -1) tt2.setText(MainActivity.MY_NAME +  "0 - 0 " + q.opponentName);
+                        if (!q.opponentName.equals("")) {
+                            if (q.myPoint == -1 && q.opponentPoint == -1) tt2.setText(MainActivity.MY_NAME +  " 0 - 0 " + q.opponentName);
                             if (q.myPoint == -1 && q.opponentPoint > -1) tt2.setText(MainActivity.MY_NAME + " 0 - " + q.opponentPoint + " " + q.opponentName);
                             if (q.myPoint > -1 && q.opponentPoint == -1) tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - 0 " + q.opponentName);
                             if (q.myPoint > -1 && q.opponentPoint > -1) tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - " + q.opponentPoint + " " + q.opponentName);

@@ -10,12 +10,12 @@ import (
 )
 
 type Users struct {
-	Oid, Name, Picture, Token string
-	FriendList                []Friend       `json:"-"`
-	ChallengeList             []Challange    `json:"-"`
-	Games                     []int          `json:"-"`
-	FinishedGames             []FinishedGame `json:"-"`
-	Won, Draw, Lost, Level    int
+	Oid, Name, Picture, Token, RealName string
+	FriendList                          []Friend       `json:"-"`
+	ChallengeList                       []Challange    `json:"-"`
+	Games                               []int          `json:"-"`
+	FinishedGames                       []FinishedGame `json:"-"`
+	Won, Draw, Lost, Level              int
 }
 
 type FinishedGame struct {
@@ -270,20 +270,17 @@ func ChangeFriendStatIfFriends(usr1, usr2 Users, one, two int) {
 func SearchUsers(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	u := user.Current(c)
-	c.Infof("A")
 	if u == nil {
 		c.Infof("Not logged in")
 		url, _ := user.LoginURL(c, "/")
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
-	c.Infof("B")
 	typee := r.FormValue("type")
 	parameter := r.FormValue("search")
 
 	switch typee {
 	case "Name":
-		c.Infof("C")
 		users, err := findUsersByName(c, parameter)
 		if err != nil {
 			c.Infof("Error : %v", err)
@@ -370,9 +367,8 @@ func FriendHandler(w http.ResponseWriter, r *http.Request) {
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	header := r.Header
-
-	c.Infof("Header = %v", header)
+	pic := r.FormValue("pic")
+	real_name := r.FormValue("real_name")
 
 	u := user.Current(c)
 	c.Infof("User: ", u)
@@ -393,6 +389,8 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		users, _ := MakeUser(c)
 		if users.Oid != "" {
 			c.Infof("Saving user on registring ID = %v", users.Oid)
+			users.Picture = pic
+			users.RealName = real_name
 			users.SaveUser(c)
 			mess, jErr := json.Marshal(users)
 			if jErr != nil {

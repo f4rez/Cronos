@@ -6,13 +6,13 @@ type ChallengeMessage struct {
 
 type GamesMessage struct {
 	GID, MPoints, OPoints, Turn int
-	OppName, OppID              string
+	OppName, OppID, OppPic      string
 	MyTurn                      bool
 }
 
 type FinishedGame struct {
 	GID, MyScore, OppScore int
-	OppName                string
+	OppName, OppPic        string
 }
 
 type StartMessage struct {

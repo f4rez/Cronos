@@ -11,6 +11,7 @@ public class GamesOverview {
     public int numberOfTurns;
     public String opponentName;
     public String opponentID;
+    public String opponentPic;
     public boolean myTurn;
     public int type;
 
@@ -20,7 +21,7 @@ public class GamesOverview {
     }
 
 
-    public GamesOverview(int g, int m, int o, int n, String oName,String oID, boolean turn) {
+    public GamesOverview(int g, int m, int o, int n, String oName,String oID, String oPic, boolean turn) {
         gameID = g;
         myPoint = m;
         opponentPoint= o;
@@ -28,6 +29,7 @@ public class GamesOverview {
         opponentName = oName;
         opponentID = oID;
         myTurn = turn;
+        opponentPic = oPic;
         type = 1;
     }
 
@@ -40,6 +42,12 @@ public class GamesOverview {
             return true;
         GamesOverview g = (GamesOverview) obj;
         return gameID == g.gameID;
+
+    }
+
+    public void changePicSize(int size) {
+        if(opponentPic != null && !opponentPic.equals(""))
+        opponentPic = opponentPic.substring(0, opponentPic.indexOf("sz=")) + "sz=" + size;
 
     }
 

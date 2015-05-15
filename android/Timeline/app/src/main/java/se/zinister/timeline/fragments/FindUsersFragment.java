@@ -106,6 +106,9 @@ public class FindUsersFragment extends BaseFragment {
                 byte[] b = baos.toByteArray();
                 i.putExtra("FriendPicture",b);
                 i.putExtra("FriendId",friend.Id);
+                i.putExtra("won",friend.won);
+                i.putExtra("draw",friend.draw);
+                i.putExtra("lost",friend.lost);
 
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(e.getWindowToken(), 0);

@@ -56,7 +56,7 @@ public class Decode {
                 JSONObject object = (JSONObject) games.get(i);
                 GamesOverview q = new GamesOverview(object.getInt("GID"),object.getInt("MPoints"),
                         object.getInt("OPoints"),object.getInt("Turn"),object.getString("OppName"),
-                        object.getString("OppID"), object.getBoolean("MyTurn"));
+                        object.getString("OppID"), object.getString("OppPic"), object.getBoolean("MyTurn"));
                 gamesOverviews.add(q);
             }
             JSONArray finished = json.getJSONArray("Finished");
@@ -93,7 +93,8 @@ public class Decode {
             json = new JSONArray(in);
             for (int i = 0; i < json.length(); i++) {
                 JSONObject object = (JSONObject) json.get(i);
-                Friend q = new Friend(object.getString("Name"),object.getString("Oid"),"");
+                Friend q = new Friend(object.getString("Name"),object.getString("Oid"), object.getString("Picture"),
+                        object.getInt("Won"),object.getInt("Draw"), object.getInt("Lost"));
                 list.add(q);
             }
 

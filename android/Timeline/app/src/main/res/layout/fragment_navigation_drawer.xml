@@ -5,16 +5,12 @@
     android:background="@color/app_drawer_color">
 
 
-
-
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitStart"
         android:adjustViewBounds="true"
         android:id="@+id/navPic"
-        android:src="@drawable/aws"
         />
 
     <ListView

@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import se.zinister.timeline.Items.Friend;
 import se.zinister.timeline.R;
 
@@ -40,12 +42,12 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
 
         if (p != null) {
 
-            ImageView img = (ImageView) v.findViewById(R.id.picture);
+            ImageView img = (ImageView) v.findViewById(R.id.profilePicture);
             TextView tt1 = (TextView) v.findViewById(R.id.selectionText);
 
 
-            if (img != null) {
-                img.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_action_new));
+            if (img != null && p.PictureLink != null && !p.PictureLink.equals("")) {
+                Picasso.with(getContext()).load(p.PictureLink).into(img);
             }
             if (tt1 != null) {
 

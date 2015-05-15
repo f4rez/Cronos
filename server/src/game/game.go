@@ -3,8 +3,8 @@ package game
 import (
 	"appengine"
 	"appengine/datastore"
-	"appengine/user"
 	"appengine/taskqueue"
+	"appengine/user"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -12,9 +12,9 @@ import (
 	"net/http"
 	"net/url"
 	"question"
-	"users"
 	"strconv"
 	"time"
+	"users"
 )
 
 type Game struct {
@@ -76,6 +76,7 @@ func CreateGame(c appengine.Context, user users.Users, uKey *datastore.Key) (Gam
 	g := new(Game)
 	g.FID = user.Oid
 	g.FName = user.Name
+	g.FPic = user.Picture
 	g.Created = time.Now()
 	g.Rounds = append(g.Rounds, FirstRound(c))
 	g.NumberOfTurns = 1
@@ -212,6 +213,7 @@ func FindFreeGame(c appengine.Context) (Game, *datastore.Key, error) {
 
 			game[1].SID = u.ID
 			game[1].SName = user.Name
+			game[1].SPic = user.Picture
 			game[1].UpdateGame(c, key[0])
 			user.AddGame(game[1].GID)
 			user.UpdateUser(c, uKey)
@@ -488,12 +490,12 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 			//Balancer(r, game)
 
 			t := taskqueue.NewPOSTTask("/balancer", url.Values{
-			    "gameID": {string(game.GID)},
+				"gameID": {string(game.GID)},
 			})
 			taskqueue.Add(c, t, "") // add t to the default queue; c is appengine.Context
-		
+
 		}
-		
+
 		fmt.Fprintf(w, "Dina svar har registrerats")
 		break
 
@@ -604,11 +606,13 @@ func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
 			g.OPoints = pointTwo
 			g.OppID = mGame.SID
 			g.OppName = mGame.SName
+			g.OppPic = mGame.SPic
 		} else {
 			g.MPoints = pointTwo
 			g.OPoints = pointOne
 			g.OppID = mGame.FID
 			g.OppName = mGame.FName
+			g.OppPic = mGame.FPic
 		}
 		mess[i] = *g
 	}

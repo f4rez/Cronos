@@ -70,6 +70,15 @@ public class Game {
 
 
 
+    public void changePicSize(int size) {
+        if(oppPic != null && !oppPic.equals(""))
+        oppPic = oppPic.substring(0, oppPic.indexOf("sz=")) + "sz=" + size;
+        if(myPic != null && !myPic.equals(""))
+        myPic = myPic.substring(0, myPic.indexOf("sz=")) + "sz=" + size;
+    }
+
+
+
 
 
     public static class Round {

@@ -202,11 +202,16 @@ public class NetRequests {
     }
 
 
-    public String registerUSer() {
+    public String registerUSer(String name, String pic) {
             if (urlConnection != null) urlConnection.disconnect();
         try {
-
-            url = new URL("https://" +host +"/registerNewUser");
+            String[] names = name.split(" ");
+            String tmp = "";
+            for (String n:names) {
+                if (tmp.equals("")) tmp = n;
+                tmp =tmp+"%20"+ n;
+            }
+            url = new URL("https://" +host +"/registerNewUser?real_name="+tmp+"&pic="+pic);
             String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
             Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
 
@@ -239,9 +244,7 @@ public class NetRequests {
             }
             return total.toString();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         } finally{
             if (urlConnection != null)

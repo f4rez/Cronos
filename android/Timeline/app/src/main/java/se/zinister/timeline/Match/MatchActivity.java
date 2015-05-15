@@ -2,12 +2,15 @@ package se.zinister.timeline.Match;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import se.zinister.timeline.Items.Game;
 import se.zinister.timeline.MainActivity;
@@ -21,11 +24,11 @@ import se.zinister.timeline.fragments.MatchStatistics;
 /**
  * Created by enigma on 2015-04-14.
  */
-public class MatchActivity extends ActionBarActivity {
+public class MatchActivity extends AppCompatActivity {
 
     public NetRequests net;
     public static int gameID;
-    private CharSequence mTitle;
+    public CharSequence mTitle;
     public Game game;
     private Toolbar mToolbar;
 
@@ -44,9 +47,11 @@ public class MatchActivity extends ActionBarActivity {
             setSupportActionBar(mToolbar);
         }
         ActionBar a = getSupportActionBar();
-        a.setHomeButtonEnabled(true);
-        a.setDisplayHomeAsUpEnabled(true);
-        a.setDisplayHomeAsUpEnabled(true);
+        if (a!= null) {
+            a.setHomeButtonEnabled(true);
+            a.setDisplayHomeAsUpEnabled(true);
+            a.setDisplayHomeAsUpEnabled(true);
+        }
         Bundle extras = getIntent().getExtras();
         gameID = extras.getInt("gameID");
         if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "GameID in MatchActivity: " + gameID);
@@ -54,6 +59,15 @@ public class MatchActivity extends ActionBarActivity {
 
         BaseFragment b = selectFragment(STATISTICS);
         openFragment(b);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     @Override

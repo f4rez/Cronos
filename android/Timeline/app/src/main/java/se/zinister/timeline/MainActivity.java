@@ -4,6 +4,7 @@ package se.zinister.timeline;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
 
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
@@ -29,7 +37,7 @@ import se.zinister.timeline.fragments.StartPageFragment;
 
 
 
-public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks  {
+public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private Toolbar mToolbar;
@@ -37,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     private DrawerLayout mDrawer;
 
     public NetRequests net;
+
+    public GoogleApiClient mGoogleApiClient;
+    private boolean mIntentInProgress;
+
 
 
     public static String TAG = "Zinister";
@@ -46,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public static final int FIND_FRIEND = 102;
     public static final int FRIEND = 103;
     public static final int LOGIN = 104;
+    private static final int RC_SIGN_IN = 0;
+
 
     public SharedPreferences userDetails;
 
@@ -76,15 +90,24 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         net = new NetRequests(HOST);
+        if (mGoogleApiClient == null)
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API)
+                .addScope(Plus.SCOPE_PLUS_LOGIN)
+                .build();
 
-        String cookies = android.webkit.CookieManager.getInstance().getCookie("www." + HOST);
+        String cookies = android.webkit.CookieManager.getInstance().getCookie("https://" +HOST +"/startMess");
         if(cookies == null) {
             if(DEBUG) Log.d(TAG,"cookies = " + cookies);
             Intent n = new Intent(this, LoginActivity.class);
             startActivityForResult(n, LOGIN);
         }
-
-
+        if (MY_NAME == null) {
+            String tmp = userDetails.getString("MY_NAME", "noName");
+            if (tmp != "noName") MY_NAME = tmp;
+        }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
@@ -94,9 +117,19 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             if (resultCode == RESULT_CANCELED) {
                 String tmp = userDetails.getString("MY_NAME", "noName");
                 if (tmp != "noName") MY_NAME = tmp;
-                else {
-                    new Request(this,net).execute("RegisterUser");
+                else if (!mGoogleApiClient.isConnected()) {
+                    onClick(null);
                 }
+            }
+        } if (requestCode == RC_SIGN_IN) {
+            if (resultCode != RESULT_OK) {
+                mSignInClicked = false;
+            }
+
+            mIntentInProgress = false;
+
+            if (!mGoogleApiClient.isConnected()) {
+                mGoogleApiClient.reconnect();
             }
         }
     }
@@ -105,6 +138,19 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     protected void onResume() {
         super.onResume();
 
+    }
+
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    protected void onStop() {
+        super.onStop();
+
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
     }
 
     @Override
@@ -229,4 +275,47 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     }
 
 
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        mSignInClicked = false;
+        Person me = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+        new Request(this, net).execute("RegisterUser", me.getDisplayName(), me.getImage().getUrl());
+        if(me.hasCover()) {
+            if (me.getCover().hasCoverPhoto()) mNavigationDrawerFragment.setCoverPhoto(me.getCover().getCoverPhoto().getUrl());
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+
+    }
+    private boolean mSignInClicked;
+
+    public void onClick(View view) {
+        if (!mGoogleApiClient.isConnecting()) {
+            mSignInClicked = true;
+            mGoogleApiClient.connect();
+        }
+    }
+
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result ) {
+        if (!mIntentInProgress) {
+            if (mSignInClicked && result.hasResolution()) {
+                // The user has already clicked 'sign-in' so we attempt to resolve all
+                // errors until the user is signed in, or they cancel.
+                try {
+                    result.startResolutionForResult(this, RC_SIGN_IN);
+                    mIntentInProgress = true;
+                } catch (IntentSender.SendIntentException e) {
+                    // The intent was canceled before it was sent.  Return to the default
+                    // state and attempt to connect to get an updated ConnectionResult.
+                    mIntentInProgress = false;
+                    mGoogleApiClient.connect();
+                }
+            }
+        }
+    }
 }

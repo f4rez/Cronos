@@ -67,7 +67,8 @@ public class MatchAdapter extends ArrayAdapter<Question> {
 
     @Override
     public boolean hasStableIds() {
-        return true;
+        return android.os.Build.VERSION.SDK_INT < 20;
+
     }
 
 

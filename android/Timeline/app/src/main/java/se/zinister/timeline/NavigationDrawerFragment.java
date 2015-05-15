@@ -20,8 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+
+import com.squareup.picasso.Picasso;
 
 import se.zinister.timeline.Adapters.DrawerAdapter;
 import se.zinister.timeline.Items.DrawerItem;
@@ -255,10 +258,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     /**
@@ -275,6 +275,16 @@ public class NavigationDrawerFragment extends Fragment {
     private ActionBar getActionBar() {
         return ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
+
+    public void setCoverPhoto(String url) {
+       View root = getView();
+        if (root != null) {
+            ImageView i = (ImageView) root.findViewById(R.id.navPic);
+            Picasso.with(getActivity()).load(url).into(i);
+        }
+    }
+
+
 
     /**
      * Callbacks interface that all activities using this fragment must implement.

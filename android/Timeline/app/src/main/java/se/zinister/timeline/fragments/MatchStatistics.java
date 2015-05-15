@@ -1,6 +1,8 @@
 package se.zinister.timeline.fragments;
 
+import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 import se.zinister.timeline.Adapters.RoundAdapter;
 import se.zinister.timeline.Items.Game;
@@ -61,57 +64,81 @@ public class MatchStatistics extends BaseFragment {
 
     public void buildGUI(){
         View root = getView();
+        MatchActivity a = (MatchActivity)getActivity();
+        if (game != null && game.oppName != null && game.oppName.equals("")) a.mTitle = getString(R.string.title_section4) + " slumpad spelare";
+        else a.mTitle = getString(R.string.title_section4) + " " + game.oppName;
+        a.restoreActionBar();
+
+        if(root != null) {
+            playerOnePic = (ImageView) root.findViewById(R.id.player1_photo);
+            playerTwoPic = (ImageView) root.findViewById(R.id.player2_photo);
+            playerOneName = (TextView) root.findViewById(R.id.player1_nameTag);
+            playerTwoName = (TextView) root.findViewById(R.id.player2_nameTag);
+            totalScore = (TextView) root.findViewById(R.id.totalScore);
+            scoreBoard = (ListView) root.findViewById(R.id.score_list);
+            FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
+            game.changePicSize(150);
+            if (playerOnePic != null && game.myPic != null && !game.myPic.equals("")) {
+                Picasso.with(getActivity()).load(game.myPic).placeholder(R.mipmap.ic_launcher).into(playerOnePic);
+            }
+            if (playerTwoPic != null && game.oppPic != null && !game.oppPic.equals("")) {
+                Picasso.with(getActivity()).load(game.oppPic).placeholder(R.mipmap.ic_launcher).into(playerTwoPic);
+            }
 
 
-         playerOnePic =(ImageView) root.findViewById(R.id.player1_photo);
-         playerTwoPic =(ImageView) root.findViewById(R.id.player2_photo);
-         playerOneName =(TextView) root.findViewById(R.id.player1_nameTag);
-         playerTwoName =(TextView) root.findViewById(R.id.player2_nameTag);
-         totalScore = (TextView) root.findViewById(R.id.totalScore);
-         scoreBoard = (ListView) root.findViewById(R.id.score_list);
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-        if (game.turn) {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MatchActivity m = (MatchActivity) getActivity();
-                    m.changeFragment(MatchActivity.MATCHPAGE);
-                }
-            });
-        } else {
-            fab.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View v) {
-                                           getActivity().onBackPressed();
-                                       }
-        });
-            fab.setImageResource(R.drawable.ic_action_overflow);
+
+            if (game.turn) {
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MatchActivity m = (MatchActivity) getActivity();
+                        m.changeFragment(MatchActivity.MATCHPAGE);
+                    }
+                });
+            } else {
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getActivity().onBackPressed();
+                    }
+                });
+                fab.setImageResource(R.drawable.ic_action_overflow);
+            }
+
+
+            if (playerOneName != null) playerOneName.setText(game.myName);
+            if (playerTwoName != null) playerTwoName.setText(game.oppName);
+            if (totalScore != null) {
+                game.calcTotalScore();
+                totalScore.setText(game.myScore + " - " + game.oppScore);
+            }
+
+            if (scoreBoard != null) {
+                RoundAdapter adapter = new RoundAdapter(getActivity(), R.layout.matchstatistics_item);
+                adapter.addAll(game.rounds);
+                scoreBoard.setAdapter(adapter);
+            }
+
         }
-
-
-        if (playerOneName != null) playerOneName.setText(game.myName);
-        if (playerTwoName != null) playerTwoName.setText(game.oppName);
-        if (totalScore != null) {
-            game.calcTotalScore();
-            totalScore.setText(game.myScore + " - " + game.oppScore);
-        }
-
-        if (scoreBoard != null) {
-            RoundAdapter adapter = new RoundAdapter(getActivity(),R.layout.matchstatistics_item);
-            adapter.addAll(game.rounds);
-            scoreBoard.setAdapter(adapter);
-        }
-
-
     }
     public void buildGUI(View root){
-
+        MatchActivity a = (MatchActivity)getActivity();
+        if (game != null && game.oppName != null && game.oppName.equals("")) a.mTitle = getString(R.string.title_section4) + " slumpad spelare";
+        else a.mTitle = getString(R.string.title_section4) + " " + game.oppName;
+        a.restoreActionBar();
          playerOnePic =(ImageView) root.findViewById(R.id.player1_photo);
          playerTwoPic =(ImageView) root.findViewById(R.id.player2_photo);
          playerOneName =(TextView) root.findViewById(R.id.player1_nameTag);
          playerTwoName =(TextView) root.findViewById(R.id.player2_nameTag);
          totalScore = (TextView) root.findViewById(R.id.totalScore);
          scoreBoard = (ListView) root.findViewById(R.id.score_list);
+        game.changePicSize(150);
+        if (playerOnePic != null && game.myPic != null && !game.myPic.equals("")) {
+            Picasso.with(getActivity()).load(game.myPic).placeholder(R.mipmap.ic_launcher).into(playerOnePic);
+        }
+        if (playerTwoPic != null && game.oppPic != null && !game.oppPic.equals("")) {
+            Picasso.with(getActivity()).load(game.oppPic).placeholder(R.mipmap.ic_launcher).into(playerTwoPic);
+        }
         FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
         if (game.turn) {
             fab.setOnClickListener(new View.OnClickListener() {

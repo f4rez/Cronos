@@ -43,7 +43,7 @@ public class Request extends AsyncTask<String, Void, String> {
             case "AnswerQuestions":
                 return net.answerQuestions(Integer.parseInt(string[1]),string[2],string[3],string[4],string[5],string[6]);
             case "RegisterUser":
-                return net.registerUSer();
+                return net.registerUSer(string[1], string[2]);
             case "Login":
                 return net.login();
             case "StartMessage":

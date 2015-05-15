@@ -14,8 +14,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="9dp"
         android:scaleType="centerCrop"
-        android:id="@+id/drawerPicture"
-        android:src="@drawable/ic_launcher"
+        android:id="@+id/oppPicture"
         android:layout_centerVertical="true"
         />
     <LinearLayout
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/listItem"
-        android:layout_toRightOf="@+id/drawerPicture"
+        android:layout_toRightOf="@+id/oppPicture"
         android:layout_centerVertical="true">
     <TextView
         android:layout_width="wrap_content"
