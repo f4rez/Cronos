@@ -98,7 +98,7 @@ VÅRT SPEL utvecklades till Android med en backend som drar nytta av Google App 
 
 
 \section{Bakgrund}
-I detta stycke beskrivs ämnet som utvecklingen av vår app är starkt kopplat till. Bland annat beskrivs 
+Denna sektion ger en översiktlig beskrivning av kategorier av spel var starkt relaterade till utveckling av vår applikation. Bland annat beskrivs kort några applikationer som var utvecklade på samma marknad. Det ges också en översiktlig beskrivning hur dessa applikationer och spel som, på ett eller annat sätt, använts vid utvecklingen av applikationen. 
 
 \subsection{Kunskapsspel för mobiltelefoner}
 Wordfeud och Quizkampen är två populära turbaserade multiplayerspel där Quizkampen har 45 miljoner användare globalt \cite{quiz} och Wordfeud har 20 miljoner användare \cite{wordfeud}. Dessa spel gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare spelar sin omgång får dess motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
@@ -114,6 +114,8 @@ Sällskapsspel har länge varit och är än idag ett populärt sätt att umgås 
 Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att det främjar vissa begär hos spelarna. Ett av begären är att man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är en av faktorerna som gör den typen av spel så populära \cite{psykologi}.
 
 \section{Projektbeskrivning}
+Denna sektion lägger betoning på varför applikationen utvecklades. Vad som var våra mål med projektet, motivation för utvecklingen, vilka avgränsningar som gjordes, vilka krav vi ställde på applikationen, vilka tekniska problem vi var tvungna att överkomma samt vad som gjorde vårt spel unikt i förhållande till konkurrenterna.
+
 \subsection{Syfte}
 Det var projektets syfte att utveckla och distribuera en spelapplikation för mobila enheter som använder plattformen Android. Applikationen skulle ge flera användare möjlighet att interagera och spela med varandra samtidigt.
 
@@ -157,7 +159,7 @@ Det finns ett spel för iOS, \textit{Historiekampen} \cite{historiekampen} som o
 Historiekampen var ett spel som konceptuellt sett liknade sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur gick till så att hen först fick en händelse som skulle placeras på spelarens tidslinje. När första frågan presenterades fanns det en årtalsreferens utlagd på tidslinjen som den första händelsen skulle placeras före eller efter. När nästa fråga presenterades fanns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare.\\ 
 Historiekampen valde att använda konceptet med kombinations-poäng vilket implicerade att spelaren kunde få flera poäng under en runda om hen placerde ut flera händelser korrekt efter varandra. Spelaren var tvungen att placera minst \underline{en} händelse och kunde få maximalt tio händelser att placera ut. Om spelaren placerade första händelsen fel var avslutades rundan. Placerade spelaren händelsen rätt ställdes hen inför ett val med två alternativ: antingen avsluta sin runda och på så sätt låsa sina poäng, eller fortsätta att få händelser att placera ut i förhållande till de tidigare händelserna. Detta val gjorde spelaren efter varje rätt placerad händelse. Spelaren kunde med andra ord välja själv om den vågade fortsätta eller om den ville vara försiktig och behålla sina välförtjänta poäng. En duktig spelare kunde välja det senare alternativet och bygga upp sin kombo fram tills dess att den femte frågan var ställd. När den femte frågan var ställd fick hen en fråga om \underline{när} den femte händelsen ägde rum. Om spelarens svara var nära det rätta årtalet fick hen fortsätta rundan med sin uppbyggda kombo av poäng. Om årtalet var fel förlorade spelaren sina tidigare poäng men kunde fortsätta få händelser att placera ut i förhållande till de tidigare händelserna. Vid en perfekt runda kunde en spelare få totalt tio poäng.
 
-\subsubsection{VVÅR APPS spets}
+\subsubsection{VÅR APPS spets}
 VÅRT SPEL liknar Historiekampen och \textit{När då då?} rent konceptuellt. Uppgiften som spelarna skulle utföra i vår applikation och uppgifterna som skulle utföras i Historiekampen liknade varandra mycket. I både Historiekampen och VÅRT SPEL var det spelarens uppgift att placera ut händelser rätt på en tidslinje. Spelmekaniken var dock annorlunda i vår applikation då varje match och varje runda behandlades annorlunda. I \textbf{VÅRT SPEL} fick varje spelare ett paket med sex frågor varje runda. En av dessa sex frågor agerade som referenshändelse på tidlinjen. Frågorna presenterades för spelaren en i taget och det var sedan spelarens uppgift att placera dessa i rätt ordning. En spelare fick ett poäng per korrekt utplacerad händelse och kunde på så sätt få maximalt fem poäng från de korrekt placerade händelserna. Om en spelare lyckades få en perfekt runda, där alla händelser placerades rätt, fick hen ett extra poäng vilket resulterade i en total summa av sex poäng. Likt Historiekampen avslutades en runda när en spelare hade placerat en händelse fel. Det som skiljde vår applikation i denna aspekt var vid fallet då en spelare hade tjänat ihop poäng från tidigare händelser. I Historiekampen förlorade spelaren alla sina tidigare poäng om hen svarade fel medan i vår applikation fick spelaren behålla sina poäng. Oavsett om spelaren lyckades placera ut alla händelser rätt eller inte så gick turen, efter fem frågor, över till motståndaren. När fem rundor hade spelats vann den spelare som hade svarat rätt på flest frågor totalt.  
 
 En viktig detalj som skiljde VÅRT SPEL från Historiekampen var faktumet att spelaren såg beskrivningen av händelserna som hen placerat tidigare istället för bara årtalen. Vid avslutad runda visades även de korrekta årtalen för händelserna så att spelaren visste vilken ordning som hade varit den korrekta. \textbf{VÅRT SPEL} handlade med andra ord mer om att relatera händelser till varandra (dog Palme efter andra världskriget?) istället för att veta vilket årtal det skedde.
@@ -186,6 +188,7 @@ Designen av applikationen var något som var väldigt viktigt för oss. Kravet i
 
 
 \section{Implementation}
+Denna sektion beskriver hur de målsatta delarna implementerades i applikationen. Applikationens systemstruktur och dess innefattande delar  förklaras och illustreras. Det finns även en grundlig genomgång av hur applikationen ser ut samt hur den fungerar, både för användare och systemadministratörer.
 
 \subsection{Balanseringsteori}
 		%%-----------------------------------------------------------%%
@@ -320,6 +323,8 @@ Gör en genomgång av hur aplikationen fungerar med en massa bilder som även ha
 
 
 \section{Resultat}
+Denna sektion beskriver ett antal utvärderingar som gjordes av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet.  
+
 Här ska det skrivas MDI-utvärderingar
 \begin{itemize}
 \item Kognitiv walkthrough
@@ -333,7 +338,13 @@ Planen var att en fungerande alfa eller betaversion av systemet skulle färdigst
 Gränssnittet och användandet av applikationen skulle också komma att utvärderas med hjälp av think aloud \cite{thinkaloud} och en heuristic evaluering \cite{heruistic}.
 
 \section{Diskussion}
-Diskutera kring hur vi hade kunnat utveckla på ett bättre sätt samt diskutera lite mer kring om vi hade kunnat välja andra hjälpmedel etc (för att det skulle ha blivit mer effektivt etc).
+Denna sektion diskuteras det vad som hade kunnat göras bättre under utvecklingen. Exempel på detta kunde exempelvis vara om det fanns alternativa vägar eller verktyg som hade varit bättre, effektivare, enklare att använda. Det beskrivs även framtida utvecklingar i det visuella och applikationens prestanda och säkerhet.
+
+\subsection{Alternativa vägar}
+
+\subsection{Alternativa verktyg}
+
+\section{Framtida utvecklingar för applikationen}
 
 
 
