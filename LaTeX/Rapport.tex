@@ -96,22 +96,25 @@ Applikationsutveckling för mobila enheter är ett spännande område som växer
 
 VÅRT SPEL utvecklades till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med användarantalet. För att vi inte skulle behöva söka och manuellt lägga in ett stort antal frågor utvecklades en semi-automatisk frågehämtare. Detta system bidrar till att VÅRT SPEL inte blir repetitivt och tråkigt för användarna. Frågehämtaren möjliggör att frågorna kan hämtas, skapas och läggas in utan att vi behöver tillägna mycket tid åt just dessa uppgifter. En annan sak som vi gjorde för att spelet skulle vara roligare för alla var att skapa ett balanseringssystem som gör att händelserna som ges till spelarna är anpassade efter spelarens kunskapsnivå.
 
-\section{Förutsättningar}
 
-\subsection{Bakgrund}
+\section{Bakgrund}
+Denna sektion ger en översiktlig beskrivning av kategorier av spel var starkt relaterade till utveckling av vår applikation. Bland annat beskrivs kort några applikationer som var utvecklade på samma marknad. Det ges också en översiktlig beskrivning hur dessa applikationer och spel som, på ett eller annat sätt, använts vid utvecklingen av applikationen. 
 
-\subsubsection{Kunskapsspel för mobiltelefoner}
+\subsection{Kunskapsspel för mobiltelefoner}
 Wordfeud och Quizkampen är två populära turbaserade multiplayerspel där Quizkampen har 45 miljoner användare globalt \cite{quiz} och Wordfeud har 20 miljoner användare \cite{wordfeud}. Dessa spel gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare spelar sin omgång får dess motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
 
-\paragraph{Quizkampen \newline} 
+\subsubsection{Quizkampen}
 Quizkampen \cite{aboutquiz} är ett frågesports-spel där spelarna svarar på frågor under 6 rundor med tre frågor i varje runda. Spelarna svarar på samma frågor varje runda.  Inför varje runda slumpas tre kategorier fram där endast en kategori väljs för den aktuella rundan. Valet av kategorier är något som spelarna turas om att göra varannan runda. Matchen avslutas när sista rundan är spelad och det är även då en vinnare koras beroende på vem som har flest poäng. 
 
-\paragraph{Wordfeud \newline}
+\subsubsection{Wordfeud}
 Wordfeud \cite{aboutwordfeud} är ett spel där en match utspelas mellan två personer. Varje spelare får en liten mängd bokstäver som är gömd för motspelaren. Spelet går sedan ut på att fläta samman ord på det givna spelbrädet med hjälp av bokstäverna. Målet är att få så många poäng som möjligt och detta kan man uppnå tack vare att varje bokstav är värd en viss poäng. På så sätt kan man genom att använda svårare bokstäver och skapa längre ord få mer poäng. 
 
-\subsubsection{Sällskapsspel med fokus på kunskap}
+\subsection{Sällskapsspel med fokus på kunskap}
 Sällskapsspel har länge varit och är än idag ett populärt sätt att umgås på \cite{bradspelspop}. Sällskapsspelet \textit{När då då?} \cite{nardada} är ett spel har bygger på ett relativt enkelt koncept. Spelarna turas om att placera ut händelser på en tidslinje i förhållande till varandra och får poäng om dessa är korrekt utplacerade. Den spelaren som har flest poäng vid en slutet av matchen vinner. \\
 Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att det främjar vissa begär hos spelarna. Ett av begären är att man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är en av faktorerna som gör den typen av spel så populära \cite{psykologi}.
+
+\section{Projektbeskrivning}
+Denna sektion lägger betoning på varför applikationen utvecklades. Vad som var våra mål med projektet, motivation för utvecklingen, vilka avgränsningar som gjordes, vilka krav vi ställde på applikationen, vilka tekniska problem vi var tvungna att överkomma samt vad som gjorde vårt spel unikt i förhållande till konkurrenterna.
 
 \subsection{Syfte}
 Det var projektets syfte att utveckla och distribuera en spelapplikation för mobila enheter som använder plattformen Android. Applikationen skulle ge flera användare möjlighet att interagera och spela med varandra samtidigt.
@@ -132,21 +135,31 @@ För att flera spelare skulle kunna interagera med varandra så behövdes det en
 
 Servermjukvaran skrevs i programspråket Go \cite{golang} och kördes på Googles molntjänst App Engine.
 
-
 \subsubsection{Automatisk informationshämtning}
 För att spelet skulle bli så intressant som möjligt behövdes en stor bredd på frågorna som skulle lagras i spelets tillhörande databas. Ett sätt att skapa många frågor snabbt var att utveckla mjukvara som kunde hämta information och från denna informationen skapa nya frågor automatiskt. 
 
 Målet med den automatiska informationshämtningen var att skapa ett delsystem som läste in delar av en hemsida, som följer en viss struktur, för att hitta nödvändig information. Systemet skulle sedan koppla samman årtalen och händelserna från hemsidan automatiskt. Systemet behövde också ett gränssnitt för att ge administratörerna ett snabbt sätt att korrekturläsa frågorna innan de godkändes och skickades vidare till spelet. För mer detaljerad information om mjukvarans design se avsnitt \ref{crawler}.
 
-\subsection{Motivation}
-Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på sådana applikationer är Quizkampen och Wordfeud som båda toppar säljlistorna för Androidspel \cite{appsalesrating}. Dessa spel följer en ganska enkel struktur och den bygger på att två personer kan möta varandra, svara på frågor eller lägga ord korrekt. På detta sätt får spelarna poäng som sen avgör vinnaren mellan de tävlande. Enligt säljstatistiken \cite{appsalesrating} är detta koncept något som är attraktivt för många användare. Spelet, vars utveckling beskrivs i rapporten, kombinerar koncepten från Quizkampen och Wordfeud i den mening att spelare ska svara på frågor samt att lägga in saker på sin rätta plats. 
+\subsection{Frågeställningar}
 
-En liknande version av vårt spel har också visat sig vara populär i form av sällskapsspel (\textit{När-då-då?}) \cite{nardada}. Detta var en av anledningarna till att förhoppningarna var höga att även vår applikation skulle bli populär på marknaden. Det finns för tillfället ingen variant av det här spelkonceptet till Android vilket ger \textbf{VÅR APP} stora möjligheter att lyckas.
+\subsubsection{Tekniska problem}
+Det fanns vissa delar i det här systemet som blev mer avancerade att lösa än andra delar. En lista av följande utmaningar presenteras nedan.
+\begin{itemize}
+\item Eftersom applikationen på något sätt skulle hämta information och konstruera frågor på ett semi-automatiskt sätt var det ett måste att utveckla ett sådant system. En svårighet i detta var att se till att systemet blev tillräckligt smart för att lyckas läsa en informationskälla och ta ut den eftertraktade informationen på rätt sätt.
+\item Det behövdes en relativt stor databas för att lagra både användare och frågor för spelet. Det här var något som vi inte hade arbetat med på en stor skala förut. Hur skulle man lagra informationen på ett sätt som var både effektivt lagringsmässigt samt snabbt och enkelt för servern att hämta?
+\item Det krävdes nätverkskommunikation med säkerhet och användaridentifiering. App Engine som användes vid stora delar av utveckling hade användbara funktioner som uppfyllde vissa av våra krav men inte alla. Hur skulle vi lyckas tillgodose användarna med en säker applikation?
+\item Spelet skulle anpassa svårighetsgraden automatiskt vilket innebar att någon form av balansering krävdes. Tanken var att frågorna skulle ha en svårighetsgrad som justerades automatiskt beroende på hur ofta de placerades rätt. Här var vi tvungna att ta hänsyn till hur resten av tidslinjen såg ut vid tillfället. Hur skulle detta utvecklas på ett tillräckligt effektivt och rättvist sätt för applikationen och användarna.
+\item Det fanns ett behov att utveckla ett system för att rangordna spelare i någon slags topplista. Hur skulle detta ske och hur skulle rangordningen bestämmas utifrån spelets mekanik? 
+\end{itemize}
 
 \subsection{Relaterat arbete}
 Det finns ett spel för iOS, \textit{Historiekampen} \cite{historiekampen} som också handlar om att lägga in händelser korrekt på en tidslinje. En nackdel som den befintliga iOS-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
 
-\subsubsection{Faktorer som gör VÅRT SPEL unikt i förhållande till konkurrenterna}
+\subsubsection{Historiekampen}
+Historiekampen var ett spel som konceptuellt sett liknade sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur gick till så att hen först fick en händelse som skulle placeras på spelarens tidslinje. När första frågan presenterades fanns det en årtalsreferens utlagd på tidslinjen som den första händelsen skulle placeras före eller efter. När nästa fråga presenterades fanns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare.\\ 
+Historiekampen valde att använda konceptet med kombinations-poäng vilket implicerade att spelaren kunde få flera poäng under en runda om hen placerde ut flera händelser korrekt efter varandra. Spelaren var tvungen att placera minst \underline{en} händelse och kunde få maximalt tio händelser att placera ut. Om spelaren placerade första händelsen fel var avslutades rundan. Placerade spelaren händelsen rätt ställdes hen inför ett val med två alternativ: antingen avsluta sin runda och på så sätt låsa sina poäng, eller fortsätta att få händelser att placera ut i förhållande till de tidigare händelserna. Detta val gjorde spelaren efter varje rätt placerad händelse. Spelaren kunde med andra ord välja själv om den vågade fortsätta eller om den ville vara försiktig och behålla sina välförtjänta poäng. En duktig spelare kunde välja det senare alternativet och bygga upp sin kombo fram tills dess att den femte frågan var ställd. När den femte frågan var ställd fick hen en fråga om \underline{när} den femte händelsen ägde rum. Om spelarens svara var nära det rätta årtalet fick hen fortsätta rundan med sin uppbyggda kombo av poäng. Om årtalet var fel förlorade spelaren sina tidigare poäng men kunde fortsätta få händelser att placera ut i förhållande till de tidigare händelserna. Vid en perfekt runda kunde en spelare få totalt tio poäng.
+
+\subsubsection{VÅR APPS spets}
 VÅRT SPEL liknar Historiekampen och \textit{När då då?} rent konceptuellt. Uppgiften som spelarna skulle utföra i vår applikation och uppgifterna som skulle utföras i Historiekampen liknade varandra mycket. I både Historiekampen och VÅRT SPEL var det spelarens uppgift att placera ut händelser rätt på en tidslinje. Spelmekaniken var dock annorlunda i vår applikation då varje match och varje runda behandlades annorlunda. I \textbf{VÅRT SPEL} fick varje spelare ett paket med sex frågor varje runda. En av dessa sex frågor agerade som referenshändelse på tidlinjen. Frågorna presenterades för spelaren en i taget och det var sedan spelarens uppgift att placera dessa i rätt ordning. En spelare fick ett poäng per korrekt utplacerad händelse och kunde på så sätt få maximalt fem poäng från de korrekt placerade händelserna. Om en spelare lyckades få en perfekt runda, där alla händelser placerades rätt, fick hen ett extra poäng vilket resulterade i en total summa av sex poäng. Likt Historiekampen avslutades en runda när en spelare hade placerat en händelse fel. Det som skiljde vår applikation i denna aspekt var vid fallet då en spelare hade tjänat ihop poäng från tidigare händelser. I Historiekampen förlorade spelaren alla sina tidigare poäng om hen svarade fel medan i vår applikation fick spelaren behålla sina poäng. Oavsett om spelaren lyckades placera ut alla händelser rätt eller inte så gick turen, efter fem frågor, över till motståndaren. När fem rundor hade spelats vann den spelare som hade svarat rätt på flest frågor totalt.  
 
 En viktig detalj som skiljde VÅRT SPEL från Historiekampen var faktumet att spelaren såg beskrivningen av händelserna som hen placerat tidigare istället för bara årtalen. Vid avslutad runda visades även de korrekta årtalen för händelserna så att spelaren visste vilken ordning som hade varit den korrekta. \textbf{VÅRT SPEL} handlade med andra ord mer om att relatera händelser till varandra (dog Palme efter andra världskriget?) istället för att veta vilket årtal det skedde.
@@ -154,11 +167,30 @@ En viktig detalj som skiljde VÅRT SPEL från Historiekampen var faktumet att sp
 Med den semi-automatiska frågehämtaren, som kunde anpassas för olika informationskällor, var det enkelt för administratörerna att hämta nya frågor. Databasen med frågor kunde på så sätt expandera snabbt vid behov. Detta var något som skiljde oss från Historiekampen där alla frågor matades in manuellt. \\
 Applikationen balanserade även frågorna kontinuerligt efter varje match vilket bidrog till att alla spelare tilldelades frågor som passade deras aktuella kunskapsnivå. Balanseringen i spelet kunde även byggas ut och göras mer avancerad om användarna skulle ge kritik på hur frågorna rankades. Det fanns egentligen inga gränser för hur avancerad balansering kunde göras vilket var en stor fördel som skiljde oss från konkurrenterna.
 
-\subsubsection{Historiekampen}
-Historiekampen var ett spel som konceptuellt sett liknade sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur gick till så att hen först fick en händelse som skulle placeras på spelarens tidslinje. När första frågan presenterades fanns det en årtalsreferens utlagd på tidslinjen som den första händelsen skulle placeras före eller efter. När nästa fråga presenterades fanns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare.\\ 
-Historiekampen valde att använda konceptet med kombinations-poäng vilket implicerade att spelaren kunde få flera poäng under en runda om hen placerde ut flera händelser korrekt efter varandra. Spelaren var tvungen att placera minst \underline{en} händelse och kunde få maximalt tio händelser att placera ut. Om spelaren placerade första händelsen fel var avslutades rundan. Placerade spelaren händelsen rätt ställdes hen inför ett val med två alternativ: antingen avsluta sin runda och på så sätt låsa sina poäng, eller fortsätta att få händelser att placera ut i förhållande till de tidigare händelserna. Detta val gjorde spelaren efter varje rätt placerad händelse. Spelaren kunde med andra ord välja själv om den vågade fortsätta eller om den ville vara försiktig och behålla sina välförtjänta poäng. En duktig spelare kunde välja det senare alternativet och bygga upp sin kombo fram tills dess att den femte frågan var ställd. När den femte frågan var ställd fick hen en fråga om \underline{när} den femte händelsen ägde rum. Om spelarens svara var nära det rätta årtalet fick hen fortsätta rundan med sin uppbyggda kombo av poäng. Om årtalet var fel förlorade spelaren sina tidigare poäng men kunde fortsätta få händelser att placera ut i förhållande till de tidigare händelserna. Vid en perfekt runda kunde en spelare få totalt tio poäng.
 
-\subsubsection{Balanseringsteori}
+\subsection{Motivation}
+Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på sådana applikationer är Quizkampen och Wordfeud som båda toppar säljlistorna för Androidspel \cite{appsalesrating}. Dessa spel följer en ganska enkel struktur och den bygger på att två personer kan möta varandra, svara på frågor eller lägga ord korrekt. På detta sätt får spelarna poäng som sen avgör vinnaren mellan de tävlande. Enligt säljstatistiken \cite{appsalesrating} är detta koncept något som är attraktivt för många användare. Spelet, vars utveckling beskrivs i rapporten, kombinerar koncepten från Quizkampen och Wordfeud i den mening att spelare ska svara på frågor samt att lägga in saker på sin rätta plats. 
+
+En liknande version av vårt spel har också visat sig vara populär i form av sällskapsspel (\textit{När-då-då?}) \cite{nardada}. Detta var en av anledningarna till att förhoppningarna var höga att även vår applikation skulle bli populär på marknaden. Det finns för tillfället ingen variant av det här spelkonceptet till Android vilket ger \textbf{VÅR APP} stora möjligheter att lyckas.
+
+\subsection{Avgränsningar}
+Någon applikation för Windows och iOS fanns som en eventuell fortsatt utveckling efter Android men kom till utvecklingsstadiet ty ett större fokus på en bra applikation till Android prioriterades. Spelet skulle troligtvis få ett par kategorier för frågorna, men vilka dessa skulle vara var då inte bestämt. 
+
+I applikationen fanns det många funktioner som skulle vara roliga och användbara, men inför projektet hade vi några funktioner som ansågs vara viktiga att ha med. Den viktigaste funktionen var att kunna hitta och spela en match. En funktion för att hitta och hantera vänner man har i spelet och även kunna se statistik över matcherna man spelat mot en vän. Dessa funktioner behövde så klart även implementeras på servern.
+
+\subsection{Krav}
+Systemet skulle klara av många spelare samtidigt, dock bara två per match. Något speciell tak för antalet användare var inte bestämt men med tanke på den otroligt solida grunden för skalbarhet som projektet stod på kunde ett mål för önskat antal användare bestämmas. Eftersom App Engine användes för servern så skulle det inte bli några problem med den enkla förklaringen att det var en tjänst som automatiskt skalade med hänsyn på belastningen \cite{appenginescalability}. 
+
+Informationssökaren skulle tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. En hög kvalitet innebar frågor som var relevanta och som följde den strukturen som vi har tänkt oss. Frågorna skulle vara lätta att läsa, förstå och samtidigt befinna sig i det breda spektrumet av svårighetsgrader vi hade i spelet. Sökaren för frågorna skulle också vara så pass bra att den administrativa kontrollen gick fort och att så lite som möjligt behövdes korrigeras efter att frågorna hade samlats in. För att applikationen inte skulle kännas alldeles för repetitiv skulle det finnas många frågor som dessutom var av varierande kategori. Det skulle även finnas minst 1000 frågor i spelet.
+
+Designen av applikationen var något som var väldigt viktigt för oss. Kravet i början var att ha en intuitiv, responsiv och snygg design. Eftersom applikationen gjordes för Android skulle den också följa dess designmönstret Material Design \cite{MaterialDesign}.
+
+
+
+\section{Implementation}
+Denna sektion beskriver hur de målsatta delarna implementerades i applikationen. Applikationens systemstruktur och dess innefattande delar  förklaras och illustreras. Det finns även en grundlig genomgång av hur applikationen ser ut samt hur den fungerar, både för användare och systemadministratörer.
+
+\subsection{Balanseringsteori}
 		%%-----------------------------------------------------------%%
 		%%															%%
 		%%		EJ KORREKTURLÄST FÖR KONTROLL AV TEMPUS				%%
@@ -189,20 +221,6 @@ $$ R'_B = 1000 + 16(0-0.849) = 997.584 $$
 I det implementerade balanseringssystemet används Elo-modellen för att beräkna spelarnas erfarenhetspoäng. Elo är ett system som utvecklades av Arpad Elo och började användas redan på 60-talet\cite{elo}. Systemet var först och främst utvecklat för att ranka schackspelare, men har sedan dess uppkomst även applicerats på många andra spel. Eftersom Elo-systemet är förhållandevis gammalt och möjligheten till datoriserade beräkningar blivit större sedan 60-talet, finns det mer avancerade system att använda sig av idag. Ett annat system som utvecklades i syfte att vara en förbättring av Elo-systemet är ett system kallat Glicko\cite{chessratings}. Skillnaden mellan Elo och Glicko är att Glicko också har ett värde för hur väl uppdaterad spelarens erfarenhetspoäng är. Det här innebär att spelaren har ett erfarenhetspoäng, säg 2000, samt ett trovärdighetspoäng, till exempel 100. Ju högre trovärdighetspoäng spelaren har, desto mindre exakt är erfarenhetspoängen. Erfarenhetspoängen har enligt systemet en +/- diff på dubbla trovärdighetspoängen. I nyss nämnda exempel innebär detta att spelaren har en erfarenhetspoäng på 1800-2200. Trovärdighetspoängen justeras bland annat baserat på hur länge sedan det var spelaren spelade förra gången, samt hur många matcher spelaren spelat totalt. Ju fler matcher totalt och ju närmare i tid förra matchen var, desto lägre trovärdighetspoäng har spelaren.
 
 Både Elo och Glicko används idag och det verkar vara svårt att avgöra om Glicko verkligen är bättre än Elo\cite{stackchess}. Ett faktum som finns är i alla fall att Glicko kräver mer information för att kunna fungera. En faktor som Glicko behöver men inte Elo är en tidsvariabel som har reda på hur länge sedan det var spelaren spelade sin förra match\cite{glickoex}. Det här gör att mer data behöver lagras i databasen, vilket är negativt ur kapacitetsperspektiv.
-
-\subsection{Frågeställningar}
-
-\subsubsection{Tekniska problem}
-Det fanns vissa delar i det här systemet som blev mer avancerade att lösa än andra delar. En lista av följande utmaningar presenteras nedan.
-\begin{itemize}
-\item Eftersom applikationen på något sätt skulle hämta information och konstruera frågor på ett semi-automatiskt sätt var det ett måste att utveckla ett sådant system. En svårighet i detta var att se till att systemet blev tillräckligt smart för att lyckas läsa en informationskälla och ta ut den eftertraktade informationen på rätt sätt.
-\item Det behövdes en relativt stor databas för att lagra både användare och frågor för spelet. Det här var något som vi inte hade arbetat med på en stor skala förut. Hur skulle man lagra informationen på ett sätt som var både effektivt lagringsmässigt samt snabbt och enkelt för servern att hämta?
-\item Det krävdes nätverkskommunikation med säkerhet och användaridentifiering. App Engine som användes vid stora delar av utveckling hade användbara funktioner som uppfyllde vissa av våra krav men inte alla. Hur skulle vi lyckas tillgodose användarna med en säker applikation?
-\item Spelet skulle anpassa svårighetsgraden automatiskt vilket innebar att någon form av balansering krävdes. Tanken var att frågorna skulle ha en svårighetsgrad som justerades automatiskt beroende på hur ofta de placerades rätt. Här var vi tvungna att ta hänsyn till hur resten av tidslinjen såg ut vid tillfället. Hur skulle detta utvecklas på ett tillräckligt effektivt och rättvist sätt för applikationen och användarna.
-\item Det fanns ett behov att utveckla ett system för att rangordna spelare i någon slags topplista. Hur skulle detta ske och hur skulle rangordningen bestämmas utifrån spelets mekanik? 
-\end{itemize}
-
-\section{Genomförande}
 
 \subsection{Metoder}
 Ett antal olika verktyg användes för att möjliggöra detta projekt. För utvecklingen och simulering av Android-applikationen användes Android Studio \cite{androidstudio}. Detta var ett kraftfullt verktyg som exempelvis kunde, på ett smidigt sätt, simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
@@ -298,22 +316,37 @@ downDiff = int((1.0-(userRatio*questionRatio))*10.0)
 
 Kodsnutten ovan är ett exempel på en justering som skedde om en spelare hade svarat rätt på den aktuella frågan. userRatio var ett värde mellan 0-1 på spelarens nivå (0 är nybörjare, 1 är avancerad). questionratio var ett värde mellan 0-1 på frågans nivå. downDiff var det värde som frågans nivå sänktes med (mellan 0-10). 
 
-\subsection{Avgränsningar}
-Någon applikation för Windows och iOS fanns som en eventuell fortsatt utveckling efter Android men kom till utvecklingsstadiet ty ett större fokus på en bra applikation till Android prioriterades. Spelet skulle troligtvis få ett par kategorier för frågorna, men vilka dessa skulle vara var då inte bestämt. 
+\subsection{Applikationens design}
 
-I applikationen fanns det många funktioner som skulle vara roliga och användbara, men inför projektet hade vi några funktioner som ansågs vara viktiga att ha med. Den viktigaste funktionen var att kunna hitta och spela en match. En funktion för att hitta och hantera vänner man har i spelet och även kunna se statistik över matcherna man spelat mot en vän. Dessa funktioner behövde så klart även implementeras på servern.
+\subsubsection{Genomgång av applikationen}
+Gör en genomgång av hur aplikationen fungerar med en massa bilder som även har förklaringar till sig.
 
-\subsection{Krav}
-Systemet skulle klara av många spelare samtidigt, dock bara två per match. Något speciell tak för antalet användare var inte bestämt men med tanke på den otroligt solida grunden för skalbarhet som projektet stod på kunde ett mål för önskat antal användare bestämmas. Eftersom App Engine användes för servern så skulle det inte bli några problem med den enkla förklaringen att det var en tjänst som automatiskt skalade med hänsyn på belastningen \cite{appenginescalability}. 
 
-Informationssökaren skulle tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. En hög kvalitet innebar frågor som var relevanta och som följde den strukturen som vi har tänkt oss. Frågorna skulle vara lätta att läsa, förstå och samtidigt befinna sig i det breda spektrumet av svårighetsgrader vi hade i spelet. Sökaren för frågorna skulle också vara så pass bra att den administrativa kontrollen gick fort och att så lite som möjligt behövdes korrigeras efter att frågorna hade samlats in. För att applikationen inte skulle kännas alldeles för repetitiv skulle det finnas många frågor som dessutom var av varierande kategori. Det skulle även finnas minst 1000 frågor i spelet.
+\section{Resultat}
+Denna sektion beskriver ett antal utvärderingar som gjordes av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet.  
 
-Designen av applikationen var något som var väldigt viktigt för oss. Kravet i början var att ha en intuitiv, responsiv och snygg design. Eftersom applikationen gjordes för Android skulle den också följa dess designmönstret Material Design \cite{MaterialDesign}.
+Här ska det skrivas MDI-utvärderingar
+\begin{itemize}
+\item Kognitiv walkthrough
+\item Think aloud utvärdering
+\item Heurisitc evaluation
+\end{itemize}
 
 \subsection{Utvärdering}
 Planen var att en fungerande alfa eller betaversion av systemet skulle färdigställas en rimlig tid innan projektet avslutas. I den här versionen skulle användare ha möjlighet att ge feedback och att testa applikationen. Tack vare den feedback vi fick från användarna så skulle så många fel som möjligt justeras innan den färdiga versionen släpptes.
 
 Gränssnittet och användandet av applikationen skulle också komma att utvärderas med hjälp av think aloud \cite{thinkaloud} och en heuristic evaluering \cite{heruistic}.
+
+\section{Diskussion}
+Denna sektion diskuteras det vad som hade kunnat göras bättre under utvecklingen. Exempel på detta kunde exempelvis vara om det fanns alternativa vägar eller verktyg som hade varit bättre, effektivare, enklare att använda. Det beskrivs även framtida utvecklingar i det visuella och applikationens prestanda och säkerhet.
+
+\subsection{Alternativa vägar}
+
+\subsection{Alternativa verktyg}
+
+\section{Framtida utvecklingar för applikationen}
+
+
 
 \newpage
 \printbibliography[title={Referenser}]
