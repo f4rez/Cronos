@@ -20,7 +20,7 @@ type Users struct {
 
 type FinishedGame struct {
 	GID, MyScore, OppScore int
-	OppName                string
+	OppName, OppPic        string
 }
 
 type Friend struct {
@@ -61,12 +61,13 @@ func (users *Users) AddGame(gid int) {
 	users.Games = append(users.Games, gid)
 }
 
-func (users *Users) AddFinishedGame(gid int, opName string, myScore, oppScore int) {
+func (users *Users) AddFinishedGame(gid int, opName string, myScore, oppScore int, oppPic string) {
 	f := new(FinishedGame)
 	f.GID = gid
 	f.OppName = opName
 	f.MyScore = myScore
 	f.OppScore = oppScore
+	f.OppPic = oppPic
 	users.FinishedGames = append(users.FinishedGames, *f)
 }
 
@@ -221,7 +222,7 @@ func findUsersByName(c appengine.Context, name string) ([]Users, error) {
 	}
 }
 
-func GameEnded(c appengine.Context, GID int, FID, SID string, one, two int) error {
+func GameEnded(c appengine.Context, GID int, FID, SID string, one, two int, onePic, twoPic string) error {
 	usr1, key1, err1 := GetUser(c, FID)
 	usr2, key2, err2 := GetUser(c, SID)
 	if err1 != nil {
@@ -232,8 +233,8 @@ func GameEnded(c appengine.Context, GID int, FID, SID string, one, two int) erro
 	}
 	usr1.RemoveGame(GID)
 	usr2.RemoveGame(GID)
-	usr1.AddFinishedGame(GID, usr2.Name, one, two)
-	usr2.AddFinishedGame(GID, usr1.Name, two, one)
+	usr1.AddFinishedGame(GID, usr2.Name, one, two, twoPic)
+	usr2.AddFinishedGame(GID, usr1.Name, two, one, onePic)
 	if one > two {
 		usr1.Won++
 		usr2.Lost++
@@ -362,7 +363,7 @@ func GetFriendListHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
-	if IsUserSignedIn(c) {
+	if !IsUserSignedIn(c) {
 		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
@@ -383,7 +384,7 @@ func FriendHandler(w http.ResponseWriter, r *http.Request) {
 	u := user.Current(c)
 	if u != nil {
 		var err error
-		if IsUserSignedIn(c) {
+		if !IsUserSignedIn(c) {
 			fmt.Fprintf(w, "Not Registerd")
 			return
 		}
@@ -412,7 +413,7 @@ func FriendHandler(w http.ResponseWriter, r *http.Request) {
 
 func IsUserSignedIn(c appengine.Context) bool {
 	u := user.Current(c)
-	c.Infof("User: ", u)
+	c.Infof("User: %v", u)
 	if u == nil {
 		return false
 	}
@@ -424,7 +425,7 @@ func IsUserSignedIn(c appengine.Context) bool {
 	if err != nil {
 		return false
 	}
-	c.Infof("count = %v", c)
+	c.Infof("count = %v", count)
 	if count > 0 {
 		return true
 	} else {

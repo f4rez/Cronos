@@ -312,7 +312,7 @@ func JoinGame(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
-	if users.IsUserSignedIn(c) {
+	if !users.IsUserSignedIn(c) {
 		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
@@ -334,7 +334,7 @@ func GetGameInfo(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
-	if users.IsUserSignedIn(c) {
+	if !users.IsUserSignedIn(c) {
 		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
@@ -378,7 +378,7 @@ func ChallengerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if users.IsUserSignedIn(c) {
+	if !users.IsUserSignedIn(c) {
 		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
@@ -437,7 +437,7 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
-	if users.IsUserSignedIn(c) {
+	if !users.IsUserSignedIn(c) {
 		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
@@ -485,7 +485,7 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 
 		if game.NumberOfTurns >= 5 && game.SID == u.ID {
 
-			uErr := users.GameEnded(c, game.GID, game.FID, game.SID, one, two)
+			uErr := users.GameEnded(c, game.GID, game.FID, game.SID, one, two, game.FPic, game.SPic)
 			if uErr != nil {
 				fmt.Fprintf(w, "error getting users to remove Game")
 				http.Error(w, uErr.Error(), http.StatusInternalServerError)
@@ -595,7 +595,7 @@ func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
-	if users.IsUserSignedIn(c) {
+	if !users.IsUserSignedIn(c) {
 		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
@@ -644,6 +644,7 @@ func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
 		f.MyScore = fGame.MyScore
 		f.OppScore = fGame.OppScore
 		f.OppName = fGame.OppName
+		f.OppPic = fGame.OppPic
 		finished[i] = *f
 	}
 	c.Infof("Finished %v", finished)

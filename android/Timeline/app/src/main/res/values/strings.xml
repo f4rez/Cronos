@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">awesomeness</string>
+    <string name="app_name">Chronos</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_section1">Matcher</string>
@@ -14,6 +14,11 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="not_online">Inte online</string>
+    <string name="log_out">Logga ut</string>
+    <string name="drawer_item_1">Matcher</string>
+    <string name="drawer_item_2">Intällningar</string>
+    <string name="drawer_item_3">Min Profil</string>
+    <string name="drawer_item_4">Inga mer annonser</string>
 
 
 </resources>
