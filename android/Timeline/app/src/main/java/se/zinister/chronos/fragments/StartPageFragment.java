@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 
 import se.zinister.chronos.Adapters.DialogAdapter;
 import se.zinister.chronos.Adapters.StartPageAdapter;
+import se.zinister.chronos.Items.Challenge;
 import se.zinister.chronos.Items.DrawerItem;
 import se.zinister.chronos.Items.StartpageMessage;
 import se.zinister.chronos.Json.Decode;
@@ -44,16 +47,9 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
     private MainActivity mainActivity;
     public StartPageAdapter mAdapter;
     private SwipeRefreshLayout swipeLayout;
+    private StartPageFragment s = this;
 
-    /* Request code used to invoke sign in user interactions. */
-    private static final int RC_SIGN_IN = 0;
-
-
-
-    /* A flag indicating that a PendingIntent is in progress and prevents
-     * us from starting further intents.
-     */
-
+    private ArrayList<Challenge> challenges;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +62,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showDialog();
+                    showFabDialog();
                 }
             });
         }
@@ -74,9 +70,6 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
         swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.ptr_layout);
         // Set the color scheme of the SwipeRefreshLayout by providing 4 color resource ids
         swipeLayout.setOnRefreshListener(this);
-
-
-
         return rootView;
     }
 
@@ -91,7 +84,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     public void doneLogin(String returned){
-        Log.d(MainActivity.TAG,"Returned login value = " + returned);
+        Log.d(MainActivity.TAG, "Returned login value = " + returned);
         Request r = new Request(this,mainActivity.net);
         r.execute("RegisterUser");
     }
@@ -141,6 +134,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
         Decode d = new Decode();
         StartpageMessage startpageMessage = d.decodeGamesOverview(jsonString);
         ArrayList<GamesOverview> gamesOverviews = startpageMessage.games;
+        challenges = startpageMessage.challenges;
         gamesOverviews = sort(gamesOverviews);
         if (mAdapter == null) {
             mAdapter = new StartPageAdapter(getActivity(), R.layout.game_overview, gamesOverviews);
@@ -166,9 +160,51 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
 
         });
         mListView.setAdapter(mAdapter);
+        if (challenges.size() > 0) {
+            showChallengeDialog(challenges.get(0));
+        }
     }
 
-    private void showDialog(){
+    private void showChallengeDialog(final Challenge challenge) {
+        final View dialogView = View.inflate(getActivity(), R.layout.challenge_dialog, null);
+        AlertDialog.Builder builder =  new AlertDialog.Builder(getActivity());
+        builder.setView(dialogView)
+                .setCancelable(true);
+        final AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    // call something for API Level 11+
+                    revealShow(dialogView, true, null);
+                }
+            }
+        });
+        Button accept =(Button)dialogView.findViewById(R.id.acceptbutton);
+        Button deny =(Button)dialogView.findViewById(R.id.denyButton);
+        TextView ct = (TextView) dialogView.findViewById(R.id.challengeFrom);
+        if(ct != null) {
+            ct.setText("Du har fått en utmaning från " + challenge.OppName);
+        }
+        if (accept != null) {
+            accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Request(s,((MainActivity)getActivity()).net).execute("AnswerChallenge",challenge.OppID, "accept");
+                }
+            });
+        }
+        if (deny != null) {
+            deny.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Request(s,((MainActivity)getActivity()).net).execute("AnswerChallenge",challenge.OppID, "deny");
+                }
+            });
+        }
+    }
+
+    private void showFabDialog(){
         final View dialogView = View.inflate(getActivity(), R.layout.new_game_dialog, null);
 
         AlertDialog.Builder builder =  new AlertDialog.Builder(getActivity());
@@ -274,6 +310,14 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
 
 
 
+    public void challengeReg() {
+        if (challenges != null) {
+            challenges.remove(0);
+            if (challenges.size() > 0) {
+                showChallengeDialog(challenges.get(1));
+            }
+        }
+    }
 
 
     @Override
