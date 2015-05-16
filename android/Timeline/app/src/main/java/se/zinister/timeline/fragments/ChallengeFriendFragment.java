@@ -37,7 +37,7 @@ public class ChallengeFriendFragment extends BaseFragment {
 
     @Override
     public int getTitleResourceId() {
-        return MainActivity.MAINPAGE;
+        return MainActivity.CHALLENGE_FRIEND;
     }
 
 

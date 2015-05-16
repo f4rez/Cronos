@@ -94,7 +94,7 @@ public class Decode {
             for (int i = 0; i < json.length(); i++) {
                 JSONObject object = (JSONObject) json.get(i);
                 Friend q = new Friend(object.getString("Name"),object.getString("Oid"), object.getString("Picture"),
-                        object.getInt("Won"),object.getInt("Draw"), object.getInt("Lost"));
+                        object.getInt("Won"),object.getInt("Draw"), object.getInt("Lost"), object.getBoolean("IsFriend"));
                 list.add(q);
             }
 
@@ -109,7 +109,7 @@ public class Decode {
         Game r = null;
         if (in == "error") return r;
         if (MainActivity.DEBUG) Log.d(MainActivity.TAG, in);
-        JSONObject json = null;
+        JSONObject json;
          try {
             json = new JSONObject(in);
              if (MainActivity.DEBUG) Log.d(MainActivity.TAG, json.getString("FName"));

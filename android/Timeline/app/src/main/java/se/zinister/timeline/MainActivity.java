@@ -90,13 +90,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         net = new NetRequests(HOST);
-        if (mGoogleApiClient == null)
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(Plus.API)
-                .addScope(Plus.SCOPE_PLUS_LOGIN)
-                .build();
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(Plus.API)
+                    .addScope(Plus.SCOPE_PLUS_LOGIN)
+                    .build();
+        }
 
         String cookies = android.webkit.CookieManager.getInstance().getCookie("https://" +HOST +"/startMess");
         if(cookies == null) {
