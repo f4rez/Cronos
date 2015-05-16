@@ -97,8 +97,8 @@ public class Request extends AsyncTask<String, Void, String> {
                 f2.addedFriend();
                 break;
             case "FriendChallenge":
-                ChallengeFriendFragment f1 = (ChallengeFriendFragment) caller;
-                f1.challengedFriend();
+                //ChallengeFriendFragment f1 = (ChallengeFriendFragment) caller;
+                //f1.challengedFriend();
                 break;
             case "StartMessage":
                 StartPageFragment pageFragment = (StartPageFragment) caller;

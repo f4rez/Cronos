@@ -105,6 +105,7 @@ public class FindUsersFragment extends BaseFragment {
                 i.putExtra("won", friend.won);
                 i.putExtra("draw", friend.draw);
                 i.putExtra("lost", friend.lost);
+                i.putExtra("isFirend", friend.isFriend);
 
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(e.getWindowToken(), 0);
