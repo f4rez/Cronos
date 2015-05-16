@@ -44,7 +44,7 @@ public class Request extends AsyncTask<String, Void, String> {
             case "AnswerQuestions":
                 return net.answerQuestions(Integer.parseInt(string[1]),string[2],string[3],string[4],string[5],string[6]);
             case "RegisterUser":
-                return net.registerUSer(string[1], string[2]);
+                return net.registerUser(string[1], string[2]);
             case "Login":
                 return net.login();
             case "StartMessage":
@@ -59,6 +59,8 @@ public class Request extends AsyncTask<String, Void, String> {
                 return net.friend("challenge", string[1]);
             case "GetGame":
                 return net.game(string[1]);
+            case "AnswerChallange":
+                return net.answerChallange(string[1],string[2]);
         }
         return "error";
     }
@@ -95,8 +97,8 @@ public class Request extends AsyncTask<String, Void, String> {
                 f2.addedFriend();
                 break;
             case "FriendChallenge":
-                ChallengeFriendFragment f1 = (ChallengeFriendFragment) caller;
-                f1.challengedFriend();
+                //ChallengeFriendFragment f1 = (ChallengeFriendFragment) caller;
+                //f1.challengedFriend();
                 break;
             case "StartMessage":
                 StartPageFragment pageFragment = (StartPageFragment) caller;
@@ -106,6 +108,9 @@ public class Request extends AsyncTask<String, Void, String> {
                 MatchStatistics matchStatistics = (MatchStatistics) caller;
                 matchStatistics.saveGame(returned);
                 break;
+            case "AnswerChallenge":
+                StartPageFragment s = (StartPageFragment)caller;
+                s.challengeReg();
         }
 
     }

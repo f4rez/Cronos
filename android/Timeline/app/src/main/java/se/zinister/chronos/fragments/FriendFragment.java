@@ -3,6 +3,7 @@ package se.zinister.chronos.fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class FriendFragment extends  BaseFragment{
         int won = extras.getInt("won");
         int draw = extras.getInt("draw");
         int lost = extras.getInt("lost");
+        final boolean isFriend = extras.getBoolean("isFriend");
 
         Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
         ImageView imageView = (ImageView) rootView.findViewById(R.id.profilePicture);
@@ -81,7 +83,12 @@ public class FriendFragment extends  BaseFragment{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Request(f,((MainActivity)getActivity()).net).execute("FriendAdd",friendID);
+                if(MainActivity.DEBUG) Log.d(MainActivity.TAG,"isFriend = "+ isFriend);
+                if(isFriend) {
+                    new Request(f, ((MainActivity) getActivity()).net).execute("FriendChallenge", friendID);
+                } else {
+                    new Request(f, ((MainActivity) getActivity()).net).execute("FriendAdd", friendID);
+                }
             }
         });
 
@@ -95,6 +102,9 @@ public class FriendFragment extends  BaseFragment{
     }
     public void addedFriend() {
         Toast.makeText(getActivity(), "Added friend", Toast.LENGTH_SHORT).show();
+    }
+    public void challengedFirend() {
+        Toast.makeText(getActivity(), "Challenged friend", Toast.LENGTH_SHORT).show();
     }
 
 }

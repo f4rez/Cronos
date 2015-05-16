@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         setSupportActionBar(mToolbar);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+        mTitle = getString(R.string.drawer_item_1);
+
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,

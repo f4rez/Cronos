@@ -40,6 +40,7 @@ public class MatchAdapter extends ArrayAdapter<Question> {
             v = vi.inflate(R.layout.list_item, null);
         }
         Question q = getItem(position);
+
         if (q != null) {
             TextView tt1 = (TextView) v.findViewById(R.id.question);
             TextView year = (TextView) v.findViewById(R.id.year);

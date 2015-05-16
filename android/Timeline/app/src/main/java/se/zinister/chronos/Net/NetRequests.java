@@ -198,7 +198,7 @@ public class NetRequests {
     }
 
 
-    public String registerUSer(String name, String pic) {
+    public String registerUser(String name, String pic) {
             if (urlConnection != null) urlConnection.disconnect();
         try {
             String[] names = name.split(" ");
@@ -460,6 +460,34 @@ public class NetRequests {
         }
         return "error";
 
+    }
+
+    public String answerChallange(String opp, String ans) {
+        try {
+            url = new URL("https://" + host + "/challenger?Opponent="+ opp+"&answer="+ans);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                urlConnection.setRequestProperty("Cookie",
+                        TextUtils.join(",",  cookieManager.getCookieStore().getCookies()));
+            }
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+            BufferedReader r = new BufferedReader(new InputStreamReader(in));
+            StringBuilder total = new StringBuilder();
+            String line;
+            while ((line = r.readLine()) != null) {
+                total.append(line);
+            }
+            return total.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally{
+            if (urlConnection != null)
+                urlConnection.disconnect();
+        }
+        return "error";
     }
 
  }

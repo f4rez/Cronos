@@ -43,9 +43,41 @@ public class MatchFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.match_fragment, container, false);
         matchActivity = (MatchActivity)getActivity();
-        gameID = matchActivity.gameID;
+        gameID = MatchActivity.gameID;
         Request req = new Request(this,matchActivity.net);
-        req.execute("GetQuestions", String.valueOf(matchActivity.gameID));
+        req.execute("GetQuestions", String.valueOf(MatchActivity.gameID));
+        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.setImageResource(R.drawable.ic_action_accept);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!hasSeenYears) {
+                    int points = checkAnswer();
+                    if (points > -1) {
+                        MatchActivity m = (MatchActivity) getActivity();
+
+                        Game.Round r = m.game.rounds.get(m.game.rounds.size() - 1);
+                        if (r.oppRoundScore == -1) {
+                            r.myRoundScore = points;
+                            m.game.turn = !m.game.turn;
+                        } else {
+                            if (m.game.rounds.size() >= 5) {
+                                r.myRoundScore = points;
+                                m.game.turn = false;
+                            } else {
+                                Game.Round round = new Game.Round();
+                                r.myRoundScore = points;
+                                m.game.addRound(round);
+                            }
+                        }
+                        showYears();
+                    }
+                } else {
+                    MatchActivity m = (MatchActivity) getActivity();
+                    m.changeFragment(MatchActivity.STATISTICS);
+                }
+            }
+        });
         return rootView;
     }
 
@@ -53,7 +85,7 @@ public class MatchFragment extends BaseFragment {
 
     @Override
     public int getTitleResourceId() {
-        return matchActivity.MATCHPAGE;
+        return MatchActivity.MATCHPAGE;
     }
 
 
@@ -116,7 +148,7 @@ public class MatchFragment extends BaseFragment {
     public void addNextQuestion(int pos) {
         if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "Add new question: " + pos);
         if (pos > 0)
-        list.get(pos - 1).locked = true;
+            list.get(pos - 1).locked = true;
         Question q = list.get(pos);
         mAdapter.addItem(q);
         mListView.addToList(0, list.get(pos));
@@ -167,59 +199,30 @@ public class MatchFragment extends BaseFragment {
 
         mAdapter = new MatchAdapter(matchActivity, R.layout.list_item, tmp);
 
+        View root = getView();
+        if (root != null) {
+            mListView = (DynamicListView) root.findViewById(R.id.questionList);
+            if (mListView != null) {
+                mListView.setAdapter(mAdapter);
+                mListView.setCheeseList(tmp);
+                mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        mListView = (DynamicListView) getView().findViewById(R.id.questionList);
-        if (mListView != null) {
-            mListView.setAdapter(mAdapter);
-            mListView.setCheeseList(tmp);
-            mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            }
+
+            card = new QuestionCard(getActivity());
+
+            //Set the card inner text
+            card.question = tmp.get(0).question;
+            //Set card in the cardView
+            CardView cardView = (CardView) root.findViewById(R.id.card);
+            if (cardView != null) {
+                cardView.setCard(card);
+                cardView.setVisibility(View.VISIBLE);
+            }
 
         }
-        card = new QuestionCard(getActivity());
-
-        //Set the card inner text
-        card.question = tmp.get(0).question;
-        //Set card in the cardView
-        CardView cardView = (CardView) getActivity().findViewById(R.id.card);
-        cardView.setCard(card);
-        cardView.setVisibility(View.VISIBLE);
 
 
-
-        fab = (FloatingActionButton) getView().findViewById(R.id.fab);
-        fab.attachToListView(mListView);
-        fab.setImageResource(R.drawable.ic_action_accept);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!hasSeenYears) {
-                    int points = checkAnswer();
-                    if (points > -1) {
-                        MatchActivity m = (MatchActivity) getActivity();
-
-                        Game.Round r = m.game.rounds.get(m.game.rounds.size() - 1);
-                        if (r.oppRoundScore == -1) {
-                            r.myRoundScore = points;
-                            m.game.turn = !m.game.turn;
-                        } else {
-                            if (m.game.rounds.size() >=5) {
-                                r.myRoundScore = points;
-                                m.game.turn = false;
-                            } else {
-                                Game.Round round = new Game.Round();
-                                r.myRoundScore = points;
-                                m.game.addRound(round);
-                            }
-                        }
-                        showYears();
-                    }
-                }
-                else {
-                    MatchActivity m = (MatchActivity) getActivity();
-                    m.changeFragment(MatchActivity.STATISTICS);
-                }
-            }
-        });
 
     }
 }
