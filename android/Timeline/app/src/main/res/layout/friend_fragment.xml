@@ -23,6 +23,7 @@
         android:layout_marginEnd="20dp"
         android:layout_alignEnd="@+id/profilePicture"
         android:layout_alignRight="@+id/profilePicture"
+        android:id="@+id/fab"
         android:src="@drawable/ic_action_new"
         fab:fab_colorNormal="@color/primary_color"
         fab:fab_colorPressed="@color/primary_darkercolor"
@@ -31,7 +32,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Josef Svensson"
         android:layout_below="@+id/profilePicture"
         android:singleLine="true"
         android:textSize="30sp"

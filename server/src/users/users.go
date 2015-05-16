@@ -32,6 +32,11 @@ type Challange struct {
 	OppName, OppID string
 }
 
+type FoundUser struct {
+	Usr      Users
+	IsFriend bool
+}
+
 func UserKey(c appengine.Context) *datastore.Key {
 	return datastore.NewKey(c, "User", "default_user", 0, nil)
 }
@@ -278,7 +283,12 @@ func SearchUsers(w http.ResponseWriter, r *http.Request) {
 	}
 	typee := r.FormValue("type")
 	parameter := r.FormValue("search")
-
+	usr, _, uErr := GetUser(c, u.ID)
+	if uErr != nil {
+		c.Infof("Error getting user : %v", uErr)
+		http.Error(w, uErr.Error(), http.StatusInternalServerError)
+		return
+	}
 	switch typee {
 	case "Name":
 		users, err := findUsersByName(c, parameter)
@@ -287,7 +297,21 @@ func SearchUsers(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		ret, err2 := json.Marshal(users)
+		mess := make([]FoundUser, len(users))
+		for i, mUser := range users {
+			tmp := new(FoundUser)
+			tmp.Usr = mUser
+			tmp.IsFriend = false
+			for _, friend := range usr.FriendList {
+				if friend.FriendID == mUser.Oid {
+					tmp.IsFriend = true
+					break
+				}
+			}
+			mess[i] = *tmp
+		}
+
+		ret, err2 := json.Marshal(mess)
 		if err2 != nil {
 			c.Infof("Error marshal: %v", err2)
 			http.Error(w, err2.Error(), http.StatusInternalServerError)
@@ -304,7 +328,20 @@ func SearchUsers(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		ret, err2 := json.Marshal(users)
+		mess := make([]FoundUser, 1)
+
+		tmp := new(FoundUser)
+		tmp.Usr = users
+		tmp.IsFriend = false
+		for _, friend := range usr.FriendList {
+			if friend.FriendID == users.Oid {
+				tmp.IsFriend = true
+				break
+			}
+		}
+		mess[0] = *tmp
+
+		ret, err2 := json.Marshal(mess)
 		if err2 != nil {
 			c.Infof("Error marshal: %v", err2)
 			http.Error(w, err2.Error(), http.StatusInternalServerError)

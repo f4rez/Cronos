@@ -78,14 +78,12 @@ public class FindUsersFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FriendAdapter f = (FriendAdapter) parent.getAdapter();
-                MainActivity m = (MainActivity) getActivity();
 
                 ImageView imageView = (ImageView) view.findViewById(R.id.profilePicture);
                 TextView textView = (TextView) view.findViewById(R.id.selectionText);
                 TransitionSet transitionSet = new TransitionSet();
                 transitionSet.addTransition(new ChangeImageTransform());
                 transitionSet.addTransition(new ChangeBounds());
-                transitionSet.addTransition(new Explode());
                 transitionSet.setDuration(300);
 
                 Fragment fragment2 = new FriendFragment();
@@ -98,19 +96,19 @@ public class FindUsersFragment extends BaseFragment {
                 Friend friend = f.getItem(position);
 
                 Intent i = getActivity().getIntent();
-                i.putExtra("FriendName", friend.Name );
+                i.putExtra("FriendName", friend.Name);
 
                 Bitmap bitmap = drawableToBitmap(imageView.getDrawable());
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 byte[] b = baos.toByteArray();
-                i.putExtra("FriendPicture",b);
-                i.putExtra("FriendId",friend.Id);
-                i.putExtra("won",friend.won);
-                i.putExtra("draw",friend.draw);
-                i.putExtra("lost",friend.lost);
+                i.putExtra("FriendPicture", b);
+                i.putExtra("FriendID", friend.Id);
+                i.putExtra("won", friend.won);
+                i.putExtra("draw", friend.draw);
+                i.putExtra("lost", friend.lost);
 
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(e.getWindowToken(), 0);
 
 
@@ -118,7 +116,7 @@ public class FindUsersFragment extends BaseFragment {
                         .replace(R.id.container, fragment2)
                         .addToBackStack("Stack")
                         .addSharedElement(imageView, "profilePicture2")
-                        .addSharedElement(textView,"friendName")
+                        .addSharedElement(textView, "friendName")
                         .commit();
             }
         });
@@ -139,7 +137,4 @@ public class FindUsersFragment extends BaseFragment {
     }
 
 
-    public void addedFriend() {
-        Toast.makeText(getActivity(),"Added friend",Toast.LENGTH_SHORT);
-    }
 }
