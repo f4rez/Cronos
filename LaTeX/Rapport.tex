@@ -120,7 +120,7 @@ Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i de
 \subsection{Automatisk informationshämtning}
 För spelets överlevnad är det viktigt att frågorna aldrig tar slut. Det är också viktigt att frågorna håller hög kvalitét och att inga missförstånd uppkommer. Eftersom internet består av fantastiskt mycket information som är relaterbar till årtal så vore det en bra idé att på något vis dra nytta av den. En skulle kunna tänka sig att flera personer arbetar aktivt under en lägre tid med att sammanställa händelser och manuellt fylla en databas med dessa. Fördelen med detta vore att hög kvalitét nästan kan garanteras (förutsatt att personerna som sammanställer händelserna har en känsla för det). Nackdelen är att det tar mycket tid att sammanställa informationen manuellt.
 
-På grund av detta vore det bra med ett system som automatiskt sammanställde händelser utifrån den historiska data som redan finns tillgänglig på internet. För att främja systemets tillförlitlighet samt kvalitéten på de producerade frågorna begränsas det automatiska systemet till att endast hämta information från Wikipedia.
+På grund av detta vore det bra med ett system som automatiskt sammanställde händelser utifrån den historiska data som redan finns tillgänglig på internet. För att främja systemets tillförlitlighet samt kvalitéten på de producerade frågorna begränsas det automatiska systemet till att endast hämta information från Wikipedia. Tillförlitligheten och kvalitéten kan höjas med den här begränsningen eftersom utvecklarna har större möjlighet att göra antaganden om hur iformationen som ska genomsökas (Wikipedia) ser ut. Det här gör att filtreringen blir lättare att konstruera samt att risken för fel blir mindre.
 
 Wikipedia har några olika standardlayouter på sina informationssidor och en av dessa layouter är en punktlista med årtal. \textbf{IMAGE HERE} Informationen i den här typen av lista presenteras alltid likadant och förekommer på många undersidor inom olika ämnen på Wikipedia. Varje händelse och årtal presenteras som punkter, likt denna:
 
@@ -130,8 +130,10 @@ Wikipedia har några olika standardlayouter på sina informationssidor och en av
 
 Eftersom presentationen är konsekvent, med ett bindestreck som avskiljer årtal och händelse är inhämtning av information från de här sidorna relativt enkel att automatisera.
 
-\subsubsection{Crawler}
+\subsubsection{Webcrawler}
+En webcrawler är ett system som automatiskt söker igenom webbsidor. Syftet med en webcrawler är att hämta information från sidan som söks igenom samt dess länkar, för att sedan göra samma sak på alla undersidor och så vidare. Googles \textit{Googlebot} är ett exempel på en webcrawler som syftar till att indexera hela webben för att göra den sökbar via Googles sökmotor, www.google.se.
 
+Den automatiska informationshämtningen i Chronos bygger på den här principen. I det här begränsade fallet söks endast utvalda Wikipediasidor igenom, men syftet är detsamma, att spara information som systemet hittar. 
 
 \subsection{Balansering}
 
