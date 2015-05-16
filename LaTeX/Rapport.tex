@@ -159,6 +159,33 @@ Det finns ett spel för iOS, \textit{Historiekampen} \cite{historiekampen} som o
 Historiekampen var ett spel som konceptuellt sett liknade sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur gick till så att hen först fick en händelse som skulle placeras på spelarens tidslinje. När första frågan presenterades fanns det en årtalsreferens utlagd på tidslinjen som den första händelsen skulle placeras före eller efter. När nästa fråga presenterades fanns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare.\\ 
 Historiekampen valde att använda konceptet med kombinations-poäng vilket implicerade att spelaren kunde få flera poäng under en runda om hen placerde ut flera händelser korrekt efter varandra. Spelaren var tvungen att placera minst \underline{en} händelse och kunde få maximalt tio händelser att placera ut. Om spelaren placerade första händelsen fel var avslutades rundan. Placerade spelaren händelsen rätt ställdes hen inför ett val med två alternativ: antingen avsluta sin runda och på så sätt låsa sina poäng, eller fortsätta att få händelser att placera ut i förhållande till de tidigare händelserna. Detta val gjorde spelaren efter varje rätt placerad händelse. Spelaren kunde med andra ord välja själv om den vågade fortsätta eller om den ville vara försiktig och behålla sina välförtjänta poäng. En duktig spelare kunde välja det senare alternativet och bygga upp sin kombo fram tills dess att den femte frågan var ställd. När den femte frågan var ställd fick hen en fråga om \underline{när} den femte händelsen ägde rum. Om spelarens svara var nära det rätta årtalet fick hen fortsätta rundan med sin uppbyggda kombo av poäng. Om årtalet var fel förlorade spelaren sina tidigare poäng men kunde fortsätta få händelser att placera ut i förhållande till de tidigare händelserna. Vid en perfekt runda kunde en spelare få totalt tio poäng.
 
+\subsubsection{Balanseringsteori}
+En viktig aspekt i det här projektet var att rangordna spelare i förhållande till varandra för att med hjälp av det skapa mer rättvisa matcher. Den här problematiken fanns det redan många som hade funderat på och de flesta större spel använder sig också av något system för detta. Två etablerade system är Elo och Glicko, varav Elo är det som har implementerats i det här projektet.
+
+Elo är ett system som förutser hur stor del av en mängd spelade matcher som bör vinnas av vardera spelare, baserat på en den svårighetsnivå respektive spelare har. Det här systemet justerar, efter en match, poängen enligt beskrivningen ovan. Eftersom en lägre rankad spelare får fler poäng vid vinst mot en högre rättar systemet på sikt sig självt, vilket innebär att spelarna faktiskt får den nivå de förtjänar.
+
+Elo-systemet fungerar enligt följande. Varje spelare får en initial Elo-poäng på 1000. Denna justeras sedan beroende på utfallet av en match i förhållande till det förväntade utfallet. Det förväntade utfallet beräknas:
+
+$$E_A = \frac{1}{1+10^{(R_B-R_A)/400}}$$
+
+Där $E_A$ är den förväntade andelen matcher som spelare A borde vinna. Är värdet till exempel 0.84 så innebär det att 84\% av matcherna borde vinnas av spelare A enligt nuvarande Elo-poäng. $R_B$ är spelare B:s nuvarande Elo-poäng och $R_A$ är spelare A:s nuvarande poäng.
+
+När det förväntade utfallet har beräknats så justeras sedan spelarnas Elo-poäng enligt formeln:
+
+$$R'_A = R_A + K(S_A-E_A)$$
+
+Där $R'_A$ är spelare A:s nya Elo-poäng, $R_A$ är spelare A:s Elo-poäng innan matchen, $S_A$ är det faktiska utfallet av matchen och $E_A$ är det förväntade utfallet. K-värdet är en skalningsfaktor som justerar hur mycket poängen justeras vid varje vinst/förlust.
+
+Ett räkneexempel med spelare A, 1300 poäng, och spelare B 1000 poäng, där A vinner:
+
+$$0.849 = \frac{1}{1+10^{(1000-1300)/400}}$$
+$$ R'_A = 1300 + 16(1-0.849) = 1302.416 $$
+$$ R'_B = 1000 + 16(0-0.849) = 997.584 $$
+
+I det implementerade balanseringssystemet används Elo-modellen för att beräkna spelarnas erfarenhetspoäng. Elo är ett system som utvecklades av Arpad Elo och började användas redan på 60-talet\cite{elo}. Systemet var först och främst utvecklat för att ranka schackspelare, men har sedan dess uppkomst även applicerats på många andra spel. Eftersom Elo-systemet är förhållandevis gammalt och möjligheten till datoriserade beräkningar blivit större sedan 60-talet, finns det mer avancerade system att använda sig av idag. Ett annat system som utvecklades i syfte att vara en förbättring av Elo-systemet är ett system kallat Glicko\cite{chessratings}. Skillnaden mellan Elo och Glicko är att Glicko också har ett värde för hur väl uppdaterad spelarens erfarenhetspoäng är. Det här innebär att spelaren har ett erfarenhetspoäng, säg 2000, samt ett trovärdighetspoäng, till exempel 100. Ju högre trovärdighetspoäng spelaren har, desto mindre exakt är erfarenhetspoängen. Erfarenhetspoängen har enligt systemet en +/- diff på dubbla trovärdighetspoängen. I nyss nämnda exempel innebär detta att spelaren har en erfarenhetspoäng på 1800-2200. Trovärdighetspoängen justeras bland annat baserat på hur länge sedan det var spelaren spelade förra gången, samt hur många matcher spelaren spelat totalt. Ju fler matcher totalt och ju närmare i tid förra matchen var, desto lägre trovärdighetspoäng har spelaren.
+
+Både Elo och Glicko används idag och det verkar vara svårt att avgöra om Glicko verkligen är bättre än Elo\cite{stackchess}. Ett faktum som finns är i alla fall att Glicko kräver mer information för att kunna fungera. En faktor som Glicko behöver men inte Elo är en tidsvariabel som har reda på hur länge sedan det var spelaren spelade sin förra match\cite{glickoex}. Det här gör att mer data behöver lagras i databasen, vilket är negativt ur kapacitetsperspektiv.
+
 \subsubsection{VÅR APPS spets}
 VÅRT SPEL liknar Historiekampen och \textit{När då då?} rent konceptuellt. Uppgiften som spelarna skulle utföra i vår applikation och uppgifterna som skulle utföras i Historiekampen liknade varandra mycket. I både Historiekampen och VÅRT SPEL var det spelarens uppgift att placera ut händelser rätt på en tidslinje. Spelmekaniken var dock annorlunda i vår applikation då varje match och varje runda behandlades annorlunda. I \textbf{VÅRT SPEL} fick varje spelare ett paket med sex frågor varje runda. En av dessa sex frågor agerade som referenshändelse på tidlinjen. Frågorna presenterades för spelaren en i taget och det var sedan spelarens uppgift att placera dessa i rätt ordning. En spelare fick ett poäng per korrekt utplacerad händelse och kunde på så sätt få maximalt fem poäng från de korrekt placerade händelserna. Om en spelare lyckades få en perfekt runda, där alla händelser placerades rätt, fick hen ett extra poäng vilket resulterade i en total summa av sex poäng. Likt Historiekampen avslutades en runda när en spelare hade placerat en händelse fel. Det som skiljde vår applikation i denna aspekt var vid fallet då en spelare hade tjänat ihop poäng från tidigare händelser. I Historiekampen förlorade spelaren alla sina tidigare poäng om hen svarade fel medan i vår applikation fick spelaren behålla sina poäng. Oavsett om spelaren lyckades placera ut alla händelser rätt eller inte så gick turen, efter fem frågor, över till motståndaren. När fem rundor hade spelats vann den spelare som hade svarat rätt på flest frågor totalt.  
 
@@ -189,38 +216,6 @@ Designen av applikationen var något som var väldigt viktigt för oss. Kravet i
 
 \section{Implementation}
 Denna sektion beskriver hur de målsatta delarna implementerades i applikationen. Applikationens systemstruktur och dess innefattande delar  förklaras och illustreras. Det finns även en grundlig genomgång av hur applikationen ser ut samt hur den fungerar, både för användare och systemadministratörer.
-
-\subsection{Balanseringsteori}
-		%%-----------------------------------------------------------%%
-		%%															%%
-		%%		EJ KORREKTURLÄST FÖR KONTROLL AV TEMPUS				%%
-		%%															%%
-		%%-----------------------------------------------------------%%
-En viktig aspekt i det här projektet var att rangordna spelare i förhållande till varandra för att med hjälp av det skapa mer rättvisa matcher. Den här problematiken fanns det redan många som hade funderat på och de flesta större spel använde sig också av något system för detta. Två etablerade system var Elo och Glicko, varav Elo var det som implementerades i det här projektet.
-
-Elo var ett system som förutsåg hur stor del av en mängd spelade matcher som borde ha vunnits av vardera spelare, baserat på en den svårighetsnivå respektive spelare hade. Det här systemet justerade, efter en match, poängen enligt beskrivningen ovan. Eftersom en lägre rankad spelare fick fler poäng vid vinst mot en högre rättade systemet på sikt sig självt, vilket innebar att spelarna faktiskt fick den nivå de förtjänade.
-
-Elo-systemet fungerade enligt följande. Varje spelare fick en initial Elo-poäng på 1000. Denna justerades sedan beroende på utfallet av en match i förhållande till det förväntade utfallet. Det förväntade utfallet beräknades:
-
-$$E_A = \frac{1}{1+10^{(R_B-R_A)/400}}$$
-
-Där $E_A$ var den förväntade andelen matcher som spelare A borde vinna. Är värdet till exempel 0.84 så innebär det att 84\% av matcherna borde vinnas av spelare A enligt nuvarande Elo-poäng. $R_B$ är spelare B:s nuvarande Elo-poäng och $R_A$ är spelare A:s nuvarande poäng.
-
-När det förväntade utfallet har beräknats så justeras sedan spelarnas Elo-poäng enligt formeln:
-
-$$R'_A = R_A + K(S_A-E_A)$$
-
-Där $R'_A$ är spelare A:s nya Elo-poäng, $R_A$ är spelare A:s Elo-poäng innan matchen, $S_A$ är det faktiska utfallet av matchen och $E_A$ är det förväntade utfallet. K-värdet är en skalningsfaktor som justerar hur mycket poängen justeras vid varje vinst/förlust.
-
-Ett räkneexempel med spelare A, 1300 poäng, och spelare B 1000 poäng, där A vinner:
-
-$$0.849 = \frac{1}{1+10^{(1000-1300)/400}}$$
-$$ R'_A = 1300 + 16(1-0.849) = 1302.416 $$
-$$ R'_B = 1000 + 16(0-0.849) = 997.584 $$
-
-I det implementerade balanseringssystemet används Elo-modellen för att beräkna spelarnas erfarenhetspoäng. Elo är ett system som utvecklades av Arpad Elo och började användas redan på 60-talet\cite{elo}. Systemet var först och främst utvecklat för att ranka schackspelare, men har sedan dess uppkomst även applicerats på många andra spel. Eftersom Elo-systemet är förhållandevis gammalt och möjligheten till datoriserade beräkningar blivit större sedan 60-talet, finns det mer avancerade system att använda sig av idag. Ett annat system som utvecklades i syfte att vara en förbättring av Elo-systemet är ett system kallat Glicko\cite{chessratings}. Skillnaden mellan Elo och Glicko är att Glicko också har ett värde för hur väl uppdaterad spelarens erfarenhetspoäng är. Det här innebär att spelaren har ett erfarenhetspoäng, säg 2000, samt ett trovärdighetspoäng, till exempel 100. Ju högre trovärdighetspoäng spelaren har, desto mindre exakt är erfarenhetspoängen. Erfarenhetspoängen har enligt systemet en +/- diff på dubbla trovärdighetspoängen. I nyss nämnda exempel innebär detta att spelaren har en erfarenhetspoäng på 1800-2200. Trovärdighetspoängen justeras bland annat baserat på hur länge sedan det var spelaren spelade förra gången, samt hur många matcher spelaren spelat totalt. Ju fler matcher totalt och ju närmare i tid förra matchen var, desto lägre trovärdighetspoäng har spelaren.
-
-Både Elo och Glicko används idag och det verkar vara svårt att avgöra om Glicko verkligen är bättre än Elo\cite{stackchess}. Ett faktum som finns är i alla fall att Glicko kräver mer information för att kunna fungera. En faktor som Glicko behöver men inte Elo är en tidsvariabel som har reda på hur länge sedan det var spelaren spelade sin förra match\cite{glickoex}. Det här gör att mer data behöver lagras i databasen, vilket är negativt ur kapacitetsperspektiv.
 
 \subsection{Metoder}
 Ett antal olika verktyg användes för att möjliggöra detta projekt. För utvecklingen och simulering av Android-applikationen användes Android Studio \cite{androidstudio}. Detta var ett kraftfullt verktyg som exempelvis kunde, på ett smidigt sätt, simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
