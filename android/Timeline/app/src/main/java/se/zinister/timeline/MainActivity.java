@@ -105,7 +105,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             startActivityForResult(n, LOGIN);
         }
         if (MY_NAME == null) {
+
             String tmp = userDetails.getString("MY_NAME", "noName");
+            if(DEBUG) Log.d(TAG, tmp);
             if (tmp != "noName") MY_NAME = tmp;
         }
     }
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public void doneRegister(String json){
         Decode decode = new Decode();
         User u = decode.decodeUser(json);
-
+        if (DEBUG) Log.d(TAG, "user " + u);
         SharedPreferences.Editor e = userDetails.edit();
         if (u != null) {
             e.putString("MY_NAME", u.name);

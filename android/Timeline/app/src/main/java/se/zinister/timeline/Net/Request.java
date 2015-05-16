@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import se.zinister.timeline.MainActivity;
 import se.zinister.timeline.fragments.ChallengeFriendFragment;
 import se.zinister.timeline.fragments.FindUsersFragment;
+import se.zinister.timeline.fragments.FriendFragment;
 import se.zinister.timeline.fragments.MatchFragment;
 import se.zinister.timeline.fragments.MatchStatistics;
 import se.zinister.timeline.fragments.StartPageFragment;
@@ -90,7 +91,7 @@ public class Request extends AsyncTask<String, Void, String> {
                 f.showResult(returned);
                 break;
             case "FriendAdd":
-                FindUsersFragment f2 = (FindUsersFragment) caller;
+                FriendFragment f2 = (FriendFragment) caller;
                 f2.addedFriend();
                 break;
             case "FriendChallenge":

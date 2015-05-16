@@ -10,8 +10,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.melnykov.fab.FloatingActionButton;
 
 import se.zinister.timeline.MainActivity;
+import se.zinister.timeline.Match.MatchActivity;
+import se.zinister.timeline.Net.NetRequests;
+import se.zinister.timeline.Net.Request;
 import se.zinister.timeline.R;
 
 
@@ -19,15 +25,20 @@ import se.zinister.timeline.R;
  * Created by josef on 2015-04-23.
  */
 public class FriendFragment extends  BaseFragment{
+    String friendID;
+    FriendFragment f = this;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.friend_fragment, container, false);
         Bundle extras = getActivity().getIntent().getExtras();
         byte[] b = extras.getByteArray("FriendPicture");
         String name = extras.getString("FriendName");
+        friendID = extras.getString("FriendID");
         int won = extras.getInt("won");
         int draw = extras.getInt("draw");
         int lost = extras.getInt("lost");
+
         Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
         ImageView imageView = (ImageView) rootView.findViewById(R.id.profilePicture);
         TextView nametextview = (TextView) rootView.findViewById(R.id.Name);
@@ -54,7 +65,7 @@ public class FriendFragment extends  BaseFragment{
                 + "          ,'height':"+webView.getHeight()
                 + "        };"
                 + "        var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));"
-                + "        chart.draw(data);"
+                + "        chart.draw(data,options);"
                 + "      }"
                 + "    </script>"
                 + "  </head>"
@@ -68,11 +79,24 @@ public class FriendFragment extends  BaseFragment{
         webView.getMeasuredWidth();
         webView.loadDataWithBaseURL("file:///android_asset/", content, "text/html", "utf-8", null);
 
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Request(f,((MainActivity)getActivity()).net).execute("FriendAdd",friendID);
+            }
+        });
+
+
         return rootView;
     }
 
     @Override
     public int getTitleResourceId() {
-        return ((MainActivity)getActivity()).FIND_FRIEND;
+        return MainActivity.FIND_FRIEND;
     }
+    public void addedFriend() {
+        Toast.makeText(getActivity(), "Added friend", Toast.LENGTH_SHORT).show();
+    }
+
 }
