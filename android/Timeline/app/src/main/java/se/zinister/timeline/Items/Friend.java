@@ -11,8 +11,9 @@ public class Friend  {
     public int won;
     public int draw;
     public int lost;
+    public boolean isFriend;
 
-    public Friend(String n, String i, String p, int w, int draw, int lost) {
+    public Friend(String n, String i, String p, int w, int draw, int lost, boolean isFriend) {
         Name = n;
         Id = i;
         p = p.substring(0, p.indexOf("sz=")) + "sz=250";
@@ -20,6 +21,7 @@ public class Friend  {
         won=w;
         this.draw = draw;
         this.lost = lost;
+        this.isFriend = isFriend;
     }
 
 

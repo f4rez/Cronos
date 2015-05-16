@@ -421,6 +421,19 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	}
 	c.Infof("count = %v", c)
 	if count > 0 {
+		usr, _, uErr := GetUser(c, u.ID)
+		if uErr != nil {
+			c.Infof("Error : %v", uErr)
+			http.Error(w, uErr.Error(), http.StatusInternalServerError)
+			return
+		}
+		mess, jErr := json.Marshal(usr)
+		if jErr != nil {
+			c.Infof("Error : %v", jErr)
+			http.Error(w, jErr.Error(), http.StatusInternalServerError)
+			return
+		}
+		fmt.Fprintf(w, string(mess))
 		return
 	} else {
 		users, _ := MakeUser(c)
