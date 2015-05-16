@@ -166,11 +166,12 @@ public class MatchFragment extends BaseFragment {
 
 
         mListView = (DynamicListView) getView().findViewById(R.id.questionList);
-        mListView.setAdapter(mAdapter);
-        mListView.setCheeseList(tmp);
-        mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        if (mListView != null) {
+            mListView.setAdapter(mAdapter);
+            mListView.setCheeseList(tmp);
+            mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-
+        }
         card = new QuestionCard(getActivity());
 
         //Set the card inner text
@@ -198,9 +199,13 @@ public class MatchFragment extends BaseFragment {
                             r.myRoundScore = points;
                             m.game.turn = !m.game.turn;
                         } else {
-                            Game.Round round = new Game.Round();
-                            r.myRoundScore = points;
-                            m.game.addRound(round);
+                            if (m.game.rounds.size() >=5) {
+                                r.myRoundScore = points;
+                            } else {
+                                Game.Round round = new Game.Round();
+                                r.myRoundScore = points;
+                                m.game.addRound(round);
+                            }
                         }
                         showYears();
                     }
