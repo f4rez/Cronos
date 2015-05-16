@@ -401,6 +401,7 @@ func ChallengerHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		game.SID = oppUser.Oid
 		game.SName = oppUser.Name
+		game.SPic = oppUser.Picture
 		game.SaveGame(c)
 
 		oppUser.AddGame(game.GID)
