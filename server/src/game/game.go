@@ -312,7 +312,10 @@ func JoinGame(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
-
+	if users.IsUserSignedIn(c) {
+		fmt.Fprintf(w, "Not Registerd")
+		return
+	}
 	mGame, _, err := FindFreeGame(c)
 	if err != nil {
 		c.Infof("Error joingGame: %v", err)
@@ -329,6 +332,10 @@ func GetGameInfo(w http.ResponseWriter, r *http.Request) {
 		c.Infof("Not logged in")
 		url, _ := user.LoginURL(c, "/")
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	if users.IsUserSignedIn(c) {
+		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
 	id, pErr := strconv.ParseInt(r.FormValue("game_id"), 10, 32)
@@ -368,6 +375,11 @@ func ChallengerHandler(w http.ResponseWriter, r *http.Request) {
 	if uErr != nil {
 		c.Infof("Error getting user: %v", uErr)
 		http.Error(w, uErr.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if users.IsUserSignedIn(c) {
+		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
 	opp := r.FormValue("Opponent")
@@ -423,6 +435,10 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 		err3 := errors.New("Det är inte din tur doe...")
 		http.Error(w, err3.Error(), http.StatusInternalServerError)
 
+		return
+	}
+	if users.IsUserSignedIn(c) {
+		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
 	action := r.FormValue("action")
@@ -577,6 +593,10 @@ func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
 	if u == nil {
 		url, _ := user.LoginURL(c, "/")
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		return
+	}
+	if users.IsUserSignedIn(c) {
+		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
 	users, _, err := users.GetUser(c, u.ID)

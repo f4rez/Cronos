@@ -69,7 +69,7 @@ public class FindUsersFragment extends BaseFragment {
 
     public void showResult(String json) {
         Decode d = new Decode();
-        ArrayList<Friend> friends = d.decodeFriendList(json);
+        ArrayList<Friend> friends = d.decodeSearchList(json);
         GridView gridView = (GridView) getView().findViewById(R.id.gridViewFindFriend);
         FriendAdapter f = new FriendAdapter(getActivity(),R.layout.challenge_friend_griditem);
         f.addAll(friends);

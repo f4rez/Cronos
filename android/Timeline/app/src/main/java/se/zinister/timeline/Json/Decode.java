@@ -89,12 +89,13 @@ public class Decode {
         ArrayList<Friend> list = new ArrayList<>();
         if (in == "error") return list;
         JSONArray json = null;
+        if (MainActivity.DEBUG)Log.d(MainActivity.TAG,in);
         try {
             json = new JSONArray(in);
             for (int i = 0; i < json.length(); i++) {
                 JSONObject object = (JSONObject) json.get(i);
                 Friend q = new Friend(object.getString("Name"),object.getString("Oid"), object.getString("Picture"),
-                        object.getInt("Won"),object.getInt("Draw"), object.getInt("Lost"), object.getBoolean("IsFriend"));
+                        object.getInt("Won"),object.getInt("Draw"), object.getInt("Lost"), true);
                 list.add(q);
             }
 
@@ -104,6 +105,26 @@ public class Decode {
         return list;
     }
 
+    public ArrayList <Friend> decodeSearchList(String in) {
+        ArrayList<Friend> list = new ArrayList<>();
+        if (in == "error") return list;
+        JSONArray json = null;
+        if (MainActivity.DEBUG)Log.d(MainActivity.TAG,in);
+        try {
+            json = new JSONArray(in);
+            for (int i = 0; i < json.length(); i++) {
+                JSONObject o = (JSONObject) json.get(i);
+                JSONObject object = o.getJSONObject("Usr");
+                Friend q = new Friend(object.getString("Name"),object.getString("Oid"), object.getString("Picture"),
+                        object.getInt("Won"),object.getInt("Draw"), object.getInt("Lost"), o.getBoolean("IsFriend"));
+                list.add(q);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public Game decodeGame(String in) {
         Game r = null;

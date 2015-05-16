@@ -362,6 +362,10 @@ func GetFriendListHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
 		return
 	}
+	if IsUserSignedIn(c) {
+		fmt.Fprintf(w, "Not Registerd")
+		return
+	}
 	friendList, err := GetFriendList(c, u.ID)
 	if err != nil {
 		c.Infof("Error marshal: %v", err)
@@ -379,6 +383,10 @@ func FriendHandler(w http.ResponseWriter, r *http.Request) {
 	u := user.Current(c)
 	if u != nil {
 		var err error
+		if IsUserSignedIn(c) {
+			fmt.Fprintf(w, "Not Registerd")
+			return
+		}
 		switch action {
 		case "add":
 			err = AddFriend(c, u.ID, friend_id)
@@ -402,6 +410,28 @@ func FriendHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func IsUserSignedIn(c appengine.Context) bool {
+	u := user.Current(c)
+	c.Infof("User: ", u)
+	if u == nil {
+		return false
+	}
+	qn := datastore.NewQuery("Users").
+		Ancestor(UserKey(c)).
+		Limit(1).
+		Filter("Oid =", u.ID)
+	count, err := qn.Count(c)
+	if err != nil {
+		return false
+	}
+	c.Infof("count = %v", c)
+	if count > 0 {
+		return true
+	} else {
+		return false
+	}
+}
+
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	pic := r.FormValue("pic")
@@ -409,6 +439,9 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 	u := user.Current(c)
 	c.Infof("User: ", u)
+	if u == nil {
+		fmt.Fprintf(w, "Error, not signed in")
+	}
 	qn := datastore.NewQuery("Users").
 		Ancestor(UserKey(c)).
 		Limit(1).
