@@ -98,7 +98,7 @@ VÅRT SPEL utvecklades till Android med en backend som drar nytta av Google App 
 
 
 \section{Bakgrund}
-Denna sektion ger en översiktlig beskrivning av kategorier av spel som var starkt relaterade till utvecklingen av vår applikation. Bland annat beskrivs kort några applikationer som utvecklats åt samma marknad. Det ges också en översiktlig beskrivning hur dessa applikationer och spel som, på ett eller annat sätt, använts vid utvecklingen av applikationen. 
+Denna sektion ger en översiktlig beskrivning av spel som var starkt relaterade till utvecklingen av vår applikation. Bland annat beskrivs kort några applikationer som utvecklats åt samma marknad. Det ges också en översiktlig beskrivning hur dessa applikationer och spel som, på ett eller annat sätt, använts vid utvecklingen av applikationen. 
 
 \subsection{Kunskapsspel för mobiltelefoner}
 Wordfeud och Quizkampen är två populära turbaserade multiplayerspel där Quizkampen har 45 miljoner användare globalt \cite{quiz} och Wordfeud har 20 miljoner användare \cite{wordfeud}. Dessa spel gör det möjligt att utmana vänner eller slumpmässiga personer på en match som spelas i omgångar. När en spelare spelar sin omgång får dess motståndare vänta på sin tur, vilket gör att en match kan pågå i flera dagar.
@@ -115,7 +115,25 @@ Wordfeud \cite{aboutwordfeud} är ett spel där en match utspelas mellan två pe
 
 \subsection{Sällskapsspel med fokus på kunskap}
 Sällskapsspel har länge varit och är än idag ett populärt sätt att umgås på \cite{bradspelspop}. Sällskapsspelet \textit{När då då?} \cite{nardada} är ett spel som bygger på ett relativt enkelt koncept. Spelarna turas om att placera ut händelser på sin egen tidslinje och får poäng om händelserna är korrekt utplacerade i förhållande till varandra. Varje tur för en spelare går till så att spelaren får en händelse uppläst för sig och sedan ska spelaren välja en plats på sin tidslinje att lägga händelsen på. Om spelaren lägger händelsen fel så är turen avslutad och spelet fortsätter till nästa spelare. Däremot, om händelsen är korrekt placerad får spelaren välja att antingen försöka placera en händelse till, eller att avsluta och säkra sina redan placerade händelser. Skulle spelaren förlora efter att ha placerat flera händelser samma runda så försvinner alla händelser i den rundan. Spelet fortsätter tills dess att någon spelare har lyckats palcera åtta händelser korrekt, då spelas rundan klart och den spelare med flest poäng vinner.\\
-Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att det främjar vissa begär hos spelarna. Ett av begären är att man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är en av faktorerna som gör den typen av spel så populära \cite{psykologi}. En annan intressant faktor i det här spelet är girigheten som infinner sig när spelaren har möjlighet att välja mellan att fortsätta sin tur eller att säkra sina frågor. Det är en viktig del av spelet som kan förändra väldigt mycket. En spelare har möjlighet att nästan vinna på sin första runda, för att sedan förlora alla sina händelser för att den sista placerades fel. Det här ökar spänningen i \textit{När då då?}. 
+Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att det främjar vissa begär hos spelarna. Ett av begären är att man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är en av faktorerna som gör den typen av spel så populära \cite{psykologi}. En annan intressant faktor i det här spelet är girigheten som infinner sig när spelaren har möjlighet att välja mellan att fortsätta sin tur eller att säkra sina frågor. Det är en viktig del av spelet som kan förändra väldigt mycket. En spelare har möjlighet att nästan vinna på sin första runda, för att sedan förlora alla sina händelser för att den sista placerades fel. Det här ökar spänningen i \textit{När då då?}.
+
+\subsection{Automatisk informationshämtning}
+För spelets överlevnad är det viktigt att frågorna aldrig tar slut. Det är också viktigt att frågorna håller hög kvalitét och att inga missförstånd uppkommer. Eftersom internet består av fantastiskt mycket information som är relaterbar till årtal så vore det en bra idé att på något vis dra nytta av den. En skulle kunna tänka sig att flera personer arbetar aktivt under en lägre tid med att sammanställa händelser och manuellt fylla en databas med dessa. Fördelen med detta vore att hög kvalitét nästan kan garanteras (förutsatt att personerna som sammanställer händelserna har en känsla för det). Nackdelen är att det tar mycket tid att sammanställa informationen manuellt.
+
+På grund av detta vore det bra med ett system som automatiskt sammanställde händelser utifrån den historiska data som redan finns tillgänglig på internet. För att främja systemets tillförlitlighet samt kvalitéten på de producerade frågorna begränsas det automatiska systemet till att endast hämta information från Wikipedia.
+
+Wikipedia har några olika standardlayouter på sina informationssidor och en av dessa layouter är en punktlista med årtal. \textbf{IMAGE HERE} Informationen i den här typen av lista presenteras alltid likadant och förekommer på många undersidor inom olika ämnen på Wikipedia. Varje händelse och årtal presenteras som punkter, likt denna:
+
+\begin{verbatim}
+	1993 – Nintendo släpper The Legend of Zelda: Link's Awakening till Game Boy.
+\end{verbatim}
+
+Eftersom presentationen är konsekvent, med ett bindestreck som avskiljer årtal och händelse är inhämtning av information från de här sidorna relativt enkel att automatisera.
+
+\subsubsection{Crawler}
+
+
+\subsection{Balansering}
 
 \section{Projektbeskrivning}
 Denna sektion lägger betoning på varför applikationen utvecklades. Vad som var våra mål med projektet, motivation för utvecklingen, vilka avgränsningar som gjordes, vilka krav vi ställde på applikationen, vilka tekniska problem vi var tvungna att överkomma samt vad som gjorde vårt spel unikt i förhållande till konkurrenterna.
