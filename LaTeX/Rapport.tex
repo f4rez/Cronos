@@ -37,35 +37,19 @@
 { \huge \textup {Historiekunskapsspel med semiautomatisk frågehämtning och ett balanseringssystem för frågor}}\\[0.3cm]
 \HRule \\[1.5cm]
 
-
 \Large \textsc{Författare:}\\[0.5cm]
-\end{center}
-\begin{minipage}{0.4\textwidth}
-\begin{flushleft} \large
 \large \textup{Alfred Yrelin}\\
-\large \textup{Alfred.Yrelin.2125@student.uu.se}\\
-\large \textup{\textup{Inst. för informationsteknolog}}\\
-\large \textup{\textup{Uppsala Universitet}}
-\end{flushleft}
-\end{minipage}
-~ \hfill
-\begin{minipage}{0.4\textwidth}
-\begin{flushright} \large
+\large \textup{Alfred.Yrelin.2125@student.uu.se}\\ [0.2cm]
 \large \textup{Josef Svensson}\\
-\large \textup{Josef.Svensson.8440@student.uu.se}\\
-\large \textup{\textup{Inst. för informationsteknologi}}\\
-\large \textup{\textup{Uppsala Universitet}}
-\end{flushright}
-\end{minipage}
-
-\center
-
-\begin{minipage}{0.4\textwidth}
+\large \textup{Josef.Svensson.8440@student.uu.se}\\[0.2cm]
 \large \textup{Philip Åkerfeldt}\\
-\large \textup{Philip.Akerfeldt.4987@student.uu.se}\\
-\large \textup{\textup{Inst. för informationsteknolog}}\\
-\large \textup{\textup{Uppsala Universitet}}
-\end{minipage}\\ [1.5cm]
+\large \textup{Philip.Akerfeldt.4987@student.uu.se}\\[0.5cm]
+
+\large \textup{\textup{Institutionen för informationsteknolog}}\\
+\large \textup{\textup{Uppsala Universitet}}\\[0.6cm]
+\end{center}
+~ \hfill
+\center
 ~
 {\Large \today}\\[2cm]
 \vfill
@@ -258,10 +242,10 @@ Denna sektion beskriver hur de målsatta delarna implementerades i applikationen
 Ett antal olika verktyg användes för att möjliggöra detta projekt. För utvecklingen och simulering av Android-applikationen användes Android Studio \cite{androidstudio}. Detta var ett kraftfullt verktyg som exempelvis kunde, på ett smidigt sätt, simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
 Google App Engine användes lokalt för att simulera serverapplikationen. När tidsperioden för testning var över användes fortfarande App Engine men då i Googles moln istället för lokalt. App engine var ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjöds när man utvecklade och körde sina applikationer via denna motor var otroligt värdefulla. Det var bland annat lätt att underhålla applikationen och skala upp när trafik och data krävde det \cite{googleappengine}. För att läsa mer om App Engine se \ref{Google App Engine}. \\
 Den primära källan för information till frågorna var under utvecklingsfasen Wikipedia men denna ersattes mot andra informationskällor vid ett senare skede. Detta förekom innan produkten färdigställdes.\\ 
-Valet att inte använda Wikipedia som informationskälla i den slutgiltiga versionen av applikationen berodde på dess tvivelaktiga roll som en pålitlig källa. Wikipedia trovärdighet hade länge diskuterats och det fanns många rapporter som hade undersökt dess trovärdighet. Att använda Wikipedia för att bekanta sig med ett ämne var fullt acceptabelt men borde lämpligtvis ha granskats kritiskt innan den användes som källa. Faktumet var att processen för att skapa och redigera artiklar på Wikipedia ansågs vara något osäker. Detta berodde mycket på att hemsidan följde strukturen \textit{editable-by-all} vilket innebar att vem som helst kunde ändra artiklar och på så sätt vinkla artikelns innehåll. Detta implicerade såklart inte att alla artiklar hade råkat ut för detta öde men det bidrog till en viss osäkerhet vid användandet av denna hemsida som källa vid vetenskapliga rapporter \cite{wikipediacred}.
+Valet att inte använda Wikipedia som informationskälla i den slutgiltiga versionen av applikationen berodde på dess tvivelaktiga rykte som en pålitlig källa. Wikipedia trovärdighet har länge diskuterats och det finns många rapporter som har undersökt dess trovärdighet. Att använda Wikipedia för att bekanta sig med ett ämne är, enligt oss, fullt acceptabelt men borde lämpligtvis granskas kritiskt innan den användes som källa. Relationen mellan processerna att skapa och redigera artiklar på Wikipedia anses vara en ledande faktor till denna osäkerhet. Detta beror mycket på att hemsidan följer strukturen \textit{editable-by-all} vilket innebär att vem som helst kan ändra artiklar och på så sätt vinkla artikelns innehåll på ett eller ett annat sätt. Detta implicerar såklart inte att alla artiklar har råkat ut för detta öde men det bidrar till en viss osäkerhet vid användandet av denna hemsida som källa vid vetenskapliga rapporter \cite{wikipediacred}.
 
 \subsubsection{Google App Engine} \label{Google App Engine}
-Google App Engine var en \textit{Platform as a service}, vilket var en servicemodell för molntjänster. Det byggde på att användaren skapade en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahöll. Programmet man byggde i App Engine kördes på Googles infrastruktur och var uppbyggt så att man kunde utöka antalet användare obegränsat. Flera stora företag använde sig av App Engine när deras produkter skulle lanseras där några av de större företagen var Coca Cola, Rovio och Best Buy \cite{googleappenginecustomers}. 
+Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att användaren skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programmet vi byggde i App Engine kördes på Googles infrastruktur och var uppbyggt så att antalet användare kunde utökas obegränsat. Flera stora företag använder sig av App Engine när deras produkter lanserades där några exempel av större företag var Coca Cola, Rovio och Best Buy \cite{googleappenginecustomers}. 
 
 \subsection{Systemstruktur}
 
@@ -282,14 +266,14 @@ Klienten kommunicerade med en server som kördes i Google App Engine. Servern va
 
 \subsubsection{Databas}
 Databasen som servern kommunicerade med kördes, likt servern, i App engine med biblioteket \textit{datastore}. Datastore \cite{datastore} var Google App Engines egna bibliotek för hantering och lagring av data vilket innebar att systemet, utan vår assistans, hanterade all datalagring. Datastore hade flera egenskaper som bidrog till en enklare utveckling av resterande delar för projektet. Med tanke på att Datastore var ett bibliotek från App Engine så medföljde dess skalbarhet som skalade med beroende på behovet. Med Datastores inbyggda hjälpmedel för redundans kunde data lätt replikeras till flera datacenter om det skulle behövas. \\
-Datastore hanterade datalagring med både SQL och NoSQL. För den som inte var bekant med NoSQL så var det en alternativ design för databaser som skiljde sig från SQL-databaser \cite{nosql}. NoSQL var designad på så sätt att det inte byggde på tabeller som i vanliga relationsdatabaser. Designen utvecklades för att möta kraven som då ställdes på datahantering. Marknaden som existerar då var vad som kunde kallas för en \textit{Big Data Reality} som kännetecknades av den enorma mängden data som var tvungen att hanteras i vardagen. NoSQL utvecklades för att bidra med en enklare design och lättare tillgänglighet. Det var mest datastrukturerna som skiljde NoSQL från vanliga relationsdatabaser. Detta ledde till att vissa operationer var lättare och mer effektiva att utföra i NoSQL medan andra var snabbare i vanliga relationsdatabaser \cite{nosqlfacts}. NoSQL användes alltmer av applikationer som var tvungna att hantera stora mängder data men också web-system som skulle exekveras i realtid \cite{nosqlcloud}. Egenskaperna som NoSQL hade passade för vår applikationen då ett tak för antalet användare inte var satt samt att vi önskade att exekvera i realtid.
+Datastore hanterar datalagring med både SQL och NoSQL. För den som inte är bekant med NoSQL så är det en alternativ design för databaser som skiljer sig från SQL-databaser \cite{nosql}. NoSQL är designad på så sätt att det inte bygger på tabeller som i vanliga relationsdatabaser. Marknaden som existerar idag är vad som kunde kallas för en \textit{Big Data Reality} som kännetecknades av den enorma mängden data som måste hanteras av dagens databaser. Designen utvecklades för att möta kraven som ställdes av denna }\textit{Big Data Reality}. NoSQL utvecklades för att bidra med en enklare design och lättare tillgänglighet. Det är mest datastrukturerna som skiljer NoSQL från vanliga relationsdatabaser. Detta leder till att vissa operationer är lättare och mer effektiva att utföra i NoSQL medan andra är snabbare i vanliga relationsdatabaser \cite{nosqlfacts}. NoSQL används alltmer av applikationer som måste hantera stora mängder data men också web-system som ska exekveras i realtid \cite{nosqlcloud}. Egenskaperna som NoSQL besitter passar för vår applikationen då ett tak för antalet användare inte var satt samt att vi önskade att exekvera i realtid.
 
-Med Datastore behövde vi inte oroa sig över hur sökning och borttagning skulle ske i databasen. Detta kunde förklaras med att Datastore inte använde sig direkt av schemas som i en relationsdatabas, exempelvis SQL. Sökningen i databasen var också effektivt tack vare den solida sökmotorn som biblioteket tillhandahöll.
+Med Datastore behövde vi inte oroa sig över hur sökning och borttagning skulle ske i databasen. Detta kan förklaras med att Datastore inte använder sig direkt av schemas som i en relationsdatabas, exempelvis SQL. Datastore ser med andra ord till att borttagning och sökning sker effektivt och på rätt sätt. Databasens sökning var effektivt tack vare den solida sökmotorn som biblioteket tillhandahöll.
 
 \subsubsection{Crawler} \label{crawler}
 Inbyggt i servern fanns en form av crawler som hanterade den semi-automatisk informationshämtning av frågematerialet. Hela systemet hade som uppgift att givet en länk kunna läsa igenom sidan och dess undersidor för att hitta information som passade den mall för frågor som vi hade definierat. 
 
-Sidor som visade sig vara enkla att läsa in var Wikipedias undersidor av typen listningssidor. Den här typen av sidor hade en punktlista med årtal samt en beskrivande mening av det årtalet inom den kategori som Wikipediasidan handlade om. Ett exempel var sidan som listar datorspelsår: Som återfinns vid denna  \textbf{\href{http://sv.wikipedia.org/wiki/Lista_\%C3\%B6ver_datorspels\%C3\%A5r}{länk.}} 
+Sidor som visade sig vara enkla att läsa in var Wikipedias undersidor av typen listningssidor. Den här typen av sidor har en punktlista med årtal samt en beskrivande mening av händelsen det årtalet. Vad för beskrivning som finns relaterat till året beror på vilken typ av listsida som har valts. Ett exempel var sidan som listar datorspelshändelser efter år: Som återfinns vid denna  \textbf{\href{http://sv.wikipedia.org/wiki/Lista_\%C3\%B6ver_datorspels\%C3\%A5r}{länk.}} 
 Denna struktur gjorde det enkelt att vid inläsning av en sida separera varje $<$li$>$-element där ett bindestreck eller kolon förekom och därefter spara varje kombination av årtal och händelse i ett temporärt cache.
 
 \begin{figure}[H]
@@ -314,10 +298,10 @@ De fyra knapparna var mappade till siffrorna 1-4 på tangentbordet för att det 
 Det fanns två sorters användare som kunde interagera med systemet.\\
 \newline
 \textbf{Administratörer} \label{admins}
-Administratörerna var vi som utvecklade applikationen och som arbetade med projektet. Vi var ansvariga för underhållet och utvecklingen av systemet. Vi hade den högsta typen av tillgång till systemet för att kunna utföra underhållet och utvecklingen. I underhållet innefattades det felsökning samt reparation av funna fel. Underhållet innefattade även uppföljning av rapporterade fel som skickats in av spelare. En vital uppgift som vi hade, förutom det allmänna underhållet och utvecklingen av systemet, var att godkänna informationen som hämtades av crawlern. Detta var för att se till att frågorna följde den struktur som vi fann lämplig för spelet.\\
+Administratörerna är vi som utvecklade applikationen och som ansvarar för projektet. Vi är ansvariga för underhållet och utvecklingen av systemet. Vi har den högsta typen av tillgång till systemet för att kunna utföra underhållet och utvecklingen. I underhållet innefattas det felsökning samt reparation av funna fel. Underhållet innefattade även uppföljning av buggrapporter som skickats in av spelare. En vital uppgift som vi har, förutom det allmänna underhållet och utvecklingen av systemet, är att godkänna informationen som hämtas av crawlern. Detta är för att se till att frågorna följer den struktur som vi finner lämplig för spelet.\\
 \newline
 \textbf{Spelare}\\
-Spelarna var den typen av användare som hade en begränsad åtkomst till systemet. Spelarna kunde endast komma åt systemet genom klienten och kunde endast interagera med själva spelet. Detta innebar att en vanlig spelare inte kunde finna information om hur systemet fungerade. Detta var delvis en säkerhetsåtgärd som var till för att den vanliga användaren inte, av misstag, eller med flit skulle kunna komma åt systemets vitala delar och alternera dessa. Användaren kunde kommunicera med administratörerna genom att skicka felrapporter om spelet skulle bete sig konstigt eller om några buggar hade upptäckts.
+Spelarna är den typen av användare som hade en begränsad åtkomst till systemet. Spelarna kan endast komma åt systemet genom klienten och kan endast interagera med själva spelet. Detta innebär att en vanlig spelare inte ska kunna finna information om hur systemet fungerade. Detta var delvis en säkerhetsåtgärd som är till för att den vanliga användaren inte, av misstag, eller med flit ska kunna komma åt systemets vitala delar och alternera dessa. Användaren kan kommunicera med administratörerna genom att skicka felrapporter om spelet skulle bete sig konstigt eller om några buggar har upptäckts.
 
 \subsubsection{Balanseringssystemet} \label{balanseringssystemet}
 Balanseringssystemet hade två mål, dels att justera svårighetsgraden på frågorna som fanns i databasen och dels till att justera spelarnas svårighetsgrad. 
