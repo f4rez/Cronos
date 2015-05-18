@@ -10,6 +10,7 @@ public class Question  {
     public Integer level;
     public Integer year;
     public boolean locked;
+    public boolean done;
 
 
     public Question(String q, int l, int i, int y) {
@@ -18,6 +19,7 @@ public class Question  {
         id = i;
         year = y;
         locked= false;
+        done = false;
     }
 
 

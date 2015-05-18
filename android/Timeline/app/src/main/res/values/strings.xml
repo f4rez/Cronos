@@ -19,6 +19,10 @@
     <string name="drawer_item_2">Intällningar</string>
     <string name="drawer_item_3">Min Profil</string>
     <string name="drawer_item_4">Inga mer annonser</string>
+    <string name="lock_in_answer">Klicka här för att låsa in ditt svar</string>
+    <string name="explain_direction_of_question">Sortera händelserna i kronologisk ordning och börja med den som hände först</string>
+    <string name="info">info</string>
+    <string name="put_event_in_order">Placera in händelsen i ordning</string>
 
 
 </resources>

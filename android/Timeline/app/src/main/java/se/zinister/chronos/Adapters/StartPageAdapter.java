@@ -35,7 +35,6 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
     private static final int TYPE_SECTION_FINISHED_GAME = 3;
     private static final int TYPE_FINISHED_GAME = 4;
 
-    // since you only have 2 types
     private static final int TYPE_MAX_COUNT = 5;
 
     @Override

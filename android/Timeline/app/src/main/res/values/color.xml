@@ -12,4 +12,7 @@
     <color name="accent_color_ea">#c5d30c</color>
     <color name="accent_color_ea_transperacy">#92c5d30c</color>
     <color name="app_drawer_color">#fff5f5f5</color>
+    <color name="wrong_answer_flash">#ffff4438</color>
+    <color name="overlay_black">#77000000</color>
+    <color name="black">#000</color>
 </resources>
