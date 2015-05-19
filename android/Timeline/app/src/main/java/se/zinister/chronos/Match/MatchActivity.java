@@ -64,6 +64,10 @@ public class MatchActivity extends AppCompatActivity {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+            case R.id.showInfoMatchActivity:
+                MatchFragment m = (MatchFragment)getFragmentManager().findFragmentById(R.id.matchContainer);
+                m.showInfo();
         }
         return (super.onOptionsItemSelected(menuItem));
     }

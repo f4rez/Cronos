@@ -5,8 +5,8 @@
 
 
     <ImageView
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:id="@+id/profilePicture"
         android:layout_centerHorizontal="true"
         android:paddingTop="15dp"
