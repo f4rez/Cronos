@@ -34,7 +34,7 @@
 \textsc{\LARGE Uppsala Universitet}\\[1.5cm] 
 
 \HRule \\[0.3cm]
-{ \huge \textup {Historiekunskapsspel med semiautomatisk frågehämtning och ett balanseringssystem för frågor}}\\[0.3cm]
+{ \huge \textup {Historiekunskapsspel med semi-automatisk frågehämtning och ett balanseringssystem för frågor}}\\[0.3cm]
 \HRule \\[1.5cm]
 
 \Large \textsc{Författare:}\\[0.5cm]
@@ -266,7 +266,7 @@ Klienten kommunicerade med en server som kördes i Google App Engine. Servern va
 
 \subsubsection{Databas}
 Databasen som servern kommunicerade med kördes, likt servern, i App engine med biblioteket \textit{datastore}. Datastore \cite{datastore} var Google App Engines egna bibliotek för hantering och lagring av data vilket innebar att systemet, utan vår assistans, hanterade all datalagring. Datastore hade flera egenskaper som bidrog till en enklare utveckling av resterande delar för projektet. Med tanke på att Datastore var ett bibliotek från App Engine så medföljde dess skalbarhet som skalade med beroende på behovet. Med Datastores inbyggda hjälpmedel för redundans kunde data lätt replikeras till flera datacenter om det skulle behövas. \\
-Datastore hanterar datalagring med både SQL och NoSQL. För den som inte är bekant med NoSQL så är det en alternativ design för databaser som skiljer sig från SQL-databaser \cite{nosql}. NoSQL är designad på så sätt att det inte bygger på tabeller som i vanliga relationsdatabaser. Marknaden som existerar idag är vad som kunde kallas för en \textit{Big Data Reality} som kännetecknades av den enorma mängden data som måste hanteras av dagens databaser. Designen utvecklades för att möta kraven som ställdes av denna }\textit{Big Data Reality}. NoSQL utvecklades för att bidra med en enklare design och lättare tillgänglighet. Det är mest datastrukturerna som skiljer NoSQL från vanliga relationsdatabaser. Detta leder till att vissa operationer är lättare och mer effektiva att utföra i NoSQL medan andra är snabbare i vanliga relationsdatabaser \cite{nosqlfacts}. NoSQL används alltmer av applikationer som måste hantera stora mängder data men också web-system som ska exekveras i realtid \cite{nosqlcloud}. Egenskaperna som NoSQL besitter passar för vår applikationen då ett tak för antalet användare inte var satt samt att vi önskade att exekvera i realtid.
+Datastore hanterar datalagring med både SQL och NoSQL. För den som inte är bekant med NoSQL så är det en alternativ design för databaser som skiljer sig från SQL-databaser \cite{nosql}. NoSQL är designad på så sätt att det inte bygger på tabeller som i vanliga relationsdatabaser. Marknaden som existerar idag är vad som kunde kallas för en \textit{Big Data Reality} som kännetecknades av den enorma mängden data som måste hanteras av dagens databaser. Designen utvecklades för att möta kraven som ställdes av dagens så kallade \textit{Big Data Reality}. NoSQL utvecklades för att bidra med en enklare design och lättare tillgänglighet. Det är mest datastrukturerna som skiljer NoSQL från vanliga relationsdatabaser. Detta leder till att vissa operationer är lättare och mer effektiva att utföra i NoSQL medan andra är snabbare i vanliga relationsdatabaser \cite{nosqlfacts}. NoSQL används alltmer av applikationer som måste hantera stora mängder data men också web-system som ska exekveras i realtid \cite{nosqlcloud}. Egenskaperna som NoSQL besitter passar för vår applikationen då ett tak för antalet användare inte var satt samt att vi önskade att exekvera i realtid.
 
 Med Datastore behövde vi inte oroa sig över hur sökning och borttagning skulle ske i databasen. Detta kan förklaras med att Datastore inte använder sig direkt av schemas som i en relationsdatabas, exempelvis SQL. Datastore ser med andra ord till att borttagning och sökning sker effektivt och på rätt sätt. Databasens sökning var effektivt tack vare den solida sökmotorn som biblioteket tillhandahöll.
 
@@ -343,15 +343,31 @@ Denna sektion beskriver ett antal utvärderingar som gjordes av applikationen. U
 
 Här ska det skrivas MDI-utvärderingar
 \begin{itemize}
-\item Kognitiv walkthrough
+\item Streamlined cognitiv walkthrough (SCW)
 \item Think aloud utvärdering
-\item Heurisitc evaluation
+\item Heurisitc evaluation (HE)
 \end{itemize}
+
+\subsection{Utvärderingar och deras användbarhet}
+Utvärderingar är nyttiga verktyg för att hitta problem eller för att hitta områden som är lämpade för vidare utveckling \cite{benyon2010designing}. Utvärderingarna vi har valt att utföra är till för att granska produkten vi har utvecklat för att se om den möter kraven vi ställer på den. Vi hoppades att utvärderingarna skulle ge oss en bild av applikationens användbarhet och effektivitet samt se till att den var tillmötesgående för användaren. Ur en designsynpunkt var vi intresserade av att se om applikationen fyller sitt syfte, om den är rolig samt om den engagerar användaren.
+
+\subsection{Streamlined Cognitive Walkthrough}
+
+\cite{cw}
+
+\subsection{Think Aloud}
+
+\cite{thinkaloud}
+
+\subsection{Heuristic Evalutation}
+
+
+\cite{heuristic}
 
 \subsection{Utvärdering}
 Planen var att en fungerande alfa eller betaversion av systemet skulle färdigställas en rimlig tid innan projektet avslutas. I den här versionen skulle användare ha möjlighet att ge feedback och att testa applikationen. Tack vare den feedback vi fick från användarna så skulle så många fel som möjligt justeras innan den färdiga versionen släpptes.
 
-Gränssnittet och användandet av applikationen skulle också komma att utvärderas med hjälp av think aloud \cite{thinkaloud} och en heuristic evaluering \cite{heuristic}.
+Gränssnittet och användandet av applikationen skulle också utvärderas med hjälp av \textit{Think Aloud } \cite{thinkaloud} och en \textit{Heuristic Evaluation } \cite{heuristic}.
 
 \section{Diskussion}
 Denna sektion diskuteras det vad som hade kunnat göras bättre under utvecklingen. Exempel på detta kunde exempelvis vara om det fanns alternativa vägar eller verktyg som hade varit bättre, effektivare, enklare att använda. Det beskrivs även framtida utvecklingar i det visuella och applikationens prestanda och säkerhet.
