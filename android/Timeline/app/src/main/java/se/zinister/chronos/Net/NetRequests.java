@@ -295,10 +295,10 @@ public class NetRequests {
 
     }
 
-    public String friendList() {
+    public String friendList(String action) {
 
         try {
-            url = new URL("https://" +host +"/friendlist");
+            url = new URL("https://" +host +"/friendlist?action="+ action);
             String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
             Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
             if(cookies != null){
@@ -466,6 +466,18 @@ public class NetRequests {
         try {
             url = new URL("https://" + host + "/challenger?Opponent="+ opp+"&answer="+ans);
             urlConnection = (HttpURLConnection) url.openConnection();
+            String cookies = android.webkit.CookieManager.getInstance().getCookie(url.toString());
+            Log.d("COKIES", "cookies from url " + url.toString() + ": " + cookies);
+            if(cookies != null){
+                String[] c = cookies.split("=");
+                HttpCookie cookie = new HttpCookie(c[0], c[1]);
+                cookie.setDomain("Https://" + host);
+                cookie.setPath("/");
+                cookie.setVersion(0);
+                if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "Cookiemanager = " +cookieManager); //+ ", Cookiestore = " + cookieManager.getCookieStore() + ", cookie = " + cookie);
+                cookieManager.getCookieStore().add(url.toURI(), cookie);
+
+            }
             if(cookieManager.getCookieStore().getCookies().size() > 0)
             {
                 urlConnection.setRequestProperty("Cookie",
@@ -481,7 +493,7 @@ public class NetRequests {
             }
             return total.toString();
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         } finally{
             if (urlConnection != null)

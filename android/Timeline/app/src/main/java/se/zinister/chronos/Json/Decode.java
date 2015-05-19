@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import se.zinister.chronos.Items.Challenge;
 import se.zinister.chronos.Items.Friend;
 import se.zinister.chronos.Items.Game;
+import se.zinister.chronos.Items.Profile;
 import se.zinister.chronos.Items.StartpageMessage;
 import se.zinister.chronos.Items.User;
 import se.zinister.chronos.MainActivity;
@@ -20,13 +21,14 @@ import se.zinister.chronos.Question.Question;
 
 /**
  * Created by josef on 2015-04-13.
+ *
  */
 public class Decode {
 
     public ArrayList<Question> decodeQuestions(String in) {
         ArrayList<Question> list = new ArrayList<>();
-        if (in == "error") return list;
-        JSONArray json = null;
+        if (in.equals("error")) return list;
+        JSONArray json;
         Log.d("Decode","string: " + in);
         try {
             json = new JSONArray(in);
@@ -45,8 +47,8 @@ public class Decode {
 
     public StartpageMessage decodeGamesOverview(String in) {
         StartpageMessage startpageMessage = new StartpageMessage();
-        if (in == "error") return startpageMessage;
-        JSONObject json = null;
+        if (in.equals("error")) return startpageMessage;
+        JSONObject json;
         ArrayList<GamesOverview> gamesOverviews = new ArrayList<>();
         ArrayList<Challenge> challenges = new ArrayList<>();
         try {
@@ -67,6 +69,7 @@ public class Decode {
                 q.gameID = object.getInt("GID");
                 q.opponentPoint = object.getInt("OppScore");
                 q.opponentName = object.getString("OppName");
+                q.opponentPic = object.getString("OppPic");
                 gamesOverviews.add(q);
             }
             startpageMessage.games = gamesOverviews;
@@ -87,8 +90,8 @@ public class Decode {
 
     public ArrayList <Friend> decodeFriendList(String in) {
         ArrayList<Friend> list = new ArrayList<>();
-        if (in == "error") return list;
-        JSONArray json = null;
+        if (in.equals("error")) return list;
+        JSONArray json;
         if (MainActivity.DEBUG)Log.d(MainActivity.TAG,in);
         try {
             json = new JSONArray(in);
@@ -105,10 +108,35 @@ public class Decode {
         return list;
     }
 
+
+    public Profile decodeProfile(String in) {
+        if (in.equals("error")) return null;
+        JSONArray json;
+        Profile p = null;
+        if (MainActivity.DEBUG)Log.d(MainActivity.TAG,in);
+        try {
+            ArrayList<Friend> list = new ArrayList<>();
+            JSONObject o = new JSONObject(in);
+            json = o.getJSONArray("Friends");
+            for (int i = 0; i < json.length(); i++) {
+                JSONObject object = (JSONObject) json.get(i);
+                Friend q = new Friend(object.getString("Name"),object.getString("Oid"), object.getString("Picture"),
+                        object.getInt("Won"),object.getInt("Draw"), object.getInt("Lost"), true);
+                list.add(q);
+            }
+            p = new Profile(list,o.getInt("Won"), o.getInt("Lost"), o.getInt("Draw"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return p;
+    }
+
+
     public ArrayList <Friend> decodeSearchList(String in) {
         ArrayList<Friend> list = new ArrayList<>();
-        if (in == "error") return list;
-        JSONArray json = null;
+        if (in.equals("error")) return list;
+        JSONArray json;
         if (MainActivity.DEBUG)Log.d(MainActivity.TAG,in);
         try {
             json = new JSONArray(in);
@@ -128,7 +156,7 @@ public class Decode {
 
     public Game decodeGame(String in) {
         Game r = null;
-        if (in == "error") return r;
+        if (in.equals("error")) return null;
         if (MainActivity.DEBUG) Log.d(MainActivity.TAG, in);
         JSONObject json;
          try {

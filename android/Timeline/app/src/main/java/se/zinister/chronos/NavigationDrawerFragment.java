@@ -1,6 +1,7 @@
 package se.zinister.chronos;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -19,9 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -116,6 +119,17 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
+            }
+        });
+
+        Button logOut = (Button)toolbar.findViewById(R.id.logoutButton);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"clicked log out, link = " + MainActivity.LOGOUT,Toast.LENGTH_SHORT).show();
+                Intent n = new Intent(getActivity(), LoginActivity.class);
+                n.putExtra("url", MainActivity.LOGOUT);
+                startActivityForResult(n, MainActivity.LOGIN);
             }
         });
 
@@ -278,6 +292,22 @@ public class NavigationDrawerFragment extends Fragment {
         if (root != null) {
             ImageView i = (ImageView) root.findViewById(R.id.navPic);
             Picasso.with(getActivity()).load(url).into(i);
+        }
+    }
+
+    public void setLogout(final String url) {
+        View root = getView();
+        if (root != null) {
+            Button i = (Button) root.findViewById(R.id.logoutButton);
+            i.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity(),"clicked log out, link = " + url ,Toast.LENGTH_SHORT).show();
+                    Intent n = new Intent(getActivity(), LoginActivity.class);
+                    n.putExtra("url",url);
+                    startActivityForResult(n, MainActivity.LOGIN);
+                }
+            });
         }
     }
 

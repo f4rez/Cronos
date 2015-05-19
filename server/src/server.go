@@ -39,11 +39,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	if u == nil {
 		url, _ := user.LoginURL(c, "/")
-		fmt.Fprintf(w, `<a href="%s">Sign in or register</a>`, url)
+		http.Redirect(w, r, url, http.StatusMovedPermanently)
 		return
 	}
 	url, _ := user.LogoutURL(c, "/")
-	fmt.Fprintf(w, `Welcome, %s! (<a href="%s">sign out</a>)`, u, url)
+	fmt.Fprintf(w, "logOutUrl:%v", url)
 }
 
 // Get the friend list

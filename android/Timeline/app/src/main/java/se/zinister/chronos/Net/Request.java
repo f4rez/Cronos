@@ -9,6 +9,7 @@ import se.zinister.chronos.fragments.FindUsersFragment;
 import se.zinister.chronos.fragments.FriendFragment;
 import se.zinister.chronos.fragments.MatchFragment;
 import se.zinister.chronos.fragments.MatchStatistics;
+import se.zinister.chronos.fragments.ProfileFragment;
 import se.zinister.chronos.fragments.StartPageFragment;
 
 
@@ -50,7 +51,9 @@ public class Request extends AsyncTask<String, Void, String> {
             case "StartMessage":
                 return net.startPage();
             case "FriendList":
-                return net.friendList();
+                return net.friendList("list");
+            case "FriendListProfile":
+                return net.friendList("profile");
             case "Search":
                 return net.search(string[1], string[2]);
             case "FriendAdd":
@@ -87,6 +90,10 @@ public class Request extends AsyncTask<String, Void, String> {
             case "FriendList":
                 ChallengeFriendFragment c = (ChallengeFriendFragment) caller;
                 c.showFriends(returned);
+                break;
+            case "FriendListProfile":
+                ProfileFragment p = (ProfileFragment) caller;
+                p.callback(returned);
                 break;
             case "Search":
                 FindUsersFragment f = (FindUsersFragment) caller;

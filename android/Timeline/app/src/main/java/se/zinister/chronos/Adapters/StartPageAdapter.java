@@ -1,5 +1,6 @@
 package se.zinister.chronos.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import se.zinister.chronos.R;
 
 /**
  * Created by josef on 2015-04-14.
+ *
  */
 public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
     public Context c;
@@ -62,6 +64,7 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
 
 
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         int type = getItemViewType(position);
