@@ -37,6 +37,11 @@ type FoundUser struct {
 	IsFriend bool
 }
 
+type Profile struct {
+	Friends         []Users
+	Won, Lost, Draw int
+}
+
 func UserKey(c appengine.Context) *datastore.Key {
 	return datastore.NewKey(c, "User", "default_user", 0, nil)
 }
@@ -145,6 +150,24 @@ func GetFriendList(c appengine.Context, id string) ([]Users, error) {
 		return make([]Users, 1), err2
 	}
 	return make([]Users, 1), err
+
+}
+
+func GetFriendListAndStats(c appengine.Context, id string) (Profile, error) {
+	mUser, _, err := GetUser(c, id)
+	if err == nil {
+		users, _, err2 := getUsers(c, mUser.FriendList)
+		if err2 == nil {
+			profile := new(Profile)
+			profile.Friends = users
+			profile.Won = mUser.Won
+			profile.Lost = mUser.Lost
+			profile.Draw = mUser.Draw
+			return *profile, nil
+		}
+		return *new(Profile), err2
+	}
+	return *new(Profile), err
 
 }
 
@@ -367,14 +390,26 @@ func GetFriendListHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Not Registerd")
 		return
 	}
-	friendList, err := GetFriendList(c, u.ID)
-	if err != nil {
-		c.Infof("Error marshal: %v", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	action := r.FormValue("action") // add, remove, challenge
+	if action == "list" {
+		friendList, err := GetFriendList(c, u.ID)
+		if err != nil {
+			c.Infof("Error marshal: %v", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		fString, _ := json.Marshal(friendList)
+		fmt.Fprintf(w, string(fString))
+	} else if action == "profile" {
+		friendList, err := GetFriendListAndStats(c, u.ID)
+		if err != nil {
+			c.Infof("Error marshal: %v", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		fString, _ := json.Marshal(friendList)
+		fmt.Fprintf(w, string(fString))
 	}
-	fString, _ := json.Marshal(friendList)
-	fmt.Fprintf(w, string(fString))
 }
 
 func FriendHandler(w http.ResponseWriter, r *http.Request) {
@@ -493,13 +528,26 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (u *Users) AddFriend(us Users) {
-	friend := new(Friend)
-	friend.FriendID = us.Oid
-	friend.Name = us.Name
-	friend.Draw = 0
-	friend.Won = 0
-	friend.Lost = 0
-	u.FriendList = append(u.FriendList, *friend)
+	if u.hasFriend(us.Oid) {
+		return
+	} else {
+		friend := new(Friend)
+		friend.FriendID = us.Oid
+		friend.Name = us.Name
+		friend.Draw = 0
+		friend.Won = 0
+		friend.Lost = 0
+		u.FriendList = append(u.FriendList, *friend)
+	}
+}
+
+func (u *Users) hasFriend(oid string) bool {
+	for _, user := range u.FriendList {
+		if user.FriendID == oid {
+			return true
+		}
+	}
+	return false
 }
 
 func (u *Users) RemoveFriend(Oid string) {

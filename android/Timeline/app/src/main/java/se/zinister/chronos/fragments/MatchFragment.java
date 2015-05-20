@@ -51,6 +51,7 @@ public class MatchFragment extends BaseFragment {
     private FloatingActionButton fab;
     final Handler handler_interact=new Handler();//not defined as final variable. may cause        problem
     private View layout_interact;
+    private boolean showInfoPressed = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,7 +87,6 @@ public class MatchFragment extends BaseFragment {
                         }
                     }
                     //showYears();
-                    flashColor();
                 }
             }
 
@@ -116,6 +116,7 @@ public class MatchFragment extends BaseFragment {
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1))){
                     addNextQuestion(2);
                 } else {
+                    flashColor();
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"1","0","0","0","0");
                     return 0;
@@ -125,6 +126,7 @@ public class MatchFragment extends BaseFragment {
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2))){
                     addNextQuestion(3);
                 } else {
+                    flashColor();
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","1","0","0","0");
                     return 1;
@@ -134,6 +136,7 @@ public class MatchFragment extends BaseFragment {
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3))){
                     addNextQuestion(4);
                 } else {
+                    flashColor();
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","1","0","0");
                     return 2;
@@ -143,6 +146,7 @@ public class MatchFragment extends BaseFragment {
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3),mAdapter.getItem(4))){
                     addNextQuestion(5);
                 } else {
+                    flashColor();
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","2","1","0");
                     return 3;
@@ -152,8 +156,10 @@ public class MatchFragment extends BaseFragment {
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3),mAdapter.getItem(4),mAdapter.getItem(5))){
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","2","2","2");
+                    showYears();
                     return 6;
                 } else {
+                    flashColor();
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","2","2","1");
                     return 5;
@@ -163,19 +169,22 @@ public class MatchFragment extends BaseFragment {
         return -1;
     }
     public void showInfo() {
-        View root = getView();
-        if (root != null) {
+        if (!showInfoPressed) {
+            showInfoPressed = true;
+            View root = getView();
+            if (root != null) {
 
-            View info = root.findViewById(R.id.infoView);
-            info.setVisibility(View.VISIBLE);
-            Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
-            info.setAnimation(fadeInAnimation);
-            info.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    removeInfo();
-                }
-            });
+                View info = root.findViewById(R.id.infoView);
+                info.setVisibility(View.VISIBLE);
+                Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+                info.setAnimation(fadeInAnimation);
+                info.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeInfo();
+                    }
+                });
+            }
         }
     }
 
@@ -185,6 +194,7 @@ public class MatchFragment extends BaseFragment {
             View info = root.findViewById(R.id.infoView);
             info.setVisibility(View.INVISIBLE);
         }
+        showInfoPressed = false;
     }
 
     public void flashColor() {

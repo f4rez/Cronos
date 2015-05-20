@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+
 import se.zinister.chronos.Items.User;
 import se.zinister.chronos.Json.Decode;
 import se.zinister.chronos.Net.NetRequests;
@@ -28,6 +29,7 @@ import se.zinister.chronos.Net.Request;
 import se.zinister.chronos.fragments.BaseFragment;
 import se.zinister.chronos.fragments.ChallengeFriendFragment;
 import se.zinister.chronos.fragments.FindUsersFragment;
+import se.zinister.chronos.fragments.ProfileFragment;
 import se.zinister.chronos.fragments.StartPageFragment;
 
 
@@ -35,9 +37,7 @@ import se.zinister.chronos.fragments.StartPageFragment;
 public class MainActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Toolbar mToolbar;
     private CharSequence mTitle;
-    private DrawerLayout mDrawer;
 
     public NetRequests net;
 
@@ -49,8 +49,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public static String TAG = "Zinister";
     public static boolean DEBUG = true;
     public static final int MAINPAGE = 100;
-    public static final int CHALLENGE_FRIEND = 101;
-    public static final int FIND_FRIEND = 102;
+    public static final int FIND_FRIEND = 101;
+    public static final int PROFILE = 102;
+    public static final int CHALLENGE_FRIEND = 105;
     public static final int FRIEND = 103;
     public static final int LOGIN = 104;
     private static final int RC_SIGN_IN = 0;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     public static String MY_NAME;
     public static final String HOST = "calcium-firefly-93808.appspot.com";
+    public static final String FULL_HOST = "https://calcium-firefly-93808.appspot.com";
+    public static  String LOGOUT;
 
 
 
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userDetails = getSharedPreferences("userdetails", MODE_PRIVATE);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
 
 
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         net = new NetRequests(HOST);
@@ -97,15 +100,16 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
         String cookies = android.webkit.CookieManager.getInstance().getCookie("https://" +HOST +"/startMess");
         if(cookies == null) {
-            if(DEBUG) Log.d(TAG,"cookies = " + cookies);
             Intent n = new Intent(this, LoginActivity.class);
+            n.putExtra("url", FULL_HOST);
             startActivityForResult(n, LOGIN);
         }
         if (MY_NAME == null) {
 
             String tmp = userDetails.getString("MY_NAME", "noName");
             if(DEBUG) Log.d(TAG, tmp);
-            if (tmp != "noName") MY_NAME = tmp;
+            assert tmp != null;
+            if (!tmp.equals("noName")) MY_NAME = tmp;
         }
     }
     @Override
@@ -113,9 +117,10 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                                     Intent data) {
         if (DEBUG) Log.d(TAG, "onActivityResult requestcode" + requestCode + ", resultcode " + resultCode );
         if (requestCode == LOGIN) {
-            if (resultCode == RESULT_CANCELED) {
+            if (resultCode == RESULT_OK) {
+                mNavigationDrawerFragment.setLogout(LOGOUT);
                 String tmp = userDetails.getString("MY_NAME", "noName");
-                if (tmp != "noName") MY_NAME = tmp;
+                if (!(tmp != null && tmp.equals("noName"))) MY_NAME = tmp;
                 else if (!mGoogleApiClient.isConnected()) {
                     onClick(null);
                 }
@@ -189,12 +194,14 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public void doneRegister(String json){
         Decode decode = new Decode();
         User u = decode.decodeUser(json);
-        if (DEBUG) Log.d(TAG, "user " + u);
         SharedPreferences.Editor e = userDetails.edit();
         if (u != null) {
+            String pic = u.picture.substring(0, u.picture.indexOf("sz=")) + "sz=500";
             e.putString("MY_NAME", u.name);
-            e.commit();
+            e.putString("MY_PICTURE", pic);
+            e.apply();
             MY_NAME = u.name;
+
         }
     }
 
@@ -237,6 +244,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             case FIND_FRIEND:
                 baseFragment = new FindUsersFragment();
                 break;
+            case PROFILE:
+                baseFragment = new ProfileFragment();
+                break;
         }
         return baseFragment;
     }
@@ -257,7 +267,16 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 break;
             case FIND_FRIEND:
                 mTitle = getString(R.string.title_section3);
+                break;
+            case PROFILE:
+                mTitle = MY_NAME;
         }
+        restoreActionBar();
+    }
+
+
+    public void setmTitle(String s ) {
+        mTitle = s;
         restoreActionBar();
     }
 
@@ -269,16 +288,13 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         }
     }
 
-    public void setmToolbarTransperent() {
-        mToolbar.getBackground().setAlpha(0);
-    }
 
 
     @Override
     public void onConnected(Bundle connectionHint) {
         mSignInClicked = false;
         Person me = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-        new Request(this, net).execute("RegisterUser", me.getDisplayName(), me.getImage().getUrl());
+        new Request(this, net).execute("RegisterUser", me.getDisplayName(), me.getImage().getUrl()); //TODO fixa om personen inte ha en bild och namn
         if(me.hasCover()) {
             if (me.getCover().hasCoverPhoto()) mNavigationDrawerFragment.setCoverPhoto(me.getCover().getCoverPhoto().getUrl());
         }
@@ -317,4 +333,5 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             }
         }
     }
+
 }

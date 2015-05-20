@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -36,6 +37,7 @@ import se.zinister.chronos.R;
 
 /**
  * Created by josef on 2015-04-21.
+ *
  */
 public class FindUsersFragment extends BaseFragment {
     EditText e;
@@ -46,6 +48,10 @@ public class FindUsersFragment extends BaseFragment {
 
         setTargetFragment(this, 0);
         e = (EditText)rootView.findViewById(R.id.searchFriends);
+        if(e.requestFocus()) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(e, InputMethodManager.SHOW_IMPLICIT);
+        }
         e.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

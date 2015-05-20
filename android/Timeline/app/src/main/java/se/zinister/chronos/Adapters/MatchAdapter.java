@@ -22,8 +22,6 @@ import se.zinister.chronos.R;
  */
 public class MatchAdapter extends ArrayAdapter<Question> {
 
-    private static final int UNLOCKED = 0;
-    private static final int LOCKED = 1;
 
     Context mContext;
     final int INVALID_ID = -1;
@@ -42,8 +40,6 @@ public class MatchAdapter extends ArrayAdapter<Question> {
     public View getView(int position, View convertView, ViewGroup parent) {
         Question q = getItem(position);
         if (q.locked) {
-
-
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
             View v = vi.inflate(R.layout.list_item, null);

@@ -44,9 +44,9 @@
         android:visibility="invisible">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_back"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/curved_arrow"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -63,26 +63,43 @@
             android:layout_above="@id/arrowToFab"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="20dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="20sp"
+
+            android:background="@color/white_transperent"
             />
 
+
+
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/ic_action_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/curved_arrow_up_left"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:id="@+id/showDirectionPic"/>
+            android:layout_above="@+id/stringForEvents"
+            android:id="@+id/showEventArrrow"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/showDirectionPic"
-            android:layout_toEndOf="@+id/showDirectionPic"
-            android:layout_marginTop="100dp"
-            android:text="@string/explain_direction_of_question"/>
+            android:layout_marginTop="30dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp"
+            android:id="@+id/stringForEvents"
+            android:text="@string/explain_direction_of_question"
+            android:background="@color/white_transperent"/>
     </RelativeLayout>
 </RelativeLayout>

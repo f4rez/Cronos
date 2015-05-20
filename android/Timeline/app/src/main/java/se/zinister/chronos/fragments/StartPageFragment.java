@@ -2,6 +2,7 @@ package se.zinister.chronos.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,6 +42,7 @@ import se.zinister.chronos.R;
 
 /**
  * Created by Josef on 2015-02-05.
+ *
  */
 public class StartPageFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     public ListView mListView;
@@ -103,7 +105,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
             if(!my && g.myTurn && g.type != 4) {
                 GamesOverview section = new GamesOverview(0);
                 newList.add(section);
-                my = !my;
+                my = true;
             }
             if(g.myTurn && g.type != 4) newList.add(g);
         }
@@ -111,7 +113,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
             if(!opp && !g.myTurn && g.type != 4) {
                 GamesOverview section = new GamesOverview(2);
                 newList.add(section);
-                opp = !opp;
+                opp = true;
             }
             if(!g.myTurn && g.type != 4) newList.add(g);
         }
@@ -119,7 +121,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
             if(!fin && g.type == 4) {
                 GamesOverview section = new GamesOverview(3);
                 newList.add(section);
-                fin = !fin;
+                fin = true;
             }
             if(g.type == 4) newList.add(g);
         }
@@ -134,34 +136,47 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
         Decode d = new Decode();
         StartpageMessage startpageMessage = d.decodeGamesOverview(jsonString);
         ArrayList<GamesOverview> gamesOverviews = startpageMessage.games;
-        challenges = startpageMessage.challenges;
-        gamesOverviews = sort(gamesOverviews);
-        if (mAdapter == null) {
-            mAdapter = new StartPageAdapter(getActivity(), R.layout.game_overview, gamesOverviews);
-        } else {
-            mAdapter.clear();
-            mAdapter.addAll(gamesOverviews);
-        }
-
-
-        if (mListView == null)
-            mListView = (ListView) getView().findViewById(R.id.mMatches);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GamesOverview g = (GamesOverview) parent.getItemAtPosition(position);
-
-                StartPageAdapter s = (StartPageAdapter) parent.getAdapter();
-                if (MainActivity.DEBUG) Log.d(MainActivity.TAG, "GameID in intent = " + g.gameID);
-                Intent n = new Intent(s.c, MatchActivity.class);
-                n.putExtra("gameID", g.gameID);
-                s.c.startActivity(n);
+        if(gamesOverviews.size() > 0) {
+            challenges = startpageMessage.challenges;
+            gamesOverviews = sort(gamesOverviews);
+            if (mAdapter == null) {
+                mAdapter = new StartPageAdapter(getActivity(), R.layout.game_overview, gamesOverviews);
+            } else {
+                mAdapter.clear();
+                mAdapter.addAll(gamesOverviews);
             }
 
-        });
-        mListView.setAdapter(mAdapter);
-        if (challenges.size() > 0) {
-            showChallengeDialog(challenges.get(0));
+            View root = getView();
+            if (root != null) {
+                View v = root.findViewById(R.id.noMatches);
+                v.setVisibility(View.INVISIBLE);
+                if (mListView == null)
+                    mListView = (ListView) getView().findViewById(R.id.mMatches);
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        GamesOverview g = (GamesOverview) parent.getItemAtPosition(position);
+
+                        StartPageAdapter s = (StartPageAdapter) parent.getAdapter();
+                        if (MainActivity.DEBUG)
+                            Log.d(MainActivity.TAG, "GameID in intent = " + g.gameID);
+                        Intent n = new Intent(s.c, MatchActivity.class);
+                        n.putExtra("gameID", g.gameID);
+                        s.c.startActivity(n);
+                    }
+
+                });
+                mListView.setAdapter(mAdapter);
+                if (challenges.size() > 0) {
+                    showChallengeDialog(challenges.get(0));
+                }
+            }
+        } else {
+            View root = getView();
+            if (root != null) {
+                View v = root.findViewById(R.id.noMatches);
+                v.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -238,7 +253,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
                 MainActivity m = (MainActivity) dialogAdapter.caller.getActivity();
                 switch (position) {
                     case 0:
-                        m.changeFragment(m.CHALLENGE_FRIEND);
+                        m.changeFragment(MainActivity.CHALLENGE_FRIEND);
                         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             revealShow(dialogView, false, dialog);
                         } else {
@@ -257,7 +272,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
                         break;
 
                     case 2:
-                        m.changeFragment(m.FIND_FRIEND);
+                        m.changeFragment(MainActivity.FIND_FRIEND);
                         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             revealShow(dialogView, false, dialog);
                         } else {
@@ -275,6 +290,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
 
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void revealShow(View rootView, boolean reveal, final AlertDialog dialog){
         final View view = rootView.findViewById(R.id.reveal_view);
         int w = view.getWidth();
