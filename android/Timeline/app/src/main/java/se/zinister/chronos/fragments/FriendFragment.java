@@ -22,6 +22,7 @@ import se.zinister.chronos.R;
 
 /**
  * Created by josef on 2015-04-23.
+ *
  */
 public class FriendFragment extends  BaseFragment{
     String friendID;
@@ -103,7 +104,7 @@ public class FriendFragment extends  BaseFragment{
     public void addedFriend() {
         Toast.makeText(getActivity(), "Added friend", Toast.LENGTH_SHORT).show();
     }
-    public void challengedFirend() {
+    public void challengedFriend() {
         Toast.makeText(getActivity(), "Challenged friend", Toast.LENGTH_SHORT).show();
     }
 
