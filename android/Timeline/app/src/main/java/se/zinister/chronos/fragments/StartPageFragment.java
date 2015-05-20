@@ -207,6 +207,11 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
                 @Override
                 public void onClick(View v) {
                     new Request(s,((MainActivity)getActivity()).net).execute("AnswerChallenge",challenge.OppID, "accept");
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        revealShow(dialogView, false, dialog);
+                    } else {
+                        dialogView.setVisibility(View.INVISIBLE);
+                    }
                 }
             });
         }
@@ -215,9 +220,16 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
                 @Override
                 public void onClick(View v) {
                     new Request(s,((MainActivity)getActivity()).net).execute("AnswerChallenge",challenge.OppID, "deny");
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        revealShow(dialogView, false, dialog);
+                    } else {
+                        dialogView.setVisibility(View.INVISIBLE);
+                    }
                 }
             });
         }
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
     }
 
     private void showFabDialog(){
@@ -328,7 +340,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
 
 
     public void challengeReg() {
-        if (challenges != null) {
+        if (challenges != null && challenges.size() > 0) {
             challenges.remove(0);
             if (challenges.size() > 0) {
                 showChallengeDialog(challenges.get(1));

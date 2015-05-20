@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:id="@+id/reveal_view"
+    >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Utmaning från"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
         android:id="@+id/challengeFrom"/>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -17,14 +22,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/acceptbutton"
-            android:text="Acceptera"
+            android:text="@string/accept_challenge"
             style="?android:attr/buttonBarButtonStyle"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/denyButton"
-            android:text="Tacka nej"
+            android:text="@string/deny_challenge"
             style="?android:attr/buttonBarButtonStyle"
             />
     </LinearLayout>

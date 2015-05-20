@@ -25,6 +25,8 @@
     <string name="put_event_in_order">Placera in händelsen i ordning</string>
     <string name="no_matches">Du har inga matcher igång just nu, klicka på den gröna knappen i högra för att slumpa en match eller utmana en vän</string>
     <string name="hello_pic">hello pic</string>
+    <string name="accept_challenge">Acceptera</string>
+    <string name="deny_challenge">Tacka nej</string>
 
 
 </resources>
