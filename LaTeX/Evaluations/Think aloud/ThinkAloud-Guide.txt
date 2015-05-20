@@ -1,0 +1,45 @@
+				Think Aloud:
+
+
+Frågor:
+"Jag kommer ställa dig inför ett antal uppgifter som du ska utföra. Medan du utför dessa uppgifter önskar jag att du försöker säga allt som du tänker på."
+
+Uppgifter:
+* Starta en match mot slumpad spelare 
+* Spela en match
+
+* Sök och lägg till en vän
+* Starta en match mot en vän
+* Spela klart en match mot en vän
+
+
+				ATT TÄNKA PÅ
+* Kom ihåg att användaren ska säga allt det som den ser, tänker på och vad den känner.
+
+"Please solve the following problems and while you do so, try to say everything
+that goes through your mind."
+
+"I will give you a problem. Please keep talking out loud while solving the problem."
+
+
+
+
+
+
+
+
+				Cognitive Walkthrough:
+
+Uppgifter:
+* Starta en match mot slumpad spelare 
+* Spela en match
+
+* Sök och lägg till en vän
+* Starta en match mot en vän
+* Spela klart en match mot en vän
+
+Frågor att ställa under genomgången:
+
+- Uppstod några problem vid utförande av uppgiten? Om ja, vilka då?
+- Var det något som var oklart när du utförde uppgiften? Om ja, var god förklara! 
+
