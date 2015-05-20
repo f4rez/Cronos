@@ -233,8 +233,6 @@ Informationssökaren skulle tillsammans med den administrativa kontrollen ge fr�
 
 Designen av applikationen var något som var väldigt viktigt för oss. Kravet i början var att ha en intuitiv, responsiv och snygg design. Eftersom applikationen gjordes för Android skulle den också följa dess designmönstret Material Design \cite{MaterialDesign}.
 
-
-
 \section{Implementation}
 Denna sektion beskriver hur de målsatta delarna implementerades i applikationen. Applikationens systemstruktur och dess innefattande delar  förklaras och illustreras. Det finns även en grundlig genomgång av hur applikationen ser ut samt hur den fungerar, både för användare och systemadministratörer.
 
@@ -351,18 +349,36 @@ Här ska det skrivas MDI-utvärderingar
 \subsection{Utvärderingar och deras användbarhet}
 Utvärderingar är nyttiga verktyg för att hitta problem eller för att hitta områden som är lämpade för vidare utveckling \cite{benyon2010designing}. Utvärderingarna vi har valt att utföra är till för att granska produkten vi har utvecklat för att se om den möter kraven vi ställer på den. Vi hoppades att utvärderingarna skulle ge oss en bild av applikationens användbarhet och effektivitet samt se till att den var tillmötesgående för användaren. Ur en designsynpunkt var vi intresserade av att se om applikationen fyller sitt syfte, om den är rolig samt om den engagerar användaren.
 
-\subsection{Streamlined Cognitive Walkthrough}
+\subsection{Kognitiv Genomgång}
+En \textit{Kognitiv Genomgång} \cite{cw} är en utvärderingsmetod som är till för att avgöra problem med användbarhet i ett interaktivt datorsystem. Utvärderingen som vi valt att utföra är en nyare version av det gamla konceptet.
+Utvärderingen går till på så sätt att systemets utvecklare väljer en grupp med användare som aldrig använt systemet tidigare. Innan dessa personer kan väljas måste systemets utvecklare först analysera vilken typ av användargrupp som systemet riktar sig till. Ett exempel på en fråga som är hjälpsam vid ett sådant urval är exempelvis: "Vilken typ av bakgrundskunskap behövs för att använda systemet?".\\ 
+När användarna för utvärderingen är valda ska systemets utvecklare sedan välja ett antal vitala uppgifter som användarna skall utföra i systemet. Vitala uppgifter kan var sådana som användare i systemet måste utföra ofta, uppgifter som inte används ofta men som fortfarande anses kritiska för systemet eller sådana uppgifter som visar på systemets duglighet.
+Varje uppgift har ett antal tillhörande frågor som utvecklarna ställer sig för att få en bättre förståelse av hur dessa uppgifter kan exekveras bättre.
+Exempel på frågor till varje vald uppgift är: \\
+Är det troligt att användarna utför "rätt" handling för varje uppgift? Med andra ord: förväntar sig utvecklarna att användarna ska göra just den handlingen vid uppgiften?\\
+Om användaren gjort "rätt" val i uppgiften, vet de då att detta var rätt val? Får användaren någon feedback som tyder på detta?\\
 
-\cite{cw}
+Efter utvärderingen kan utvecklarna analysera den data som samlats in och skapa en ny design eller alternera den gamla för att öka användbarheten.
+
+\subsubsection{Kognitiv Genomgång av Chronos} 
+Uppgifterna vi valde att använda i den kognitiva genomgången var:
+
 
 \subsection{Think Aloud}
+\textit{Think Aloud} \cite{thinkaloud} är en utvärderingsmetod som går ut på att användare ska utföra ett antal uppgifter som utvecklarna har valt. Det är sedan användarnas jobb att under tiden uppgifterna utförs att säga vad de tänker på. Utvecklarna antecknar det användarna säger kontinuerligt under tiden uppgifterna utförs. Anteckningarna analyseras sedan av utvecklarna för att se vilka delar som eventuellt var för svåra, dåliga eller rent av ineffektiva. Designen av systemet kommer sedan att alterneras eller skapas på nytt beroende på inputen som gavs från användarna.\\
+Utvecklarna ska försöka hålla sin aktivitet något i bakgrunden för att inte påverka användarna på något sätt. Utvecklarna skall endast ställa sin fråga och sen vara mer som en åskådare. Det är inte meningen att användarna skall behöva utveckla sina tankar eller lösa problemet som de ställs inför. Hela poängen är istället att deras tankar och feedback ska få flöda fritt.  
 
-\cite{thinkaloud}
+
+\subsubsection{Think Aloud utvärdering av Chronos}
+
 
 \subsection{Heuristic Evalutation}
+En \textit{Heuristic Evalutation} \cite{benyon2010designing} är en utvärderingsmetod för att fastställa problem i användbarhet hos ett system, problemens storlek samt vart de finns.
+Utvärderingen går till på så sätt att en grupp människor som har någon utbildning i Människa och Datorinteraktion utvärderar en föreslagen design av ett system. Utvärderarna traverserar systemet och dess design och noterar problem som de finner. Om problem finns ger utvärderarna förslag på lösningar om det finns några. Utvecklarna kan även ge personerna som utvärderar en skala på hur allvarliga de funna problemen är. Genom detta kan utvecklarna få en bild av vilka problem som borde prioriteras vid en eventuell ny design.\\
+En stor del av utvärderingsgruppen var elever från Civilingenjörsprogrammet - IT på Uppsala Universitet som alla hade gått en kurs i Människa och Datorinteraktion. Vi valde även att inkludera en person som hade gått en separat utbildning i Apputveckling och grafisk design. 
 
+\subsubsection{Heuristic Evaluation av Chronos}
 
-\cite{heuristic}
 
 \subsection{Utvärdering}
 Planen var att en fungerande alfa eller betaversion av systemet skulle färdigställas en rimlig tid innan projektet avslutas. I den här versionen skulle användare ha möjlighet att ge feedback och att testa applikationen. Tack vare den feedback vi fick från användarna så skulle så många fel som möjligt justeras innan den färdiga versionen släpptes.

@@ -1,0 +1,40 @@
+Inloggning:
+
+* Lite oklart att man ska signa in så många gånger
+* Borde stå gå vidare
+
+Uppgifter:
+
+Starta en match
+	- Inga problem att starta en match
+	- När man startat en match är det oklart hur man ska komma in i rundan
+	- Att flytta händelser är jäkligt oklart
+	- Om man placerade fel var det lite oklart vad man skulle göra efteråt
+	- 
+
+Sök efter spelare och lägga till som vän:
+	- Om sökningen inte fungerar så vet man inte det
+	- Borde ge någon slags bekräftelse på att man har spelaren som vän. Ska inte finnas ett plus som att man inte har addat personen. Borde vara en bock kanske!
+	- När man är inne på någons profil vill man ju kunna spela en match mot denna.
+	- 
+
+
+Starta en match mot en vän:
+	- mycket oklart hur man ska navigera sig fram till att utmana en vän
+	- Man måste få veta om man har utmanat en vän för nu ges det ingen notfikation
+	- 
+
+
+
+
+				FEEDBACK:
+
+- Kul spel
+- Inte ha någon referenshändelse
+	- Ordna upp alla händelser hela tiden istället för att bygga på vid varje ny händelse.
+- Det framgår inte i spelet vilken som är tidigast eller senast. Man vet inte vilken ordning man ska lägga händelserna i
+	- Kanske borde ha en mer detaljerad tutorial i början av spelet
+- När man är inne i en runda borde det stå att det är ens runda eller inte
+- Hur lång är en match?
+
+
