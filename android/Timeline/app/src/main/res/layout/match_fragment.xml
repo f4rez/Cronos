@@ -18,11 +18,12 @@
         android:visibility="invisible"
         />
 
-<se.zinister.chronos.Adapters.DynamicListView
+    <se.zinister.chronos.Adapters.DynamicListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/questionList"
         android:layout_marginTop="16dp"
+        android:drawSelectorOnTop="true"
         android:layout_below="@+id/card"/>
 
     <com.melnykov.fab.FloatingActionButton

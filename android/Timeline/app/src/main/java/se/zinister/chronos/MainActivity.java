@@ -30,6 +30,7 @@ import se.zinister.chronos.fragments.BaseFragment;
 import se.zinister.chronos.fragments.ChallengeFriendFragment;
 import se.zinister.chronos.fragments.FindUsersFragment;
 import se.zinister.chronos.fragments.ProfileFragment;
+import se.zinister.chronos.fragments.SettingsFragment;
 import se.zinister.chronos.fragments.StartPageFragment;
 
 
@@ -49,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     public static String TAG = "Zinister";
     public static boolean DEBUG = true;
     public static final int MAINPAGE = 100;
-    public static final int FIND_FRIEND = 101;
+    public static final int SETTINGS = 101;
+    public static final int FIND_FRIEND = 106;
     public static final int PROFILE = 102;
     public static final int CHALLENGE_FRIEND = 105;
     public static final int FRIEND = 103;
@@ -83,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
-
-
         DrawerLayout mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mDrawer.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     protected void onStart() {
@@ -151,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
 
     protected void onStop() {
         super.onStop();
-
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
@@ -247,6 +245,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
             case PROFILE:
                 baseFragment = new ProfileFragment();
                 break;
+            case SETTINGS:
+                baseFragment = new SettingsFragment();
+                break;
         }
         return baseFragment;
     }
@@ -270,6 +271,9 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 break;
             case PROFILE:
                 mTitle = MY_NAME;
+                break;
+            case SETTINGS:
+                mTitle = getString(R.string.drawer_item_2);
         }
         restoreActionBar();
     }

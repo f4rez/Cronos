@@ -29,7 +29,7 @@ public class Decode {
         ArrayList<Question> list = new ArrayList<>();
         if (in.equals("error")) return list;
         JSONArray json;
-        Log.d("Decode","string: " + in);
+        Log.d(MainActivity.TAG,"string: " + in);
         try {
             json = new JSONArray(in);
             for (int i = 0; i < json.length(); i++) {
@@ -74,7 +74,9 @@ public class Decode {
             }
             startpageMessage.games = gamesOverviews;
             JSONArray challenge = json.getJSONArray("Challenges");
+            Log.d(MainActivity.TAG,"Challenges: " + challenge.length());
             for (int i = 0; i < challenge.length(); i++) {
+                Log.d(MainActivity.TAG,"Challenges: " + challenge.length());
                 JSONObject object = (JSONObject) challenge.get(i);
                 Challenge q = new Challenge(object.getString("OppID"),object.getString("OppName"));
                 challenges.add(q);

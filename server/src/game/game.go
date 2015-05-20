@@ -657,9 +657,10 @@ func GetStartPageMessage(w http.ResponseWriter, r *http.Request) {
 		f.OppName = challenge.OppName
 		f.OppID = challenge.OppID
 		chall[i] = *f
+
 	}
 	startMess.Challenges = chall
-
+	c.Infof("Challenges %v", chall)
 	m, err := json.Marshal(startMess)
 	fmt.Fprintf(w, string(m))
 

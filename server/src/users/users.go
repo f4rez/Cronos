@@ -11,8 +11,8 @@ import (
 
 type Users struct {
 	Oid, Name, Picture, Token, RealName string
-	FriendList                          []Friend       `json:"-"`
-	ChallengeList                       []Challange    `json:"-"`
+	FriendList                          []Friend `json:"-"`
+	ChallengeList                       []Challange
 	Games                               []int          `json:"-"`
 	FinishedGames                       []FinishedGame `json:"-"`
 	Won, Draw, Lost, Level              int

@@ -131,7 +131,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
 
 
     public void showMatches(String jsonString) {
-        Log.d("mainActivity", " ENterd showMatches json = " + jsonString);
+
         if (swipeLayout != null) swipeLayout.setRefreshing(false);
         Decode d = new Decode();
         StartpageMessage startpageMessage = d.decodeGamesOverview(jsonString);
@@ -167,6 +167,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
 
                 });
                 mListView.setAdapter(mAdapter);
+                Log.d(MainActivity.TAG,"Chalenges len = " + challenges.size());
                 if (challenges.size() > 0) {
                     showChallengeDialog(challenges.get(0));
                 }
