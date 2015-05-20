@@ -62,7 +62,7 @@ public class Request extends AsyncTask<String, Void, String> {
                 return net.friend("challenge", string[1]);
             case "GetGame":
                 return net.game(string[1]);
-            case "AnswerChallange":
+            case "AnswerChallenge":
                 return net.answerChallange(string[1],string[2]);
         }
         return "error";

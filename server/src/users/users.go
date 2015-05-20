@@ -11,8 +11,8 @@ import (
 
 type Users struct {
 	Oid, Name, Picture, Token, RealName string
-	FriendList                          []Friend `json:"-"`
-	ChallengeList                       []Challange
+	FriendList                          []Friend       `json:"-"`
+	ChallengeList                       []Challange    `json:"-"`
 	Games                               []int          `json:"-"`
 	FinishedGames                       []FinishedGame `json:"-"`
 	Won, Draw, Lost, Level              int
@@ -222,13 +222,11 @@ func ChallengeFriend(c appengine.Context, mOid, fOid string) error {
 	u := user.Current(c)
 	mUser, mKey, err := GetUser(c, fOid)
 	if err != nil {
-		mUser.ChallengeFrom(mOid, u.String())
-		mUser.UpdateUser(c, mKey)
-		return nil
-	} else {
 		return err
 	}
-
+	mUser.ChallengeFrom(mOid, u.String())
+	mUser.UpdateUser(c, mKey)
+	return nil
 }
 
 func findUsersByName(c appengine.Context, name string) ([]Users, error) {
