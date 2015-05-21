@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 
 import se.zinister.chronos.MainActivity;
+import se.zinister.chronos.Net.Request;
 import se.zinister.chronos.R;
 
 
@@ -46,10 +47,6 @@ public class FriendFragment extends  BaseFragment{
         int won = extras.getInt("won");
         int draw = extras.getInt("draw");
         int lost = extras.getInt("lost");
-        final boolean isFriend = extras.getBoolean("isFriend");
-
-        removeStatusbar();
-
         Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
         ImageView imageView = (ImageView) rootView.findViewById(R.id.profilePicture);
         TextView nametextview = (TextView) rootView.findViewById(R.id.Name);
@@ -104,18 +101,21 @@ public class FriendFragment extends  BaseFragment{
                     @Override
                     public void onClick(View v) {
                        showFabAndRemovetoolbar(toolbar,fab);
+                        new Request(f, ((MainActivity)getActivity()).net).execute("FriendChallenge", friendID);
                     }
                 });
                 addFriend.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showFabAndRemovetoolbar(toolbar, fab);
+                        new Request(f, ((MainActivity)getActivity()).net).execute("FriendAdd", friendID);
                     }
                 });
                 removeFriend.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showFabAndRemovetoolbar(toolbar,fab);
+                        new Request(f, ((MainActivity)getActivity()).net).execute("FriendRemove", friendID);
                     }
                 });
 
@@ -137,6 +137,10 @@ public class FriendFragment extends  BaseFragment{
         Toast.makeText(getActivity(), "Challenged friend", Toast.LENGTH_SHORT).show();
     }
 
+    public void removedFriend() {
+        Toast.makeText(getActivity(), "Removed friend", Toast.LENGTH_SHORT).show();
+    }
+
     private void showToolBarAndRemoveFab(final View toolbar, final View fab) {
         int cx = (fab.getLeft() + fab.getRight()) / 2;
         int cy = (fab.getTop() + fab.getBottom()) / 2;
@@ -154,7 +158,7 @@ public class FriendFragment extends  BaseFragment{
             }
         });
         toolbar.setVisibility(View.VISIBLE);
-        revealAnimator.setDuration(2000);
+        revealAnimator.setDuration(500);
         revealAnimator.start();
 
     }
@@ -175,29 +179,12 @@ public class FriendFragment extends  BaseFragment{
 
             }
         });
-        revealAnimator.setDuration(2000);
+        revealAnimator.setDuration(500);
         toolbar.setVisibility(View.VISIBLE);
         revealAnimator.start();
 
 
     }
 
-    private int getRelativeLeft(View myView) {
-        if (myView.getParent() == myView.getRootView())
-            return myView.getLeft();
-        else
-            return myView.getLeft() + getRelativeLeft((View) myView.getParent());
-    }
-
-    private int getRelativeTop(View myView) {
-        if (myView.getParent() == myView.getRootView())
-            return myView.getTop();
-        else
-            return myView.getTop() + getRelativeTop((View) myView.getParent());
-    }
-
-    public void removeStatusbar() {
-        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.white_transperent));
-    }
 
 }

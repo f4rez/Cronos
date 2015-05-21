@@ -68,7 +68,7 @@ public class MatchFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                int points = checkAnswer();
+                int points = checkAnswer(fab);
                 if (points > -1) {
                     MatchActivity m = (MatchActivity) getActivity();
 
@@ -109,7 +109,7 @@ public class MatchFragment extends BaseFragment {
     }
 
 
-    public int checkAnswer() {
+    public int checkAnswer(View fab) {
         String id = String.valueOf(gameID);
         switch(mAdapter.getCount()) {
             case 2:
@@ -117,6 +117,7 @@ public class MatchFragment extends BaseFragment {
                     addNextQuestion(2);
                 } else {
                     flashColor();
+                    fab.setVisibility(View.INVISIBLE);
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"1","0","0","0","0");
                     return 0;
@@ -127,6 +128,7 @@ public class MatchFragment extends BaseFragment {
                     addNextQuestion(3);
                 } else {
                     flashColor();
+                    fab.setVisibility(View.INVISIBLE);
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","1","0","0","0");
                     return 1;
@@ -136,6 +138,7 @@ public class MatchFragment extends BaseFragment {
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3))){
                     addNextQuestion(4);
                 } else {
+                    fab.setVisibility(View.INVISIBLE);
                     flashColor();
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","1","0","0");
@@ -146,6 +149,8 @@ public class MatchFragment extends BaseFragment {
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3),mAdapter.getItem(4))){
                     addNextQuestion(5);
                 } else {
+                    fab.setVisibility(View.INVISIBLE);
+
                     flashColor();
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","2","1","0");
@@ -155,10 +160,12 @@ public class MatchFragment extends BaseFragment {
             case 6:
                 if( allCorrect(mAdapter.getItem(0),mAdapter.getItem(1), mAdapter.getItem(2), mAdapter.getItem(3),mAdapter.getItem(4),mAdapter.getItem(5))){
                     Request r = new Request(this,matchActivity.net);
+                    fab.setVisibility(View.INVISIBLE);
                     r.execute("AnswerQuestions",id,"2","2","2","2","2");
                     showYears();
                     return 6;
                 } else {
+                    fab.setVisibility(View.INVISIBLE);
                     flashColor();
                     Request r = new Request(this,matchActivity.net);
                     r.execute("AnswerQuestions",id,"2","2","2","2","1");
