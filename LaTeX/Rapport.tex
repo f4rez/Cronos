@@ -333,34 +333,27 @@ Kodsnutten ovan är ett exempel på en justering som skedde om en spelare hade s
 \subsection{Applikationens design}
 
 \subsubsection{Genomgång av applikationen}
-Gör en genomgång av hur aplikationen fungerar med en massa bilder som även har förklaringar till sig.
+Gör en genomgång av hur applikationen fungerar med en massa bilder som även har förklaringar till sig.
 
 
 \section{Resultat}
 Denna sektion beskriver ett antal utvärderingar som gjordes av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet.  
 
-Här ska det skrivas MDI-utvärderingar
-\begin{itemize}
-\item Streamlined cognitiv walkthrough (SCW)
-\item Think aloud utvärdering
-\item Heurisitc evaluation (HE)
-\end{itemize}
-
 \subsection{Utvärderingar och deras användbarhet}
 Utvärderingar är nyttiga verktyg för att hitta problem eller för att hitta områden som är lämpade för vidare utveckling \cite[sid 226--228]{benyon2010designing}. Utvärderingarna vi har valt att utföra är till för att granska produkten vi har utvecklat för att se om den möter kraven vi ställer på den. Vi hoppades att utvärderingarna skulle ge oss en bild av applikationens användbarhet och effektivitet samt se till att den var tillmötesgående för användaren. Ur en designsynpunkt var vi intresserade av att se om applikationen fyller sitt syfte, om den är rolig samt om den engagerar användaren.
 
 \subsection{Kognitiv Genomgång}
-En \textit{Kognitiv Genomgång} \cite[sid 2--8]{cw} är en utvärderingsmetod som är till för att avgöra problem med användbarhet i ett interaktivt datorsystem. Utvärderingen går ut på att utvecklarna traverserar systemet analytiskt givet ett antal specifika uppgifter användarna förväntas utföra i systemet. Den kognitiva genomgången utvärderar vilken sekvens av steg som är nödvändiga för att användaren ska kunna utföra en uppgift. Användarnas sekvens av steg ställs sedan i relation till utvecklarnas förväntade sekvens för att utföra samma uppgift. Detta för att se skillnader i sekvenserna och därmed upptäcka problem med den aktuella designen.
-Innan utvärderingen kan utföras måste utvecklarna bestämma fyra faktorer:
+En \textit{Kognitiv Genomgång} \cite{cogniwalk} är en utvärderingsmetod som är till för att avgöra problem med användbarhet i ett interaktivt datorsystem. Utvärderingen går ut på att utvecklarna traverserar systemet analytiskt givet ett antal specifika uppgifter användarna förväntas utföra i systemet. Den kognitiva genomgången utvärderar vilken sekvens av steg som är nödvändiga för att användaren ska kunna utföra en uppgift. Användarnas sekvens av steg jämförs sedan med utvecklarnas förväntade sekvens för att utföra samma uppgift. Detta för att se skillnader i sekvenserna och därmed upptäcka problem med den aktuella designen.
+Innan utvärderingen kan utföras måste utvecklarna göra en komplett lista med steg för att lyckas göra varje uppgift korrekt. Förutom detta behöver utvecklarna bestämma fyra faktorer:
 \begin{enumerate}
 \item Vilka kommer använda systemet?\\
-Ett exempel på en fråga som är hjälpsam vid ett sådant val är exempelvis: "Vilken typ av bakgrundskunskap behöver användarna för att kunna använda systemet?"\\
+Ett exempel på en fråga som är hjälpsam vid ett sådant val är exempelvis: "Vilken typ av bakgrundskunskap behöver användarna för att kunna använda systemet?"
 \item Vilka uppgifter i systemet ska analyseras?
 \item Vilken är den rätta ordning av handlingar för att utföra uppgiften?
 \item Definiera gränssnittet.
 \end{enumerate}
 
-När detta är fastställt kan utvecklarna börja med utvärderingen. Under analysens gång ska utvecklarna ställa följande frågor i relation till varje vald uppgift:
+När detta är fastställt kan utvecklarna börja med utvärderingen. Under utvärderingens gång ska utvecklarna ställa följande frågor vid varje vald uppgift:
 \begin{enumerate}
 \item Kommer användarna försöka uppnå rätt mål?
 \item Kommer användarna märka att rätt beslut är tillgängligt?
@@ -368,13 +361,10 @@ När detta är fastställt kan utvecklarna börja med utvärderingen. Under anal
 \item Om rätt beslut har tagits, kommer användaren förstå att hen har gjort framsteg i att uppnå målet?
 \end{enumerate}
 
-Exempel på frågor till varje vald uppgift är: \\
-Är det troligt att användarna utför "rätt" handling för varje uppgift? Med andra ord: förväntar sig utvecklarna att användarna ska göra just den handlingen vid uppgiften?\\
-Om användaren gjort "rätt" val i uppgiften, vet de då att detta var rätt val? Får användaren någon feedback som tyder på detta?\\
-
 Efter utvärderingen kan utvecklarna analysera den data som samlats in och skapa en ny design eller alternera den gamla för att öka användbarheten.
 
-\subsubsection{Kognitiv Genomgång av Chronos} 
+\subsubsection{Kognitiv genomgång av Chronos}
+
 Uppgifterna vi valde att använda i den kognitiva genomgången var:
 
 
@@ -387,9 +377,9 @@ Utvecklarna ska försöka hålla sin aktivitet något i bakgrunden för att inte
 
 
 \subsection{Heuristic Evalutation}
-En \textit{Heuristic Evalutation} \cite[sid 228--229]{heuristic} är en utvärderingsmetod för att fastställa problem i användbarhet hos ett system, problemens storlek samt vart de finns. Den här typen av utvärdering är till för att fånga upp de problem i användbarhet som inte upptäcktes i de tidiga utvärderingarna, exempelvis den kognitiva genomgången.
+En \textit{Heuristic Evalutation} \cite[sid 228--229]{benyon2010designing} är en utvärderingsmetod för att fastställa problem i användbarhet hos ett system, problemens storlek samt vart de finns. Den här typen av utvärdering är till för att fånga upp de problem i användbarhet som inte upptäcktes i de tidiga utvärderingarna, exempelvis den kognitiva genomgången.
 Utvärderingen går till på så sätt att en grupp människor som har någon utbildning i Människa och Datorinteraktion utvärderar en föreslagen design av ett system. Utvärderarna traverserar systemet och dess design och noterar problem som de finner. Om problem finns ger utvärderarna förslag på lösningar om det finns några. Utvecklarna kan även ge personerna som utvärderar en skala på hur allvarliga de funna problemen är. Genom detta kan utvecklarna få en bild av vilka problem som borde prioriteras vid en eventuell ny design.\\
-En stor del av utvärderingsgruppen var elever från Civilingenjörsprogrammet - IT på Uppsala Universitet som alla hade gått en kurs i Människa och Datorinteraktion. Vi valde även att inkludera en person som hade gått en separat utbildning i Apputveckling och grafisk design. 
+En stor del av utvärderingsgruppen var elever från Civilingenjörsprogrammet i IT på Uppsala Universitet som alla hade gått en kurs i Människa och Datorinteraktion. Vi valde även att inkludera en person som hade gått en separat utbildning i Apputveckling och grafisk design. 
 
 \subsubsection{Heuristic Evaluation av Chronos}
 
@@ -397,7 +387,7 @@ En stor del av utvärderingsgruppen var elever från Civilingenjörsprogrammet -
 \subsection{Utvärdering}
 Planen var att en fungerande alfa eller betaversion av systemet skulle färdigställas en rimlig tid innan projektet avslutas. I den här versionen skulle användare ha möjlighet att ge feedback och att testa applikationen. Tack vare den feedback vi fick från användarna så skulle så många fel som möjligt justeras innan den färdiga versionen släpptes.
 
-Gränssnittet och användandet av applikationen skulle också utvärderas med hjälp av \textit{Think Aloud } \cite{thinkaloud} och en \textit{Heuristic Evaluation } \cite{heuristic}.
+Gränssnittet och användandet av applikationen skulle också utvärderas med hjälp av \textit{Think Aloud},en \textit{Kognitiv Genomgång} och en \textit{Heuristic Evaluation}.
 
 \section{Diskussion}
 Denna sektion diskuteras det vad som hade kunnat göras bättre under utvecklingen. Exempel på detta kunde exempelvis vara om det fanns alternativa vägar eller verktyg som hade varit bättre, effektivare, enklare att använda. Det beskrivs även framtida utvecklingar i det visuella och applikationens prestanda och säkerhet.
