@@ -245,7 +245,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
             @Override
             public void onShow(DialogInterface dialog) {
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    // call something for API Level 11+
+                    // call something for API Level 11+te
                     revealShow(dialogView, true, null);
                 }
             }

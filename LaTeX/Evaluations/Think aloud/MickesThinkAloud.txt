@@ -1,0 +1,10 @@
+* Logga in
+
+
+* Starta en match mot slumpad spelare 
+
+* Spela en match
+
+* Sök och lägg till en vän
+* Starta en match mot en vän
+* Spela klart en match mot en vän
