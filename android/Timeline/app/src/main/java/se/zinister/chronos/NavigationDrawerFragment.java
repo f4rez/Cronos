@@ -99,10 +99,10 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RelativeLayout toolbar = (RelativeLayout) inflater.inflate(
+        RelativeLayout drawer = (RelativeLayout) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
 
-        mDrawerListView = (ListView) toolbar.findViewById(R.id.NavBarListView);
+        mDrawerListView = (ListView) drawer.findViewById(R.id.NavBarListView);
         DrawerAdapter drawerAdapter = new DrawerAdapter(getActivity(), R.id.NavBarListView);
         DrawerItem d1 = new DrawerItem("", getString(R.string.drawer_item_1), R.drawable.ic_action_play);
         DrawerItem d2 = new DrawerItem("", getString(R.string.drawer_item_2), R.drawable.ic_action_settings);
@@ -122,7 +122,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        Button logOut = (Button)toolbar.findViewById(R.id.logoutButton);
+        Button logOut = (Button)drawer.findViewById(R.id.logoutButton);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,8 +132,8 @@ public class NavigationDrawerFragment extends Fragment {
                 startActivityForResult(n, MainActivity.LOGIN);
             }
         });
-
-        return toolbar;
+        drawer.setFitsSystemWindows(true);
+        return drawer;
     }
 
     public boolean isDrawerOpen() {

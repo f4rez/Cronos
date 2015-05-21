@@ -23,10 +23,15 @@
     <string name="explain_direction_of_question">Sortera in händelsen i tidslinjen genom att flytta in den gröna delaren på rätt plats, tidigaste händelsen först</string>
     <string name="info">info</string>
     <string name="put_event_in_order">Placera in händelsen i ordning</string>
-    <string name="no_matches">Du har inga matcher igång just nu, klicka på den gröna knappen i högra för att slumpa en match eller utmana en vän</string>
+    <string name="no_matches">Du har inga matcher igång just nu, klicka på knappen i det högra hörnet för att slumpa en match eller utmana en vän</string>
     <string name="hello_pic">hello pic</string>
     <string name="accept_challenge">Acceptera</string>
     <string name="deny_challenge">Tacka nej</string>
+    <string name="challenge">Utmana</string>
+    <string name="add_as_friend">Lägg till som vän</string>
+    <string name="remove_friend">Ta bort vän</string>
+    <string name="your_matches">Dina matcher</string>
+    <string name="your_friends">Dina vänner</string>
 
 
 </resources>

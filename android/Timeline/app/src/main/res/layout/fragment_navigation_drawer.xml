@@ -34,7 +34,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@color/primary_color"
+        android:background="@color/accent_color"
         android:textColor="@color/white"
         android:text="@string/log_out"/>
 

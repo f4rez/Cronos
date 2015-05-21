@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import se.zinister.chronos.Items.Game;
 import se.zinister.chronos.MainActivity;
@@ -40,7 +41,11 @@ public class MatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        mToolbar.setFitsSystemWindows(true);
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
         }

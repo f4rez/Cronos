@@ -4,14 +4,15 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        >
 
         <include
             android:id="@+id/toolbar_actionbar"
@@ -34,8 +35,8 @@
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
         app:layout="@layout/fragment_navigation_drawer"
-        tools:layout="@layout/fragment_navigation_drawer" />
+        tools:layout="@layout/fragment_navigation_drawer"
+        android:fitsSystemWindows="true"/>
 </android.support.v4.widget.DrawerLayout>
 

@@ -2,13 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:text="@string/your_matches"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:textStyle="italic"
+        android:layout_marginLeft="16dp"/>
 
     <WebView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:id="@+id/profileWebView">
     </WebView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:text="@string/your_friends"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:textStyle="italic"
+        android:layout_marginLeft="16dp"/>
 
     <GridView
         android:layout_width="match_parent"
@@ -16,11 +36,11 @@
         android:id="@+id/profileGridView"
         android:columnWidth="100dp"
         android:numColumns="auto_fit"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
         android:verticalSpacing="20dp"
         android:horizontalSpacing="10dp"
         android:stretchMode="columnWidth"
         android:gravity="center">
     </GridView>
-
-
 </LinearLayout>
