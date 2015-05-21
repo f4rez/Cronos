@@ -5,18 +5,21 @@
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="actionBarStyle">@style/MyActionBar</item>
         <item name="android:windowActionBar">false</item>
-
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
 
         <!-- Set AppCompat’s color theming attrs -->
         <item name="colorPrimary">@color/primary_color</item>
 
         <item name="colorPrimaryDark">@color/primary_darkercolor</item>
-        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
     <!-- The rest of your attributes -->
     </style>
     <style name="MyActionBar"
-        parent="@style/Widget.AppCompat.ActionBar">
+        parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="displayOptions">showHome</item>
         <item name="background">@color/primary_color</item>
     </style>
+
+
 </resources>

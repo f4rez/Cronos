@@ -343,7 +343,7 @@ public class StartPageFragment extends BaseFragment implements SwipeRefreshLayou
         if (challenges != null && challenges.size() > 0) {
             challenges.remove(0);
             if (challenges.size() > 0) {
-                showChallengeDialog(challenges.get(1));
+                showChallengeDialog(challenges.get(0));
             }
         }
     }

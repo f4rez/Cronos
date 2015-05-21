@@ -1,22 +1,30 @@
 package se.zinister.chronos.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import se.zinister.chronos.MainActivity;
-import se.zinister.chronos.Net.Request;
 import se.zinister.chronos.R;
 
 
@@ -30,7 +38,7 @@ public class FriendFragment extends  BaseFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.friend_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.friend_fragment, container, false);
         Bundle extras = getActivity().getIntent().getExtras();
         byte[] b = extras.getByteArray("FriendPicture");
         String name = extras.getString("FriendName");
@@ -39,6 +47,8 @@ public class FriendFragment extends  BaseFragment{
         int draw = extras.getInt("draw");
         int lost = extras.getInt("lost");
         final boolean isFriend = extras.getBoolean("isFriend");
+
+        removeStatusbar();
 
         Bitmap bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
         ImageView imageView = (ImageView) rootView.findViewById(R.id.profilePicture);
@@ -80,16 +90,35 @@ public class FriendFragment extends  BaseFragment{
         webView.getMeasuredWidth();
         webView.loadDataWithBaseURL("file:///android_asset/", content, "text/html", "utf-8", null);
 
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(MainActivity.DEBUG) Log.d(MainActivity.TAG,"isFriend = "+ isFriend);
-                if(isFriend) {
-                    new Request(f, ((MainActivity) getActivity()).net).execute("FriendChallenge", friendID);
-                } else {
-                    new Request(f, ((MainActivity) getActivity()).net).execute("FriendAdd", friendID);
-                }
+                TextView challenge = (TextView) rootView.findViewById(R.id.challengeFriend);
+                TextView addFriend = (TextView) rootView.findViewById(R.id.addFriend);
+                TextView removeFriend = (TextView) rootView.findViewById(R.id.removeFriend);
+                final LinearLayout toolbar = (LinearLayout) rootView.findViewById(R.id.friendToolbar);
+
+                showToolBarAndRemoveFab(toolbar,fab);
+                challenge.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       showFabAndRemovetoolbar(toolbar,fab);
+                    }
+                });
+                addFriend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showFabAndRemovetoolbar(toolbar, fab);
+                    }
+                });
+                removeFriend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showFabAndRemovetoolbar(toolbar,fab);
+                    }
+                });
+
             }
         });
 
@@ -106,6 +135,69 @@ public class FriendFragment extends  BaseFragment{
     }
     public void challengedFriend() {
         Toast.makeText(getActivity(), "Challenged friend", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showToolBarAndRemoveFab(final View toolbar, final View fab) {
+        int cx = (fab.getLeft() + fab.getRight()) / 2;
+        int cy = (fab.getTop() + fab.getBottom()) / 2;
+        int maxRadius =  Math.max(toolbar.getWidth(), toolbar.getHeight());
+        int minRadius =  Math.max(fab.getWidth(), fab.getHeight());
+        Animator revealAnimator = ViewAnimationUtils.createCircularReveal(toolbar,
+                cx, cy, minRadius, maxRadius);
+
+        revealAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationEnd(animation);
+                fab.setVisibility(View.INVISIBLE);
+
+            }
+        });
+        toolbar.setVisibility(View.VISIBLE);
+        revealAnimator.setDuration(2000);
+        revealAnimator.start();
+
+    }
+    private void showFabAndRemovetoolbar(final View toolbar, final View fab) {
+        int cx = (fab.getLeft() + fab.getRight()) / 2;
+        int cy = (fab.getTop() + fab.getBottom()) / 2;
+        int maxRadius =  Math.max(toolbar.getWidth(), toolbar.getHeight());
+        int minRadius =  Math.max(fab.getWidth(), fab.getHeight());
+        Animator revealAnimator = ViewAnimationUtils.createCircularReveal(toolbar,
+                cx, cy, maxRadius, minRadius);
+
+        revealAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                fab.setVisibility(View.VISIBLE);
+                toolbar.setVisibility(View.INVISIBLE);
+
+            }
+        });
+        revealAnimator.setDuration(2000);
+        toolbar.setVisibility(View.VISIBLE);
+        revealAnimator.start();
+
+
+    }
+
+    private int getRelativeLeft(View myView) {
+        if (myView.getParent() == myView.getRootView())
+            return myView.getLeft();
+        else
+            return myView.getLeft() + getRelativeLeft((View) myView.getParent());
+    }
+
+    private int getRelativeTop(View myView) {
+        if (myView.getParent() == myView.getRootView())
+            return myView.getTop();
+        else
+            return myView.getTop() + getRelativeTop((View) myView.getParent());
+    }
+
+    public void removeStatusbar() {
+        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.white_transperent));
     }
 
 }

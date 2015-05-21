@@ -25,9 +25,60 @@
         android:layout_alignRight="@+id/profilePicture"
         android:id="@+id/fab"
         android:src="@drawable/ic_action_new"
-        fab:fab_colorNormal="@color/primary_color"
-        fab:fab_colorPressed="@color/primary_darkercolor"
-        fab:fab_colorRipple="@color/accent_color_ea" />
+        fab:fab_colorNormal="@color/accent_color"
+        fab:fab_colorPressed="@color/accent_color_dark"
+        fab:fab_colorRipple="@color/accent_color_dark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/friendToolbar"
+        android:background="@color/accent_color"
+        android:layout_below="@+id/profilePicture"
+        android:layout_marginTop="-40dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="invisible">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/challengeFriend"
+            android:textColor="@color/white"
+            android:text="@string/challenge"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ripple"
+            android:drawableTop="@drawable/ic_action_accept"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addFriend"
+            android:textColor="@color/white"
+            android:text="@string/add_as_friend"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ripple"
+            android:drawableTop="@drawable/ic_action_new"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeFriend"
+            android:textColor="@color/white"
+            android:text="@string/remove_friend"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ripple"
+            android:drawableTop="@drawable/ic_action_remove"/>
+
+
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
