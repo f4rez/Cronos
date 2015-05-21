@@ -60,6 +60,8 @@ public class Request extends AsyncTask<String, Void, String> {
                 return net.friend("add", string[1]);
             case "FriendChallenge":
                 return net.friend("challenge", string[1]);
+            case "FriendRemove":
+                return net.friend("remove", string[1]);
             case "GetGame":
                 return net.game(string[1]);
             case "AnswerChallenge":
@@ -104,8 +106,12 @@ public class Request extends AsyncTask<String, Void, String> {
                 f2.addedFriend();
                 break;
             case "FriendChallenge":
-                //ChallengeFriendFragment f1 = (ChallengeFriendFragment) caller;
-                //f1.challengedFriend();
+                FriendFragment f1 = (FriendFragment) caller;
+                f1.challengedFriend();
+                break;
+            case "FriendRemove":
+                FriendFragment f3 = (FriendFragment) caller;
+                f3.removedFriend();
                 break;
             case "StartMessage":
                 StartPageFragment pageFragment = (StartPageFragment) caller;

@@ -330,11 +330,70 @@ downDiff = int((1.0-(userRatio*questionRatio))*10.0)
 
 Kodsnutten ovan är ett exempel på en justering som skedde om en spelare hade svarat rätt på den aktuella frågan. userRatio var ett värde mellan 0-1 på spelarens nivå (0 är nybörjare, 1 är avancerad). questionratio var ett värde mellan 0-1 på frågans nivå. downDiff var det värde som frågans nivå sänktes med (mellan 0-10). 
 
+\pagebreak
 \subsection{Applikationens design}
 
 \subsubsection{Genomgång av applikationen}
 Gör en genomgång av hur applikationen fungerar med en massa bilder som även har förklaringar till sig.
 
+
+\begin{enumerate}
+\item \large \textup{Inloggningsvy}
+Första gången en användare startar applikationen eller av någon anledning har blivit utloggad möts hen av inloggningsvyn. Det är en webbsida som tillhandahålls av Google App Engine. Den innehåller primärt två textfält och en knapp för att logga in. När användaren fyllt i sina inloggningsuppgifter och klickat på logga in, sköter Google allt med inloggningen och vår server får ett unikt id för användaren och om det är första gången hen loggar in skapas en egen användare struktur som sparas in i databasen. När detta är klart eller om användaren redan var inloggad stängs aktiviteten ner och istället öppnas matchvyn(2) upp. 
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_login} 
+	\end{center}
+	\caption{\textit{Inloggningsvy}}
+\end{figure}
+
+\pagebreak
+\item \large \textup{Startsida - matcher}
+\linebreak
+Denna vy är huvudvy i hela applikationen. Det är här användaren ser vilka matcher de har igång eller har avslutat, de kan även starta en ny match eller söka efter en spelare att utmana i denna vy. Det finns fyra olika handlingar som användaren kan göra här. De kan klicka på hamburgarmenyn uppe i vänstra hörnet för att öppna navigationsvyn. De kan klicka på en av de matcher de har igång för att spela en ny omgång eller titta på matchstatistiken detta leder till matchstatistikvyn(3). De kan dra med fingret neråt på skärmen för att uppdatera den nuvarande vyn för att se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB), FAB är en del i Googles Material Design ~\cite{MaterialDesign} och är en knapp som alltid ligger överst och utgör huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(NUMMER PÅ STYCKE SOM VISAR DETTA). De kan möta en slumpad motståndare(Slumpad motståndare) detta stänger ner dialogen som öppnades av FAB-en och en ny match finns i listan av matcher. De kan också söka efter en spelare(Sök spelare), då byts vyn ut mot en sökvy(NUMMER SOM VISAR DETTA). 
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_matches} 
+	\includegraphics[width=0.4\textwidth]{app_new_match} 
+	\caption{\textit{Till vänster är startsidan i applikationen och till höger är dialogen som öppnas när man klickar på FAB-en}}
+	\end{center}
+\end{figure}
+
+
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_drawer} 
+	\end{center}
+	\caption{\textit{Applikationens navigationsvy}}
+\end{figure}
+
+
+\begin{figure}[H]
+	\begin{centering}
+	\includegraphics[width=\textwidth]{app_match} 
+	\end{centering}
+	\caption{\textit{Sceenshot på en match}}
+\end{figure}
+
+
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_profile_fab} 
+	\end{center}
+	\caption{\textit{Profilsida för en användare}}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_profile_toolbar} 
+	\end{center}
+	\caption{\textit{Profilsida för en användare där toolbar syns}}
+\end{figure}
+
+\end{enumerate} 
 
 \section{Resultat}
 Denna sektion beskriver ett antal utvärderingar som gjordes av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet.  
