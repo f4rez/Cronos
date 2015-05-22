@@ -1,0 +1,51 @@
+Denna person ombads att utvärdera applikationens 
+
+* kontroll
+Jag vet inte riktigt vad man ska komma. Finns inte så många alternativ. Lätt att navigera sig ty det är få alternativ. Det är en standard design, simpel. Straight forward hur man ska navigera sig förutom "plus"-ikonen. Den är ganska rakt framåt, men dom kan betyda många saker vilket är dåligt. Det är enklet med ett plus men det är tydligare med knappar för varje 
+
+* synlighet 
+Boxarna för matcher, rundorna och korten borde vara specifika. Typ med fäger, pilar eller liknande så man vet att man kommer till det stället om man trycker där. 
+Ställningen vid en runda, vilken omgång det är, och poängställning borde poppa mer för varje match.
+Det kanske borde vara en färg om det är ens tur och kanske nån annan färg om det är nån annans tur.
+Bilderna för spelarna i en match borde vara runda, personlig åsikt bara. Men om ni behåller runda knappen så ska ni ha bilderna 
+
+
+* Stil  
+Borde vara lite klarare med boxar och pilar etc. Färgerna var bra, flödet var också riktigt bra!
+Appens stil var stilren etc.
+
+
+* Om designen var konsekvent
+Konsekvent design med symboler och knappar. Bra färgsättning, konsekvent sådan.  
+Varej spelare borde ha en bar så att designen blir konsekvent. Kanske för varje spelare ha en bar med ikonerna "en gubbe med ett plus" "ett svärd (utmana)" etc.
+Samma knappar vid varje vy. 
+
+
+
+Övrigt:
+
+* Hamburgarmenyn är överflödig och man når den inte heller. Om den ska vara kvar så ska det vara klarare att man kan swipa ut den. Hellre en tab-bar. Eller om menyn ska ligga i högra hörnet. Där man kan nå den. 
+* Ha en knapp där det står starta en match i mitten istället för att ha en lång text som beskriver vad man ska göra. Altidd ha den knappen på samma ställe. Ha den högst upp. 
+ - Kanske ska ha vid knappen starta match så får man: slumpad motståndare, spela mot en vän, Sök person/spelare.  
+* När man söker efter en spelare borde varje spelare ha en bar med alternativen som finns på "plusset". 
+* Man kanske alltid ska se en tab-bar är man ser "inställningar min profil etc"
+* Köpa bort annonser kan ju finnas vid profil eller liknande
+* Istället för hamburgarmenyn så kanske en infoknapp och en bakåtknapp alltid ska visas på skärmen. Blir mycket smidigare för användare då.
+* Logga ut knappen borde ligga under "min profil" typ längst ner. 
+
+* Skippa cirkeldiagram. Det är fult och dåligt. Påminner om excell.
+* Statitstiken på en spelares sida borde inte vara cirkeldiagram. Kolla typ hur man presenterar i boxning eller liknande. Kanske tre rader med vinst, förlust, oavgjort
+* Kanske ska finnas något slags index också, typ anlat stjärnor av 5. Rating typ.
+
+
+
+* Vid matchvyn, skriv med en grå text högst upp med en pil typ. Skapa lite utrymma högst upp och skriv "Dra ner för att uppdatera" eller liknande.
+* För mycket text vid matchvyn. LIte oklart och plåttrigt vid 
+* Dom som är avslutade borde vara lite fadade
+* Minska mängden text det är för mycket.
+* Förstora rubrikerna "Din tur" och "motståndarens tur". Gör dessa rubriker större och då behöver man inte skriva att det är ens tur vid varje runda (kort). Sätt en pil vid varje runda så det blir enkelt att navigera till varej runda.
+* 
+ 
+
+ 
+
