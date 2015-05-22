@@ -337,30 +337,30 @@ Kodsnutten ovan är ett exempel på en justering som skedde om en spelare hade s
 \subsubsection{Genomgång av applikationen}
 Gör en genomgång av hur applikationen fungerar med en massa bilder som även har förklaringar till sig.\\
 
-\large \textup{1. Inloggningsvy}
+\large \textup{1. Inloggningsvy}\\
 Första gången en användare startar applikationen eller av någon anledning har blivit utloggad möts hen av inloggningsvyn. Det är en webbsida som tillhandahålls av Google App Engine. Den innehåller primärt två textfält och en knapp för att logga in. När användaren fyllt i sina inloggningsuppgifter och klickat på logga in så sköter Google allt som har med inloggningen att  göra. Vår server får sedan ett unikt id för användaren och om det är första gången hen loggar in så skapas en egen användarstruktur som sparas in i databasen.
 När detta är klart eller om användaren redan var inloggad stängs aktiviteten ner och istället öppnas matchvyn(2) upp. 
 \begin{figure}[H]
-	\vspace{-5pt}
 	\begin{centering}
 	\includegraphics[width=0.4\textwidth]{app_login}\\ 
 	\end{centering}
 	\caption{\textit{Inloggningsvy}}
-	\vspace{-10pt}
 \end{figure}
 
 
 \pagebreak
-\large \textup{2. Startsida - matcher}\\
-Denna vy är huvudvy i hela applikationen. Det är här användaren ser vilka matcher de har igång eller har avslutat, de kan även starta en ny match eller söka efter en spelare att utmana i denna vy. Det finns fyra olika handlingar som användaren kan göra här. De kan klicka på hamburgarmenyn uppe i vänstra hörnet för att öppna navigationsvyn. De kan klicka på en av de matcher de har igång för att spela en ny omgång eller titta på matchstatistiken detta leder till matchstatistikvyn(3). 
-\begin{wrapfigure}{o}{0.5\textwidth}
+\large \textup{2. Startsida - Matcher}\\
+Matchvyn kan lättast beskrivas som startsidan i hela applikationen. Det är här användaren ser vilka matcher hen har pågående eller har avslutat. I denna vy kan Användaren kan även starta en ny slumpad match samt söka efter en spelare eller vänner att utmana. 
+Det finns fyra olika handlingar som användaren kan göra här vid denna sida. De kan klicka på hamburgarmenyn ($\equiv$) uppe i vänstra hörnet för att öppna navigationsvyn. De kan även klicka på en av de matcher de har pågående för att spela en ny omgång eller titta på matchens tillhörande matchstatistik. Om använder väljer att klicka på en av matcherna skickas hen till matchstatistikvyn (3).
+\begin{figure}[H]
 \begin{center}
-	\vspace{-15pt}
 	\includegraphics[width=0.4\textwidth]{app_matches} 
-	\caption{\textit{Startsidan i applikationen}}
+	\caption{\textit{Matchvyn - Startsidan i applikationen}}
 	\end{center}
-\end{wrapfigure}
-De kan dra med fingret neråt på skärmen för att uppdatera den nuvarande vyn för att se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design ~\cite{MaterialDesign} och är en knapp som alltid ligger överst och utgör huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(7). 
+\end{figure}
+\pagebreak
+
+Användarna kan vdi matchvyn dra med fingret neråt på skärmen för att uppdatera matchflödet. Detta är till för användaren ska kunna se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design ~\cite{MaterialDesign} och är en knapp som alltid ligger överst och utgör huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(7). 
 De kan möta en slumpad motståndare (Slumpad motståndare) detta stänger ner dialogen som öppnades av FAB-en och en ny match finns i listan av matcher. De kan också söka efter en spelare(Sök spelare), då byts vyn ut mot en sökvy(8). 
 
 \begin{wrapfigure}{r}{0.5\textwidth}
