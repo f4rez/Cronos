@@ -349,7 +349,7 @@ Första gången en användare startar applikationen eller av någon anledning ha
 
 \pagebreak
 \item \large \textup{Startsida - matcher}
-Denna vy är huvudvy i hela applikationen. Det är här användaren ser vilka matcher de har igång eller har avslutat, de kan även starta en ny match eller söka efter en spelare att utmana i denna vy. Det finns fyra olika handlingar som användaren kan göra här. De kan klicka på hamburgarmenyn uppe i vänstra hörnet för att öppna navigationsvyn. De kan klicka på en av de matcher de har igång för att spela en ny omgång eller titta på matchstatistiken detta leder till matchstatistikvyn(3). De kan dra med fingret neråt på skärmen för att uppdatera den nuvarande vyn för att se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB), FAB är en del i Googles Material Design ~\cite{MaterialDesign} och är en knapp som alltid ligger överst och utgör huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(NUMMER PÅ STYCKE SOM VISAR DETTA). De kan möta en slumpad motståndare(Slumpad motståndare) detta stänger ner dialogen som öppnades av FAB-en och en ny match finns i listan av matcher. De kan också söka efter en spelare(Sök spelare), då byts vyn ut mot en sökvy(NUMMER SOM VISAR DETTA). 
+Denna vy är huvudvy i hela applikationen. Det är här användaren ser vilka matcher de har igång eller har avslutat, de kan även starta en ny match eller söka efter en spelare att utmana i denna vy. Det finns fyra olika handlingar som användaren kan göra här. De kan klicka på hamburgarmenyn uppe i vänstra hörnet för att öppna navigationsvyn(5). De kan klicka på en av de matcher de har igång för att spela en ny omgång eller titta på matchstatistiken detta leder till matchstatistikvyn(3). De kan dra med fingret neråt på skärmen för att uppdatera den nuvarande vyn för att se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB), FAB är en del i Googles Material Design ~\cite{MaterialDesign} och är en knapp som alltid ligger överst och utgör huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(7). De kan möta en slumpad motståndare(Slumpad motståndare) detta stänger ner dialogen som öppnades av FAB-en och en ny match finns i listan av matcher. De kan också söka efter en spelare(Sök spelare), då byts vyn ut mot en sökvy(8). 
 
 \begin{figure}[H]
 \begin{center}
@@ -364,6 +364,29 @@ Denna vy är huvudvy i hela applikationen. Det är här användaren ser vilka ma
 Hit kommer användaren när de klickar på en match eller de har spelat färdigt en omgång. Vyn består av de två användare som möter varandras profilbild och namn och under finns varje resultatet för varje runda som spelats. Längst ner finns två olika element, i mitten visas den sammanlagda poängen för hela matchen och till höger finns det en FAB som leder till en match(4)  
 
 
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_match_stats} 
+	\end{center}
+	\caption{\textit{Sceenshot på en match}}
+\end{figure}
+
+\pagebreak
+\item \large \textup{Match}
+Här är vyn där matcherna kommer spelas. Överst i vyn finns ett kort som innehåller den händelse som ska placeras in i tidslinjen. Under kortet ligger tidslinjen, den ska sorteras i kronologisk ordning där den tidigaste händelsen ligger högst upp. När matchen startas ligger det en given händelse i tidslinjen och ovanför ligger det en delare (Placera in händelsen i ordning) som representerar händelsen som är skriven på kortet. Delaren är mobil och för att flytta den får man göra ett långt klick och sedan dra den den till den position man vill. Det finns även här en FAB som rättar det placeringen av delaren, om svaret är rätt omvandlas delaren till händelsen som var på kortet det läggs in en ny delare och en ny händelse visas på kortet. Om svaret däremot var fel blinkar delaren till i rött och visar sedan årtalen på alla händelser som är utlagda i tidslinjen.
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_match} 
+	\end{center}
+	\caption{\textit{Sceenshot på en match}}
+\end{figure}
+
+
+
+\pagebreak
+\item \large \textup{Navigationsvy}
+Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida - matcher(2), Profilsida(6), Mina vänner(7) och Sök spelare(8). Den ger möjlighet att navigera till de olika övermenyerna som finns: Startsida - Matcher (2), Inställningar (9), Min profil (10). Det finns även möjlighet att att köpa sig fri från annonser (Inga mer annonser) och att logga ut från sitt konto (LOGGA UT), om du väljer att logga ut kommer du att skickas till inloggningsvyn(1). Högst upp i navigationsvyn finns det även en bild som fyller hela vidden av vyn, bilden tas från användarens googel konto och om hen inte har en omslagsbild kommer istället en standardbild att visas.   
 
 \begin{figure}[H]
 	\begin{center}
@@ -373,27 +396,18 @@ Hit kommer användaren när de klickar på en match eller de har spelat färdigt
 \end{figure}
 
 
-\begin{figure}[H]
-	\begin{centering}
-	\includegraphics[width=\textwidth]{app_match} 
-	\end{centering}
-	\caption{\textit{Sceenshot på en match}}
-\end{figure}
+
+
+
 
 
 
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=0.4\textwidth]{app_profile_fab} 
-	\end{center}
-	\caption{\textit{Profilsida för en användare}}
-\end{figure}
-
-\begin{figure}[H]
-	\begin{center}
 	\includegraphics[width=0.4\textwidth]{app_profile_toolbar} 
 	\end{center}
-	\caption{\textit{Profilsida för en användare där toolbar syns}}
+	\caption{\textit{Profilsida för en användare, till höger med en FAB och till vänster med ett verktygsfält som visas när användaren klickar på FAB-en }}
 \end{figure}
 
 \end{enumerate} 
