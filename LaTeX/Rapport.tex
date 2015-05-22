@@ -337,7 +337,7 @@ Kodsnutten ovan är ett exempel på en justering som skedde om en spelare hade s
 \subsubsection{Genomgång av applikationen}
 Gör en genomgång av hur applikationen fungerar med en massa bilder som även har förklaringar till sig.\\
 
-\large \textup{1. Inloggningsvy}
+\large \textup{1. Inloggningsvy}\\
 Första gången en användare startar applikationen eller av någon anledning har blivit utloggad möts hen av inloggningsvyn. Det är en webbsida som tillhandahålls av Google App Engine. Den innehåller primärt två textfält och en knapp för att logga in. När användaren fyllt i sina inloggningsuppgifter och klickat på logga in så sköter Google allt som har med inloggningen att  göra. Vår server får sedan ett unikt id för användaren och om det är första gången hen loggar in så skapas en egen användarstruktur som sparas in i databasen.
 När detta är klart eller om användaren redan var inloggad stängs aktiviteten ner och istället öppnas matchvyn(2) upp. 
 \begin{figure}[H]
@@ -371,7 +371,7 @@ De kan möta en slumpad motståndare (Slumpad motståndare) detta stänger ner d
 \end{wrapfigure}
 
 \pagebreak
-\large \textup{3. Matchstatstik}
+\large \textup{3. Matchstatstik}\\
 Hit kommer användaren när de klickar på en match eller de har spelat färdigt en omgång. Vyn består av de två användare som möter varandras profilbild och namn och under finns varje resultatet för varje runda som spelats. Längst ner finns två olika element, i mitten visas den sammanlagda poängen för hela matchen och till höger finns det en FAB som leder till en match(4)  
 
 
@@ -383,7 +383,7 @@ Hit kommer användaren när de klickar på en match eller de har spelat färdigt
 \end{figure}
 
 \pagebreak
- \large \textup{4. Match}
+ \large \textup{4. Match}\\
 Här är vyn där matcherna kommer spelas. Överst i vyn finns ett kort som innehåller den händelse som ska placeras in i tidslinjen. Under kortet ligger tidslinjen, den ska sorteras i kronologisk ordning där den tidigaste händelsen ligger högst upp. När matchen startas ligger det en given händelse i tidslinjen och ovanför ligger det en delare (Placera in händelsen i ordning) som representerar händelsen som är skriven på kortet. Delaren är mobil och för att flytta den får man göra ett långt klick och sedan dra den den till den position man vill. Det finns även här en FAB som rättar det placeringen av delaren, om svaret är rätt omvandlas delaren till händelsen som var på kortet det läggs in en ny delare och en ny händelse visas på kortet. Om svaret däremot var fel blinkar delaren till i rött och visar sedan årtalen på alla händelser som är utlagda i tidslinjen.
 
 
@@ -397,7 +397,7 @@ Här är vyn där matcherna kommer spelas. Överst i vyn finns ett kort som inne
 
 
 \pagebreak
-\large \textup{5. Navigationsvy}
+\large \textup{5. Navigationsvy}\\
 Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida - matcher(2), Profilsida(6), Mina vänner(7) och Sök spelare(8). Den ger möjlighet att navigera till de olika övermenyerna som finns: Startsida - Matcher (2), Inställningar (9), Min profil (10). Det finns även möjlighet att att köpa sig fri från annonser (Inga mer annonser) och att logga ut från sitt konto (LOGGA UT), om du väljer att logga ut kommer du att skickas till inloggningsvyn(1). Högst upp i navigationsvyn finns det även en bild som fyller hela vidden av vyn, bilden tas från användarens googel konto och om hen inte har en omslagsbild kommer istället en standardbild att visas.   
 
 
@@ -409,8 +409,9 @@ Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida -
 \end{figure}
 
 
-
-
+\pagebreak
+\large \textup{6. Profilsida}\\
+Det finns två sätt att komma till en profilsida. Man kan genom Min profil (10) klicka på en vän få se deras profilsida eller genom Sök spelare (8). Vyn består av en profilbild som är tagen från användarens Google konto, längs kanten på profilbilden ligger det en FAB som vid tryck vecklas ut till ett verktygsfält där man kan utmana profilen (Utmana), lägga till profilen som en vän (Lägg till som vän) eller ta bort profilen från sin vän lista (Ta bort vän). Under profilenbilden visas den andres användaren namn och cirkeldiagram över hur många matcher som hen har vunnit, förlorat och spelat oavgjort. Klickar man till exempel på den del som visar hur många man förlorat visas även hur många matcher det är man har förlorat. 
 
 
 
