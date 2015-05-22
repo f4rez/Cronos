@@ -11,6 +11,7 @@
 \usepackage{listings}
 \usepackage{multirow}
 \usepackage{fontenc}
+\usepackage{wrapfig}
 
 \usepackage[hidelinks]{hyperref}
 
@@ -75,7 +76,7 @@
 Vem vill inte kunna avgöra diskussioner med sina vänner med argumentet "Jag är i alla fall bäst på ..."? 
 Att tävla är en både rolig och social aktivitet. Oavsett om målet är att vinna eller bara ha kul så bidrar spel ofta med någon form av tävlingskänsla. Att kunna få denna tävlingskänsla och samtidigt en källa för nöje i sin telefon är något som vi tror är att eftersträva i mobila spel. Spel som exempelvis Quizkampen ~\cite{quiz} och Wordfeud ~\cite{wordfeud} besitter båda denna egenskap och det är därför vi tror att dessa spel har blivit så populära på marknaden ~\cite{appsalesrating}. Vi som utvecklare finner att Quizkampen och Wordfeud har lyckats väl med att designa spel som är enkla, roliga, estetiskt vackra samt effektiva i den meningen att man som spelare lätt kan orientera sig i applikationen. Vi eftersträvade att skapa ett spel som besitter samma egenskaper och som kan framkalla samma tävlingskänsla som dessa spel. Vi har utvecklat ett spel som går ut på att ordna historiska händelser relativt till andra händelser. 
 
-Applikationsutveckling för mobila enheter är ett spännande område som växer ~\cite{IDC}, under sista kvartalet av 2014 hade Android 81,5\% av marknaden och av de enheter som såldes hade 76,6\% Android som operativsystem. Enligt Digi-Capital-Found ~\cite{revenue} var även Android operativsystemet som gav högst intäkter för utvecklare som placerat sina applikation i någon form av applikationsmarknad, även om intäkter per nerladdning i iOS fortfarande var större. \\
+Applikationsutveckling för mobila enheter är ett spännande område som växer ~\cite{IDC}, under sista kvartalet av 2014 hade Android 81,5\% av marknaden och av de enheter som såldes hade 76,6\% Android som operativsystem. Enligt Digi-Capital-Found ~\cite{revenue} var även Android operativsystemet som gav högst intäkter för utvecklare som placerat sina applikation i någon form av applikationsmarknad, även om intäkter per nerladdning i iOS fortfarande var större.
 
 Chronos har utvecklats till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med att användarantalet ökar. För att vi inte skulle behöva söka och manuellt lägga in ett stort antal frågor har en semi-automatisk frågehämtare utvecklats. Detta system bidrar till att Chronos inte blir repetitivt och tråkigt för användarna. Frågehämtaren möjliggör att frågorna kan hämtas, skapas och läggas in utan att vi behöver ägna mycket tid åt dessa uppgifter. En annan sak som utvecklats för att spelet ska vara roligare för alla är ett balanseringssystem som gör att händelserna som ges till spelarna är anpassade efter spelarens kunskapsnivå.
 
@@ -238,7 +239,7 @@ Denna sektion beskriver hur de målsatta delarna implementerades i applikationen
 
 \subsection{Metoder}
 Ett antal olika verktyg användes för att möjliggöra detta projekt. För utvecklingen och simulering av Android-applikationen användes Android Studio ~\cite{androidstudio}. Detta var ett kraftfullt verktyg som exempelvis kunde, på ett smidigt sätt, simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
-Google App Engine användes lokalt för att simulera serverapplikationen. När tidsperioden för testning var över användes fortfarande App Engine men då i Googles moln istället för lokalt. App engine var ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjöds när man utvecklade och körde sina applikationer via denna motor var otroligt värdefulla. Det var bland annat lätt att underhålla applikationen och skala upp när trafik och data krävde det ~\cite{googleappengine}. För att läsa mer om App Engine se \ref{Google App Engine}. \\
+Google App Engine användes lokalt för att simulera serverapplikationen. När tidsperioden för testning var över användes fortfarande App Engine men då i Googles moln istället för lokalt. App engine var ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjöds när man utvecklade och körde sina applikationer via denna motor var otroligt värdefulla. Det var bland annat lätt att underhålla applikationen och skala upp när trafik och data krävde det~\cite{googleappengine}. För att läsa mer om App Engine se \ref{Google App Engine}. \\
 Den primära källan för information till frågorna var under utvecklingsfasen Wikipedia men denna ersattes mot andra informationskällor vid ett senare skede. Detta förekom innan produkten färdigställdes.\\ 
 Valet att inte använda Wikipedia som informationskälla i den slutgiltiga versionen av applikationen berodde på dess tvivelaktiga rykte som en pålitlig källa. Wikipedia trovärdighet har länge diskuterats och det finns många rapporter som har undersökt dess trovärdighet. Att använda Wikipedia för att bekanta sig med ett ämne är, enligt oss, fullt acceptabelt men borde lämpligtvis granskas kritiskt innan den användes som källa. Relationen mellan processerna att skapa och redigera artiklar på Wikipedia anses vara en ledande faktor till denna osäkerhet. Detta beror mycket på att hemsidan följer strukturen \textit{editable-by-all} vilket innebär att vem som helst kan ändra artiklar och på så sätt vinkla artikelns innehåll på ett eller ett annat sätt. Detta implicerar såklart inte att alla artiklar har råkat ut för detta öde men det bidrar till en viss osäkerhet vid användandet av denna hemsida som källa vid vetenskapliga rapporter ~\cite[sid 27--34]{wikipediacred}.
 
@@ -334,33 +335,43 @@ Kodsnutten ovan är ett exempel på en justering som skedde om en spelare hade s
 \subsection{Applikationens design}
 
 \subsubsection{Genomgång av applikationen}
-Gör en genomgång av hur applikationen fungerar med en massa bilder som även har förklaringar till sig.
+Gör en genomgång av hur applikationen fungerar med en massa bilder som även har förklaringar till sig.\\
 
-
-\begin{enumerate}
-\item \large \textup{Inloggningsvy}
-Första gången en användare startar applikationen eller av någon anledning har blivit utloggad möts hen av inloggningsvyn. Det är en webbsida som tillhandahålls av Google App Engine. Den innehåller primärt två textfält och en knapp för att logga in. När användaren fyllt i sina inloggningsuppgifter och klickat på logga in, sköter Google allt med inloggningen och vår server får ett unikt id för användaren och om det är första gången hen loggar in skapas en egen användare struktur som sparas in i databasen. När detta är klart eller om användaren redan var inloggad stängs aktiviteten ner och istället öppnas matchvyn(2) upp. 
+\large \textup{1. Inloggningsvy}
+Första gången en användare startar applikationen eller av någon anledning har blivit utloggad möts hen av inloggningsvyn. Det är en webbsida som tillhandahålls av Google App Engine. Den innehåller primärt två textfält och en knapp för att logga in. När användaren fyllt i sina inloggningsuppgifter och klickat på logga in så sköter Google allt som har med inloggningen att  göra. Vår server får sedan ett unikt id för användaren och om det är första gången hen loggar in så skapas en egen användarstruktur som sparas in i databasen.
+När detta är klart eller om användaren redan var inloggad stängs aktiviteten ner och istället öppnas matchvyn(2) upp. 
 \begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.4\textwidth]{app_login} 
-	\end{center}
+	\vspace{-5pt}
+	\begin{centering}
+	\includegraphics[width=0.4\textwidth]{app_login}\\ 
+	\end{centering}
 	\caption{\textit{Inloggningsvy}}
+	\vspace{-10pt}
 \end{figure}
 
-\pagebreak
-\item \large \textup{Startsida - matcher}
-Denna vy är huvudvy i hela applikationen. Det är här användaren ser vilka matcher de har igång eller har avslutat, de kan även starta en ny match eller söka efter en spelare att utmana i denna vy. Det finns fyra olika handlingar som användaren kan göra här. De kan klicka på hamburgarmenyn uppe i vänstra hörnet för att öppna navigationsvyn(5). De kan klicka på en av de matcher de har igång för att spela en ny omgång eller titta på matchstatistiken detta leder till matchstatistikvyn(3). De kan dra med fingret neråt på skärmen för att uppdatera den nuvarande vyn för att se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB), FAB är en del i Googles Material Design ~\cite{MaterialDesign} och är en knapp som alltid ligger överst och utgör huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(7). De kan möta en slumpad motståndare(Slumpad motståndare) detta stänger ner dialogen som öppnades av FAB-en och en ny match finns i listan av matcher. De kan också söka efter en spelare(Sök spelare), då byts vyn ut mot en sökvy(8). 
 
-\begin{figure}[H]
+\pagebreak
+\large \textup{2. Startsida - matcher}\\
+Denna vy är huvudvy i hela applikationen. Det är här användaren ser vilka matcher de har igång eller har avslutat, de kan även starta en ny match eller söka efter en spelare att utmana i denna vy. Det finns fyra olika handlingar som användaren kan göra här. De kan klicka på hamburgarmenyn uppe i vänstra hörnet för att öppna navigationsvyn. De kan klicka på en av de matcher de har igång för att spela en ny omgång eller titta på matchstatistiken detta leder till matchstatistikvyn(3). 
+\begin{wrapfigure}{o}{0.5\textwidth}
 \begin{center}
+	\vspace{-15pt}
 	\includegraphics[width=0.4\textwidth]{app_matches} 
-	\includegraphics[width=0.4\textwidth]{app_new_match} 
-	\caption{\textit{Till vänster är startsidan i applikationen och till höger är dialogen som öppnas när man klickar på FAB-en}}
+	\caption{\textit{Startsidan i applikationen}}
 	\end{center}
-\end{figure}
+\end{wrapfigure}
+De kan dra med fingret neråt på skärmen för att uppdatera den nuvarande vyn för att se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design ~\cite{MaterialDesign} och är en knapp som alltid ligger överst och utgör huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(7). 
+De kan möta en slumpad motståndare (Slumpad motståndare) detta stänger ner dialogen som öppnades av FAB-en och en ny match finns i listan av matcher. De kan också söka efter en spelare(Sök spelare), då byts vyn ut mot en sökvy(8). 
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_new_match} 
+	\caption{\textit{Dialogen som öppnas när man klickar på FAB-en}}
+	\end{center}
+\end{wrapfigure}
 
 \pagebreak
-\item \large \textup{Matchstatstik}
+\large \textup{3. Matchstatstik}
 Hit kommer användaren när de klickar på en match eller de har spelat färdigt en omgång. Vyn består av de två användare som möter varandras profilbild och namn och under finns varje resultatet för varje runda som spelats. Längst ner finns två olika element, i mitten visas den sammanlagda poängen för hela matchen och till höger finns det en FAB som leder till en match(4)  
 
 
@@ -372,8 +383,9 @@ Hit kommer användaren när de klickar på en match eller de har spelat färdigt
 \end{figure}
 
 \pagebreak
-\item \large \textup{Match}
+ \large \textup{4. Match}
 Här är vyn där matcherna kommer spelas. Överst i vyn finns ett kort som innehåller den händelse som ska placeras in i tidslinjen. Under kortet ligger tidslinjen, den ska sorteras i kronologisk ordning där den tidigaste händelsen ligger högst upp. När matchen startas ligger det en given händelse i tidslinjen och ovanför ligger det en delare (Placera in händelsen i ordning) som representerar händelsen som är skriven på kortet. Delaren är mobil och för att flytta den får man göra ett långt klick och sedan dra den den till den position man vill. Det finns även här en FAB som rättar det placeringen av delaren, om svaret är rätt omvandlas delaren till händelsen som var på kortet det läggs in en ny delare och en ny händelse visas på kortet. Om svaret däremot var fel blinkar delaren till i rött och visar sedan årtalen på alla händelser som är utlagda i tidslinjen.
+
 
 \begin{figure}[H]
 	\begin{center}
@@ -385,8 +397,9 @@ Här är vyn där matcherna kommer spelas. Överst i vyn finns ett kort som inne
 
 
 \pagebreak
-\item \large \textup{Navigationsvy}
+\large \textup{5. Navigationsvy}
 Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida - matcher(2), Profilsida(6), Mina vänner(7) och Sök spelare(8). Den ger möjlighet att navigera till de olika övermenyerna som finns: Startsida - Matcher (2), Inställningar (9), Min profil (10). Det finns även möjlighet att att köpa sig fri från annonser (Inga mer annonser) och att logga ut från sitt konto (LOGGA UT), om du väljer att logga ut kommer du att skickas till inloggningsvyn(1). Högst upp i navigationsvyn finns det även en bild som fyller hela vidden av vyn, bilden tas från användarens googel konto och om hen inte har en omslagsbild kommer istället en standardbild att visas.   
+
 
 \begin{figure}[H]
 	\begin{center}
@@ -410,7 +423,6 @@ Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida -
 	\caption{\textit{Profilsida för en användare, till höger med en FAB och till vänster med ett verktygsfält som visas när användaren klickar på FAB-en }}
 \end{figure}
 
-\end{enumerate} 
 
 \section{Resultat}
 Denna sektion beskriver ett antal utvärderingar som gjordes av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet.  
