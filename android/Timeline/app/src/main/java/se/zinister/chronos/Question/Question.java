@@ -25,7 +25,7 @@ public class Question  {
 
 
     public boolean happendBefore(Question q) {
-        return year >= q.year;
+        return year <= q.year;
     }
 
 
