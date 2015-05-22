@@ -1,0 +1,65 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{FipparN}
+
+
+
+
+\begin{document}
+
+\section{Matchvyn översikt}
+\subsection{1. För mycket text}
+Vid matchvyn är det generellt för mycket text. T ex vid varje runda så är det mycket överflödig information. 
+Först och främst: Förstora rubriker "Din tur", "Motståndarens tur" och "Avslutade matcher". Matcherna som ligger under dessa rubiker behöver då inte ha så mycket text i sig. Exempelvis räcker det för matcher som ligger under rubriken "Din tur" eller "Motståndarens tur":
+\begin{itemize}
+\item Poängställning
+\item # omgång
+\item Motståndare
+\end{itemize}
+Man behöver med andra ord inte skriva att det är spelarens tur för matcher ligger under den nya och solklara rubriken "Din tur". På så sätt sparar man utrymme på kortet och det blir mindre kladdigt med texten.\\
+
+\subsection{2. "Uppdatera"-box}
+För att användaren ska veta att man kan uppdatera matchflödet genom att swipa neråt så kan man sätta en grå ruta högst upp där man skriver typ "Dra neråt för att uppdatera". Då är det solklart!
+
+\subsection{3. "Starta en match"-knapp}
+Det är inte helt uppenbart hur man startar en match heller. Om man skulle ha en knapp som har rubriken "Starta en ny match" som ligger på samma ställe hela tiden så skulle man veta hur man skulle göra. Denna knapp skulle kunna ha alternativen: "Utmana vän", "Utmana slumpad spelare" exempelvis.
+
+\section{Spela en match}
+\subsection{1. Layout på korten}
+Gör huvudkortet större eller få det att poppa mer. Man skulle kunna göra texten i det kortet bold medan alla andra händelser är vanlig text exempelvis. kanske också öka mellanrummet mellan huvudkortet och de andra händelserna.\\
+För just nu fattar man inte riktigt att det är den händelsen man ska placera ut.
+
+\subsection{2. Flytta händelsen}
+Oklart hur man ska flytta runt händelsen. Vilken ordning är skalan, vart är nutid och dåtid? Skulle man kanske kunna visa detta med att skriva ut typ: Big bang och dagens datum på olika ändar av skalan? inte som kort då men fast på bakgrunden? Det skulle bidra till ett mellanrum mellan huvudkortet och tidslinjen också. Nyaste händelsen högst upp känns rätt tycker jag.
+
+\subsection{3. Ikon} 
+Ikonen för kategorin behövs bara på huvudkortet (frågan) och inte på de andra händelserna.
+
+\subsection{4. Förlorad runda}
+Vad händer när man förlorar en runda. Man får visserligen se årtalen men det är väldigt lite. Går detta är göra klarare möjligtvis?\\
+När man förlorar borde händelsen som var fel inte bara bli röd en kort stund utan tills man går ur rundan. På så sätt ser ser man vilken händelse som är fel lättare. \\
+När man förlorat en runda borde det också poppa upp en ruta som typ säger: "Du svarade fel" och visa hur många rätt man hade, exempelvis 2/10 eller liknande.\\
+När man har förlorat borde man automatiskt komma tillbaka till matchvyn efter en stund eller alternativ ska det poppa upp en tillbaka-knapp efter "Du svara fel"-rutan fadeat bort.
+
+\section{Söka eller lägga till vän/spelare}
+Att söka efter en vän eller spelare borde kanske till och med vara under samma funktion. Denna knapp borde ganska naturligt vara ett förstoringsglas nere i tab-baren.\\ 
+Sen borde spelarna som kommer upp av sökningen inte ligga som i ett grid tycker jag. Varje spelare borde ha en bar för sig själv. I denna bar skulle man kunna ha en ikon som har samma funktion som "plusset" när man är inne på någons profil. Eller så kan man ha flera mindre ikoner, som jag föreslog i tab-baren tidigare. Typ för att lägga till en vän så är en ikon i dennes bar en gubbe med ett plus på. Då kommer alla fatta vad den knappen gör.
+
+
+\section{Profil för spelare}
+Statistiken för spelare borde inte vara i cirkeldiagram. det är gaska snyggt men det påminner för mycket om excell och det är en ganska dålig design. Man skulle istället kunna ha typ som statistiken för boxning. Tre rader: "Vinster: #", "Förluster: #" och "Oavgjorda: #". Enkelt!\\
+Det borde ganska naturligt finnas något slags index också. Typ en rankingskala: "(2/5 stjärnor)". Då kan man enkelt avgöra om en spelare är bra eller inte, man slipper alltså kolla på statsen.
+
+\section{Övrigt}
+Skippa hamburgarmenyn. Den ligger utanför tummens räckvidd och är bara jobbig att komma åt. Dessutom finns det bara ca tre alternativ där som lika bra skulle kunna ha i en tab-bar längst ner i appen. Denna tab-bar borde man kunna se i alla vyer också för enkelhetens skull. I denna tab-bar skulle an kunna ha text + ikoner eller bara ikoner. De ikonerna ni har nu är solklara så ni skulle antagligen kunna klara er med bara dessa.\\
+Om ni dock verkligen vill ha hamburgarmenyn så föreslår jag att ni har den uppe i högra hörnet för att där kan man i alla fall nå den utan att behöva "sträcka sig" med tummen.\\
+
+Ett förslag för att slippa hamburgarmenyn är att ha två knappar uppe i varsitt hörn av appen. Till vänster en bakåtknapp och till höger en infoknapp som likt tab-baren också visas på varje vy. På sätt på det konsekvent och lätt för användaren att hitta rätt saker.\\
+
+Funktionen "Logga ut" Borde ligga under mitt konto typ. För det är nog inte många som faktiskt vill logga ut ur sin app. Eller rättare sagt är det nog inte många som bryr sig om det.
+
+
+\end{document}

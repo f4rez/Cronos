@@ -5,6 +5,7 @@ Jag vet inte riktigt vad man ska komma. Finns inte så många alternativ. Lätt 
 
 * synlighet 
 Boxarna för matcher, rundorna och korten borde vara specifika. Typ med fäger, pilar eller liknande så man vet att man kommer till det stället om man trycker där. 
+
 Ställningen vid en runda, vilken omgång det är, och poängställning borde poppa mer för varje match.
 Det kanske borde vara en färg om det är ens tur och kanske nån annan färg om det är nån annans tur.
 Bilderna för spelarna i en match borde vara runda, personlig åsikt bara. Men om ni behåller runda knappen så ska ni ha bilderna 
@@ -27,7 +28,7 @@ Samma knappar vid varje vy.
 * Hamburgarmenyn är överflödig och man når den inte heller. Om den ska vara kvar så ska det vara klarare att man kan swipa ut den. Hellre en tab-bar. Eller om menyn ska ligga i högra hörnet. Där man kan nå den. 
 * Ha en knapp där det står starta en match i mitten istället för att ha en lång text som beskriver vad man ska göra. Altidd ha den knappen på samma ställe. Ha den högst upp. 
  - Kanske ska ha vid knappen starta match så får man: slumpad motståndare, spela mot en vän, Sök person/spelare.  
-* När man söker efter en spelare borde varje spelare ha en bar med alternativen som finns på "plusset". 
+* När man söker efter en spelare borde varje spelare ha en bar med alternativen som redan finns i "plusset"-ikonen. 
 * Man kanske alltid ska se en tab-bar är man ser "inställningar min profil etc"
 * Köpa bort annonser kan ju finnas vid profil eller liknande
 * Istället för hamburgarmenyn så kanske en infoknapp och en bakåtknapp alltid ska visas på skärmen. Blir mycket smidigare för användare då.
