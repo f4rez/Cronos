@@ -360,7 +360,7 @@ Det finns fyra olika handlingar som användaren kan göra här vid denna sida. D
 \end{figure}
 \pagebreak
 
-Användarna kan vdi matchvyn dra med fingret neråt på skärmen för att uppdatera matchflödet. Detta är till för användaren ska kunna se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design ~\cite{MaterialDesign} och är en knapp som alltid ligger överst och utgör huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(7). 
+Användarna kan vdi matchvyn dra med fingret neråt på skärmen för att uppdatera matchflödet. Detta är till för användaren ska kunna se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design~\cite{MaterialDesign} och är en knapp som alltid ligger överst och utgör huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(7). 
 De kan möta en slumpad motståndare (Slumpad motståndare) detta stänger ner dialogen som öppnades av FAB-en och en ny match finns i listan av matcher. De kan också söka efter en spelare(Sök spelare), då byts vyn ut mot en sökvy(8). 
 
 \begin{wrapfigure}{r}{0.5\textwidth}
@@ -371,7 +371,7 @@ De kan möta en slumpad motståndare (Slumpad motståndare) detta stänger ner d
 \end{wrapfigure}
 
 \pagebreak
-\large \textup{3. Matchstatstik}
+\large \textup{3. Matchstatstik}\\
 Hit kommer användaren när de klickar på en match eller de har spelat färdigt en omgång. Vyn består av de två användare som möter varandras profilbild och namn och under finns varje resultatet för varje runda som spelats. Längst ner finns två olika element, i mitten visas den sammanlagda poängen för hela matchen och till höger finns det en FAB som leder till en match(4)  
 
 
@@ -383,7 +383,7 @@ Hit kommer användaren när de klickar på en match eller de har spelat färdigt
 \end{figure}
 
 \pagebreak
- \large \textup{4. Match}
+ \large \textup{4. Match}\\
 Här är vyn där matcherna kommer spelas. Överst i vyn finns ett kort som innehåller den händelse som ska placeras in i tidslinjen. Under kortet ligger tidslinjen, den ska sorteras i kronologisk ordning där den tidigaste händelsen ligger högst upp. När matchen startas ligger det en given händelse i tidslinjen och ovanför ligger det en delare (Placera in händelsen i ordning) som representerar händelsen som är skriven på kortet. Delaren är mobil och för att flytta den får man göra ett långt klick och sedan dra den den till den position man vill. Det finns även här en FAB som rättar det placeringen av delaren, om svaret är rätt omvandlas delaren till händelsen som var på kortet det läggs in en ny delare och en ny händelse visas på kortet. Om svaret däremot var fel blinkar delaren till i rött och visar sedan årtalen på alla händelser som är utlagda i tidslinjen.
 
 
@@ -397,8 +397,8 @@ Här är vyn där matcherna kommer spelas. Överst i vyn finns ett kort som inne
 
 
 \pagebreak
-\large \textup{5. Navigationsvy}
-Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida - matcher(2), Profilsida(6), Mina vänner(7) och Sök spelare(8). Den ger möjlighet att navigera till de olika övermenyerna som finns: Startsida - Matcher (2), Inställningar (9), Min profil (10). Det finns även möjlighet att att köpa sig fri från annonser (Inga mer annonser) och att logga ut från sitt konto (LOGGA UT), om du väljer att logga ut kommer du att skickas till inloggningsvyn(1). Högst upp i navigationsvyn finns det även en bild som fyller hela vidden av vyn, bilden tas från användarens googel konto och om hen inte har en omslagsbild kommer istället en standardbild att visas.   
+\large \textup{5. Navigationsvy}\\
+Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida - matcher(2), Profilsida(6), Utmana en vän(7) och Sök spelare(8). Den ger möjlighet att navigera till de olika övermenyerna som finns: Startsida - Matcher (2), Inställningar (9), Min profil (10). Det finns även möjlighet att att köpa sig fri från annonser (Inga mer annonser) och att logga ut från sitt konto (LOGGA UT), om du väljer att logga ut kommer du att skickas till inloggningsvyn(1). Högst upp i navigationsvyn finns det även en bild som fyller hela vidden av vyn, bilden tas från användarens googel konto och om hen inte har en omslagsbild kommer istället en standardbild att visas.   
 
 
 \begin{figure}[H]
@@ -409,8 +409,9 @@ Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida -
 \end{figure}
 
 
-
-
+\pagebreak
+\large \textup{6. Profilsida}\\
+Det finns två sätt att komma till en profilsida. Man kan genom Min profil (10) klicka på en vän få se deras profilsida eller genom Sök spelare (8). Vyn består av en profilbild som är tagen från användarens Google konto, längs kanten på profilbilden ligger det en FAB som vid tryck vecklas ut till ett verktygsfält där man kan utmana profilen (Utmana), lägga till profilen som en vän (Lägg till som vän) eller ta bort profilen från sin vän lista (Ta bort vän). Under profilenbilden visas den andres användaren namn och cirkeldiagram över hur många matcher som hen har vunnit, förlorat och spelat oavgjort. Klickar man till exempel på den del som visar hur många man förlorat visas även hur många matcher det är man har förlorat. 
 
 
 
@@ -421,6 +422,44 @@ Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida -
 	\includegraphics[width=0.4\textwidth]{app_profile_toolbar} 
 	\end{center}
 	\caption{\textit{Profilsida för en användare, till höger med en FAB och till vänster med ett verktygsfält som visas när användaren klickar på FAB-en }}
+\end{figure}
+
+\pagebreak
+\large \textup{7. Utmana en vän}\\
+Vyn består av ett rutnät av användarens vänner där varje väns profilbild och användarnamn syns. När användaren klickar på en vän skickas en utmaning till den vännen och det visas en Toast som säger att man utmanat vännen. 
+
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_challenge} 
+	\end{center}
+	\caption{\textit{Bild av vyn Utmana en vän(7)}}
+\end{figure}
+
+\pagebreak
+\large \textup{8. Sök spelare}\\
+När denna vy startas visas först bara söklinje upp, men när man sedan fyller i tecken och klickar retur visas ett rutnät av personer som matchar sökningen. Varje sökresultat visar profilbild och användarnamn. Klickar man på något av sökresultaten tas man till dennes profilsida(6)  
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_search} 
+	\end{center}
+	\caption{\textit{Bild av vyn Sök spelare(8) när en användare hittats}}
+\end{figure}
+
+
+
+\pagebreak
+\large \textup{9. Inställningar}\\
+
+\pagebreak
+\large \textup{10. Min profil}\\
+Överst på vyn finns det ett cirkeldiagram som innehåller statistik över hur många matcher som vunnits, förlorats eller slutat oavgjort. Under finns ett rutnät av användarens vänner som visas med hjälp av deras profilbild och användarnamn, klickar man på en vän visas deras profilsida(6). 
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_profile} 
+	\end{center}
+	\caption{\textit{Bild över Min profil (10)}}
 \end{figure}
 
 

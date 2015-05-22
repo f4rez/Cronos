@@ -106,8 +106,11 @@ public class Request extends AsyncTask<String, Void, String> {
                 f2.addedFriend();
                 break;
             case "FriendChallenge":
-                FriendFragment f1 = (FriendFragment) caller;
-                f1.challengedFriend();
+                if (caller instanceof FriendFragment) {
+                    ((FriendFragment)caller).challengedFriend();
+                } else if (caller instanceof ChallengeFriendFragment) {
+                    ((ChallengeFriendFragment)caller).challengedFriend();
+                }
                 break;
             case "FriendRemove":
                 FriendFragment f3 = (FriendFragment) caller;

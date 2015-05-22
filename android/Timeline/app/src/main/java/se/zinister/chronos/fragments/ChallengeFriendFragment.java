@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,10 @@ public class ChallengeFriendFragment extends BaseFragment {
         return MainActivity.CHALLENGE_FRIEND;
     }
 
+
+    public void challengedFriend() {
+        Toast.makeText(getActivity(), "Challenged friend", Toast.LENGTH_SHORT).show();
+    }
 
     public void showFriends(String json) {
         Decode d = new Decode();
