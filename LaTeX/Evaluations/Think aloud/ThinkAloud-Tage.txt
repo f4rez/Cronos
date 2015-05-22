@@ -1,0 +1,37 @@
+				Think Aloud:
+
+
+Frågor:
+"Jag kommer ställa dig inför ett antal uppgifter som du ska utföra. Medan du utför dessa uppgifter önskar jag att du försöker säga allt som du tänker på."
+
+Uppgifter:
+* Logga in
+
+Inga problem. Solkalrt vad man skulle göra
+
+* Starta en match mot slumpad spelare 
+- oklart vart man ska trycka när man ska starta en omgång
+- 
+
+* Spela en match
+- Gör huvudkortet större, fattar inte riktigt att det är det som är huvudhändelsen. Kanske göra det större eller få den att poppa med färg eller liknande.
+- Oklart hur man ska flytta runt händelsen. Vilken ordning som är nu och dåtid (skalan). Det kanske borde visas. Nyast högst upp känns mest rimligt men jag blev förvånad när jag hade fel. Det var tydligen tvärt om
+- Ikonen behövs bara på huvudkortet
+- Fet stil på kortet men inte är det på händelserna så tror jag att jag hade förstått bättre.
+- Vad hände när man förlorade en runda, inget hände ju. Man borde gå tillbaka till matchvyn när man förlorat kan jag tycka. 
+- Det hade kunnat vara tydligare vilken händelse som var fel. Händelsen som var fel borde vara röd hela tiden så man vet.
+- En bakåtknapp borde komma upp när man förlorat så man kommer tillbaka till matchvyn
+- Det borde kanske stå hur många händelser man har fått rätt. Typ 2/3 händelser
+
+
+* Sök och lägg till en vän
+Gick till utmana en vän. Såg inget. blev lite förvirrad. Borde finnas en knapp för att lägga till vänner, typ ett plus eller liknande. Om man inte har några vänner kanske det borde stå också istället för bara en tom vy.
+Lägg ett plus på bilden så man vet att man lägger tll honom.
+Kanske borde finnas ett alternativ redan vid sökningen att utmana spelaren. Typ ett plus. Eller en meny som poppar upp när man trycker på bilden. En spelare borde få en hel rad tycker jag. 
+Bra att få feeback vid addad vän.
+Förfrågan har skikcats borde stå. Vad händer efter att man har utmanat
+Jag fattar inte vad som händer när man har utmanat en vän. Man borde kanske se det i matchvyn att utmaningen väntar svar eller liknande.
+
+
+
+
