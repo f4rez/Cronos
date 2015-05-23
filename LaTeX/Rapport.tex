@@ -220,28 +220,31 @@ Applikationen balanserade även frågorna kontinuerligt efter varje match vilket
 \subsection{Motivation}
 Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på sådana applikationer är Quizkampen och Wordfeud som båda toppar säljlistorna för Androidspel ~\cite{appsalesrating}. Dessa spel följer en ganska enkel struktur och den bygger på att två personer kan möta varandra, svara på frågor eller lägga ord korrekt. På detta sätt får spelarna poäng som sen avgör vinnaren mellan de tävlande. Enligt säljstatistiken ~\cite{appsalesrating} är detta koncept något som är attraktivt för många användare. Spelet, vars utveckling beskrivs i rapporten, kombinerar koncepten från Quizkampen och Wordfeud i den mening att spelare ska svara på frågor samt att lägga in saker på sin rätta plats. 
 
-En liknande version av Chronos har också visat sig vara populär i form av sällskapsspel (\textit{När-då-då?}) ~\cite{nardada}. Detta var en av anledningarna till att förhoppningarna var höga att även vår applikation skulle bli populär på marknaden. Det finns för tillfället ingen variant av det här spelkonceptet till Android vilket ger Chronos stora möjligheter att lyckas.
+En liknande version av Chronos har också visat sig vara populär i form av sällskapsspel (\textit{När-då-då?}) ~\cite{nardada}. Detta var en av anledningarna till att förhoppningarna var höga att även vår applikation ska bli populär på marknaden. Det finns för tillfället ingen variant av det här spelkonceptet till Android vilket ger Chronos stora möjligheter att lyckas.
 
 \subsection{Avgränsningar}
 Någon applikation för Windows och iOS fanns som en eventuell fortsatt utveckling efter Androidapplikationen men kom aldrig till utvecklingsstadiet. Detta på grund av att ett större fokus på en bra applikation till Android prioriterades. Spelet skulle troligtvis få ett par kategorier för frågorna, men vilka dessa skulle vara var då inte bestämt. 
 
-I applikationen finns det många funktioner som skulle vara roliga och användbara att implementera, men inför projektet var det några funktioner som ansågs vara viktigast att ha med. Den viktigaste funktionen var att kunna hitta och spela en match. En funktion för att hitta och hantera vänner man har i spelet och även en funktion för att kunna se statistik över matcherna man spelat mot en vän. Dessa funktioner behövde så klart även implementeras på servern.
+I planeringen för applikationen fanns det många funktioner som skulle vara roliga och användbara att implementera, men inför projektet var det några funktioner som ansågs vara viktigast att ha med. Den viktigaste funktionen var att kunna hitta och spela en match. En funktion för att hitta och hantera vänner man har i spelet och även en funktion för att kunna se statistik över matcherna man spelat mot en vän. Dessa funktioner behövde så klart även implementeras på servern.
 
 \subsection{Krav}
-Systemet skulle klara av många spelare samtidigt, dock bara två per match. Något speciell tak för antalet användare var inte bestämt men med tanke på den otroligt solida grunden för skalbarhet som projektet stod på kunde ett mål för önskat antal användare bestämmas. Eftersom App Engine användes för servern så skulle det inte bli några problem med den enkla förklaringen att det var en tjänst som automatiskt skalade med hänsyn på belastningen ~\cite{appenginescalability}. 
+Systemet skulle klara av många spelare samtidigt, dock bara två per match. Något speciell tak för antalet användare var inte bestämt men med tanke på den otroligt solida grunden för skalbarhet som projektet stod på kunde ett mål för önskat antal användare bestämmas. Eftersom App Engine användes för servern så skulle det inte bli några problem med den enkla förklaringen att det är en tjänst som automatiskt skalar med hänsyn till belastningen ~\cite{appenginescalability}. 
 
-Informationssökaren skulle tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. En hög kvalitet innebar frågor som var relevanta och som följde den strukturen som vi har tänkt oss. Frågorna skulle vara lätta att läsa, förstå och samtidigt befinna sig i det breda spektrumet av svårighetsgrader vi hade i spelet. Sökaren för frågorna skulle också vara så pass bra att den administrativa kontrollen gick fort och att så lite som möjligt behövdes korrigeras efter att frågorna hade samlats in. För att applikationen inte skulle kännas alldeles för repetitiv skulle det finnas många frågor som dessutom var av varierande kategori. Det skulle även finnas minst 1000 frågor i spelet.
+Informationssökaren skulle tillsammans med den administrativa kontrollen ge frågor som håller hög kvalitet. Hög kvalitet innebär frågor som är relevanta och som följer den strukturen som vi hade tänkt oss. Frågorna skulle vara lätta att läsa, förstå och samtidigt befinna sig i det breda spektrumet av svårighetsgrader som spelet skulle ha. Frågehämtaren skulle också vara så pass bra att den administrativa kontrollen gick fort och att så lite som möjligt behövdes korrigeras efter att frågorna hade samlats in. För att applikationen inte skulle kännas alldeles för repetitiv skulle det finnas många frågor som dessutom var av varierande kategori. Det skulle även finnas minst 1000 frågor i spelet.
 
-Designen av applikationen var något som var väldigt viktigt för oss. Kravet i början var att ha en intuitiv, responsiv och snygg design. Eftersom applikationen gjordes för Android skulle den också följa dess designmönstret Material Design ~\cite{MaterialDesign}.
+Designen av applikationen var något som var väldigt viktigt för oss. Kravet i början var att ha en intuitiv, responsiv och snygg design. Eftersom applikationen gjordes för Android skulle den också följa dess designmönster, Material Design ~\cite{MaterialDesign}.
 
 \section{Implementation}
-Denna sektion beskriver hur de målsatta delarna implementerades i applikationen. Applikationens systemstruktur och dess innefattande delar  förklaras och illustreras. Det finns även en grundlig genomgång av hur applikationen ser ut samt hur den fungerar, både för användare och systemadministratörer.
+Den här sektionen beskriver hur de målsatta delarna implementerades i applikationen. Applikationens systemstruktur och dess innefattande delar  förklaras och illustreras. Det finns även en grundlig genomgång av hur applikationen ser ut samt hur den fungerar, både för användare och systemadministratörer.
 
 \subsection{Metoder}
-Ett antal olika verktyg användes för att möjliggöra detta projekt. För utvecklingen och simulering av Android-applikationen användes Android Studio ~\cite{androidstudio}. Detta var ett kraftfullt verktyg som exempelvis kunde, på ett smidigt sätt, simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
-Google App Engine användes lokalt för att simulera serverapplikationen. När tidsperioden för testning var över användes fortfarande App Engine men då i Googles moln istället för lokalt. App engine var ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjöds när man utvecklade och körde sina applikationer via denna motor var otroligt värdefulla. Det var bland annat lätt att underhålla applikationen och skala upp när trafik och data krävde det~\cite{googleappengine}. För att läsa mer om App Engine se \ref{Google App Engine}. \\
-Den primära källan för information till frågorna var under utvecklingsfasen Wikipedia men denna ersattes mot andra informationskällor vid ett senare skede. Detta förekom innan produkten färdigställdes.\\ 
-Valet att inte använda Wikipedia som informationskälla i den slutgiltiga versionen av applikationen berodde på dess tvivelaktiga rykte som en pålitlig källa. Wikipedia trovärdighet har länge diskuterats och det finns många rapporter som har undersökt dess trovärdighet. Att använda Wikipedia för att bekanta sig med ett ämne är, enligt oss, fullt acceptabelt men borde lämpligtvis granskas kritiskt innan den användes som källa. Relationen mellan processerna att skapa och redigera artiklar på Wikipedia anses vara en ledande faktor till denna osäkerhet. Detta beror mycket på att hemsidan följer strukturen \textit{editable-by-all} vilket innebär att vem som helst kan ändra artiklar och på så sätt vinkla artikelns innehåll på ett eller ett annat sätt. Detta implicerar såklart inte att alla artiklar har råkat ut för detta öde men det bidrar till en viss osäkerhet vid användandet av denna hemsida som källa vid vetenskapliga rapporter ~\cite[sid 27--34]{wikipediacred}.
+Ett antal olika verktyg användes för att möjliggöra detta projekt. För utvecklingen och simuleringen av Androidapplikationen användes Android Studio ~\cite{androidstudio}. Detta är ett kraftfullt verktyg som exempelvis kan, på ett smidigt sätt, simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
+Google App Engine användes lokalt för att simulera serverapplikationen. När tidsperioden för den första testningen var över användes fortfarande App Engine men då i Googles moln istället för lokalt. App engine var ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjöds när man utvecklade och körde sina applikationer via denna motor var otroligt värdefulla. Det var bland annat lätt att underhålla applikationen och skala upp när trafik och data krävde det~\cite{googleappengine}. 
+
+% Det här stämmer inte
+%
+%Den primära källan för information till frågorna var under utvecklingsfasen Wikipedia men denna ersattes mot andra informationskällor vid ett senare skede. Detta förekom innan produkten färdigställdes.\\ 
+%Valet att inte använda Wikipedia som informationskälla i den slutgiltiga versionen av applikationen berodde på dess tvivelaktiga rykte som en pålitlig källa. Wikipedia trovärdighet har länge diskuterats och det finns många rapporter som har undersökt dess trovärdighet. Att använda Wikipedia för att bekanta sig med ett ämne är, enligt oss, fullt acceptabelt men borde lämpligtvis granskas kritiskt innan den användes som källa. Relationen mellan processerna att skapa och redigera artiklar på Wikipedia anses vara en ledande faktor till denna osäkerhet. Detta beror mycket på att hemsidan följer strukturen \textit{editable-by-all} vilket innebär att vem som helst kan ändra artiklar och på så sätt vinkla artikelns innehåll på ett eller ett annat sätt. Detta implicerar såklart inte att alla artiklar har råkat ut för detta öde men det bidrar till en viss osäkerhet vid användandet av denna hemsida som källa vid vetenskapliga rapporter ~\cite[sid 27--34]{wikipediacred}.
 
 \subsubsection{Google App Engine} \label{Google App Engine}
 Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att användaren skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programmet vi byggde i App Engine kördes på Googles infrastruktur och var uppbyggt så att antalet användare kunde utökas obegränsat. Flera stora företag använder sig av App Engine när deras produkter lanserades där några exempel av större företag var Coca Cola, Rovio och Best Buy ~\cite{googleappenginecustomers}. 
@@ -431,7 +434,7 @@ Vyn består av ett rutnät av användarens vänner där varje väns profilbild o
 
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=0.4\textwidth]{app_challenge} 
+%	\includegraphics[width=0.4\textwidth]{app_challenge} 
 	\end{center}
 	\caption{\textit{Bild av vyn Utmana en vän(7)}}
 \end{figure}
@@ -441,7 +444,7 @@ Vyn består av ett rutnät av användarens vänner där varje väns profilbild o
 När denna vy startas visas först bara söklinje upp, men när man sedan fyller i tecken och klickar retur visas ett rutnät av personer som matchar sökningen. Varje sökresultat visar profilbild och användarnamn. Klickar man på något av sökresultaten tas man till dennes profilsida(6)  
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=0.4\textwidth]{app_search} 
+%	\includegraphics[width=0.4\textwidth]{app_search} 
 	\end{center}
 	\caption{\textit{Bild av vyn Sök spelare(8) när en användare hittats}}
 \end{figure}
@@ -457,7 +460,7 @@ När denna vy startas visas först bara söklinje upp, men när man sedan fyller
 
 \begin{figure}[H]
 	\begin{center}
-	\includegraphics[width=0.4\textwidth]{app_profile} 
+%	\includegraphics[width=0.4\textwidth]{app_profile} 
 	\end{center}
 	\caption{\textit{Bild över Min profil (10)}}
 \end{figure}
@@ -585,9 +588,35 @@ Denna sektion diskuteras det vad som hade kunnat göras bättre under utveckling
 \subsection{Alternativa verktyg}
 
 \subsection{Framtida utvecklingar för applikationen}
+Än så länge är applikationen bara i ett tidigt alfastadie. Det här innebär att det fortfarande finns oändligt mycket att bygga på, dels buggfixar men också nya funktioner som inte har blivit implementerade än. Det som i första hand ska fixas är de buggar som våra alfatestare (och sedan betatestare) hittar. Det är viktigast att få produkten att fungera ordentligt med de få funktioner som redan finns, innan fler delar adderas. 
 
+\subsubsection{Alfatest}
+Alfateset har som sagt precis börjat och för att göra det lite lättare för både oss och våra testare så ska några saker läggas till. För att göra det lätt för testarna att rapportera buggar skapas det en bugtracker som kan hålla reda på dessa. Det är helt enkelt en websida som testaren kan gå till och anteckna saker som inte fungerar. När testaren sedan har gjort det kan utvecklarna se problemet och fixa det. För att gör den här sortens instruktioner tydligare för testarna ska också en websida för appen sättas upp. Websidan är primärt till för att informera om spelet och hur buggar rapporteras. I ett senare skede ska också websidan marknadsföra den färdiga applikationen.
 
+\subsubsection{Grafisk profil}
+Innan applikationen lanseras för en bredare publik behöver den en enhetlig grafisk profil. Utseendet i själva applikationen behöver också bearbetas för att få applikationen att mer likna ett spel. I det nuvarande stadiet har Chronos fått kritik av testare eftersom det inte riktigt ser ut som ett mobilspel. 
 
+Det finns just nu en temporär ikon och logotyp för Chronos som också eventuellt behöver utvecklas mer.
+
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[]{ic_launcher} 
+	\end{center}
+	\caption{\textit{Chronos logotyp}}
+\end{figure}
+
+Det är många saker som kräver tid i utvecklingen av den grafiska profilen. Färg och form behöver på bästa möjliga vis illustrera historia, sortering, tävling och spel. I den nuvarande logotypen är till exempel färgerna valda helt utan tanke på nämnda faktorer. Formen har däremot vissa referenser till spelets syfte. Ikonen är formad som ett fickur eftersom det är en symbol som ibland förekommer i samband med historia. Frågetecknet på urtavlan syftar på att det är någon form av frågesport det handlar om.
+
+\subsubsection{Kategorier}
+I den färdiga versionen har det sedan tidigare bestämts att det ska finnas olika kategorier att välja på. Det här är något som för närvarande inte är implementerat. Kategorier är något som skulle lyfta spelet eftersom det ger spelarna möjlighet att anpassa applikationen efter sina intresseområden. I själva frågeserveringssystemet är det inte så svårt att implementera detta. Eftersom den här egenskapen har varit med i specifikationen redan från början så är nuvarande system också anpassat för en sån här utbyggnad. Den största utmaningen med kategorier är egentligen hur frågehämtningen ska automatiseras i den här aspekten. Det bästa vore om frågehämtaren kunde automatisera val av kategori, men det gör också frågehämtaren mycket mer avancerad. Ett alternativ är att precis som initial svårighetsgrad väljs i dagsläget så kan kategori också väljas av administratören. Det är dessutom så att den initiala svårighetsgraden är överflödig, eftersom det var någonting som var med i bilden innan Elo implementerades. Enligt specifikationerna för Elo ska alla frågors initiala svårighetsgrad vara lika. I och med detta skulle man helt enkelt kunna byta ut initial svårighetsgrad mot kategorival i webgränssnittet.
+
+\subsubsection{Balanseringssystemet}
+Det finns många buggar relaterade till balanseringen i den aktuella versionen. Först och främst är det så att det ibland finns svårigheter för systemet att skriva de nya Elopoängen till databasen. Sedan är det också så att användandet av poängen inte är implementerad än. Frågorna i den nuvarande versionen får ett Elopoäng men systemet tar i nuläget inte hänsyn till poängen när frågor serveras till spelarna. Det är lättare att alfatesta spelet med minimalt antal funktioner för att i första läget se så att grundläggande kommunikation och interaktion fungerar. På grund av detta så har balanseringsprioriteringen inte haft högsta prioritet, det här ska byggas klart snarast. 
+
+\subsubsection{Mindre utvecklingar}
+Det finns många små delar som inte fungerar som det är tänkt, det saknas också begränsningar på flera stället. Spelet fungerar utan dessa begränsningar men det blir till exempel lättare att fuska när begränsningarna inte finns. I nuvarande version kan spelaren slumpa oändligt antal matcher, vilket gör att en spelare skulle kunna starta hur många matcher som hest. Det här riskerar att öka väntetiden för andra spelare eftersom värsta scenariot vore att en spelare spelar mot alla andra aktiva spelare. Det finns inte någon tidsbegränsning på hur länge en spelare har på sig att sortera sina händelser, det här gör det väldigt lätt för spelaren att söka upp informationen om händelserna utanför applikationen och sedan svara. Matcher kan också i nuläget hålla på hur länge som helst. Många spel, likt Wordfeud och Quizkampen har en begränsning på hur lång tid spelaren får på sig att svara. I en senare version av Chronos ska spelaren förlora sin match om den inte ha svarat inom en viss tid, till exempel tre dagar. I en senare version ska också slutförda matcher försvinna från flödet efter en viss tid, någonting som inte sker idag.
+
+Just nu saknas också authorisering för frågehämtaren, vilket gör att vem som helst skulle kunna lägga in frågor i databasen. Det här är någonting som är ganska kritiskt och det har därför hög prioritet att fixas till nästa version.
 \newpage
 \printbibliography[title={Referenser}]
 \end{document}
