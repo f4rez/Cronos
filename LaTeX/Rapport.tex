@@ -15,8 +15,8 @@
 
 \usepackage[hidelinks]{hyperref}
 
-\usepackage{titlesec}
-\setcounter{secnumdepth}{4}
+%\usepackage{titlesec}
+%\setcounter{secnumdepth}{4}
 
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
 \addbibresource{cites.bib}
@@ -122,7 +122,7 @@ Informationen i den här typen av lista presenteras alltid likadant och förekom
 	1993 \– Nintendo släpper The Legend of Zelda: Link's Awakening till Game Boy.
 \end{verbatim}
 
-Eftersom presentationen är konsekvent, med ett bindestreck som avskiljer årtal och händelse är inhämtning av information från de här sidorna relativt enkel att automatisera.
+Eftersom presentationen är konsekvent, med ett bindestreck som avskiljer årtal och händelse är inhämtning av information från de här sidorna enkel att automatisera.
 
 \subsubsection{Webcrawler}
 
@@ -467,10 +467,16 @@ När denna vy startas visas först bara söklinje upp, men när man sedan fyller
 
 
 \section{Resultat}
-Den här sektionen beskriver de utvärderingar som gjorts av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet.  
+Den här sektionen beskriver de utvärderingar som gjorts av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet. Det utfördes tre utvärderingar på applikationen. En \textit{Think Aloud}, en \textit{Kognitiv Genomgång} och en \textit{Heuristic Evaluation}. 
 
 \subsection{Utvärderingar och deras användbarhet}
-Utvärderingar är bra verktyg för att hitta problem eller för att hitta områden som är lämpade för vidare utveckling. Det kan också hjälpa till att få nyttig feedback på en tidig design eller hjälpa till att välja mellan olika designalternativ ~\cite[sid 226--228]{benyon2010designing}. Utvärderingarna vi valde att utföra var till för att granska produkten vi har utvecklat. Detta för att se om produkten mötte de krav som vi hade ställt. Vi hoppades att utvärderingarna skulle ge oss en bild av applikationens användbarhet och effektivitet samt se till att den var tillmötesgående för användaren. Ur en designsynpunkt gjorde vi utvärderingen för att se om applikationen fyllde sitt syfte, om den var rolig samt om den engagerar användaren.
+Utvärderingar är bra verktyg för att hitta problem eller för att hitta områden som är lämpade för vidare utveckling. Det kan också hjälpa till att få nyttig feedback på en tidig design eller hjälpa till att välja mellan olika designalternativ ~\cite[sid 226--228]{benyon2010designing}. Utvärderingarna vi valde att utföra var till för att granska produkten vi har utvecklat. Vi ville se om produkten mötte de krav som vi hade ställt vid starten av projektet. Vi hoppades även att utvärderingarna skulle ge oss en bild av applikationens användbarhet och effektivitet samt se till att den var tillmötesgående. Ur en designsynpunkt gjorde vi utvärderingen för att se om applikationen fyllde sitt syfte, om den var rolig samt om den engagerar användaren.
+
+
+\subsection{Utvärdering av projekt}
+Planen var att en fungerande alfa eller betaversion av systemet skulle färdigställas en rimlig tid innan projektet avslutas. I den här versionen skulle användare ha möjlighet att ge feedback och att testa applikationen. Tack vare den feedback vi fick från användarna så skulle så många fel som möjligt justeras innan den färdiga versionen släpptes.
+
+
 
 \subsection{Kognitiv Genomgång}
 En \textit{Kognitiv Genomgång} ~\cite[sid 2--8]{cognitive} är en utvärderingsmetod som är till för att avgöra problem med användbarhet i ett interaktivt datorsystem. Utvärderingen går ut på att utvecklarna traverserar systemet analytiskt givet ett antal specifika uppgifter användarna förväntas utföra i systemet. Den kognitiva genomgången utvärderar vilken sekvens av steg som är nödvändiga för att användaren ska kunna utföra en uppgift. Användarnas sekvens av steg jämförs sedan med utvecklarnas förväntade sekvens för att utföra samma uppgift. Detta för att se skillnader i sekvenserna och därmed upptäcka problem med den aktuella designen.\\
@@ -483,13 +489,7 @@ Ett exempel på en fråga som är hjälpsam vid ett sådant val är exempelvis: 
 \item Definiera gränssnittet.
 \end{enumerate}
 
-När detta är fastställt kan utvecklarna börja med utvärderingen. Under utvärderingens gång ska utvecklarna ställa följande frågor vid varje vald uppgift:
-\begin{enumerate}
-\item[•] Kommer användarna försöka uppnå rätt mål?
-\item[•] Kommer användarna märka att rätt beslut är tillgängligt?
-\item[•] Kommer användaren kunna koppla rätt beslut till det målet hen försöker uppnå?
-\item[•] Om rätt beslut har tagits, kommer användaren förstå att hen har gjort framsteg i att uppnå målet?
-\end{enumerate}
+När detta är fastställt kan utvecklarna börja med utvärderingen. Under utvärderingens gång ska utvecklarna ställa följande frågor vid varje vald uppgift. Kommer användarna försöka uppnå rätt mål? Kommer användarna märka att rätt beslut är tillgängligt? Kommer användaren kunna koppla rätt beslut till det målet hen försöker uppnå? Om rätt beslut har tagits, kommer användaren förstå att hen har gjort framsteg i att uppnå målet?
 Om någon av dessa frågor får ett negativt svar betyder det att det finns problem i användbarheten och detta noteras då av utvecklarna ~\cite[sid 230--232]{benyon2010designing}.\\
 
 Efter utvärderingen kan utvecklarna analysera den data som samlats in och skapa en ny design eller alternera den gamla för att öka användbarheten.\\ 
@@ -555,13 +555,19 @@ Detta är ett steg som skulle kunna utgöra ett problem för användaren då den
 \subsection{Think Aloud}
 \textit{Think Aloud} ~\cite[sid 29--32]{thinkaloud} är en utvärderingsmetod som går ut på att användare ska utföra ett antal uppgifter som utvecklarna har valt. Det är sedan användarnas jobb att under tiden som uppgifterna utförs att säga vad de tänker på. Utvecklarna antecknar det användarna säger kontinuerligt under tiden uppgifterna utförs. Anteckningarna analyseras sedan av utvecklarna för att se vilka delar som eventuellt var för svåra, dåliga eller rent av ineffektiva. Designen av systemet kommer sedan att alterneras eller skapas på nytt beroende på kommentarerna som noterades från användarna.\\
 Utvecklarna ska försöka hålla sin aktivitet något i bakgrunden för att inte påverka användarna på något sätt. Utvecklarna skall endast ställa sin fråga och sen vara mer som en åskådare. Det är inte meningen att användarna skall behöva utveckla sina tankar eller lösa problemet som de ställs inför. Hela poängen är istället att deras tankar och feedback ska få flöda fritt.\\
-
-Miljön som denna utvärderingen utförde i var en sådan som den utvärderande kunde känna sig säker i. Det var den som medverkar i utvärderingen som fick göra detta val. Användaren valde att utföra utvärderingen i sitt eget hem vilket vanligtvis brukar vara en varningsklocka för utvecklare. Detta är för att människor i sitt hem ofta är väldigt måna om att skydda sitt privatliv. Detta kan resultera i att utvärderingen ger dåliga resultat eller i värsta fall inga alls. Om utvärderingen måste ske i användarens hem så är det utvecklarnas uppgift att göra utvärderingen stimulerande och se till att den är så lite tidskrävande som möjligt ~\cite[sid 245]{benyon2010designing} .
-I just detta fall utgjorde det inget problem eftersom användaren kände den ansvariga utvärderaren sedan en lång tid tillbaka. \\
+Miljön som utvärderingen borde utföras i är en sådan som den utvärderande kan känna sig säker i. Det är bra om den som medverkar i utvärderingen gör detta val för att göra det enkelt för båda parterna. Om användaren skulle välja att utföra utvärderingen i sitt eget hem borde utvecklarna av produkten se detta som en varningsklocka. Detta är för att människor i sitt hem ofta är väldigt måna om att skydda sitt privatliv. Detta kan resultera i att utvärderingen ger dåliga resultat eller i värsta fall inga alls. Om utvärderingen måste ske i användarens hem så är det utvecklarnas uppgift att göra utvärderingen stimulerande för användaren och se till att den är så lite tidskrävande som möjligt~\cite[sid 245]{benyon2010designing}.
 
 Att använda en kontrollerad utvärderingsmetod som \textit{Think Aloud} var självklart för oss för att vi ville få feedback från riktiga människor och inte bara experter.
 
 \subsubsection{Think Aloud utvärdering av Chronos}
+Think Aloud utvärderingen utfördes under en personlig intervju med en man i 24-års åldern. Mannen hade haft en smartphone sedan en tid tillbaka och var väl bekant med hur den användes. Detta gjorde att han passade bra in på den typen av användare som vi designade applikationen för. Mannen önskade att vara anonym och därför kallar vi honom i nedanstående stycke för Carl.\\
+
+Carl valde att utföra utvärderingen i sitt hem vilket vanligtvis inte är så passande men var i detta fall problemfritt då Carl kände en av utvecklarna sedan en lång tid tillbaka.
+Utvecklarna hade förberett fyra uppgifter som Carl skulle genomföra. Han ombads att logga in på applikationen, starta en match mot en slumpad spelare, spela matchen och till sist söka och lägga till en spelar som vän. 
+Utvärderingen började med att Carl skulle logga in med sitt Google konto på applikationen. Han hade inga problem med denna uppgift och uttryckte sig att uppgiften var en \textit{``enkel sak att göra med tanke på att i princip alla inloggningssystem idag ser likadana ut''}.\\
+Efter inloggningen presenterades Carl med vyn över spelarens matcher som nu var tom. Han satt någon minut och funderade men fick till slut fram rätt meny varpå han tittade mot utvecklarna med ett frågande ansiktsuttryck. Han menade att \textit{``Det är väldigt oklart vart man ska trycka för att starta en ny match''}. De rätta stegen förklarades och han kunde sedan fortsätta med utvärderingen.\\
+När han hade startat matchen så uttryckte han en viss förvirring kring hur han skulle placera händelserna och vilken sida som var nutid och dåtid. Utvecklarna förklarade vilken ordning som var den rätta och han spelade klart rundan utan vidare problem. När Carl väl svarade fel under rundan så höjde han ögonbrynen och vände sig mot utvecklarna varpå han frågade \textit{``vad nu då? Vad ska jag göra nu?''}. Han menade att det inte var helt solklart när man hade fel, vilken händelse som var fel samt vad man skulle göra när man hade svarat fel.\\
+När Carl skulle söka och lägga till en vän så navigerade han sig först till sidan \textit{Utmana en vän} där han sedan fastnade och efter någon minut gav upp. Han testade sedan att använda sig av "Plus"-knappen från tidigare uppgifter och valde alternativet \textit{sök spelare} varpå han lyckades navigera till rätt mål. När han lyckats med uppgiften beskrev han stegen han var tvungen att ta som onödigt svåra och smått förvirrande. 
 
 \subsection{Heuristic Evalutation}
 En \textit{Heuristic Evalutation} ~\cite[sid 228--229]{benyon2010designing} är en utvärderingsmetod för att fastställa problem i användbarhet hos ett system, problemens storlek samt vart de finns. Den här typen av utvärdering utförs ofta i en tidig fas av designutvecklingen. 
@@ -571,12 +577,28 @@ Vi som utvecklade applikationen har alla gått en kurs i MDI och vi kritiserade 
 Denna person ombads att utvärdera applikationens kontroll, synlighet, stil och om designen var konsekvent. Utvecklarna gav även personen en skala från 1-5 för att bedöma hur allvarliga problemen var.  
 
 \subsubsection{Heuristic Evaluation av Chronos}
+En Heuristic Evaluation utfördes med en man som heter Tage Winberg under en personlig intervju 22 maj 2015. Tage är 28 år gammal och arbetar som UX-designer~\cite{uxdesign} på företaget \textit{STOPP Family}. Han har en gått utbildning \textit{Mobile Creative} på Hyper Island i Stockholm och har dessutom mer än 12 års erfarenhet av grafisk design. Tage har även ett eget företag och har jobbat med bland annat UX Design, interaktionsdesign, grafisk design och konceptutveckling för applikationer.
+Nedan presenteras hans åsikter om hur väl applikationen var designad med hänsyn till de designprinciper som utvecklarna valt.
 
+\paragraph{Kontroll\\}
+Kontrollen i applikationen var kort sagt ganska simpel. Eftersom att applikationen inte hade så många knappar och alternativ så kände jag att det var lätt att navigera sig. Det kan vara positivt med få alternativ och knappar i sin applikation. Det kan bidra till att användaren lätt förstår vart hen ska trycka på för att komma till sitt mål. Detta är dock inte fallet för den här applikationen då det inte är helt solklart vart man ska trycka för att komma till de olika funktionerna applikationen tillhandahåller. Detta har dock inte med antalet knappar eller alternativ att göra. Det handlar mer om hur knapparna ser ut som bidrar till en viss förvirring.
+"Plus"-ikonen är relativt simpel i sin design men den kan betyda många saker vilket är positivt i den meningen att det blir en ganska "clean" design. Det negativa med att ha många alternativ samlade i en knapp är att användaren kan bli förvirrad över hur knappen fungerar samt om dess egenskaper förändras beroende på vilken vy som är aktuell.
+Summeringen av problemen skulle rankas som 3/5 på den givna skalan.
 
-\subsection{Utvärdering av projekt}
-Planen var att en fungerande alfa eller betaversion av systemet skulle färdigställas en rimlig tid innan projektet avslutas. I den här versionen skulle användare ha möjlighet att ge feedback och att testa applikationen. Tack vare den feedback vi fick från användarna så skulle så många fel som möjligt justeras innan den färdiga versionen släpptes.
+\paragraph{Synlighet\\}
+Boxarna för matcher och rundor borde "poppa" mer från bakgrunden alternativt vara mer specifika. Korten som finns i en runda har också detta problem. Detta problem skulle man kunna lösa med exempelvis bättre färgsättning eller instruerande pilar. Om detta genomfördes skulle användaren lättare kunna koppla vart hen skulle komma om en speciell knapp trycktes.\\
+Informationen som ges för varje runda, exempelvis: ställningen, vilken omgång det är samt vems tur det är borde "poppa" mer från den befintliga designen. Just nu är det för mycket text för att det ska vara enkelt för användaren att lätt ta in den värdefulla informationen. Förslagsvis borde mängden text som visas för varje runda minskas ner och ersättas med mer summerad information som står ut från bakgrunden. Detta skulle man kunna uppnå med en annan färgsättning eller om man exempelvis skulle vilja experimentera med fet text och vanligt text. 
+För att lösa problemet med oklarheten kring vems tur det är skulle man kunna ha olika färger för varje typ av runda. Varje färg betyder en sak, exempelvis: Grön = din tur, gul = motståndarens tur och röd = avslutad match. Om färgsättning inte är något som utvecklarna vill ändra på i matchvyn skulle de möjligtvis kunna använda sig av andra metoder för att särskilja matchernas status. Utvecklarna skulle kunna ha en litet tomt utrymme mellan sektionerna "Din tur" och "Motståndarens tur" samt att se till att avslutade matcher mattades ur för att visa spelarna att dessa inte är aktiva.\\
+Summeringen av problemen skulle rankas som 2/5 på den givna skalan.    
 
-Gränssnittet och användandet av applikationen skulle också utvärderas med hjälp av \textit{Think Aloud},en \textit{Kognitiv Genomgång} och en \textit{Heuristic Evaluation}.
+\paragraph{Stil\\}
+Stilen för applikationen var stilren i den meningen att det inte var allt för mycket information på de olika menyerna. Färgsättningen i designen var mycket väl vald då det bidrog till kontraster mellan olika delar vilket är otroligt viktigt. Flödet i applikationen var också väl designat då  dess animationer var lättviktiga och mjuka. Detta bidrog till att det inte var jobbigt för åskådaren att använda sig av applikationen.\\
+Summeringen av problemen skulle rankas som 1/5 på den givna skalan.
+
+\paragraph{Om designen var konsekvent\\}
+Applikationens design hade en konsekvent formgivning och likaså färgsättning av knappar och symboler. Dock finns det möjlighet att göra designen ännu mer konsekvent. Exempel på detta var under processen då man sökte efter spelare. Sökresultaten visades som ett rutnät vilket inte riktigt följde den övriga visuella designen för applikationens vyer. Istället för rutnät skulle sökresultatet visa varje spelare i en separat rad. Om denna design skulle väljas skulle utvecklarna även kunna få in ett antal knappar för att bland annat lägga till spelaren som vän och utmana spelare. Detta skulle bidra till att användaren slipper leta efter dessa funktioner på andra platser i applikationen.\\
+Summeringen av problemen skulle rankas som 3/5 på den givna skalan.
+
 
 \section{Diskussion}
 I den här sektionen diskuteras det vad som hade kunnat göras bättre under utvecklingen. Exempel på detta kunde exempelvis vara om det fanns alternativa vägar eller verktyg som hade varit bättre, effektivare, enklare att använda. Det beskrivs även framtida utvecklingar i det visuella och applikationens prestanda och säkerhet.
