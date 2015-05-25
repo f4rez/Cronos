@@ -94,7 +94,7 @@
                     break;
                 }
 
-                if(e.which == 50 || e.which == 51 || e.which == 52) {
+                if((e.ctrlKey && e.which == 50) || (e.ctrlKey && e.which == 51) || (e.ctrlKey && e.which == 52)) {
                     $.get("/store", {q:question, year:year, level:level}, function() {
                         counter = counter+1;
 
@@ -105,7 +105,7 @@
                         $('.year').text(q[counter].Year);
                         $('.question').text(q[counter].Question);
                     });
-                } else if(e.which == 49) {
+                } else if((e.ctrlKey && e.which == 49)) {
                     counter = counter+1;
 
                     if(q.length <= counter) {
