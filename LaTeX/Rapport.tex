@@ -152,7 +152,7 @@ Applikationen till Android skrevs i Java och gränssnittet skrevs med hjälp av 
 \subsubsection{Server}
 För att flera spelare skulle kunna interagera med varandra så behövdes det en server. En server möjliggjorde även att frågorna i spelet kunde uppdateras kontinuerligt under applikationens exekvering.
 
-Servermjukvaran skrevs i programspråket Go ~\cite{golang} och körs på Googles molntjänst App Engine.
+Servermjukvaran skrevs i programspråket Go~\cite{golang} och körs på Googles molntjänst App Engine.
 
 \subsubsection{Automatisk informationshämtning}
 För att spelet skulle bli så intressant som möjligt behövdes en stor bredd på frågorna som skulle lagras i spelets tillhörande databas. Ett sätt att skapa många frågor snabbt var att utveckla mjukvara som kunde hämta information och från denna information skapa nya frågor automatiskt. 
@@ -249,7 +249,7 @@ Google App Engine användes lokalt för att simulera serverapplikationen. När t
 %Valet att inte använda Wikipedia som informationskälla i den slutgiltiga versionen av applikationen berodde på dess tvivelaktiga rykte som en pålitlig källa. Wikipedia trovärdighet har länge diskuterats och det finns många rapporter som har undersökt dess trovärdighet. Att använda Wikipedia för att bekanta sig med ett ämne är, enligt oss, fullt acceptabelt men borde lämpligtvis granskas kritiskt innan den användes som källa. Relationen mellan processerna att skapa och redigera artiklar på Wikipedia anses vara en ledande faktor till denna osäkerhet. Detta beror mycket på att hemsidan följer strukturen \textit{editable-by-all} vilket innebär att vem som helst kan ändra artiklar och på så sätt vinkla artikelns innehåll på ett eller ett annat sätt. Detta implicerar såklart inte att alla artiklar har råkat ut för detta öde men det bidrar till en viss osäkerhet vid användandet av denna hemsida som källa vid vetenskapliga rapporter ~\cite[sid 27--34]{wikipediacred}.
 
 \subsubsection{Google App Engine} \label{Google App Engine}
-Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att användaren skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Programmet vi byggde i App Engine kördes på Googles infrastruktur och var uppbyggt så att antalet användare kunde utökas obegränsat. Flera stora företag använder sig av App Engine när deras produkter lanserades där några exempel av större företag var Coca Cola, Rovio och Best Buy~\cite{googleappenginecustomers}. 
+Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att utvecklare skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Den utvecklade produkten kan sedan köras vid Google App Engine. Servern som vi byggde i App Engine kördes på Googles infrastruktur och var uppbyggt så att antalet användare för applikationen kunde utökas obegränsat. Flera stora företag använder sig av App Engine när deras produkter lanserades där några exempel av större företag var Coca Cola, Rovio och Best Buy~\cite{googleappenginecustomers}. 
 
 \subsection{Systemstruktur}
 
@@ -270,11 +270,11 @@ Androidapplikationen, klienten i systemet, var själva spelet som utvecklades. D
 När det är den aktuella spelarens tur får hen en chunk med sex frågor och dess svar (årtal) från systemets server. Svaren är gömda för användaren under rundans gång och används endast av klienten för att rätta svaren från spelaren. När spelaren är färdig med sin runda och klienten har rättat svaren så skickas dessa tillbaka till servern där de lagras i matchens historik. 
 
 \subsubsection{Server}
-Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang)~\cite{golang}. Anledningen till att vi valde att skriva servern i Go var för att det, enligt oss, var ett simpelt språk med en syntax som liknade andra språk som hade använts tidigare. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen. Databasen skickar frågor till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra crawlern som är den semi-automatiska informationshämtaren. Servern har också som uppgift att med jämna mellanrum köra fråge- och användarbalanseringssystemet som justerar svårighetsgraden för frågorna respektive spelarna i systemet. 
+Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang)~\cite{golang}. Anledningen till att vi valde att skriva servern i Go var för att det, enligt oss, var ett simpelt språk med en syntax som liknade andra språk som vi hade använt tidigare. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen. Databasen skickar frågor till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra crawlern som är den semi-automatiska informationshämtaren. Servern har också som uppgift att med jämna mellanrum köra fråge- och användarbalanseringssystemet som justerar svårighetsgraden för frågorna respektive spelarna i systemet. 
 
 \subsubsection{Databas}
 Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Datastore~\cite{datastore} är Google App Engines egna bibliotek för hantering och lagring av data vilket innebär att systemet, utan vår assistans, hanterar all datalagring. Datastore har flera egenskaper som bidrar till en enklare utveckling av resterande delar för projektet. Med tanke på att Datastore är ett bibliotek från App Engine så medföljer dess skalbarhet som skalar beroende på behovet. Med Datastores inbyggda hjälpmedel för redundans kan data lätt replikeras till flera datacenter om det skulle behövas. \\
-Datastore hanterar datalagring med både SQL och NoSQL. För den som inte är bekant med NoSQL så är det en alternativ design för databaser som skiljer sig från SQL-databaser~\cite{nosql}. Marknaden som existerar idag är vad som kan kallas för en \textit{Big Data Reality} som kännetecknas av den enorma mängd data som måste hanteras av dagens databaser. Designen för NoSQL utvecklades för att möta kraven som ställdes av dagens \textit{Big Data Reality}. NoSQL utvecklades för att bidra med en enklare design och lättare tillgänglighet. Det är mest datastrukturerna som skiljer NoSQL från vanliga relationsdatabaser. Detta leder till att vissa operationer är lättare och mer effektiva att utföra i NoSQL medan andra är snabbare i vanliga relationsdatabaser~\cite[1--3]{nosqlfacts}. NoSQL används alltmer av applikationer som måste hantera stora mängder data men också websystem som ska exekveras i realtid~\cite{nosqlcloud}. Egenskaperna som NoSQL besitter passar för vår applikationen då ett tak för antalet användare inte var satt samt att vi önskade att exekvera i realtid.
+Datastore hanterar datalagring med både SQL och NoSQL. För den som inte är bekant med NoSQL så är det en alternativ design för databaser som skiljer sig från SQL-databaser~\cite{nosql}. Marknaden som existerar idag är vad som kan kallas för en \textit{Big Data Reality} som kännetecknas av den enorma mängd data som måste hanteras av dagens databaser. Designen för NoSQL utvecklades för att möta kraven som ställdes av dagens \textit{Big Data Reality}. NoSQL utvecklades för att bidra med en enklare design och lättare tillgänglighet. Det är mest strukturella skillnader mellan NoSQL och vanliga relationsdatabaser. Det betyder att vissa operationer är lättare och mer effektiva att utföra i NoSQL medan andra är snabbare i vanliga relationsdatabaser~\cite[1--3]{nosqlfacts}. NoSQL används alltmer av applikationer som måste hantera stora mängder data men också websystem som ska exekveras i realtid~\cite{nosqlcloud}. Egenskaperna som NoSQL besitter passar för vår applikationen då ett tak för antalet användare inte var satt samt att vi önskade att exekvera i realtid.
 
 Med Datastore behövde vi inte oroa sig över hur sökning och borttagning skulle ske i databasen. Detta kan förklaras med att Datastore inte använder sig direkt av schemas som i en relationsdatabas, exempelvis SQL. Datastore ser med andra ord till att borttagning och sökning sker effektivt och på rätt sätt. Databasens sökning var effektivt tack vare den solida sökmotorn som biblioteket tillhandahöll.
 
@@ -372,12 +372,12 @@ Det finns fyra olika handlingar som användaren kan göra här vid denna sida. D
 Användarna kan vid matchvyn dra med fingret neråt på skärmen för att uppdatera matchflödet. Detta är till för användaren ska kunna se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design~\cite{MaterialDesign} och är en knapp som alltid ligger överst och representerar huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(7). 
 De kan möta en slumpad motståndare (Slumpad motståndare) detta stänger ner dialogen som öppnades av FAB-en och en ny match finns i listan av matcher. De kan också söka efter en spelare(Sök spelare), då byts vyn ut mot en sökvy(8). 
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{figure}[H]
 \begin{center}
 	\includegraphics[width=0.4\textwidth]{app_new_match} 
 	\caption{\textit{Dialogen som öppnas när man klickar på FAB-en}}
 	\end{center}
-\end{wrapfigure}
+\end{figure}
 
 \pagebreak
 \large \textup{3. Matchstatstik}\\
@@ -388,12 +388,12 @@ Hit kommer användaren när den klickar på en match eller när den har spelat f
 	\begin{center}
 	\includegraphics[width=0.4\textwidth]{app_match_stats} 
 	\end{center}
-	\caption{\textit{Sceenshot på en match}}
+	\caption{\textit{Vy över rundorna i en match}}
 \end{figure}
 
 \pagebreak
- \large \textup{4. Match}\\
-Här är vyn där matcherna spelas. Överst i vyn finns ett kort som innehåller den händelse som ska placeras in i tidslinjen. Under kortet ligger tidslinjen, den ska sorteras i kronologisk ordning där den tidigaste händelsen ligger högst upp. När matchen startas ligger det en given händelse i tidslinjen och ovanför ligger det en delare (Placera in händelsen i ordning) som representerar händelsen som är skriven på kortet. Delaren är mobil och för att flytta den får man göra ett långt klick och sedan dra den den till den position man vill. Det finns även här en FAB som rättar placeringen av delaren, om svaret är rätt omvandlas delaren till händelsen som var på kortet och det läggs in en ny delare med en ny händelse som visas på kortet. Om svaret däremot var fel blinkar delaren till i rött och visar sedan årtalen på alla händelser som är utlagda i tidslinjen.
+ \large \textup{4. Pågående match}\\
+I figuren nedan illustreras hur spelet representerar en pågående match. Överst i vyn finns ett kort som innehåller den händelse som ska placeras in i tidslinjen. Under kortet ligger tidslinjen, den ska sorteras i kronologisk ordning där den tidigaste händelsen ligger högst upp. När matchen startas ligger det en given händelse i tidslinjen och ovanför ligger det en delare (Placera in händelsen i ordning). Delaren ska representerar händelsen som är skriven på kortet ovanför. Delaren är mobil och för att flytta den får man göra ett långt klick och sedan dra den den till den position man vill. Det finns även här en FAB som rättar placeringen av delaren, om svaret är rätt omvandlas delaren till händelsen som var på kortet och det läggs in en ny delare med en ny händelse som visas på kortet. Om svaret däremot var fel blinkar delaren till i rött och visar sedan årtalen på alla händelser som är utlagda i tidslinjen.
 
 
 \begin{figure}[H]
@@ -407,7 +407,7 @@ Här är vyn där matcherna spelas. Överst i vyn finns ett kort som innehåller
 
 \pagebreak
 \large \textup{5. Navigationsvy}\\
-Navigationsvyn nås genom att klicka på hamburgarmenyn som finns i: Startsida - matcher(2), Profilsida(6), Utmana en vän(7) och Sök spelare(8). Den ger möjlighet att navigera till de olika övermenyerna som finns: Startsida - Matcher (2), Inställningar (9), Min profil (10). Det finns även möjlighet att att köpa sig fri från annonser (Inga mer annonser) och att logga ut från sitt konto (LOGGA UT), om du väljer att logga ut skickas du till inloggningsvyn(1). Högst upp i navigationsvyn finns det även en bild som fyller hela vidden av vyn, bilden tas från användarens googlekonto och om hen inte har en omslagsbild visas istället en standardbild.   
+Navigationsvyn som illustreras nedan nås genom att klicka på hamburgarmenyn som finns i följande vyer: Startsida - matcher(2), Profilsida(6), Utmana en vän(7) och Sök spelare(8). Den ger möjlighet att navigera till de olika övermenyerna som finns: Startsida - Matcher (2), Inställningar (9), Min profil (10). Det finns även möjlighet att att köpa sig fri från annonser (Inga mer annonser) och att logga ut från sitt konto (LOGGA UT). Om spelaren väljer att logga ut skickas hen till inloggningsvyn(1). Högst upp i navigationsvyn finns det även en bild som fyller hela vidden av vyn. Bilden tas från användarens googlekonto och om hen inte har en omslagsbild visas istället en standardbild.   
 
 
 \begin{figure}[H]
@@ -430,7 +430,7 @@ Det finns två sätt att komma till en profilsida. Man kan genom Min profil (10)
 	\includegraphics[width=0.4\textwidth]{app_profile_fab} 
 	\includegraphics[width=0.4\textwidth]{app_profile_toolbar} 
 	\end{center}
-	\caption{\textit{Profilsida för en användare, till höger med en FAB och till vänster med ett verktygsfält som visas när användaren klickar på FAB-en }}
+	\caption{\textit{Profilsida för en användare, till vänster med en FAB och till höger med ett verktygsfält som visas när användaren klickar på FAB-en }}
 \end{figure}
 
 \pagebreak
@@ -531,7 +531,7 @@ Detta är en simulerad körning av applikationen med användaren, uppgifterna oc
 \item Starta applikationen. \\ 
 Detta är något som en person som äger en smartphone kommer kunna utföra genom kunskap från erfarenhet.
 \item Logga in med Google konto.\\ 
-Om användaren har ett konto hos Google så kommer det inte uppstå några problem här då hen tidigare har tvingats logga på andra platser med sitt konto.
+Om användaren har ett konto hos Google så kommer det inte uppstå några problem här då hen tidigare har tvingats logga på andra platser med liknande layout.
 \item Skapa en ny match mot slumpad motståndare genom att trycka på den gröna cirkulära \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Slumpad motståndare}.\\
 Vid denna punkt presenteras användaren med en vy som är blank förutom den gröna cirkulära \textbf{+}-ikonen. Tack vare att användaren är van vid att använda sig av applikationer kommer hen trycka på den gröna cirkulära \textbf{+}-ikonen.
 \item Välj den slumpade matchen genom att klicka på listelementet som ligger under rubriken \textit{Din tur}.\\
@@ -567,12 +567,12 @@ Att använda en kontrollerad utvärderingsmetod som \textit{Think Aloud} var sj�
 
 \subsubsection{Think Aloud utvärdering av Chronos}
 Think Aloud utvärderingen utfördes under en personlig intervju med en man i 24-års åldern. Mannen hade haft en smartphone sedan en tid tillbaka och var väl bekant med hur den användes. Detta gjorde att han passade bra in på den typen av användare som vi designade applikationen för. Mannen önskade att vara anonym och därför kallar vi honom i nedanstående stycke för Carl.\\
-Som grund för utvärderingen sa utvecklarna detta till Carl: \textit{``Vi kommer be dig utföra ett antal uppgifter. Medan du utför dessa uppgifter önskar vi att du försöker säga allt som du tänker på.''}\\
+Som grund för utvärderingen sa utvecklarna detta till Carl: \textit{``Vi kommer be dig utföra ett antal uppgifter. Medan du utför dessa uppgifter önskar vi att du säger allt som du tänker på.''}\\
 Carl valde att utföra utvärderingen i sitt hem vilket vanligtvis inte är så passande men var i detta fall problemfritt då Carl kände en av utvecklarna sedan en lång tid tillbaka.
 Utvecklarna hade förberett fyra uppgifter som Carl skulle genomföra. Han ombads att logga in på applikationen, starta en match mot en slumpad spelare, spela matchen och till sist söka och lägga till en spelar som vän. 
-Utvärderingen började med att Carl skulle logga in med sitt Google konto på applikationen. Han hade inga problem med denna uppgift och uttryckte sig att uppgiften var en \textit{``enkel sak att göra med tanke på att i princip alla inloggningssystem idag ser likadana ut''}.\\
-Efter inloggningen presenterades Carl med vyn över spelarens matcher som nu var tom. Han satt någon minut och funderade men fick till slut fram rätt meny varpå han tittade mot utvecklarna med ett frågande ansiktsuttryck. Han menade att \textit{``Det är väldigt oklart vart man ska trycka för att starta en ny match''}. De rätta stegen förklarades och han kunde sedan fortsätta med utvärderingen.\\
-När han hade startat matchen så uttryckte han en viss förvirring kring hur han skulle placera händelserna och vilken sida som var nutid och dåtid. Utvecklarna förklarade vilken ordning som var den rätta och han spelade klart rundan utan vidare problem. När Carl väl svarade fel under rundan så höjde han ögonbrynen och vände sig mot utvecklarna varpå han frågade \textit{``vad nu då? Vad ska jag göra nu?''}. Han menade att det inte var helt solklart när man hade fel, vilken händelse som var fel samt vad man skulle göra när man hade svarat fel.\\
+Utvärderingen började med att Carl skulle logga in med sitt Google konto på applikationen. Han hade inga problem med denna uppgift och uttryckte sig att uppgiften var en enkel sak att utföra med tanke på att i princip alla inloggningssystem idag ser likadana ut.\\
+Efter inloggningen presenterades Carl med vyn över spelarens matcher som nu var tom. Han satt någon minut och funderade men fick till slut fram rätt meny varpå han tittade mot utvecklarna med ett frågande ansiktsuttryck. Han menade på att det var väldigt oklart vart man ska trycka för att starta en ny match. De rätta stegen förklarades för honom och han kunde sedan fortsätta med utvärderingen.\\
+När han hade startat matchen så uttryckte han en viss förvirring kring hur han skulle placera händelserna och vilken sida som var nutid och dåtid. Utvecklarna förklarade vilken ordning som var den rätta och han spelade klart rundan utan vidare problem. När Carl väl svarade fel under rundan så höjde han ögonbrynen och vände sig mot utvecklarna varpå han frågade vad som skulle hända nu och hur han skulle komma vidare. Han menade att det inte var helt solklart när man hade fel, vilken händelse som var fel samt vad man skulle göra när man hade svarat fel.\\
 När Carl skulle söka och lägga till en vän så navigerade han sig först till sidan \textit{Utmana en vän} där han sedan fastnade och efter någon minut gav upp. Han testade sedan att använda sig av "Plus"-knappen från tidigare uppgifter och valde alternativet \textit{sök spelare} varpå han lyckades navigera till rätt mål. När han lyckats med uppgiften beskrev han stegen han var tvungen att ta som onödigt svåra och smått förvirrande. 
 
 \subsection{Heuristic Evalutation}
@@ -582,12 +582,13 @@ Vi som utvecklade applikationen har alla gått en kurs i MDI och vi kritiserade 
 Denna person ombads att utvärdera applikationens kontroll, synlighet, stil och om designen var konsekvent. Utvecklarna gav även personen en skala från 1-5 för att bedöma hur allvarliga problemen var.  
 
 \subsubsection{Heuristic Evaluation av Chronos}
-En Heuristic Evaluation utfördes med en man som heter Tage Winberg under en personlig intervju 22 maj 2015. Tage är 28 år gammal och arbetar som UX-designer~\cite{uxdesign} på företaget \textit{STOPP Family}. Han har en gått utbildning \textit{Mobile Creative} på Hyper Island i Stockholm och har dessutom mer än 12 års erfarenhet av grafisk design. Tage har även ett eget företag och har jobbat med bland annat UX Design, interaktionsdesign, grafisk design och konceptutveckling för applikationer.
+En Heuristic Evaluation utfördes med en man som heter Tage Winberg under en personlig intervju 22 maj 2015. \\
+Tage är 28 år gammal och arbetar som UX-designer~\cite{uxdesign} på företaget STOPP Family. Han har en gått utbildning \textit{Mobile Creative} på Hyper Island i Stockholm och har dessutom mer än 12 års erfarenhet av grafisk design. Tage har även ett eget företag och har jobbat med bland annat UX Design, interaktionsdesign, grafisk design och konceptutveckling för applikationer.
 Nedan presenteras hans åsikter om hur väl applikationen var designad med hänsyn till de designprinciper som utvecklarna valde.
 
 \paragraph{Kontroll\\}
 Kontrollen i applikationen var kort sagt ganska simpel. Eftersom att applikationen inte hade så många knappar och alternativ så kände jag att det var lätt att navigera sig. Det kan vara positivt med få alternativ och knappar i sin applikation. Det kan bidra till att användaren lätt förstår vart hen ska trycka på för att komma till sitt mål. Detta är dock inte fallet för den här applikationen då det inte är helt solklart vart man ska trycka för att komma till de olika funktionerna applikationen tillhandahåller. Detta har dock inte med antalet knappar eller alternativ att göra. Det handlar mer om hur knapparna ser ut som bidrar till en viss förvirring.
-"Plus"-ikonen är relativt simpel i sin design men den kan betyda många saker vilket är positivt i den meningen att det blir en ganska "clean" design. Det negativa med att ha många alternativ samlade i en knapp är att användaren kan bli förvirrad över hur knappen fungerar samt om dess egenskaper förändras beroende på vilken vy som är aktuell.
+"Plus"-ikonen är relativt simpel i sin design men den kan betyda många saker vilket är positivt i den meningen att det blir en ganska "clean" design. Det negativa med att ha många alternativ samlade i en knapp är att användaren kan bli förvirrad över hur knappen fungerar samt om dess egenskaper förändras beroende på vilken vy som är aktuell.\\
 Summeringen av problemen skulle rankas som 3/5 på den givna skalan.
 
 \paragraph{Synlighet\\}
