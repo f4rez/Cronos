@@ -253,10 +253,14 @@ Google App Engine är en \textit{Platform as a service}, vilket är en servicemo
 
 \begin{figure}[H]
 	\begin{centering}
-	\includegraphics[width = \textwidth]{systemstruktur.jpg} 
+	\includegraphics[width = \textwidth]{systemstruktur2.jpg} 
 	\end{centering}
 	\caption{\textit{Illustration av systemstrukturen}}
 \end{figure} 
+
+Hela systemet består av fem delar som interagerar med varandra. Närmast spelaren finns klienten vilket är det enda som spelaren ser. Klienten är byggd för Android som en mobilapplikation. Mobilapplikationen interagerar i sin tur med serverns API. Servern fungerar som en länk mellan klienten och resten av delarna i systemet.
+
+På serversidan av systemet finns en semiautomatisk frågehämtare, ett balanseringssystem och en databas. Frågehämtaren hanterar automatisk generering av frågor och balanseringssystemet justerar svårighetsnivåerna på spelarna och frågorna för att maximera spelupplevelsen.
 
 \subsubsection{Androidapplikationen}
 Androidapplikationen, klienten i systemet, var själva spelet som utvecklades. Det var den del av systemet som användaren interagerade med båda visuellt och funktionellt.
