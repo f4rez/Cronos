@@ -15,7 +15,7 @@ import se.zinister.chronos.R;
 public class SettingsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.start_page_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.settings_fragment, container, false);
         return rootView;
     }
 

@@ -2,6 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[swedish]{babel}
+\usepackage{csquotes}
 
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -23,6 +24,9 @@
 
 \usepackage{caption}
 \captionsetup[figure]{name=Figur}
+
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
 
 
 \begin{document}
@@ -113,8 +117,10 @@ Quizkampen~\cite{aboutquiz} är ett frågesportsspel där spelarna svarar på fr
 \subsubsection{Wordfeud}
 Wordfeud~\cite{aboutwordfeud} är ett spel där en match utspelas mellan två personer. Varje spelare får en liten mängd bokstäver som är gömd för motspelaren. Spelet går sedan ut på att fläta samman ord på det givna spelbrädet med hjälp av bokstäverna. Målet är att få så många poäng som möjligt och detta kan man uppnå tack vare att varje bokstav är värd en viss poäng. På så sätt kan man genom att använda svårare bokstäver och skapa längre ord få mer poäng. 
 
+
 \subsection{Sällskapsspel med fokus på kunskap} \label{nardada}
 Sällskapsspel har länge varit och är än idag ett populärt sätt att umgås på~\cite{bradspelspop}. Sällskapsspelet \textit{När då då?}~\cite{nardada} är ett spel som bygger på ett relativt enkelt koncept. Spelarna turas om att placera ut händelser på sin egen tidslinje och får poäng om händelserna är korrekt utplacerade i förhållande till varandra. Varje tur för en spelare går till så att spelaren får en händelse uppläst för sig och sedan ska spelaren välja en plats på sin tidslinje att lägga händelsen på. Om spelaren lägger händelsen fel så är turen avslutad och spelet fortsätter till nästa spelare. Däremot, om händelsen är korrekt placerad får spelaren välja att antingen försöka placera en händelse till, eller att avsluta och säkra sina redan placerade händelser. Skulle spelaren förlora efter att ha placerat flera händelser samma runda så försvinner alla händelser i den rundan. Spelet fortsätter tills dess att någon spelare har lyckats placera åtta händelser korrekt, då spelas rundan klart och den spelare med flest poäng vinner.\\
+
 
 Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att det lyfter fram vissa begär hos spelarna. Ett av begären är att man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är en av faktorerna som gör den typen av spel så populära~\cite[sid 3--4]{psykologi}. En annan intressant faktor i det här spelet är girigheten som infinner sig när spelaren har möjlighet att välja mellan att fortsätta sin tur eller att säkra sina frågor. Det är en viktig del av spelet som kan förändra väldigt mycket. En spelare har möjlighet att nästan vinna på sin första runda, för att sedan förlora alla sina händelser för att den sista placerades fel. Det här ökar spänningen i \textit{När då då?}.
 
@@ -134,7 +140,10 @@ Wikipedia har några olika standardlayouter på sina informationssidor och en av
 
 Informationen i den här typen av lista presenteras alltid likadant och förekommer på många undersidor inom olika ämnen på Wikipedia. Varje händelse och årtal presenteras som punkter, likt denna:\\
 
+
+
 	1993 – Nintendo släpper The Legend of Zelda: Link's Awakening till Game Boy.\\
+
 
 Eftersom presentationen är konsekvent, med ett bindestreck som avskiljer årtal och händelse är inhämtning av information från de här sidorna enkel att automatisera.
 
@@ -182,7 +191,8 @@ Det fanns vissa delar i det här systemet som var mer avancerade att lösa än a
 \begin{itemize}
 \item Eftersom applikationen på något sätt skulle hämta information och konstruera frågor på ett semi-automatiskt sätt var det ett måste att utveckla ett sådant system. En svårighet i detta var att se till att systemet blev tillräckligt smart för att lyckas läsa en informationskälla och ta ut den eftertraktade informationen på rätt sätt.
 \item Det behövdes en relativt stor databas för att lagra både användare och frågor för spelet. Det här var något som vi inte hade arbetat med på en stor skala förut. Hur skulle man lagra informationen på ett sätt som var både effektivt lagringsmässigt samt snabbt och enkelt för servern att hämta?
-\item Det krävdes nätverkskommunikation med säkerhet och användaridentifiering. App Engine som användes vid stora delar av utveckling hade användbara funktioner som uppfyllde vissa av våra krav men inte alla. Hur skulle vi lyckas tillgodose användarna med en säker applikation?
+\item Det krävdes nätverkskommunikation med säkerhet och användar-
+identifiering. App Engine som användes vid stora delar av utveckling hade användbara funktioner som uppfyllde vissa av våra krav men inte alla. Hur skulle vi lyckas tillgodose användarna med en säker applikation?
 \item Spelet skulle anpassa svårighetsgraden automatiskt vilket innebar att någon form av balansering krävdes. Tanken var att frågorna skulle ha en svårighetsgrad som justerades automatiskt beroende på hur ofta de placerades rätt. Här var vi tvungna att ta hänsyn till hur resten av tidslinjen såg ut vid tillfället. Hur skulle detta utvecklas på ett tillräckligt effektivt och rättvist sätt för applikationen och användarna.
 \item Det fanns ett behov att utveckla ett system för att rangordna spelare i någon slags topplista. Hur skulle detta ske och hur skulle rangordningen bestämmas utifrån spelets mekanik? 
 \end{itemize}
@@ -191,6 +201,7 @@ Det fanns vissa delar i det här systemet som var mer avancerade att lösa än a
 
 \subsubsection{Historiekampen} \label{Historiekampen}
 Det finns ett spel för iOS, \textit{Historiekampen} ~\cite{historiekampen} som också handlar om att lägga in händelser korrekt på en tidslinje. En nackdel som den befintliga iOS-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
+
 
 Historiekampen är ett spel som konceptuellt sett liknar sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur går till så att den först får en händelse som skulle placeras på spelarens tidslinje. När första frågan presenterades fanns det en årtalsreferens utlagd på tidslinjen som den första händelsen ska placeras före eller efter. När nästa fråga presenteras finns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare.\\ 
 Historiekampen har valt att använda konceptet med kombinationspoäng vilket implicerade att spelaren kan få flera poäng under en runda om den placerar ut flera händelser korrekt efter varandra. Spelaren är tvungen att placera minst \underline{en} händelse och kan få maximalt tio händelser att placera ut. Om spelaren placerar första händelsen fel avslutas rundan. Placerade spelaren istället händelsen rätt ställs den inför ett val med två alternativ: antingen avsluta sin runda och på så sätt låsa sina poäng, eller fortsätta att få händelser att placera ut i förhållande till de tidigare händelserna. Detta val gör spelaren efter varje rätt placerad händelse. Spelaren kan med andra ord välja själv om den vågar fortsätta eller om den vill vara försiktig och behålla sina välförtjänta poäng. En duktig spelare kan välja det senare alternativet och bygga upp sin kombo fram tills dess att den femte frågan är ställd. När den femte frågan är ställd får spelaren en fråga om \textbf{när} den femte händelsen ägde rum. Om spelarens svar är nära det rätta årtalet får spelaren fortsätta rundan med sin uppbyggda kombo av poäng. Om årtalet var fel förlorar spelaren sina tidigare poäng men kan fortsätta få händelser att placera ut i förhållande till de tidigare händelserna. Vid en perfekt runda kan en spelare få totalt tio poäng.\\
@@ -222,7 +233,9 @@ $$0.849 = \frac{1}{1+10^{(1000-1300)/400}}$$
 $$ R'_A = 1300 + 16(1-0.849) = 1302.416 $$
 $$ R'_B = 1000 + 16(0-0.849) = 997.584 $$
 
-I det implementerade balanseringssystemet används Elo-modellen för att beräkna spelarnas erfarenhetspoäng. Elo är ett system som utvecklades av Arpad Elo och började användas redan på 60-talet ~\cite{elo}. Systemet var först och främst utvecklat för att ranka schackspelare, men har sedan dess uppkomst även applicerats på många andra spel. Eftersom Elo-systemet är förhållandevis gammalt och möjligheten till datoriserade beräkningar blivit större sedan 60-talet, finns det mer avancerade system att använda sig av idag. Ett annat system som utvecklades i syfte att vara en förbättring av Elo-systemet är ett system kallat Glicko ~\cite{chessratings}. Skillnaden mellan Elo och Glicko är att Glicko också har ett värde för hur väl uppdaterad spelarens erfarenhetspoäng är. Det här innebär att spelaren har ett erfarenhetspoäng, säg 2000, samt ett trovärdighetspoäng, till exempel 100. Ju högre trovärdighetspoäng spelaren har, desto mindre exakt är erfarenhetspoängen. Erfarenhetspoängen har enligt systemet en +/- diff på dubbla trovärdighetspoängen. I nyss nämnda exempel innebär detta att spelaren har en erfarenhetspoäng på 1800-2200. Trovärdighetspoängen justeras bland annat baserat på hur länge sedan det var spelaren spelade förra gången, samt hur många matcher spelaren spelat totalt. Ju fler matcher totalt och ju närmare i tid förra matchen var, desto lägre trovärdighetspoäng har spelaren.
+I det implementerade balanseringssystemet används Elo-modellen för att beräkna spelarnas erfarenhetspoäng. Elo är ett system som utvecklades av Arpad Elo och började användas redan på 60-talet ~\cite{elo}. Systemet var först och främst utvecklat för att ranka schackspelare, men har sedan dess uppkomst även applicerats på många andra spel. Eftersom Elo-systemet är förhållandevis gammalt och möjligheten till datoriserade beräkningar blivit större sedan 60-talet, finns det mer avancerade system att använda sig av idag. Ett annat system som utvecklades i syfte att vara en förbättring av Elo-systemet är ett system kallat Glicko ~\cite{chessratings}. Skillnaden mellan Elo och Glicko är att Glicko också har ett värde för hur väl uppdaterad spelarens erfarenhetspoäng är. Det här innebär att spelaren har ett erfarenhetspoäng, säg 2000, samt ett trovärdighetspoäng, till exempel 100. Ju högre trovärdighetspoäng spelaren har, desto mindre exakt är erfarenhetspoängen. Erfarenhetspoängen har enligt systemet en +/- differens på dubbla
+trovärdig-
+hetspoängen. I nyss nämnda exempel innebär detta att spelaren har en erfarenhetspoäng på 1800-2200. Trovärdighetspoängen justeras bland annat baserat på hur länge sedan det var spelaren spelade förra gången, samt hur många matcher spelaren spelat totalt. Ju fler matcher totalt och ju närmare i tid förra matchen var, desto lägre trovärdighetspoäng har spelaren.
 
 Både Elo och Glicko används idag och det verkar vara svårt att avgöra om Glicko verkligen är bättre än Elo ~\cite{stackchess}. Ett faktum som finns är i alla fall att Glicko kräver mer information för att kunna fungera. En faktor som Glicko behöver men inte Elo är en tidsvariabel som har reda på hur länge sedan det var spelaren spelade sin förra match ~\cite{glickoex}. Det här gör att mer data behöver lagras i databasen, vilket är negativt ur kapacitetsperspektiv.
 
@@ -231,8 +244,10 @@ Chronos liknar Historiekampen (avsnitt \ref{Historiekampen}) och \textit{När d�
 
 En viktig detalj som skiljer Chronos från Historiekampen är faktumet att spelaren ser beskrivningen av händelserna som spelaren placerat tidigare istället för bara årtalen. Vid avslutad runda visas även de korrekta årtalen för händelserna så att spelaren vet vilken ordning som hade varit den korrekta. Chronos handlar med andra ord mer om att relatera händelser till varandra (dog Palme efter andra världskriget?) istället för att veta vilket årtal det skedde.
 
-Med den semi-automatiska frågehämtaren, som kan anpassas för olika informationskällor, är det enkelt för administratörerna att hämta nya händelser. Databasen med händelser kan på så sätt expandera snabbt vid behov. Detta är något som skiljde oss från Historiekampen där alla frågor matades in manuellt. \\
-Applikationen balanserade även händelsernas svårighetsgrad kontinuerligt efter varje match vilket bidrog till att alla spelare tilldelades händelser som passade deras aktuella kunskapsnivå. Balanseringen ansvarade även för att se till att slumpade matcher skulle ske mellan spelare av ungefär samma kunskapsnivå. En novis skulle med andra ord inte behöva möta en mästare. Balanseringen i spelet kan även byggas ut och göras mer avancerad om användarna skulle ge kritik på hur frågorna rankades. Det finns egentligen inga gränser för hur avancerad balansering kunde göras vilket är en stor fördel som skiljer oss från konkurrenterna.
+Med den semi-automatiska frågehämtaren, som kan anpassas för olika informationskällor, är det enkelt för administratörerna att hämta nya frågor. Databasen med frågor kan på så sätt expandera snabbt vid behov. Detta är något som skiljde oss från Historiekampen där alla frågor matades in manuellt.
+
+Applikationen balanserade även frågorna kontinuerligt efter varje match vilket bidrog till att alla spelare tilldelades frågor som passade deras aktuella kunskapsnivå. Balanseringen i spelet kan även byggas ut och göras mer avancerad om användarna skulle ge kritik på hur frågorna rankades. Det finns egentligen inga gränser för hur avancerad balansering kunde göras vilket är en stor fördel som skiljer oss från konkurrenterna.
+
 
 \subsection{Motivation}
 Det finns många mobilspel som handlar om att två personer möts och mäter sina färdigheter inom ett visst område. Exempel på sådana applikationer är Quizkampen och Wordfeud som båda toppar säljlistorna för Androidspel~\cite{appsalesrating}. Dessa spel följer en ganska enkel struktur och den bygger på att två personer kan möta varandra för att sedan svara på frågor eller lägga ord korrekt. På detta sätt får spelarna poäng som sen avgör vinnaren mellan de tävlande. Enligt säljstatistiken~\cite{appsalesrating} är detta koncept något som är attraktivt för många användare. Chronos kombinerar koncepten från Quizkampen och Wordfeud i den mening att spelare på sätt och vis ska svara på frågor samt att lägga in saker på sin rätta plats. 
@@ -256,7 +271,9 @@ Designen av applikationen var något som var väldigt viktigt för oss. Kravet i
 Den här sektionen beskriver hur de målsatta delarna implementerades i applikationen samt metoderna som användes för att lyckas med detta. Applikationens systemstruktur och dess innefattande delar förklaras och illustreras. Det finns även en grundlig genomgång av hur applikationen ser ut samt hur den fungerar, både för användare och systemadministratörer.
 
 \subsection{Metoder}
-Ett antal olika verktyg användes för att möjliggöra detta projekt. För utvecklingen och simuleringen av Androidapplikationen användes Android Studio~\cite{androidstudio}. Detta är ett kraftfullt verktyg som på ett smidigt sätt bland annat kan simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.\\
+Ett antal olika verktyg användes för att möjliggöra detta projekt. För utvecklingen och simuleringen av Androidapplikationen användes Android Studio ~\cite{androidstudio}. Detta är ett kraftfullt verktyg som exempelvis kan, på ett smidigt sätt, simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.
+
+
 Google App Engine användes lokalt för att simulera serverapplikationen. När tidsperioden för den första testningen var över användes fortfarande App Engine men då i Googles moln istället för lokalt. App engine var ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjöds när man utvecklade och körde sina applikationer via denna motor var otroligt värdefulla. Det var bland annat lätt att underhålla applikationen och skala upp när trafik och data krävde det~\cite{googleappengine}. 
 
 % Det här stämmer inte
@@ -265,6 +282,7 @@ Google App Engine användes lokalt för att simulera serverapplikationen. När t
 %Valet att inte använda Wikipedia som informationskälla i den slutgiltiga versionen av applikationen berodde på dess tvivelaktiga rykte som en pålitlig källa. Wikipedia trovärdighet har länge diskuterats och det finns många rapporter som har undersökt dess trovärdighet. Att använda Wikipedia för att bekanta sig med ett ämne är, enligt oss, fullt acceptabelt men borde lämpligtvis granskas kritiskt innan den användes som källa. Relationen mellan processerna att skapa och redigera artiklar på Wikipedia anses vara en ledande faktor till denna osäkerhet. Detta beror mycket på att hemsidan följer strukturen \textit{editable-by-all} vilket innebär att vem som helst kan ändra artiklar och på så sätt vinkla artikelns innehåll på ett eller ett annat sätt. Detta implicerar såklart inte att alla artiklar har råkat ut för detta öde men det bidrar till en viss osäkerhet vid användandet av denna hemsida som källa vid vetenskapliga rapporter ~\cite[sid 27--34]{wikipediacred}.
 
 \subsubsection{Google App Engine} \label{Google App Engine}
+
 Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att utvecklare skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Den utvecklade produkten kan sedan köras vid Google App Engine. Servern som vi byggde i App Engine kördes på Googles infrastruktur och var uppbyggt så att antalet användare för applikationen kunde utökas obegränsat. Flera stora företag använder sig av App Engine när deras produkter lanserades där några exempel av större företag var Coca Cola, Rovio och Best Buy~\cite{googleappenginecustomers}. 
 
 \subsection{Systemstruktur}
@@ -289,7 +307,9 @@ När det är den aktuella spelarens tur får hen en chunk med sex frågor och de
 Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang)~\cite{golang}. Anledningen till att vi valde att skriva servern i Go var för att det, enligt oss, var ett simpelt språk med en syntax som liknade andra språk som vi hade använt tidigare. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen. Databasen skickar frågor till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra crawlern som är den semi-automatiska informationshämtaren. Servern har också som uppgift att med jämna mellanrum köra fråge- och användarbalanseringssystemet som justerar svårighetsgraden för frågorna respektive spelarna i systemet. 
 
 \subsubsection{Databas}
-Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Datastore~\cite{datastore} är Google App Engines egna bibliotek för hantering och lagring av data vilket innebär att systemet, utan vår assistans, hanterar all datalagring. Datastore har flera egenskaper som bidrar till en enklare utveckling av resterande delar för projektet. Med tanke på att Datastore är ett bibliotek från App Engine så medföljer dess skalbarhet som skalar beroende på behovet. Med Datastores inbyggda hjälpmedel för redundans kan data lätt replikeras till flera datacenter om det skulle behövas. \\
+Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Datastore~\cite{datastore} är Google App Engines egna bibliotek för hantering och lagring av data vilket innebär att systemet, utan vår assistans, hanterar all datalagring. Datastore har flera egenskaper som bidrar till en enklare utveckling av resterande delar för projektet. Med tanke på att Datastore är ett bibliotek från App Engine så medföljer dess skalbarhet som skalar beroende på behovet. Med Datastores inbyggda hjälpmedel för redundans kan data lätt replikeras till flera datacenter om det skulle behövas.
+
+
 Datastore hanterar datalagring med både SQL och NoSQL. För den som inte är bekant med NoSQL så är det en alternativ design för databaser som skiljer sig från SQL-databaser~\cite{nosql}. Marknaden som existerar idag är vad som kan kallas för en \textit{Big Data Reality} som kännetecknas av den enorma mängd data som måste hanteras av dagens databaser. Designen för NoSQL utvecklades för att möta kraven som ställdes av dagens \textit{Big Data Reality}. NoSQL utvecklades för att bidra med en enklare design och lättare tillgänglighet. Det är mest strukturella skillnader mellan NoSQL och vanliga relationsdatabaser. Det betyder att vissa operationer är lättare och mer effektiva att utföra i NoSQL medan andra är snabbare i vanliga relationsdatabaser~\cite[1--3]{nosqlfacts}. NoSQL används alltmer av applikationer som måste hantera stora mängder data men också websystem som ska exekveras i realtid~\cite{nosqlcloud}. Egenskaperna som NoSQL besitter passar för vår applikationen då ett tak för antalet användare inte var satt samt att vi önskade att exekvera i realtid.
 
 Med Datastore behövde vi inte oroa sig över hur sökning och borttagning skulle ske i databasen. Detta kan förklaras med att Datastore inte använder sig direkt av schemas som i en relationsdatabas, exempelvis SQL. Datastore ser med andra ord till att borttagning och sökning sker effektivt och på rätt sätt. Databasens sökning var effektivt tack vare den solida sökmotorn som biblioteket tillhandahöll.
@@ -319,16 +339,17 @@ När alla  händelser har lästs in i cachet presenteras de inlästa händelsern
 De fyra knapparna är mappade till siffrorna 1-4 på tangentbordet för att det ska gå snabbt att gå igenom frågorna. Texten kan också redigeras om administratören vill justera grammatiska fel.
 
 \subsubsection{Användare}
-Det finns två sorters användare som kunde interagera med systemet.\\
+Det finns två sorters användare som kunde interagera med systemet.
 \newline
-\textbf{Administratörer} \label{admins}
+\textbf{Administratörer} \label{admins}\newline
 Administratörerna är vi som utvecklade applikationen och som ansvarar för projektet. Vi är ansvariga för underhållet och utvecklingen av systemet. Vi har den högsta typen av tillgång till systemet för att kunna utföra underhållet och utvecklingen. I underhållet innefattas det felsökning samt reparation av funna fel. Underhållet innefattar även uppföljning av buggrapporter som skickats in av spelare. En vital uppgift som administratörerna har, förutom det allmänna underhållet och utvecklingen av systemet, är att godkänna information som hämtas av crawlern. Detta för att se till att frågorna följer den struktur som är lämplig för spelet.\\
 \newline
-\textbf{Spelare}\\
+\textbf{Spelare}\newline
 Spelarna är den typ av användare som har begränsad åtkomst till systemet. Spelarna kan endast komma åt systemet genom klienten och kan endast interagera med själva spelet. Detta innebär att en vanlig spelare inte ska kunna finna information om hur systemet fungerar. Detta är delvis en säkerhetsåtgärd som är till för att den vanliga användaren inte, av misstag, eller med flit ska kunna komma åt systemets vitala delar och alternera dessa. Användaren kan kommunicera med administratörerna genom att skicka felrapporter om spelet skulle bete sig konstigt eller om några buggar har upptäckts.
 
 \subsubsection{Balanseringssystemet} \label{balanseringssystemet}
-Balanseringssystemet hade två mål, dels att justera svårighetsgraden på frågorna som fanns i databasen och dels till att justera spelarnas svårighetsgrad. 
+Balanseringssystemet hade två mål, dels att justera svårighetsgraden på frågorna som fanns i databasen och dels till att justera spelarnas svårighets-
+grad. 
 
 Det finns alltså två separata nivåsystem i applikationen. Varje fråga i databasen har ett siffervärde för dess svårighetsgrad, ju högre siffra, desto svårare fråga. På liknande vis hade också varje användare en svårighetsgrad som lagrats som ett siffervärde i spelarens profil. Syftet med dessa poäng är att få spelet att sätta upp så rättvisa och roliga matcher som möjligt för spelarna. 
 
@@ -362,19 +383,21 @@ Kodsnutten ovan är ett exempel på en justering som sker om en spelare har svar
 \subsubsection{Genomgång av applikationen}
 %Gör en genomgång av hur applikationen fungerar med en massa bilder som även har förklaringar till sig.\\
 
-\large \textup{1. Inloggningsvy}\\
+\large \textup{1. Inloggningsvy}
+
 Första gången en användare startar applikationen eller av någon anledning har blivit utloggad möts hen av inloggningsvyn. Det är en webbsida som tillhandahålls av Google App Engine. Den innehåller primärt två textfält och en knapp för att logga in. När användaren fyllt i sina inloggningsuppgifter och klickat på logga in så sköter Google allt som har med inloggningen att  göra. Vår server får sedan ett unikt id för användaren och om det är första gången hen loggar in så skapas en egen användarstruktur som sparas in i databasen.
 När detta är klart eller om användaren redan var inloggad stängs aktiviteten ner och istället öppnas matchvyn(2) upp. 
 \begin{figure}[H]
-	\begin{centering}
-	\includegraphics[width=0.4\textwidth]{app_login}\\ 
-	\end{centering}
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_login} 
+	\end{center}
 	\caption{\textit{Inloggningsvy}}
 \end{figure}
 
 
 \pagebreak
-\large \textup{2. Startsida - Matcher}\\
+\large \textup{2. Startsida - Matcher}
+
 Matchvyn kan lättast beskrivas som startsidan i hela applikationen. Det är här användaren ser vilka matcher hen har pågående eller har avslutat. I den här vyn kan användaren även starta en ny slumpad match samt söka efter en spelare eller vänner att utmana. 
 Det finns fyra olika handlingar som användaren kan göra här vid denna sida. De kan klicka på hamburgarmenyn ($\equiv$) uppe i vänstra hörnet för att öppna navigationsvyn. De kan även klicka på en av de matcher de har pågående för att spela en ny omgång eller titta på matchens tillhörande matchstatistik. Om användaren väljer att klicka på en av matcherna skickas hen till matchstatistikvyn (3).
 \begin{figure}[H]
@@ -396,7 +419,8 @@ De kan möta en slumpad motståndare (Slumpad motståndare) detta stänger ner d
 \end{figure}
 
 \pagebreak
-\large \textup{3. Matchstatstik}\\
+\large \textup{3. Matchstatstik}
+
 Hit kommer användaren när den klickar på en match eller när den har spelat färdigt en omgång. Vyn består av de två användarnas profilbild och namn och under det finns resultatet för varje runda som spelats. Längst ner finns två olika element, i mitten visas den sammanlagda poängen för hela matchen och till höger finns det en FAB som leder till en match(4)  
 
 
@@ -456,7 +480,7 @@ Vyn består av ett rutnät av användarens vänner där varje väns profilbild o
 
 \begin{figure}[H]
 	\begin{center}
-%	\includegraphics[width=0.4\textwidth]{app_challenge} 
+	\includegraphics[width=0.4\textwidth]{app_challenge} 
 	\end{center}
 	\caption{\textit{Bild av vyn Utmana en vän(7)}}
 \end{figure}
@@ -466,7 +490,7 @@ Vyn består av ett rutnät av användarens vänner där varje väns profilbild o
 När denna vy startas visas först bara söklinje upp, men när man sedan fyller i tecken och klickar retur visas ett rutnät av personer som matchar sökningen. Varje sökresultat visar profilbild och användarnamn. Klickar man på något av sökresultaten tas man till dennes profilsida(6)  
 \begin{figure}[H]
 	\begin{center}
-%	\includegraphics[width=0.4\textwidth]{app_search} 
+	\includegraphics[width=0.4\textwidth]{app_search} 
 	\end{center}
 	\caption{\textit{Bild av vyn Sök spelare(8) när en användare hittats}}
 \end{figure}
@@ -475,14 +499,20 @@ När denna vy startas visas först bara söklinje upp, men när man sedan fyller
 
 \pagebreak
 \large \textup{9. Inställningar}\\
-
+Denna vy ger fem olika möjligheter till interaktion. Högst upp i vyn finns det ett textfält för att fylla i sitt nya profilnamn och jämte finns en knapp (Spara) för att kolla med servern om namnet är ledigt och i så fall byta. Under knappen finns tre olika knappar som indikerar om en viss inställning är på, de tre inställningarna som kan göras med knapparna är i vilken ordning man vill sortera händelserna som ges i Pågående match(4). Det ges även möjlighet att stänga av notifikationer och att ställa in om det ska spelas ett ljud vid notifikation. I denna vyn finns även en hamburgarmeny ($\equiv$) för att visa Navigationsvyn (5).
+\begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.4\textwidth]{app_settings} 
+	\end{center}
+	\caption{\textit{Vyn över inställningar(9)}}
+\end{figure}
 \pagebreak
 \large \textup{10. Min profil}\\
 Överst på vyn finns det ett cirkeldiagram som innehåller statistik över hur många matcher som vunnits, förlorats eller slutat oavgjort. Under finns ett rutnät av användarens vänner som visas med hjälp av deras profilbild och användarnamn, klickar man på en vän visas deras profilsida(6). 
 
 \begin{figure}[H]
 	\begin{center}
-%	\includegraphics[width=0.4\textwidth]{app_profile} 
+	\includegraphics[width=0.4\textwidth]{app_profile} 
 	\end{center}
 	\caption{\textit{Bild över Min profil (10)}}
 \end{figure}
@@ -501,26 +531,34 @@ Planen var att en fungerande alfa eller betaversion av systemet skulle färdigst
 
 
 \subsection{Kognitiv Genomgång}
-En \textit{Kognitiv Genomgång}~\cite[sid 2--8]{cognitive} är en utvärderingsmetod som är till för att avgöra problem med användbarhet i ett interaktivt datorsystem. Utvärderingen går ut på att utvecklarna traverserar systemet analytiskt givet ett antal specifika uppgifter användarna förväntas utföra i systemet. Den kognitiva genomgången utvärderar vilken sekvens av steg som är nödvändiga för att användaren ska kunna utföra en uppgift. Användarnas sekvens av steg jämförs sedan med utvecklarnas förväntade sekvens för att utföra samma uppgift. Detta för att se skillnader i sekvenserna och därmed upptäcka problem med den aktuella designen.\\
+En \textit{Kognitiv Genomgång}~\cite[sid 2--8]{cognitive} är en utvärderingsmetod som är till för att avgöra problem med användbarhet i ett interaktivt datorsystem. Utvärderingen går ut på att utvecklarna traverserar systemet analytiskt givet ett antal specifika uppgifter användarna förväntas utföra i systemet. Den kognitiva genomgången utvärderar vilken sekvens av steg som är nödvändiga för att användaren ska kunna utföra en uppgift. Användarnas sekvens av steg jämförs sedan med utvecklarnas förväntade sekvens för att utföra samma uppgift. Detta för att se skillnader i sekvenserna och därmed upptäcka problem med den aktuella designen.
+
+
 Innan utvärderingen kan utföras måste utvecklarna göra en komplett lista med steg för att lyckas göra varje uppgift korrekt. Förutom detta behöver utvecklarna bestämma fyra faktorer:
 \begin{enumerate}
-\item Vilka kommer använda systemet?\\
+\item Vilka kommer använda systemet?
+
 Ett exempel på en fråga som är hjälpsam vid ett sådant val är exempelvis: "Vilken typ av bakgrundskunskap behöver användarna för att kunna använda systemet?"
 \item Vilka uppgifter i systemet ska analyseras?
 \item Vilken är den rätta ordning av handlingar för att utföra uppgiften?
 \item Definiera gränssnittet.
 \end{enumerate}
 
-När detta är fastställt kan utvecklarna börja med utvärderingen. Under utvärderingens gång ska utvecklarna ställa följande frågor vid varje vald uppgift. Kommer användarna försöka uppnå rätt mål? Kommer användarna märka att rätt beslut är tillgängligt? Kommer användaren kunna koppla rätt beslut till det målet hen försöker uppnå? Om rätt beslut har tagits, kommer användaren förstå att hen har gjort framsteg i att uppnå målet?
-Om någon av dessa frågor får ett negativt svar betyder det att det finns problem i användbarheten och detta noteras då av utvecklarna~\cite[sid 230--232]{benyon2010designing}.\\
+När detta är fastställt kan utvecklarna börja med utvärderingen. Under utvärderingens gång ska utvecklarna ställa följande frågor vid varje vald uppgift. Kommer användarna försöka uppnå rätt mål? Kommer användarna märka att rätt beslut är tillgängligt? Kommer använ-
+daren kunna koppla rätt beslut till det målet hen försöker uppnå? Om rätt beslut har tagits, kommer användaren förstå att hen har gjort framsteg i att uppnå målet?
+Om någon av dessa frågor får ett negativt svar betyder det att det finns problem i användbarheten och detta noteras då av utvecklarna ~\cite[sid 230--232]{benyon2010designing}.
 
-Efter utvärderingen kan utvecklarna analysera den data som samlats in och skapa en ny design eller alternera den gamla för att öka användbarheten.\\ 
 
-En stor fördel som gjorde att vi valde att använda oss av en kognitiv genomgång är bland annat metodens välstrukturerade process. Bortsett från detta är en av metodens stora styrkor att den bygger på en väletablerad teori till skillnad från många andra metoder som är av typen \textit{trial and error}~\cite[sid 230-231]{benyon2010designing}.\\
+Efter utvärderingen kan utvecklarna analysera den data som samlats in och skapa en ny design eller alternera den gamla för att öka användbarheten.
+
+
+En stor fördel som gjorde att vi valde att använda oss av en kognitiv genomgång är bland annat metodens välstrukturerade process. Bortsett från detta är en av metodens stora styrkor att den bygger på en väletablerad teori till skillnad från många andra metoder som är av typen \textit{trial and error}~\cite[sid 230-231]{benyon2010designing}.
+
 
 \subsubsection{Förberedelse inför kognitiv genomgång av Chronos} \label{kog}
 Den typen av användare som vi valde att utveckla Chronos för är en person som har en smartphone med operativsystemet Android 4.4 eller senare. Det krävs även av användaren att hen har ett konto hos Google, exempelvis ett gmail-konto. Kunskapsmässigt krävs det att användaren vet hur en smartphone används samt besitter kunskaper om hur applikationer fungerar. Utöver detta krävs inget för att kunna använda sig effektivt av Chronos.
-De uppgifter som användaren hoppas genomföra är att starta upp applikationen och logga in med sitt Google konto. Starta en match mot en slumpad motståndare och spela klart den slumpade matchen. Söka och lägga till en vän samt utmana den tillagda vännen och spela klart matchen samt till sist logga ut ur applikationen.\\
+De uppgifter som användaren hoppas genomföra är att starta upp applikationen och logga in med sitt Google konto. Starta en match mot en slumpad motståndare och spela klart den slumpade matchen. Söka och lägga till en vän samt utmana den tillagda vännen och spela klart matchen samt till sist logga ut ur applikationen.
+
 Den korrekta sekvensen av handlingar för att genomföra dessa uppgifter är:
 \begin{enumerate}
 \item Starta applikationen.
@@ -542,83 +580,97 @@ Den korrekta sekvensen av handlingar för att genomföra dessa uppgifter är:
 Miljön som utvärderingen utförs i är applikationen Chronos på en smartphone med operativsystem Android 4.4 eller högre.
 
 \subsubsection{Simulering av kognitiv genomgång av Chronos}
-Detta är en simulerad körning av applikationen med användaren, uppgifterna och miljön som är beskrivna i \ref{kog}.\\
+Detta är en simulerad körning av applikationen med användaren, uppgifterna och miljön som är beskrivna i \ref{kog}.
+
 \begin{enumerate}
-\item Starta applikationen. \\ 
+\item Starta applikationen.
 Detta är något som en person som äger en smartphone kommer kunna utföra genom kunskap från erfarenhet.
 \item Logga in med Google konto.\\ 
 Om användaren har ett konto hos Google så kommer det inte uppstå några problem här då hen tidigare har tvingats logga på andra platser med liknande layout.
 \item Skapa en ny match mot slumpad motståndare genom att trycka på den gröna cirkulära \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Slumpad motståndare}.\\
 Vid denna punkt presenteras användaren med en vy som är blank förutom den gröna cirkulära \textbf{+}-ikonen. Tack vare att användaren är van vid att använda sig av applikationer kommer hen trycka på den gröna cirkulära \textbf{+}-ikonen.
-\item Välj den slumpade matchen genom att klicka på listelementet som ligger under rubriken \textit{Din tur}.\\
+\item Välj den slumpade matchen genom att klicka på listelementet som ligger under rubriken \textit{Din tur}.
 Vyn som användaren ser framför sig nu är tom med undantaget för en match som beskriver att det är spelarens tur mot en slumpad motståndare. Eftersom att det inte finns några andra saker att klicka på, förutom den gröna cirkulära \textbf{+}-ikonen, kommer användaren trycka och därmed lyckas navigera sig till matchen.
-\item Starta rundan genom att trycka på \textbf{+}-ikonen.\\
+\item Starta rundan genom att trycka på \textbf{+}-ikonen.
 Detta kommer inte vara några problem för användaren då spelet har en inbyggd funktion för nya spelare som beskriver hur en match går till och vart hen ska trycka för genomföra en omgång.
-\item Vid avslutad runda används telefonens bakåtknapp, alternativt Chronos knapp \textbf{"$\leftarrow$ Matcher"}, för att gå tillbaka till matchsidan.\\
-Detta kommer inte heller vara några problem eftersom användaren i föregående steg fick en förklaring om hur hen skulle genomföra en omgång. Om användaren inte skulle se denna vy skulle hen, av vana och tidigare erfarenhet, använda sig av telefonens bakåtknapp för att komma ut matchen.
-\item Repetera steg 5 \& 6 tills dess att matchen är avslutad.\\
+\item Vid avslutad runda används telefonens bakåtknapp\textbf{"$\leftarrow$"}, för att gå tillbaka till matchsidan. Detta kommer inte heller vara några problem eftersom användaren i föregående steg fick en förklaring om hur hen skulle genomföra en omgång. Om användaren inte skulle se denna vy skulle hen, av vana och tidigare erfarenhet, använda sig av telefonens bakåtknapp för att komma ut matchen.
+\item Repetera steg 5 \& 6 tills dess att matchen är avslutad.
 Detta kommer inte vara några problem eftersom användaren vid det här laget har fått det beskriver för sig hur en match går till.
 \item Sök efter en vän genom att trycka på \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Sök spelare}.\\
 I detta steg kan det bli problem för användaren då hen kanske inte minns att den gröna cirkulära \textbf{+}-ikonen hade flera olika alternativ. Ett av dessa alternativ var "Sök efter vän". Att inte hitta detta direkt skulle mycket troligt få användaren att känna sig förvirrad. Att detta sker är dock inte helt säkert ty användaren skulle kunna, genom tidigare erfarenheter av applikationer, lyckas navigera sig till rätt meny.
-\item Skriv in spelarens namn.\\
+\item Skriv in spelarens namn.
 Detta steg kommer inte utgöra något problem för användaren förutsatt att hen lyckades med föregående steg. Vyn som presenteras för användaren är en mycket simpel sådan med ett uppmaning som lyder "Skriv in spelarens namn" följt av ett textfält. Genom sina tidigare kunskaper om applikationer och smatphones så kommer användaren lyckas utföra denna uppgift utan problem.
-\item Välj önskad användare genom att klicka på användarens bild.\\
+\item Välj önskad användare genom att klicka på användarens bild.
 Detta steg kommer inte vara några problem för användaren då hen presenteras med bilder och namn för varje spelare. Bilderna i kombination med namnen gör det lätt för användaren att hitta önskad spelare. Att välja eftersökt spelare kommer inte heller vara några problem för användaren då hen kommer klicka på bilden eller namnet för att välja en speciell spelare.
-\item Tryck på \textbf{+}-ikonen vid användarens bild för att lägga till som vän.\\
+\item Tryck på \textbf{+}-ikonen vid användarens bild för att lägga till som vän.
 Detta steg kommer inte vara något problem för användaren eftersom det endast finns en knapp att trycka på när hen väl är inne på en annan spelares profil. När denna knapp har blivit tryckt kommer det upp en meny där det finns flera alternativ där ett av dessa alternativ är "Lägg till vän". 
-\item Tryck på \textbf{+}-ikonen vid användarens bild för att utmana vännen.\\
+\item Tryck på \textbf{+}-ikonen vid användarens bild för att utmana vännen.
 Detta steg är mycket likt det föregående. Att även detta steg inte skulle utgöra något problem för användaren ges med samma förklaring som föregående punkt. Det finns endast en knapp att trycka på när hen väl är inne på en annan spelares profil. När denna knapp har blivit tryckt kommer det upp en meny där det finns flera alternativ där ett av dessa alternativ är "Utmana".
-\item Repetera steg 5 \& 6 till dessa att matchen är avslutad.\\
+\item Repetera steg 5 \& 6 till dessa att matchen är avslutad.
 Detta kommer inte vara några problem eftersom användaren vid det här laget har fått det beskrivet för sig hur en match går till.
-\item För att logga ut från applikationen tryck på knappen \textbf{$\equiv$} och välj sedan alternativet \textbf{Logga ut} längst ner i menyn.\\
-Detta är ett steg som skulle kunna utgöra ett problem för användaren då den menyn där alternativet "Logga ut" finns endast har visats för användaren första gången hen startade applikationen. Om användaren har glömt bort att denna meny finns kan det bidra till att användaren känner sig förvirrad. Att detta sker är dock inte helt säkert ty användaren skulle kunna, genom tidigare erfarenheter av applikationer, lyckas navigera sig till rätt meny.       
+\item För att logga ut från applikationen tryck på knappen \textbf{$\equiv$} och välj sedan alternativet \textbf{Logga ut} längst ner i menyn. Detta är ett steg som skulle kunna utgöra ett problem för användaren då den menyn där alternativet "Logga ut" finns endast har visats för användaren första gången hen startade applikationen. Om användaren har glömt bort att denna meny finns kan det bidra till att användaren känner sig förvirrad. Att detta sker är dock inte helt säkert ty användaren skulle kunna, genom tidigare erfarenheter av applikationer, lyckas navigera sig till rätt meny.       
 \end{enumerate}
  
 \subsection{Think Aloud}
-\textit{Think Aloud}~\cite[sid 29--32]{thinkaloud} är en utvärderingsmetod som går ut på att användare ska utföra ett antal uppgifter som utvecklarna har valt. Det är sedan användarnas jobb att under tiden som uppgifterna utförs att säga vad de tänker på. Utvecklarna antecknar det användarna säger kontinuerligt under tiden uppgifterna utförs. Anteckningarna analyseras sedan av utvecklarna för att se vilka delar som eventuellt var för svåra, dåliga eller rent av ineffektiva. Designen av systemet kommer sedan att alterneras eller skapas på nytt beroende på kommentarerna som noterades från användarna.\\
-Utvecklarna ska försöka hålla sitt deltagande något i bakgrunden för att inte påverka användarna på något sätt. Utvecklarna skall endast ställa sin fråga och sen vara mer som en åskådare. Det är inte meningen att användarna skall behöva utveckla sina tankar eller lösa problemet som de ställs inför. Hela poängen är istället att deras tankar och feedback ska få flöda fritt.\\
+\textit{Think Aloud}~\cite[sid 29--32]{thinkaloud} är en utvärderingsmetod som går ut på att användare ska utföra ett antal uppgifter som utvecklarna har valt. Det är sedan användarnas jobb att under tiden som uppgifterna utförs att säga vad de tänker på. Utvecklarna antecknar det användarna säger kontinuerligt under tiden uppgifterna utförs. Anteckningarna analyseras sedan av utvecklarna för att se vilka delar som eventuellt var för svåra, dåliga eller rent av ineffektiva. Designen av systemet kommer sedan att alterneras eller skapas på nytt beroende på kommentarerna som noterades från användarna.
+
+
+Utvecklarna ska försöka hålla sitt deltagande något i bakgrunden för att inte påverka användarna på något sätt. Utvecklarna skall endast ställa sin fråga och sen vara mer som en åskådare. Det är inte meningen att användarna skall behöva utveckla sina tankar eller lösa problemet som de ställs inför. Hela poängen är istället att deras tankar och feedback ska få flöda fritt.
+
+
 Miljön som utvärderingen borde utföras i är en sådan som den utvärderande kan känna sig säker i. Det är bra om den som medverkar i utvärderingen gör detta val för att göra det enkelt för båda parterna. Om användaren skulle välja att utföra utvärderingen i sitt eget hem borde utvecklarna av produkten se detta som en varningsklocka. Detta är för att människor i sitt hem ofta är väldigt måna om att skydda sitt privatliv. Detta kan resultera i att utvärderingen ger dåliga resultat eller i värsta fall inga alls. Om utvärderingen måste ske i användarens hem så är det utvecklarnas uppgift att göra utvärderingen stimulerande för användaren och se till att den är så lite tidskrävande som möjligt~\cite[sid 245]{benyon2010designing}.
 
 Att använda en kontrollerad utvärderingsmetod som \textit{Think Aloud} var självklart för oss för att vi ville få feedback från riktiga människor och inte bara experter.
 
 \subsubsection{Think Aloud utvärdering av Chronos}
-Think Aloud utvärderingen utfördes under en personlig intervju med en man i 24-års åldern. Mannen hade haft en smartphone sedan en tid tillbaka och var väl bekant med hur den användes. Detta gjorde att han passade bra in på den typen av användare som vi designade applikationen för. Mannen önskade att vara anonym och därför kallar vi honom i nedanstående stycke för Carl.\\
+Think Aloud utvärderingen utfördes under en personlig intervju med en man i 24-års åldern. Mannen hade haft en smartphone sedan en tid tillbaka och var väl bekant med hur den användes. Detta gjorde att han passade bra in på den typen av användare som vi designade applikationen för. Mannen önskade att vara anonym och därför kallar vi honom i nedanstående stycke för Carl.
+
+
 Som grund för utvärderingen sa utvecklarna detta till Carl: \textit{``Vi kommer be dig utföra ett antal uppgifter. Medan du utför dessa uppgifter önskar vi att du säger allt som du tänker på.''}\\
 Carl valde att utföra utvärderingen i sitt hem vilket vanligtvis inte är så passande men var i detta fall problemfritt då Carl kände en av utvecklarna sedan en lång tid tillbaka.
 Utvecklarna hade förberett fyra uppgifter som Carl skulle genomföra. Han ombads att logga in på applikationen, starta en match mot en slumpad spelare, spela matchen och till sist söka och lägga till en spelar som vän. 
-Utvärderingen började med att Carl skulle logga in med sitt Google konto på applikationen. Han hade inga problem med denna uppgift och uttryckte sig att uppgiften var en enkel sak att utföra med tanke på att i princip alla inloggningssystem idag ser likadana ut.\\
-Efter inloggningen presenterades Carl med vyn över spelarens matcher som nu var tom. Han satt någon minut och funderade men fick till slut fram rätt meny varpå han tittade mot utvecklarna med ett frågande ansiktsuttryck. Han menade på att det var väldigt oklart vart man ska trycka för att starta en ny match. De rätta stegen förklarades för honom och han kunde sedan fortsätta med utvärderingen.\\
-När han hade startat matchen så uttryckte han en viss förvirring kring hur han skulle placera händelserna och vilken sida som var nutid och dåtid. Utvecklarna förklarade vilken ordning som var den rätta och han spelade klart rundan utan vidare problem. När Carl väl svarade fel under rundan så höjde han ögonbrynen och vände sig mot utvecklarna varpå han frågade vad som skulle hända nu och hur han skulle komma vidare. Han menade att det inte var helt solklart när man hade fel, vilken händelse som var fel samt vad man skulle göra när man hade svarat fel.\\
+Utvärderingen började med att Carl skulle logga in med sitt Google konto på applikationen. Han hade inga problem med denna uppgift och uttryckte sig att uppgiften var en enkel sak att utföra med tanke på att i princip alla inloggningssystem idag ser likadana ut.
+
+
+Efter inloggningen presenterades Carl med vyn över spelarens matcher som nu var tom. Han satt någon minut och funderade men fick till slut fram rätt meny varpå han tittade mot utvecklarna med ett frågande ansiktsuttryck. Han menade på att det var väldigt oklart vart man ska trycka för att starta en ny match. De rätta stegen förklarades för honom och han kunde sedan fortsätta med utvärderingen.
+
+
+När han hade startat matchen så uttryckte han en viss förvirring kring hur han skulle placera händelserna och vilken sida som var nutid och dåtid. Utvecklarna förklarade vilken ordning som var den rätta och han spelade klart rundan utan vidare problem. När Carl väl svarade fel under rundan så höjde han ögonbrynen och vände sig mot utvecklarna varpå han frågade vad som skulle hända nu och hur han skulle komma vidare. Han menade att det inte var helt solklart när man hade fel, vilken händelse som var fel samt vad man skulle göra när man hade svarat fel.
+
+
 När Carl skulle söka och lägga till en vän så navigerade han sig först till sidan \textit{Utmana en vän} där han sedan fastnade och efter någon minut gav upp. Han testade sedan att använda sig av "Plus"-knappen från tidigare uppgifter och valde alternativet \textit{sök spelare} varpå han lyckades navigera till rätt mål. När han lyckats med uppgiften beskrev han stegen han var tvungen att ta som onödigt svåra och smått förvirrande. 
 
 \subsection{Heuristic Evalutation}
 En \textit{Heuristic Evalutation}~\cite[sid 228--229]{benyon2010designing} är en utvärderingsmetod för att fastställa problem i användbarhet hos ett system, problemens storlek samt vart de finns. Den här typen av utvärdering utförs ofta i en tidig fas av designutvecklingen. 
-Utvärderingen går till på så sätt att en person, som har någon slags utbildning i Människa och Datorinteraktion (MDI), utvärderar en föreslagen design av ett system. Denna person traverserar systemet och dess design och noterar problem som hen finner. Om problem hittas ger hen förslag på lösningar till problemen förutsatt att det fanns några problem. Utvecklarna kan även ge personen som utvärderar en skala på hur allvarliga de funna problemen är. Genom detta kan utvecklarna få en bild av vilka problem som borde prioriteras vid en eventuell ny design. Det finns flera designprinciper som kan utvärderas vid en Heuristic Evaluaton. Några av dessa är: Synlighet, kontroll, flexibilitet, stil, gemytlighet samt om designen är konsekvent. \\
+Utvärderingen går till på så sätt att en person, som har någon slags utbildning i Människa och Datorinteraktion (MDI), utvärderar en föreslagen design av ett system. Denna person traverserar systemet och dess design och noterar problem som hen finner. Om problem hittas ger hen förslag på lösningar till problemen förutsatt att det fanns några problem. Utvecklarna kan även ge personen som utvärderar en skala på hur allvarliga de funna problemen är. Genom detta kan utvecklarna få en bild av vilka problem som borde prioriteras vid en eventuell ny design. Det finns flera designprinciper som kan utvärderas vid en Heuristic Evaluaton. Några av dessa är: Synlighet, kontroll, flexibilitet, stil, gemytlighet samt om designen är konsekvent.
+
 Vi som utvecklade applikationen har alla gått en kurs i MDI och vi kritiserade applikationens design kontinuerligt under utvecklingen gång. Dessutom genomfördes flera olika typer av utvärderingar av applikationen. Med tanke på detta så ansåg vi att det endast behövdes feedback från en utomstående expert. Personen som vi valde att använda som expert är en person som har slutfört en utbildning i Apputveckling, grafisk design och MDI. 
 Denna person ombads att utvärdera applikationens kontroll, synlighet, stil och om designen var konsekvent. Utvecklarna gav även personen en skala från 1-5 för att bedöma hur allvarliga problemen var.  
 
 \subsubsection{Heuristic Evaluation av Chronos}
-En Heuristic Evaluation utfördes med en man som heter Tage Winberg under en personlig intervju 22 maj 2015. \\
+En Heuristic Evaluation utfördes med en man som heter Tage Winberg under en personlig intervju 22 maj 2015. 
+
 Tage är 28 år gammal och arbetar som UX-designer~\cite{uxdesign} på företaget STOPP Family. Han har en gått utbildning \textit{Mobile Creative} på Hyper Island i Stockholm och har dessutom mer än 12 års erfarenhet av grafisk design. Tage har även ett eget företag och har jobbat med bland annat UX Design, interaktionsdesign, grafisk design och konceptutveckling för applikationer.
 Nedan presenteras hans åsikter om hur väl applikationen var designad med hänsyn till de designprinciper som utvecklarna valde.
 
-\paragraph{Kontroll\\}
+\paragraph{Kontroll}
 Kontrollen i applikationen var kort sagt ganska simpel. Eftersom att applikationen inte hade så många knappar och alternativ så kände jag att det var lätt att navigera sig. Det kan vara positivt med få alternativ och knappar i sin applikation. Det kan bidra till att användaren lätt förstår vart hen ska trycka på för att komma till sitt mål. Detta är dock inte fallet för den här applikationen då det inte är helt solklart vart man ska trycka för att komma till de olika funktionerna applikationen tillhandahåller. Detta har dock inte med antalet knappar eller alternativ att göra. Det handlar mer om hur knapparna ser ut som bidrar till en viss förvirring.
 "Plus"-ikonen är relativt simpel i sin design men den kan betyda många saker vilket är positivt i den meningen att det blir en ganska "clean" design. Det negativa med att ha många alternativ samlade i en knapp är att användaren kan bli förvirrad över hur knappen fungerar samt om dess egenskaper förändras beroende på vilken vy som är aktuell.\\
 Summeringen av problemen skulle rankas som 3/5 på den givna skalan.
 
-\paragraph{Synlighet\\}
-Boxarna för matcher och rundor borde "poppa" mer från bakgrunden alternativt vara mer specifika. Korten som finns i en runda har också detta problem. Detta problem skulle man kunna lösa med exempelvis bättre färgsättning eller instruerande pilar. Om detta genomfördes skulle användaren lättare kunna koppla vart hen skulle komma om en speciell knapp trycktes.\\
+\paragraph{Synlighet}
+Boxarna för matcher och rundor borde "poppa" mer från bakgrunden alternativt vara mer specifika. Korten som finns i en runda har också detta problem. Detta problem skulle man kunna lösa med exempelvis bättre färgsättning eller instruerande pilar. Om detta genomfördes skulle användaren lättare kunna koppla vart hen skulle komma om en speciell knapp trycktes.
 Informationen som ges för varje runda, exempelvis: ställningen, vilken omgång det är samt vems tur det är borde "poppa" mer från den befintliga designen. Just nu är det för mycket text för att det ska vara enkelt för användaren att lätt ta in den värdefulla informationen. Förslagsvis borde mängden text som visas för varje runda minskas ner och ersättas med mer summerad information som står ut från bakgrunden. Detta skulle man kunna uppnå med en annan färgsättning eller om man exempelvis skulle vilja experimentera med fet text och vanligt text. 
-För att lösa problemet med oklarheten kring vems tur det är skulle man kunna ha olika färger för varje typ av runda. Varje färg betyder en sak, exempelvis: Grön = din tur, gul = motståndarens tur och röd = avslutad match. Om färgsättning inte är något som utvecklarna vill ändra på i matchvyn skulle de möjligtvis kunna använda sig av andra metoder för att särskilja matchernas status. Utvecklarna skulle kunna ha en litet tomt utrymme mellan sektionerna "Din tur" och "Motståndarens tur" samt att se till att avslutade matcher mattades ur för att visa spelarna att dessa inte är aktiva.\\
+För att lösa problemet med oklarheten kring vems tur det är skulle man kunna ha olika färger för varje typ av runda. Varje färg betyder en sak, exempelvis: Grön = din tur, gul = motståndarens tur och röd = avslutad match. Om färgsättning inte är något som utvecklarna vill ändra på i matchvyn skulle de möjligtvis kunna använda sig av andra metoder för att särskilja matchernas status. Utvecklarna skulle kunna ha en litet tomt utrymme mellan sektionerna "Din tur" och "Motståndarens tur" samt att se till att avslutade matcher mattades ur för att visa spelarna att dessa inte är aktiva.
 Summeringen av problemen skulle rankas som 2/5 på den givna skalan.    
 
-\paragraph{Stil\\}
-Stilen för applikationen var stilren i den meningen att det inte var allt för mycket information på de olika menyerna. Färgsättningen i designen var mycket väl vald då det bidrog till kontraster mellan olika delar vilket är otroligt viktigt. Flödet i applikationen var också väl designat då  dess animationer var lättviktiga och mjuka. Detta bidrog till att det inte var jobbigt för åskådaren att använda sig av applikationen.\\
+\paragraph{Stil}
+Stilen för applikationen var stilren i den meningen att det inte var allt för mycket information på de olika menyerna. Färgsättningen i designen var mycket väl vald då det bidrog till kontraster mellan olika delar vilket är otroligt viktigt. Flödet i applikationen var också väl designat då  dess animationer var lättviktiga och mjuka. Detta bidrog till att det inte var jobbigt för åskådaren att använda sig av applikationen.
 Summeringen av problemen skulle rankas som 1/5 på den givna skalan.
 
-\paragraph{Om designen var konsekvent\\}
-Applikationens design hade en konsekvent formgivning och likaså färgsättning av knappar och symboler. Dock finns det möjlighet att göra designen ännu mer konsekvent. Exempel på detta var under processen då man sökte efter spelare. Sökresultaten visades som ett rutnät vilket inte riktigt följde den övriga visuella designen för applikationens vyer. Istället för rutnät skulle sökresultatet visa varje spelare i en separat rad. Om denna design skulle väljas skulle utvecklarna även kunna få in ett antal knappar för att bland annat lägga till spelaren som vän och utmana spelare. Detta skulle bidra till att användaren slipper leta efter dessa funktioner på andra platser i applikationen.\\
+\paragraph{Om designen var konsekvent}
+Applikationens design hade en konsekvent formgivning och likaså färgsättning av knappar och symboler. Dock finns det möjlighet att göra designen ännu mer konsekvent. Exempel på detta var under processen då man sökte efter spelare. Sökresul-
+taten visades som ett rutnät vilket inte riktigt följde den övriga visuella designen för applikationens vyer. Istället för rutnät skulle sökresultatet visa varje spelare i en separat rad. Om denna design skulle väljas skulle utvecklarna även kunna få in ett antal knappar för att bland annat lägga till spelaren som vän och utmana spelare. Detta skulle bidra till att användaren slipper leta efter dessa funktioner på andra platser i applikationen.
 Summeringen av problemen skulle rankas som 3/5 på den givna skalan.
 
 
@@ -657,8 +709,6 @@ Det finns många buggar relaterade till balanseringen i den aktuella versionen. 
 
 \subsubsection{Mindre utvecklingar}
 Det finns många små delar som inte fungerar som det är tänkt, det saknas också begränsningar på flera stället. Spelet fungerar utan dessa begränsningar men det blir till exempel lättare att fuska när begränsningarna inte finns. I nuvarande version kan spelaren slumpa oändligt antal matcher, vilket gör att en spelare skulle kunna starta hur många matcher som hest. Det här riskerar att öka väntetiden för andra spelare eftersom värsta scenariot vore att en spelare spelar mot alla andra aktiva spelare. Det finns inte någon tidsbegränsning på hur länge en spelare har på sig att sortera sina händelser, det här gör det väldigt lätt för spelaren att söka upp informationen om händelserna utanför applikationen och sedan svara. Matcher kan också i nuläget hålla på hur länge som helst. Många spel, likt Wordfeud och Quizkampen har en begränsning på hur lång tid spelaren får på sig att svara. I en senare version av Chronos ska spelaren förlora sin match om den inte ha svarat inom en viss tid, till exempel tre dagar. I en senare version ska också slutförda matcher försvinna från flödet efter en viss tid, någonting som inte sker idag.
-
-Just nu saknas också authorisering för frågehämtaren, vilket gör att vem som helst skulle kunna lägga in frågor i databasen. Det här är någonting som är ganska kritiskt och det har därför hög prioritet att fixas till nästa version.
 
 \subsubsection{Utvärderingar}
 Till nästa version av applikationen ska också de utvärderingar som både experter och användare gjort ha analyserats. Det är högst troligt att det finns saker i utvärderingarna som är värda att fundera kring, och i flera fall kan förmodligen gränssnittet komma att ändras.
