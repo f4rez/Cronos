@@ -472,7 +472,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	real_name := r.FormValue("real_name")
 
 	u := user.Current(c)
-	c.Infof("User: ", u)
+	c.Infof("User: %v", u)
 	if u == nil {
 		fmt.Fprintf(w, "Error, not signed in")
 	}

@@ -104,9 +104,25 @@ func Store(w http.ResponseWriter, r *http.Request) {
 	level := r.FormValue("level")
 
 	var qu question.Question
-	qu.ID, _ = question.GetCountQuestions(c)
-	qu.Level, _ = strconv.Atoi(level)
-	qu.Year, _ = strconv.Atoi(year)
+	var err error
+	qu.ID, err = question.GetCountQuestions(c)
+	if err != nil {
+		c.Infof("Error getting count: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	qu.Level, err = strconv.Atoi(level)
+	if err != nil {
+		c.Infof("Error converting level: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	qu.Year, err = strconv.Atoi(year)
+	if err != nil {
+		c.Infof("Error convertin year: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	qu.Question = q
 
 	if question.HasQuestion(c, qu) {

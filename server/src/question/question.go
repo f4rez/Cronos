@@ -165,7 +165,7 @@ func isAlone(c appengine.Context, nr int, numbers []int) bool {
 }
 
 func GetCountQuestions(c appengine.Context) (int, error) {
-	query := datastore.NewQuery("Question").KeysOnly()
+	query := datastore.NewQuery("Question")
 	count, err := query.Count(c)
 	return count, err
 
