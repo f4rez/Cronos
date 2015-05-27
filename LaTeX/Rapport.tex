@@ -1,7 +1,7 @@
 \documentclass[a4paper, 11pt]{article}
 
 \usepackage[utf8]{inputenc}
-\usepackage[swedish]{babel}
+\usepackage[english,swedish]{babel}
 \usepackage{csquotes}
 
 \usepackage{amsmath}
@@ -70,16 +70,21 @@ Varje spelare får en bunt händelser och den som kan relatera dessa till varand
 
 Chronos är inte bara ett roligt spel. Bakom användarens gränssnitt finns det ett intelligent system som anpassar spelet åt spelaren, för en maximalt rolig spelupplevelse. Spelet analyserar spelarens kunskapsnivå och anpassar händelserna i spelet för att matcha nivån. Serverapplikationen har också ett smart system för att automatiskt uppdatera spelet med nya frågor så att den erfarne spelaren aldrig får tråkigt.
 
-Serverdelen är skriven i GO och använder Googles App Engine som plattform till stor del på grund av skalbarheten. Det intelligenta systemet balanserar frågorna och spelarna enligt Elo, ett system som används i många populära multiplayerspel.
+Serverdelen är skriven i Go och använder Googles App Engine som plattform till stor del på grund av skalbarheten. Det intelligenta systemet balanserar frågorna och spelarna enligt Elo, ett system som används i många populära multiplayerspel.
 \end{abstract}
 
+\begin{otherlanguage}{english}
 \begin{abstract}
 Chronos is a mobile game developed on the Android platform. The goal of the game is to arrange historical events in the correct order and to do it better than your opponent. You are able to play against either your friend or someone unknown. Each player is served a bunch of events and the one able to arrange them in most correct order is the winner.
 
 Chronos is not just not a fun game. Behind the users interface there exists a intelligent system which adapts the game depending on the player, to get the most fun out of the game. The game analyses the players knowledge and adapts the questions against that. The server also has a system that automatically updates the database with new events so that the experienced player never gets bored. 
 
-The serever is written in the language GO and it uses Google App Engine as platform mostly due to its scalability. The intelligent system adapts the questions with Elo, which is a system used in many popular multiplayer games.
+The serever is written in the language Go and it uses Google App Engine as platform mostly due to its scalability. The intelligent system adapts the questions with Elo, which is a system used in many popular multiplayer games.
 \end{abstract}
+\end{otherlanguage}
+
+\newpage
+
 \begin{center}
 \textbf{Förord}\\
 \textit{Tack till}
@@ -386,7 +391,7 @@ Kodsnutten ovan är ett exempel på en justering som sker om en spelare har svar
 \large \textup{1. Inloggningsvy}
 
 Första gången en användare startar applikationen eller av någon anledning har blivit utloggad möts hen av inloggningsvyn. Det är en webbsida som tillhandahålls av Google App Engine. Den innehåller primärt två textfält och en knapp för att logga in. När användaren fyllt i sina inloggningsuppgifter och klickat på logga in så sköter Google allt som har med inloggningen att  göra. Vår server får sedan ett unikt id för användaren och om det är första gången hen loggar in så skapas en egen användarstruktur som sparas in i databasen.
-När detta är klart eller om användaren redan var inloggad stängs aktiviteten ner och istället öppnas matchvyn(2) upp. 
+När detta är klart eller om användaren redan var inloggad stängs aktiviteten ner och istället öppnas matchvyn (2) upp. 
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=0.4\textwidth]{app_login} 
@@ -408,8 +413,8 @@ Det finns fyra olika handlingar som användaren kan göra här vid denna sida. D
 \end{figure}
 \pagebreak
 
-Användarna kan vid matchvyn dra med fingret neråt på skärmen för att uppdatera matchflödet. Detta är till för användaren ska kunna se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design~\cite{MaterialDesign} och är en knapp som alltid ligger överst och representerar huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän (Utmana en vän) när de klickar här byts vyn ut som ett rutnät av användarens vänner(7). 
-De kan möta en slumpad motståndare (Slumpad motståndare) detta stänger ner dialogen som öppnades av FAB-en och en ny match finns i listan av matcher. De kan också söka efter en spelare(Sök spelare), då byts vyn ut mot en sökvy(8). 
+Användarna kan vid matchvyn dra med fingret neråt på skärmen för att uppdatera matchflödet. Detta är till för användaren ska kunna se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design~\cite{MaterialDesign} och är en knapp som alltid ligger överst och representerar huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän via alternativet (\textit{Utmana en vän}). När användarna klickar här byts vyn ut som ett rutnät av användarens vänner (7). 
+Användarna kan möta en slumpad motståndare via alternativet (\textit{Slumpad motståndare}). Detta stänger ner dialogen som öppnades av FAB-en och en ny match skapas i listan av matcher. Användarna kan även söka efter en spelare via alternativet (\textit{Sök spelare}) och då byts vyn ut mot en sökvy (8). 
 
 \begin{figure}[H]
 \begin{center}
@@ -421,7 +426,7 @@ De kan möta en slumpad motståndare (Slumpad motståndare) detta stänger ner d
 \pagebreak
 \large \textup{3. Matchstatstik}
 
-Hit kommer användaren när den klickar på en match eller när den har spelat färdigt en omgång. Vyn består av de två användarnas profilbild och namn och under det finns resultatet för varje runda som spelats. Längst ner finns två olika element, i mitten visas den sammanlagda poängen för hela matchen och till höger finns det en FAB som leder till en match(4)  
+Hit kommer användaren när den klickar på en match eller när hen har spelat färdigt en omgång. Vyn består av de två användarnas profilbild och namn och samt resultatet för varje runda som spelats. Längst ner finns två olika element, i mitten visas den sammanlagda poängen för hela matchen och till höger finns det en FAB som leder till en match (4).  
 
 
 \begin{figure}[H]
@@ -433,7 +438,7 @@ Hit kommer användaren när den klickar på en match eller när den har spelat f
 
 \pagebreak
  \large \textup{4. Pågående match}\\
-I figuren nedan illustreras hur spelet representerar en pågående match. Överst i vyn finns ett kort som innehåller den händelse som ska placeras in i tidslinjen. Under kortet ligger tidslinjen, den ska sorteras i kronologisk ordning där den tidigaste händelsen ligger högst upp. När matchen startas ligger det en given händelse i tidslinjen och ovanför ligger det en delare (Placera in händelsen i ordning). Delaren ska representerar händelsen som är skriven på kortet ovanför. Delaren är mobil och för att flytta den får man göra ett långt klick och sedan dra den den till den position man vill. Det finns även här en FAB som rättar placeringen av delaren, om svaret är rätt omvandlas delaren till händelsen som var på kortet och det läggs in en ny delare med en ny händelse som visas på kortet. Om svaret däremot var fel blinkar delaren till i rött och visar sedan årtalen på alla händelser som är utlagda i tidslinjen.
+I figuren nedan illustreras hur spelet representerar en pågående match. Överst i vyn finns ett kort som innehåller den händelse som ska placeras in i tidslinjen. Under kortet ligger tidslinjen som ska sorteras i kronologisk ordning med den mest aktuella händelsen högst upp. När matchen startas ligger det en given händelse i tidslinjen och ovanför ligger det en delare (\textit{Placera in händelsen i ordning}). Delaren ska representerar händelsen som är skriven på kortet högst upp. Delaren är mobil och för att flytta den får användaren göra ett långt klick och sedan dra den den till den position hen vill. Det finns även här en FAB som rättar placeringen av delaren. Om svaret är rätt omvandlas delaren till händelsen som var på kortet högst upp. När detta har skett läggs in en ny delare med en ny händelse från kortet högst upp. Om svaret däremot var fel pulserar delaren rött och visar sedan årtalen på alla händelser som är utlagda i tidslinjen.
 
 
 \begin{figure}[H]
@@ -447,7 +452,8 @@ I figuren nedan illustreras hur spelet representerar en pågående match. Övers
 
 \pagebreak
 \large \textup{5. Navigationsvy}\\
-Navigationsvyn som illustreras nedan nås genom att klicka på hamburgarmenyn som finns i följande vyer: Startsida - matcher(2), Profilsida(6), Utmana en vän(7) och Sök spelare(8). Den ger möjlighet att navigera till de olika övermenyerna som finns: Startsida - Matcher (2), Inställningar (9), Min profil (10). Det finns även möjlighet att att köpa sig fri från annonser (Inga mer annonser) och att logga ut från sitt konto (LOGGA UT). Om spelaren väljer att logga ut skickas hen till inloggningsvyn(1). Högst upp i navigationsvyn finns det även en bild som fyller hela vidden av vyn. Bilden tas från användarens googlekonto och om hen inte har en omslagsbild visas istället en standardbild.   
+Navigationsvyn som illustreras nedan nås genom att klicka på hamburgarmenyn ($\equiv$) som finns i följande vyer: Startsida - matcher (2), Profilsida (6), Utmana en vän (7) och Sök spelare (8). Navigationsvyn ger möjlighet att navigera till de olika övermenyerna som finns: Startsida - Matcher (2), Inställningar (9) och Min profil (10). Det finns även möjlighet att att köpa sig fri från annonser via alternativet (\textit{Inga mer annonser}) samt att logga ut från sitt konto via alternativet (\textit{LOGGA UT}). Om spelaren väljer att logga ut skickas hen till inloggningsvyn (1). 
+Högst upp i navigationsvyn finns det även en bild som fyller hela vidden av vyn. Bilden tas från användarens Google-konto och om hen inte har en omslagsbild visas istället en standardbild.   
 
 
 \begin{figure}[H]
@@ -460,7 +466,7 @@ Navigationsvyn som illustreras nedan nås genom att klicka på hamburgarmenyn so
 
 \pagebreak
 \large \textup{6. Profilsida}\\
-Det finns två sätt att komma till en profilsida. Man kan genom Min profil (10) klicka på en vän och få se deras profilsida eller genom Sök spelare (8). Vyn består av en profilbild som är tagen från användarens Googlekonto, längs kanten på profilbilden ligger det en FAB som vid tryck vecklas ut till ett verktygsfält där man kan utmana profilen (Utmana), lägga till profilen som en vän (Lägg till som vän) eller ta bort profilen från sin vän lista (Ta bort vän). Under profilbilden visas den andra användarens namn samt ett cirkeldiagram över hur många matcher som hen har vunnit, förlorat samt spelat oavgjort. Klickar man till exempel på den del som visar hur många matcher man förlorat visas det även hur många matcher det är man har förlorat. 
+Det finns två sätt att komma till en profilsida. Användare kan genom till sin egen profilsida genom alternativet Min profil (10). För att hitta andra spelares profilsidor kan man gå genom alternativet Min Profil (10) för att sedan klicka på en vän och på så sätt komma till deras profilsida. Om man inte är vän med den eftersökta spelaren kan hen nå spelarens profil genom alternativet \textit{Sök spelare} (8).\\ Profilsidan består av en profilbild som är tagen från användarens Google-konto. Utmed kanten på profilbilden ligger det en FAB som vid tryck vecklas ut till ett verktygsfält där man kan utmana användaren (\textit{Utmana}), lägga till användaren som en vän (\textit{Lägg till som vän}) eller ta bort användaren från sin vän lista (\textit{Ta bort vän}).\\ Under profilbilden visas användarens namn samt ett cirkeldiagram över hur många matcher hen har vunnit, förlorat samt spelat oavgjort. Om en användaren vill veta det exakta antalet matcher som är förlorade, vunna eller oavgjorda kan hen klicka på de olika delarna av diagrammet för att få se antal istället för procent för respektive kategori.
 
 
 
@@ -475,31 +481,31 @@ Det finns två sätt att komma till en profilsida. Man kan genom Min profil (10)
 
 \pagebreak
 \large \textup{7. Utmana en vän}\\
-Vyn består av ett rutnät av användarens vänner där varje väns profilbild och användarnamn syns. När användaren klickar på en vän skickas en utmaning till den vännen och det visas en Toast som säger att man utmanat vännen. 
+Vyn för att utmana en vän som illustreras nedan består av ett rutnät med användarens vänner där varje väns profilbild och användarnamn syns. När användaren klickar på en vän skickas en utmaning till den valda vännen och det visas en bekräftelse som säger att man har utmanat vännen. 
 
 
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=0.4\textwidth]{app_challenge} 
 	\end{center}
-	\caption{\textit{Bild av vyn Utmana en vän(7)}}
+	\caption{\textit{Bild av vyn Utmana en vän (7)}}
 \end{figure}
 
 \pagebreak
 \large \textup{8. Sök spelare}\\
-När denna vy startas visas först bara söklinje upp, men när man sedan fyller i tecken och klickar retur visas ett rutnät av personer som matchar sökningen. Varje sökresultat visar profilbild och användarnamn. Klickar man på något av sökresultaten tas man till dennes profilsida(6)  
+Vyn för att söka efter en användare som illustreras nedan visar först anblick bara en söklinje. När användaren sedan fyller i namnet för en spelare och klickar retur visas ett rutnät av personer som matchar sökningen. Varje sökresultat visar användarnas profilbild och deras användarnamn. Klickar man på något av sökresultaten kommer man till  den valde användarens profilsida (6).  
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=0.4\textwidth]{app_search} 
 	\end{center}
-	\caption{\textit{Bild av vyn Sök spelare(8) när en användare hittats}}
+	\caption{\textit{Bild av vyn Sök spelare (8) när en användare hittats}}
 \end{figure}
 
 
 
 \pagebreak
 \large \textup{9. Inställningar}\\
-Denna vy ger fem olika möjligheter till interaktion. Högst upp i vyn finns det ett textfält för att fylla i sitt nya profilnamn och jämte finns en knapp (Spara) för att kolla med servern om namnet är ledigt och i så fall byta. Under knappen finns tre olika knappar som indikerar om en viss inställning är på, de tre inställningarna som kan göras med knapparna är i vilken ordning man vill sortera händelserna som ges i Pågående match(4). Det ges även möjlighet att stänga av notifikationer och att ställa in om det ska spelas ett ljud vid notifikation. I denna vyn finns även en hamburgarmeny ($\equiv$) för att visa Navigationsvyn (5).
+Denna vy ger fem olika möjligheter till interaktion. Högst upp i vyn finns det ett textfält med där användare har möjligheten att byta profilnamn. Bredvid textfältet finns en knapp (\textit{Spara}) för att kolla med servern om namnet är ledigt. Om namnet är ledigt så kommer användarens profilnamn i sådana fall ändras. Under textfältet finns tre olika knappar som indikerar om en viss inställning är på eller av. Inställningarna som kan göras med knapparna är bland annat i vilken ordning man vill sortera händelserna som ges i Pågående match (4). Det ges även möjlighet att stänga av notifikationer och att ställa in om det ska spelas upp ett ljud vid en notifikation.\\ I denna vyn finns även en hamburgarmeny ($\equiv$) so kan användas för att komma åt Navigationsvyn (5).
 \begin{figure}[H]
 	\begin{center}
 	\includegraphics[width=0.4\textwidth]{app_settings} 
@@ -508,7 +514,7 @@ Denna vy ger fem olika möjligheter till interaktion. Högst upp i vyn finns det
 \end{figure}
 \pagebreak
 \large \textup{10. Min profil}\\
-Överst på vyn finns det ett cirkeldiagram som innehåller statistik över hur många matcher som vunnits, förlorats eller slutat oavgjort. Under finns ett rutnät av användarens vänner som visas med hjälp av deras profilbild och användarnamn, klickar man på en vän visas deras profilsida(6). 
+Överst på vyn finns det ett cirkeldiagram som innehåller statistik över hur många matcher som vunnits, förlorats eller slutat oavgjort. Under finns ett rutnät av användarens vänner som visas med hjälp av deras profilbild och användarnamn. Klickar man på en vän kommer man till deras profilsida (6). 
 
 \begin{figure}[H]
 	\begin{center}
@@ -557,12 +563,12 @@ En stor fördel som gjorde att vi valde att använda oss av en kognitiv genomgå
 
 \subsubsection{Förberedelse inför kognitiv genomgång av Chronos} \label{kog}
 Den typen av användare som vi valde att utveckla Chronos för är en person som har en smartphone med operativsystemet Android 4.4 eller senare. Det krävs även av användaren att hen har ett konto hos Google, exempelvis ett gmail-konto. Kunskapsmässigt krävs det att användaren vet hur en smartphone används samt besitter kunskaper om hur applikationer fungerar. Utöver detta krävs inget för att kunna använda sig effektivt av Chronos.
-De uppgifter som användaren hoppas genomföra är att starta upp applikationen och logga in med sitt Google konto. Starta en match mot en slumpad motståndare och spela klart den slumpade matchen. Söka och lägga till en vän samt utmana den tillagda vännen och spela klart matchen samt till sist logga ut ur applikationen.
+De uppgifter som användaren hoppas genomföra är att starta upp applikationen och logga in med sitt Google-konto. Starta en match mot en slumpad motståndare och spela klart den slumpade matchen. Söka och lägga till en vän samt utmana den tillagda vännen och spela klart matchen samt till sist logga ut ur applikationen.
 
 Den korrekta sekvensen av handlingar för att genomföra dessa uppgifter är:
 \begin{enumerate}
 \item Starta applikationen.
-\item Logga in med Googlekonto.
+\item Logga in med Google-konto.
 \item Skapa en ny match mot slumpad motståndare genom att trycka på \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Slumpad motståndare}.
 \item Välj den slumpade matchen genom att klicka på listelementet som ligger under rubriken \textit{Din tur}. 
 \item Starta rundan genom att trycka på \textbf{+}-ikonen.
@@ -585,7 +591,7 @@ Detta är en simulerad körning av applikationen med användaren, uppgifterna oc
 \begin{enumerate}
 \item Starta applikationen.
 Detta är något som en person som äger en smartphone kommer kunna utföra genom kunskap från erfarenhet.
-\item Logga in med Google konto.\\ 
+\item Logga in med Google-konto.\\ 
 Om användaren har ett konto hos Google så kommer det inte uppstå några problem här då hen tidigare har tvingats logga på andra platser med liknande layout.
 \item Skapa en ny match mot slumpad motståndare genom att trycka på den gröna cirkulära \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Slumpad motståndare}.\\
 Vid denna punkt presenteras användaren med en vy som är blank förutom den gröna cirkulära \textbf{+}-ikonen. Tack vare att användaren är van vid att använda sig av applikationer kommer hen trycka på den gröna cirkulära \textbf{+}-ikonen.
@@ -629,7 +635,7 @@ Think Aloud utvärderingen utfördes under en personlig intervju med en man i 24
 Som grund för utvärderingen sa utvecklarna detta till Carl: \textit{``Vi kommer be dig utföra ett antal uppgifter. Medan du utför dessa uppgifter önskar vi att du säger allt som du tänker på.''}\\
 Carl valde att utföra utvärderingen i sitt hem vilket vanligtvis inte är så passande men var i detta fall problemfritt då Carl kände en av utvecklarna sedan en lång tid tillbaka.
 Utvecklarna hade förberett fyra uppgifter som Carl skulle genomföra. Han ombads att logga in på applikationen, starta en match mot en slumpad spelare, spela matchen och till sist söka och lägga till en spelar som vän. 
-Utvärderingen började med att Carl skulle logga in med sitt Google konto på applikationen. Han hade inga problem med denna uppgift och uttryckte sig att uppgiften var en enkel sak att utföra med tanke på att i princip alla inloggningssystem idag ser likadana ut.
+Utvärderingen började med att Carl skulle logga in med sitt Google-konto på applikationen. Han hade inga problem med denna uppgift och uttryckte sig att uppgiften var en enkel sak att utföra med tanke på att i princip alla inloggningssystem idag ser likadana ut.
 
 
 Efter inloggningen presenterades Carl med vyn över spelarens matcher som nu var tom. Han satt någon minut och funderade men fick till slut fram rätt meny varpå han tittade mot utvecklarna med ett frågande ansiktsuttryck. Han menade på att det var väldigt oklart vart man ska trycka för att starta en ny match. De rätta stegen förklarades för honom och han kunde sedan fortsätta med utvärderingen.
@@ -675,11 +681,7 @@ Summeringen av problemen skulle rankas som 3/5 på den givna skalan.
 
 
 \section{Diskussion}
-I den här sektionen diskuteras det vad som hade kunnat göras bättre under utvecklingen. Exempel på detta kunde exempelvis vara om det fanns alternativa vägar eller verktyg som hade varit bättre, effektivare, enklare att använda. Det beskrivs även framtida utvecklingar i det visuella och applikationens prestanda och säkerhet.
-
-\subsection{Alternativa vägar}
-
-\subsection{Alternativa verktyg}
+I den här sektionen diskuteras det bland annat framtida utvecklingar av den visuella representation och applikationens prestanda. Avsnittet beskriver även befintliga delar av applikationen som vi vill utveckla vidare och varför dessa utvecklingar är nödvändiga.
 
 \subsection{Framtida utvecklingar för applikationen}
 Än så länge är applikationen bara i ett tidigt alfastadie. Det här innebär att det fortfarande finns oändligt mycket att bygga på, dels buggfixar men också nya funktioner som inte har blivit implementerade än. Det som i första hand ska fixas är de buggar som våra alfatestare (och sedan betatestare) hittar. Det är viktigast att få produkten att fungera ordentligt med de få funktioner som redan finns, innan fler delar adderas. 
@@ -710,8 +712,6 @@ Det finns många buggar relaterade till balanseringen i den aktuella versionen. 
 \subsubsection{Mindre utvecklingar}
 Det finns många små delar som inte fungerar som det är tänkt, det saknas också begränsningar på flera stället. Spelet fungerar utan dessa begränsningar men det blir till exempel lättare att fuska när begränsningarna inte finns. I nuvarande version kan spelaren slumpa oändligt antal matcher, vilket gör att en spelare skulle kunna starta hur många matcher som hest. Det här riskerar att öka väntetiden för andra spelare eftersom värsta scenariot vore att en spelare spelar mot alla andra aktiva spelare. Det finns inte någon tidsbegränsning på hur länge en spelare har på sig att sortera sina händelser, det här gör det väldigt lätt för spelaren att söka upp informationen om händelserna utanför applikationen och sedan svara. Matcher kan också i nuläget hålla på hur länge som helst. Många spel, likt Wordfeud och Quizkampen har en begränsning på hur lång tid spelaren får på sig att svara. I en senare version av Chronos ska spelaren förlora sin match om den inte ha svarat inom en viss tid, till exempel tre dagar. I en senare version ska också slutförda matcher försvinna från flödet efter en viss tid, någonting som inte sker idag.
 
-\subsubsection{Utvärderingar}
-Till nästa version av applikationen ska också de utvärderingar som både experter och användare gjort ha analyserats. Det är högst troligt att det finns saker i utvärderingarna som är värda att fundera kring, och i flera fall kan förmodligen gränssnittet komma att ändras.
 \newpage
 \printbibliography[title={Referenser}]
 \end{document}

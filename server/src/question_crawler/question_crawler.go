@@ -64,7 +64,7 @@ func get_site(uri string, r *http.Request) ([]temp_item, error) {
 
 		q, err := filter_question(listitem)
 
-		//c.Infof("%+v\n", err)
+		c.Infof("%v", err)
 
 		if err == nil {
 			list_items = append(list_items, q)
@@ -78,6 +78,7 @@ func get_site(uri string, r *http.Request) ([]temp_item, error) {
 func filter_question(listitem string) (temp_item, error) {
 
 	var q temp_item
+	var err error
 	parts := strings.Split(listitem, " – ")
 
 	if len(parts) < 2 {
@@ -86,7 +87,13 @@ func filter_question(listitem string) (temp_item, error) {
 			return q, errors.New("The statement is not a complete question.")
 		}
 	}
-	q.Year, _ = strconv.Atoi(parts[0])
+	q.Year, err = strconv.Atoi(parts[0])
+	if err != nil {
+		q.Year, err = strconv.Atoi(parts[0][len(parts[0])-4 : len(parts[0])])
+		if err != nil {
+			return q, err
+		}
+	}
 	q.Question = parts[1]
 
 	if q.Year <= 0 {
