@@ -84,7 +84,10 @@ func filter_question(listitem string) (temp_item, error) {
 	if len(parts) < 2 {
 		parts = strings.Split(listitem, " - ")
 		if len(parts) < 2 {
-			return q, errors.New("The statement is not a complete question.")
+			parts = strings.Split(listitem, ": ")
+			if len(parts) < 2 {
+				return q, errors.New("The statement is not a complete question.")
+			}
 		}
 	}
 	q.Year, err = strconv.Atoi(parts[0])

@@ -120,7 +120,7 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
                             tt1.setText("Du vann mot " + q.opponentName);
                         }
                         if (q.opponentPoint == q.myPoint) tt1.setText("Det blev oavgjort mellan dig och " + q.opponentName);
-                        tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - " + q.opponentPoint + " " + q.opponentName);
+                        tt2.setText(q.myPoint + " - " + q.opponentPoint);
                     }
                 }
 
@@ -167,24 +167,24 @@ public class StartPageAdapter extends ArrayAdapter <GamesOverview>  {
                     if (tt1 != null) {
                         if(q.myTurn)
                             if(!q.opponentName.equals(""))
-                                tt1.setText("Det är din tur mot " + q.opponentName + " i omgång " + q.numberOfTurns);
-                            else tt1.setText("Det är din tur mot slumpad spelare i omgång " + q.numberOfTurns);
+                                tt1.setText(q.opponentName);
+                            else tt1.setText("slumpad spelare");
                         else
                         if (!q.opponentName.equals(""))
-                            tt1.setText("Det är " + q.opponentName + "s tur" + " i omgång " + q.numberOfTurns);
-                        else  tt1.setText("Det är slumpad spelares tur i omgång " + q.numberOfTurns);
+                            tt1.setText( q.opponentName);
+                        else  tt1.setText("slumpad spelare");
                     }
 
                     if (tt2 != null)  {
                         if (!q.opponentName.equals("")) {
-                            if (q.myPoint == -1 && q.opponentPoint == -1) tt2.setText(MainActivity.MY_NAME +  " 0 - 0 " + q.opponentName);
-                            if (q.myPoint == -1 && q.opponentPoint > -1) tt2.setText(MainActivity.MY_NAME + " 0 - " + q.opponentPoint + " " + q.opponentName);
-                            if (q.myPoint > -1 && q.opponentPoint == -1) tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - 0 " + q.opponentName);
-                            if (q.myPoint > -1 && q.opponentPoint > -1) tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - " + q.opponentPoint + " " + q.opponentName);
+                            if (q.myPoint == -1 && q.opponentPoint == -1) tt2.setText("0 - 0");
+                            if (q.myPoint == -1 && q.opponentPoint > -1) tt2.setText("0 - " + q.opponentPoint);
+                            if (q.myPoint > -1 && q.opponentPoint == -1) tt2.setText(q.myPoint + " - 0");
+                            if (q.myPoint > -1 && q.opponentPoint > -1) tt2.setText(q.myPoint + " - " + q.opponentPoint);
                         }
                         else {
-                            if (q.myPoint > -1) tt2.setText(MainActivity.MY_NAME + " " + q.myPoint + " - 0 slumpad spelare");
-                            else tt2.setText(MainActivity.MY_NAME + " 0 - 0 slumpad spelare");
+                            if (q.myPoint > -1) tt2.setText(q.myPoint + " - 0");
+                            else tt2.setText("0 - 0");
                         }
 
                     }
