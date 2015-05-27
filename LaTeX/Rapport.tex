@@ -152,11 +152,8 @@ Informationen i den här typen av lista presenteras alltid likadant och förekom
 
 Eftersom presentationen är konsekvent, med ett bindestreck som avskiljer årtal och händelse är inhämtning av information från de här sidorna enkel att automatisera.
 
-\subsubsection{Webcrawler}
-
-En webcrawler är ett system som automatiskt söker igenom webbsidor. Syftet med en webcrawler är att hämta information från sidan som söks igenom samt dess länkar, för att sedan göra samma sak på alla undersidor och så vidare. Googles \textit{Googlebot}~\cite{googlebot} är ett exempel på en webcrawler som syftar till att indexera hela webben för att göra den sökbar via Googles sökmotor, www.google.se.
-
-Den automatiska informationshämtningen i Chronos bygger på den här principen. I det här begränsade fallet söks endast utvalda Wikipediasidor igenom, men syftet är detsamma, att spara information som systemet hittar. 
+\subsubsection{Parser}
+En parser eller tolk som det också kan kallas, är ett program som automatiskt söker igenom en dataström för att finna data som matchar ett visst mönster. Den semi-automatiska informationshämtningen i Chronos bygger på den här principen. I det här fallet söks utvalda Wikipediasidor igenom, med syftet att spara informationen som matchar vårt mönster. 
 
 \subsection{Balansering}
 Begreppet balansering syftar på tekniker för att göra spelet så jämnt och rättvist som möjligt samtidigt som det är roligt. Ett spel blir roligast när man spelar mot likvärdiga motståndare och får frågor som är något utmanande men inte helt omöjliga. Det ska inte vara för lätt att vinna och inte heller för svårt. Det finns två huvuddelar i Chronos som är möjliga att anpassa för att justera svårighetsgraden för spelaren. Det ena är händelsernas svårighet, det vill säga, hur pass troligt det är att spelaren vet när händelsen ägde rum. Det andra är motståndarens skicklighet.
@@ -288,7 +285,7 @@ Google App Engine användes lokalt för att simulera serverapplikationen. När t
 
 \subsubsection{Google App Engine} \label{Google App Engine}
 
-Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att utvecklare skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Den utvecklade produkten kan sedan köras vid Google App Engine. Servern som vi byggde i App Engine kördes på Googles infrastruktur och var uppbyggt så att antalet användare för applikationen kunde utökas obegränsat. Flera stora företag använder sig av App Engine när deras produkter lanserades där några exempel av större företag var Coca Cola, Rovio och Best Buy~\cite{googleappenginecustomers}. 
+Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att utvecklare skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Den utvecklade produkten kan sedan köras på Google App Engine. Servern som vi byggde i App Engine kördes på Googles infrastruktur och var uppbyggt så att antalet användare för applikationen kunde utökas obegränsat. Flera stora företag använder sig av App Engine när deras produkter lanserades där några exempel av större företag var Coca Cola, Rovio och Best Buy~\cite{googleappenginecustomers}. 
 
 \subsection{Systemstruktur}
 
@@ -309,7 +306,7 @@ Androidapplikationen, klienten i systemet, var själva spelet som utvecklades. D
 När det är den aktuella spelarens tur får hen en chunk med sex frågor och dess svar (årtal) från systemets server. Svaren är gömda för användaren under rundans gång och används endast av klienten för att rätta svaren från spelaren. När spelaren är färdig med sin runda och klienten har rättat svaren så skickas dessa tillbaka till servern där de lagras i matchens historik. 
 
 \subsubsection{Server}
-Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang)~\cite{golang}. Anledningen till att vi valde att skriva servern i Go var för att det, enligt oss, var ett simpelt språk med en syntax som liknade andra språk som vi hade använt tidigare. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen. Databasen skickar frågor till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra crawlern som är den semi-automatiska informationshämtaren. Servern har också som uppgift att med jämna mellanrum köra fråge- och användarbalanseringssystemet som justerar svårighetsgraden för frågorna respektive spelarna i systemet. 
+Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang)~\cite{golang}. Anledningen till att vi valde att skriva servern i Go var för att det, enligt oss, var ett simpelt språk med en syntax som liknade andra språk som vi hade använt tidigare. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya frågor till spelet kommunicerar servern med databasen. Databasen skickar frågor till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra parsern som är den semi-automatiska informationshämtaren. Servern har också som uppgift att med jämna mellanrum köra fråge- och användarbalanseringssystemet som justerar svårighetsgraden för frågorna respektive spelarna i systemet. 
 
 \subsubsection{Databas}
 Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Datastore~\cite{datastore} är Google App Engines egna bibliotek för hantering och lagring av data vilket innebär att systemet, utan vår assistans, hanterar all datalagring. Datastore har flera egenskaper som bidrar till en enklare utveckling av resterande delar för projektet. Med tanke på att Datastore är ett bibliotek från App Engine så medföljer dess skalbarhet som skalar beroende på behovet. Med Datastores inbyggda hjälpmedel för redundans kan data lätt replikeras till flera datacenter om det skulle behövas.
@@ -319,8 +316,8 @@ Datastore hanterar datalagring med både SQL och NoSQL. För den som inte är be
 
 Med Datastore behövde vi inte oroa sig över hur sökning och borttagning skulle ske i databasen. Detta kan förklaras med att Datastore inte använder sig direkt av schemas som i en relationsdatabas, exempelvis SQL. Datastore ser med andra ord till att borttagning och sökning sker effektivt och på rätt sätt. Databasens sökning var effektivt tack vare den solida sökmotorn som biblioteket tillhandahöll.
 
-\subsubsection{Crawler} \label{crawler}
-Inbyggt i servern finns en form av crawler som hanterar den semiautomatiska informationshämtningen av frågematerialet. Hela systemet har som uppgift att givet en länk kunna läsa igenom sidan för att hitta information som passade den mall för frågor som vi har definierat. 
+\subsubsection{Parser} \label{crawler}
+Inbyggt i servern finns en form av parser som hanterar den semiautomatiska informationshämtningen av frågematerialet. Hela systemet har som uppgift att givet en länk kunna läsa igenom sidan för att hitta information som passade den mall för frågor som vi har definierat. 
 
 Sidor som visade sig vara enkla att läsa in var Wikipedias undersidor av typen listningssidor. Den här typen av sidor har en punktlista med årtal samt en beskrivande mening av händelsen det årtalet. Vad för beskrivning som finns relaterat till året beror på vilken typ av listsida som har valts. Ett exempel är sidan som listar datorspelshändelser efter år: Som återfinns vid denna  \textbf{\href{http://sv.wikipedia.org/wiki/Lista_\%C3\%B6ver_datorspels\%C3\%A5r}{länk.}} 
 Denna struktur gjorde det enkelt att vid inläsning av en sida separera varje $<$li$>$-element där ett bindestreck eller kolon förekom och därefter spara varje kombination av årtal och händelse i ett temporärt cache.
@@ -338,7 +335,7 @@ När alla  händelser har lästs in i cachet presenteras de inlästa händelsern
 	\begin{centering}
 	\includegraphics[width=\textwidth]{crawler} 
 	\end{centering}
-	\caption{\textit{Webinterface för crawlern}}
+	\caption{\textit{Webinterface för parsern}}
 \end{figure}
 
 De fyra knapparna är mappade till siffrorna 1-4 på tangentbordet för att det ska gå snabbt att gå igenom frågorna. Texten kan också redigeras om administratören vill justera grammatiska fel.
@@ -347,7 +344,7 @@ De fyra knapparna är mappade till siffrorna 1-4 på tangentbordet för att det 
 Det finns två sorters användare som kunde interagera med systemet.
 \newline
 \textbf{Administratörer} \label{admins}\newline
-Administratörerna är vi som utvecklade applikationen och som ansvarar för projektet. Vi är ansvariga för underhållet och utvecklingen av systemet. Vi har den högsta typen av tillgång till systemet för att kunna utföra underhållet och utvecklingen. I underhållet innefattas det felsökning samt reparation av funna fel. Underhållet innefattar även uppföljning av buggrapporter som skickats in av spelare. En vital uppgift som administratörerna har, förutom det allmänna underhållet och utvecklingen av systemet, är att godkänna information som hämtas av crawlern. Detta för att se till att frågorna följer den struktur som är lämplig för spelet.\\
+Administratörerna är vi som utvecklade applikationen och som ansvarar för projektet. Vi är ansvariga för underhållet och utvecklingen av systemet. Vi har den högsta typen av tillgång till systemet för att kunna utföra underhållet och utvecklingen. I underhållet innefattas det felsökning samt reparation av funna fel. Underhållet innefattar även uppföljning av buggrapporter som skickats in av spelare. En vital uppgift som administratörerna har, förutom det allmänna underhållet och utvecklingen av systemet, är att godkänna information som hämtas av parsern. Detta för att se till att frågorna följer den struktur som är lämplig för spelet.\\
 \newline
 \textbf{Spelare}\newline
 Spelarna är den typ av användare som har begränsad åtkomst till systemet. Spelarna kan endast komma åt systemet genom klienten och kan endast interagera med själva spelet. Detta innebär att en vanlig spelare inte ska kunna finna information om hur systemet fungerar. Detta är delvis en säkerhetsåtgärd som är till för att den vanliga användaren inte, av misstag, eller med flit ska kunna komma åt systemets vitala delar och alternera dessa. Användaren kan kommunicera med administratörerna genom att skicka felrapporter om spelet skulle bete sig konstigt eller om några buggar har upptäckts.
