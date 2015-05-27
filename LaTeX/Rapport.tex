@@ -39,7 +39,7 @@
 \textsc{\LARGE Uppsala Universitet}\\[1.5cm] 
 
 \HRule \\[0.3cm]
-{ \huge \textup {Historiekunskapsspel med semi-automatisk frågehämtning och ett balanseringssystem för frågor}}\\[0.3cm]
+{ \huge \textup {Historiekunskapsspel med semi-automatisk frågehämtning och ett balanseringssystem för frågor och spelare}}\\[0.3cm]
 \HRule \\[1.5cm]
 
 \Large \textsc{Författare:}\\[0.5cm]
@@ -107,7 +107,7 @@ Applikationsutveckling för mobila enheter är ett spännande område som växer
 
 Chronos har utvecklats till Android med en backend som drar nytta av Google App Engines skalbarhet för att ge applikationen möjlighet att växa i takt med att användarantalet ökar. För att vi inte skulle behöva söka och manuellt lägga in ett stort antal frågor har en semi-automatisk frågehämtare utvecklats. Detta system bidrar till att Chronos inte blir repetitivt och tråkigt för användarna. Frågehämtaren möjliggör att frågorna kan hämtas, skapas och läggas in utan att vi behöver ägna mycket tid åt dessa uppgifter. En annan sak som utvecklats för att spelet ska vara roligare för alla är ett balanseringssystem som gör att händelserna som ges till spelarna är anpassade efter spelarens kunskapsnivå.
 
-
+\newpage
 \section{Bakgrund}
 Den här sektionen ger en översiktlig beskrivning av spel och koncept som var starkt relaterade till utvecklingen av vår applikation. Bland annat beskrivs kort några applikationer som utvecklats till samma marknad. Det ges också en översiktlig beskrivning av dessa applikationer, koncept och spel som, på ett eller annat sätt, använts som inspiration vid utvecklingen av applikationen. 
 
@@ -160,7 +160,7 @@ En parser eller tolk som det också kan kallas, är ett program som automatiskt 
 \subsection{Balansering}
 Begreppet balansering syftar på tekniker för att göra spelet så jämnt och rättvist som möjligt samtidigt som det är roligt. Ett spel blir roligast när man spelar mot likvärdiga motståndare och får frågor som är något utmanande men inte helt omöjliga. Det ska inte vara för lätt att vinna och inte heller för svårt. Det finns två huvuddelar i Chronos som är möjliga att anpassa för att justera svårighetsgraden för spelaren. Det ena är händelsernas svårighet, det vill säga, hur pass troligt det är att spelaren vet när händelsen ägde rum. Det andra är motståndarens skicklighet.
 
-
+\newpage
 \section{Projektbeskrivning}
 Denna sektion lägger betoning på varför applikationen utvecklades. Vad som var våra mål med projektet, motivation för utvecklingen, vilka avgränsningar som gjordes, vilka krav vi ställde på applikationen, vilka tekniska problem vi var tvungna att överkomma samt vad som gjorde Chronos unikt i förhållande till konkurrenterna.
 
@@ -271,6 +271,7 @@ Informationssökaren skulle tillsammans med den administrativa kontrollen ge fr�
 
 Designen av applikationen var något som var väldigt viktigt för oss. Kravet i början var att ha en intuitiv, responsiv och snygg design. Eftersom applikationen gjordes för Android skulle den också följa dess designmönster, Material Design~\cite{MaterialDesign}.
 
+\newpage
 \section{Implementation}
 Den här sektionen beskriver hur de målsatta delarna implementerades i applikationen samt metoderna som användes för att lyckas med detta. Applikationens systemstruktur och dess innefattande delar förklaras och illustreras. Det finns även en grundlig genomgång av hur applikationen ser ut samt hur den fungerar, både för användare och systemadministratörer.
 
@@ -412,8 +413,8 @@ Det finns fyra olika handlingar som användaren kan göra här vid denna sida. D
 \end{figure}
 \pagebreak
 
-Användarna kan vid matchvyn dra med fingret neråt på skärmen för att uppdatera matchflödet. Detta är till för användaren ska kunna se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design~\cite{MaterialDesign}och är en knapp som alltid ligger överst och representerar huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän via alternativet (\textit{Utmana en vän}). När användarna klickar här byts vyn ut som ett rutnät av användarens vänner (7). 
-Användarna kan möta en slumpad motståndare via alternativet (\textit{Slumpad motståndare}). Detta stänger ner dialogen som öppnades av FAB-en och en ny match skapas i listan av matcher. Användarna kan även söka efter en spelare via alternativet (\textit{Sök spelare}) och då byts vyn ut mot en sökvy (8). 
+Användarna kan vid matchvyn dra med fingret neråt på skärmen för att uppdatera matchflödet. Detta är till för användaren ska kunna se om det blivit deras tur i en match eller om matchen är avgjord. Det finns även en så kallad \textit{Floating Action Button} (FAB). FAB är en del i Googles Material Design~\cite{MaterialDesign} och är en knapp som alltid ligger överst och representerar huvudhandlingen som kan göras på vyn. När FAB-en i denna vy klickas öppnas en dialog som ger användaren tre olika alternativ. De kan utmana en vän via alternativet (\textit{Utmana en vän}). När användarna klickar här byts vyn ut som ett rutnät av användarens vänner (7). 
+Användarna kan möta en slumpad motståndare via alternativet (\textit{Slumpad motståndare}). Detta stänger ner dialogen som öppnades av FAB-en och en ny match skapas i listan av matcher. Användarna kan även söka efter en spelare via alternativet (\textit{Sök spelare}) och då byts den aktuella vyn ut mot en sökvy (8). 
 
 \begin{figure}[H]
 \begin{center}
@@ -522,7 +523,7 @@ Denna vy ger fem olika möjligheter till interaktion. Högst upp i vyn finns det
 	\caption{\textit{Bild över Min profil (10)}}
 \end{figure}
 
-
+\newpage
 \section{Resultat}
 Den här sektionen beskriver de utvärderingar som gjorts av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet. Det utfördes tre utvärderingar på applikationen. En \textit{Think Aloud}, en \textit{Kognitiv Genomgång} och en \textit{Heuristic Evaluation}. 
 
@@ -530,7 +531,7 @@ Den här sektionen beskriver de utvärderingar som gjorts av applikationen. Utv�
 Utvärderingar är bra verktyg för att hitta problem eller för att hitta områden som är lämpade för vidare utveckling. Det kan också hjälpa till att få nyttig feedback på en tidig design eller hjälpa till att välja mellan olika designalternativ~\cite[sid 226--228]{benyon2010designing}. Utvärderingarna vi valde att utföra var till för att granska produkten vi har utvecklat. Vi ville se om produkten mötte de krav som vi hade ställt vid starten av projektet. Vi hoppades även att utvärderingarna skulle ge oss en bild av applikationens användbarhet och effektivitet samt se till att den var tillmötesgående. Ur en designsynpunkt gjorde vi utvärderingen för att se om applikationen fyllde sitt syfte, om den var rolig samt om den engagerar användaren.
 
 
-\subsection{Utvärdering av projekt}
+\subsection{Utvärdering av Chronos}
 Planen var att en fungerande alfa eller betaversion av systemet skulle färdigställas en rimlig tid innan projektet avslutas. I den här versionen skulle användare ha möjlighet att ge feedback och att testa applikationen. Tack vare den feedback vi fick från användarna så skulle så många fel som möjligt justeras innan den färdiga versionen släpptes.
 
 
@@ -579,7 +580,7 @@ Den korrekta sekvensen av handlingar för att genomföra dessa uppgifter är:
 \item Tryck på \textbf{+}-ikonen vid användarens bild för att lägga till som vän.
 \item Tryck på \textbf{+}-ikonen vid användarens bild för att utmana vännen.
 \item Repetera steg 5 \& 6 till dessa att matchen är avslutad.
-\item För att logga ut från applikationen tryck på knappen \textbf{$\equiv$} och välj sedan alternativet \textbf{Logga ut} längst ner i menyn.
+\item För att logga ut från applikationen tryck på knappen \textbf{$\equiv$} och välj sedan alternativet \textit{LOGGA UT} längst ner i menyn.
 \end{enumerate}
 
 Miljön som utvärderingen utförs i är applikationen Chronos på en smartphone med operativsystem Android 4.1 eller högre.
@@ -592,17 +593,17 @@ Detta är en simulerad körning av applikationen med användaren, uppgifterna oc
 Detta är något som en person som äger en smartphone kommer kunna utföra genom kunskap från erfarenhet.
 \item Logga in med Google-konto.\\ 
 Om användaren har ett konto hos Google så kommer det inte uppstå några problem här då hen tidigare har tvingats logga på andra platser med liknande layout.
-\item Skapa en ny match mot slumpad motståndare genom att trycka på den gröna cirkulära \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Slumpad motståndare}.\\
-Vid denna punkt presenteras användaren med en vy som är blank förutom den gröna cirkulära \textbf{+}-ikonen. Tack vare att användaren är van vid att använda sig av applikationer kommer hen trycka på den gröna cirkulära \textbf{+}-ikonen.
-\item Välj den slumpade matchen genom att klicka på listelementet som ligger under rubriken \textit{Din tur}.
-Vyn som användaren ser framför sig nu är tom med undantaget för en match som beskriver att det är spelarens tur mot en slumpad motståndare. Eftersom att det inte finns några andra saker att klicka på, förutom den gröna cirkulära \textbf{+}-ikonen, kommer användaren trycka och därmed lyckas navigera sig till matchen.
+\item Skapa en ny match mot slumpad motståndare genom att trycka på den gula cirkulära \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Slumpad motståndare}.\\
+Vid denna punkt presenteras användaren med en vy som är blank förutom den gula cirkulära \textbf{+}-ikonen. Tack vare att användaren är van vid att använda sig av applikationer kommer hen trycka på den gula cirkulära \textbf{+}-ikonen.
+\item Välj den slumpade matchen genom att klicka på listelementet som ligger under rubriken \textsc{Din tur}.
+Vyn som användaren ser framför sig nu är tom med undantaget för en match som beskriver att det är spelarens tur mot en slumpad motståndare. Eftersom att det inte finns några andra saker att klicka på, förutom den gula cirkulära \textbf{+}-ikonen, kommer användaren trycka och därmed lyckas navigera sig till matchen.
 \item Starta rundan genom att trycka på \textbf{+}-ikonen.
 Detta kommer inte vara några problem för användaren då spelet har en inbyggd funktion för nya spelare som beskriver hur en match går till och vart hen ska trycka för genomföra en omgång.
 \item Vid avslutad runda används telefonens bakåtknapp\textbf{"$\leftarrow$"}, för att gå tillbaka till matchsidan. Detta kommer inte heller vara några problem eftersom användaren i föregående steg fick en förklaring om hur hen skulle genomföra en omgång. Om användaren inte skulle se denna vy skulle hen, av vana och tidigare erfarenhet, använda sig av telefonens bakåtknapp för att komma ut matchen.
 \item Repetera steg 5 \& 6 tills dess att matchen är avslutad.
 Detta kommer inte vara några problem eftersom användaren vid det här laget har fått det beskriver för sig hur en match går till.
 \item Sök efter en vän genom att trycka på \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Sök spelare}.\\
-I detta steg kan det bli problem för användaren då hen kanske inte minns att den gröna cirkulära \textbf{+}-ikonen hade flera olika alternativ. Ett av dessa alternativ var "Sök efter vän". Att inte hitta detta direkt skulle mycket troligt få användaren att känna sig förvirrad. Att detta sker är dock inte helt säkert ty användaren skulle kunna, genom tidigare erfarenheter av applikationer, lyckas navigera sig till rätt meny.
+I detta steg kan det bli problem för användaren då hen kanske inte minns att den gula cirkulära \textbf{+}-ikonen hade flera olika alternativ. Ett av dessa alternativ var "Sök efter vän". Att inte hitta detta direkt skulle mycket troligt få användaren att känna sig förvirrad. Att detta sker är dock inte helt säkert ty användaren skulle kunna, genom tidigare erfarenheter av applikationer, lyckas navigera sig till rätt meny.
 \item Skriv in spelarens namn.
 Detta steg kommer inte utgöra något problem för användaren förutsatt att hen lyckades med föregående steg. Vyn som presenteras för användaren är en mycket simpel sådan med ett uppmaning som lyder "Skriv in spelarens namn" följt av ett textfält. Genom sina tidigare kunskaper om applikationer och smatphones så kommer användaren lyckas utföra denna uppgift utan problem.
 \item Välj önskad användare genom att klicka på användarens bild.
@@ -613,9 +614,9 @@ Detta steg kommer inte vara något problem för användaren eftersom det endast 
 Detta steg är mycket likt det föregående. Att även detta steg inte skulle utgöra något problem för användaren ges med samma förklaring som föregående punkt. Det finns endast en knapp att trycka på när hen väl är inne på en annan spelares profil. När denna knapp har blivit tryckt kommer det upp en meny där det finns flera alternativ där ett av dessa alternativ är "Utmana".
 \item Repetera steg 5 \& 6 till dessa att matchen är avslutad.
 Detta kommer inte vara några problem eftersom användaren vid det här laget har fått det beskrivet för sig hur en match går till.
-\item För att logga ut från applikationen tryck på knappen \textbf{$\equiv$} och välj sedan alternativet \textbf{Logga ut} längst ner i menyn. Detta är ett steg som skulle kunna utgöra ett problem för användaren då den menyn där alternativet "Logga ut" finns endast har visats för användaren första gången hen startade applikationen. Om användaren har glömt bort att denna meny finns kan det bidra till att användaren känner sig förvirrad. Att detta sker är dock inte helt säkert ty användaren skulle kunna, genom tidigare erfarenheter av applikationer, lyckas navigera sig till rätt meny.       
+\item För att logga ut från applikationen tryck på knappen \textbf{$\equiv$} och välj sedan alternativet \textit{Logga ut} längst ner i menyn. Detta är ett steg som skulle kunna utgöra ett problem för användaren då den menyn där alternativet "Logga ut" finns endast har visats för användaren första gången hen startade applikationen. Om användaren har glömt bort att denna meny finns kan det bidra till att användaren känner sig förvirrad. Att detta sker är dock inte helt säkert ty användaren skulle kunna, genom tidigare erfarenheter av applikationer, lyckas navigera sig till rätt meny.       
 \end{enumerate}
- 
+\newpage 
 \subsection{Think Aloud}
 \textit{Think Aloud}~\cite[sid 29--32]{thinkaloud} är en utvärderingsmetod som går ut på att användare ska utföra ett antal uppgifter som utvecklarna har valt. Det är sedan användarnas jobb att under tiden som uppgifterna utförs att säga vad de tänker på. Utvecklarna antecknar det användarna säger kontinuerligt under tiden uppgifterna utförs. Anteckningarna analyseras sedan av utvecklarna för att se vilka delar som eventuellt var för svåra, dåliga eller rent av ineffektiva. Designen av systemet kommer sedan att alterneras eller skapas på nytt beroende på kommentarerna som noterades från användarna.
 
@@ -645,6 +646,7 @@ När han hade startat matchen så uttryckte han en viss förvirring kring hur ha
 
 När Carl skulle söka och lägga till en vän så navigerade han sig först till sidan \textit{Utmana en vän} där han sedan fastnade och efter någon minut gav upp. Han testade sedan att använda sig av "Plus"-knappen från tidigare uppgifter och valde alternativet \textit{sök spelare} varpå han lyckades navigera till rätt mål. När han lyckats med uppgiften beskrev han stegen han var tvungen att ta som onödigt svåra och smått förvirrande. 
 
+\newpage
 \subsection{Heuristic Evalutation}
 En \textit{Heuristic Evalutation}~\cite[sid 228--229]{benyon2010designing} är en utvärderingsmetod för att fastställa problem i användbarhet hos ett system, problemens storlek samt vart de finns. Den här typen av utvärdering utförs ofta i en tidig fas av designutvecklingen. 
 Utvärderingen går till på så sätt att en person, som har någon slags utbildning i Människa och Datorinteraktion (MDI), utvärderar en föreslagen design av ett system. Denna person traverserar systemet och dess design och noterar problem som hen finner. Om problem hittas ger hen förslag på lösningar till problemen förutsatt att det fanns några problem. Utvecklarna kan även ge personen som utvärderar en skala på hur allvarliga de funna problemen är. Genom detta kan utvecklarna få en bild av vilka problem som borde prioriteras vid en eventuell ny design. Det finns flera designprinciper som kan utvärderas vid en Heuristic Evaluaton. Några av dessa är: Synlighet, kontroll, flexibilitet, stil, gemytlighet samt om designen är konsekvent.
@@ -658,27 +660,26 @@ En Heuristic Evaluation utfördes med en man som heter Tage Winberg under en per
 Tage är 28 år gammal och arbetar som UX-designer~\cite{uxdesign} på företaget STOPP Family. Han har en gått utbildning \textit{Mobile Creative} på Hyper Island i Stockholm och har dessutom mer än 12 års erfarenhet av grafisk design. Tage har även ett eget företag och har jobbat med bland annat UX Design, interaktionsdesign, grafisk design och konceptutveckling för applikationer.
 Nedan presenteras hans åsikter om hur väl applikationen var designad med hänsyn till de designprinciper som utvecklarna valde.
 
-\paragraph{Kontroll}
+\paragraph{Kontroll}\mbox{}\\
 Kontrollen i applikationen var kort sagt ganska simpel. Eftersom att applikationen inte hade så många knappar och alternativ så kände jag att det var lätt att navigera sig. Det kan vara positivt med få alternativ och knappar i sin applikation. Det kan bidra till att användaren lätt förstår vart hen ska trycka på för att komma till sitt mål. Detta är dock inte fallet för den här applikationen då det inte är helt solklart vart man ska trycka för att komma till de olika funktionerna applikationen tillhandahåller. Detta har dock inte med antalet knappar eller alternativ att göra. Det handlar mer om hur knapparna ser ut som bidrar till en viss förvirring.
 "Plus"-ikonen är relativt simpel i sin design men den kan betyda många saker vilket är positivt i den meningen att det blir en ganska "clean" design. Det negativa med att ha många alternativ samlade i en knapp är att användaren kan bli förvirrad över hur knappen fungerar samt om dess egenskaper förändras beroende på vilken vy som är aktuell.\\
 Summeringen av problemen skulle rankas som 3/5 på den givna skalan.
 
-\paragraph{Synlighet}
+\paragraph{Synlighet}\mbox{}\\
 Boxarna för matcher och rundor borde "poppa" mer från bakgrunden alternativt vara mer specifika. Korten som finns i en runda har också detta problem. Detta problem skulle man kunna lösa med exempelvis bättre färgsättning eller instruerande pilar. Om detta genomfördes skulle användaren lättare kunna koppla vart hen skulle komma om en speciell knapp trycktes.
 Informationen som ges för varje runda, exempelvis: ställningen, vilken omgång det är samt vems tur det är borde "poppa" mer från den befintliga designen. Just nu är det för mycket text för att det ska vara enkelt för användaren att lätt ta in den värdefulla informationen. Förslagsvis borde mängden text som visas för varje runda minskas ner och ersättas med mer summerad information som står ut från bakgrunden. Detta skulle man kunna uppnå med en annan färgsättning eller om man exempelvis skulle vilja experimentera med fet text och vanligt text. 
 För att lösa problemet med oklarheten kring vems tur det är skulle man kunna ha olika färger för varje typ av runda. Varje färg betyder en sak, exempelvis: Grön = din tur, gul = motståndarens tur och röd = avslutad match. Om färgsättning inte är något som utvecklarna vill ändra på i matchvyn skulle de möjligtvis kunna använda sig av andra metoder för att särskilja matchernas status. Utvecklarna skulle kunna ha en litet tomt utrymme mellan sektionerna "Din tur" och "Motståndarens tur" samt att se till att avslutade matcher mattades ur för att visa spelarna att dessa inte är aktiva.
 Summeringen av problemen skulle rankas som 2/5 på den givna skalan.    
 
-\paragraph{Stil}
+\paragraph{Stil}\mbox{}\\
 Stilen för applikationen var stilren i den meningen att det inte var allt för mycket information på de olika menyerna. Färgsättningen i designen var mycket väl vald då det bidrog till kontraster mellan olika delar vilket är otroligt viktigt. Flödet i applikationen var också väl designat då  dess animationer var lättviktiga och mjuka. Detta bidrog till att det inte var jobbigt för åskådaren att använda sig av applikationen.
 Summeringen av problemen skulle rankas som 1/5 på den givna skalan.
 
-\paragraph{Om designen var konsekvent}
-Applikationens design hade en konsekvent formgivning och likaså färgsättning av knappar och symboler. Dock finns det möjlighet att göra designen ännu mer konsekvent. Exempel på detta var under processen då man sökte efter spelare. Sökresul-
-taten visades som ett rutnät vilket inte riktigt följde den övriga visuella designen för applikationens vyer. Istället för rutnät skulle sökresultatet visa varje spelare i en separat rad. Om denna design skulle väljas skulle utvecklarna även kunna få in ett antal knappar för att bland annat lägga till spelaren som vän och utmana spelare. Detta skulle bidra till att användaren slipper leta efter dessa funktioner på andra platser i applikationen.
+\paragraph{Om designen var konsekvent}\mbox{}\\
+Applikationens design hade en konsekvent formgivning och likaså färgsättning av knappar och symboler. Dock finns det möjlighet att göra designen ännu mer konsekvent. Exempel på detta var under processen då man sökte efter spelare. Sökresultaten visades som ett rutnät vilket inte riktigt följde den övriga visuella designen för applikationens vyer. Istället för rutnät skulle sökresultatet visa varje spelare i en separat rad. Om denna design skulle väljas skulle utvecklarna även kunna få in ett antal knappar för att bland annat lägga till spelaren som vän och utmana spelare. Detta skulle bidra till att användaren slipper leta efter dessa funktioner på andra platser i applikationen.
 Summeringen av problemen skulle rankas som 3/5 på den givna skalan.
 
-
+\newpage
 \section{Diskussion}
 I den här sektionen diskuteras det bland annat framtida utvecklingar av den visuella representation och applikationens prestanda. Avsnittet beskriver även befintliga delar av applikationen som vi vill utveckla vidare och varför dessa utvecklingar är nödvändiga.
 
