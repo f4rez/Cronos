@@ -4,6 +4,7 @@
 \usepackage[english,swedish]{babel}
 \usepackage{csquotes}
 
+\usepackage[nottoc,numbib]{tocbibind}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -92,6 +93,7 @@ The serever is written in the language Go and it uses Google App Engine as platf
 Ett stort tack vill vi som utvecklat Chronos tillägna våra handledare för kursen för deras värdefulla feedback och vägledning. Tacka till alla studenterna på Civilingenjörsprogrammet i Informationsteknologi, Uppsala Universitet, för deras hjälp under rapportens skrivande. Ett stort tack till alla alfa-testare och utvärderare av applikationen.\\ Utan hjälpen från ovanstående parter hade detta inte varit möjligt.
 \end{center}
 \newpage
+
 \tableofcontents
 \pagebreak
 
@@ -127,14 +129,10 @@ Wordfeud~\cite{aboutwordfeud} är ett spel där en match utspelas mellan två pe
 
 \subsection{Sällskapsspel med fokus på kunskap} \label{nardada}
 Sällskapsspel har länge varit och är än idag ett populärt sätt att umgås på~\cite{bradspelspop}. Sällskapsspelet \textit{När då då?}~\cite{nardada} är ett spel som bygger på ett relativt enkelt koncept. Spelarna turas om att placera ut händelser på sin egen tidslinje och får poäng om händelserna är korrekt utplacerade i förhållande till varandra. Varje tur för en spelare går till så att spelaren får en händelse uppläst för sig och sedan ska spelaren välja en plats på sin tidslinje att lägga händelsen på. Om spelaren lägger händelsen fel så är turen avslutad och spelet fortsätter till nästa spelare. Däremot, om händelsen är korrekt placerad får spelaren välja att antingen försöka placera en händelse till, eller att avsluta och säkra sina redan placerade händelser. Skulle spelaren förlora efter att ha placerat flera händelser samma runda så försvinner alla händelser i den rundan. Spelet fortsätter tills dess att någon spelare har lyckats placera åtta händelser korrekt, då spelas rundan klart och den spelare med flest poäng vinner.\\
-
-
-Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att det lyfter fram vissa begär hos spelarna. Ett av begären är att man vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är en av faktorerna som gör den typen av spel så populära~\cite[sid 3--4]{psykologi}. En annan intressant faktor i det här spelet är girigheten som infinner sig när spelaren har möjlighet att välja mellan att fortsätta sin tur eller att säkra sina frågor. Det är en viktig del av spelet som kan förändra väldigt mycket. En spelare har möjlighet att nästan vinna på sin första runda, för att sedan förlora alla sina händelser för att den sista placerades fel. Det här ökar spänningen i \textit{När då då?}.
+Spelkonceptet är som sagt ett enkelt sådant men det är också kraftfullt i den meningen att det lyfter fram vissa begär hos spelarna. Ett av begären är att spelarna vill överkomma problem som ställs av antingen spelet själv eller motspelarna. Detta är en av faktorerna som gör den typen av spel så populära~\cite[sid 3--4]{psykologi}. En annan intressant faktor i det här spelet är känslan som infinner sig när spelaren har möjlighet att välja mellan att fortsätta sin tur eller att säkra sina poäng. En spelare har kan ha möjligheten vinna spelet på sin första runda, för att sedan förlora alla sina poäng för att den sista händelsen placerades fel. Det här något som ökar spänningen i \textit{När då då?}.
 
 \subsection{Automatisk informationshämtning}
-För spelets överlevnad är det viktigt att händelserna aldrig tar slut. Det är också viktigt att händelserna håller hög kvalitet för att inga missförstånd ska förekomma. Eftersom internet består av fantastiskt mycket information som går att relatera till årtal så vore det en bra idé att på något vis dra nytta av den här informationen. Man skulle kunna tänka sig att flera personer arbetar aktivt under en lägre tid med att sammanställa händelser och manuellt fylla en databas med dessa. Fördelen med detta vore att en hög kvalitét nästan kan garanteras (förutsatt att personerna som sammanställer händelserna håller en hög nivå). Nackdelen är att det tar mycket tid att sammanställa informationen manuellt.
-
-På grund av detta vore det bra med ett system som på ett semi-automatiskt sätt sammanställer händelser utifrån den historiska data som finns tillgänglig på internet. För att främja systemets tillförlitlighet och kvalitéten på de producerade händelserna begränsas det semi-automatiska systemet till att endast hämta information från Wikipedia. Tillförlitligheten och kvalitéten kan höjas med den här begränsningen eftersom utvecklarna har större möjlighet att göra antaganden om hur informationen som ska genomsökas (Wikipedia) ser ut. Det här gör att filtreringen blir lättare att konstruera samt att risken för fel blir mindre.
+För spelets överlevnad är det viktigt att händelserna aldrig tar slut. Det är också viktigt att händelserna håller hög kvalitet för att inga missförstånd ska förekomma. Eftersom internet består av fantastiskt mycket information som går att relatera till årtal så vore det en bra idé att på något vis dra nytta av den här informationen. Man skulle kunna tänka sig att flera personer arbetar aktivt under en lägre tid med att sammanställa händelser och manuellt fylla en databas med dessa. Fördelen med detta vore att en hög kvalitét nästan kan garanteras (förutsatt att personerna som sammanställer händelserna håller en hög nivå). Nackdelen är att det tar mycket tid att sammanställa informationen manuellt. På grund av detta vore det bra med ett system som på ett semi-automatiskt sätt sammanställer händelser utifrån den historiska data som finns tillgänglig på internet. För att främja systemets tillförlitlighet och kvalitéten på de producerade händelserna begränsas det semi-automatiska systemet till att endast hämta information från Wikipedia. Tillförlitligheten och kvalitéten kan höjas med den här begränsningen eftersom utvecklarna har större möjlighet att göra antaganden om hur informationen som ska genomsökas (Wikipedia) ser ut. Det här gör att filtreringen blir lättare att konstruera samt att risken för fel blir mindre.
 
 Wikipedia har några olika standardlayouter på sina informationssidor och en av dessa layouter är en punktlista med årtal. 
 Informationen i den här typen av lista presenteras alltid likadant och förekommer på många undersidor inom olika ämnen på Wikipedia. Varje händelse och årtal presenteras som punkter, likt denna:\\
@@ -144,13 +142,13 @@ Informationen i den här typen av lista presenteras alltid likadant och förekom
 	1993 – Nintendo släpper The Legend of Zelda: Link's Awakening till Game Boy.\\
 
 
-Eftersom presentationen är konsekvent, med ett bindestreck som avskiljer årtal och händelse är inhämtning av information från de här sidorna enkel att automatisera.
+Eftersom presentationen är konsekvent med ett bindestreck som avskiljer årtal och händelse är inhämtning av information från de här sidorna enkel att automatisera.
 
 \subsubsection{Parser}
 En parser eller tolk som det också kan kallas, är ett program som automatiskt söker igenom en dataström för att finna data som matchar ett visst mönster. Den semi-automatiska informationshämtningen i Chronos bygger på den här principen. I det här fallet söks utvalda Wikipediasidor igenom med syftet att spara informationen som matchar vårt mönster. 
 
 \subsection{Balansering}
-Begreppet balansering syftar på tekniker för att göra spelet så jämnt och rättvist som möjligt samtidigt som det är roligt. Ett spel blir roligast när man spelar mot likvärdiga motståndare och får händelser som är utmanande men inte helt omöjliga. Det ska varken vara för lätt eller för svårt att vinna. Det finns två delar i Chronos som går att balansera  med hänsyn till svårighetsgrad. Det ena är händelsernas svårighetsgrad vilket innebär hur pass troligt det är att spelaren vet när händelsen ägde rum. Det andra är motståndarens svårighetsgrad.
+Begreppet balansering syftar på tekniker för att exempelvis göra spel så jämnt och rättvist som möjligt. Ett spel blir roligast när man spelar mot likvärdiga motståndare och får händelser som är utmanande men inte helt omöjliga. Det ska varken vara för lätt eller för svårt att vinna. Det finns två delar i Chronos som går att balansera med hänsyn till svårighetsgrad. Det ena är händelsernas svårighetsgrad vilket innebär hur pass troligt det är att spelaren vet när händelsen ägde rum. Det andra är motståndarens svårighetsgrad.
 
 \section{Projektbeskrivning}
 Denna sektion lägger betoning på varför applikationen utvecklades. Vad som var våra mål med projektet, motivation för utvecklingen, vilka avgränsningar som gjordes, vilka krav vi ställde på applikationen, vilka tekniska problem vi var tvungna att överkomma samt vad som gjorde Chronos unikt i förhållande till konkurrenterna.
@@ -186,10 +184,8 @@ Det fanns vissa delar i det här systemet som var mer avancerade att lösa än a
 \begin{itemize}
 \item Eftersom applikationen på något sätt skulle hämta information och konstruera händelser på ett semi-automatiskt sätt var det en självklarhet att utveckla ett sådant system. En svårighet med detta var att se till att systemet blev tillräckligt smart för att lyckas läsa från en informationskälla och ta ut den eftertraktade informationen på rätt sätt.
 \item Det behövdes en relativt stor databas för att lagra både användare och historiska händelser för spelet. Det här var något som vi inte hade arbetat med på en stor skala förut. Hur skulle man lagra informationen på ett sätt som var både effektivt lagringsmässigt samt snabbt och enkelt för servern att hämta?
-\item Det krävdes nätverkskommunikation med säkerhet och användar-
-identifiering. App Engine som användes vid stora delar av utveckling hade användbara funktioner som uppfyllde vissa av våra krav men inte alla. Hur skulle vi lyckas tillgodose användarna med en säker applikation?
-\item Spelet skulle anpassa svårighetsgraden automatiskt vilket innebar att någon form av balansering krävdes. Tanken var att händelserna skulle ha en svårighetsgrad som justerades automatiskt beroende på hur ofta de placerades rätt eller fel. Här var vi tvungna att ta hänsyn till hur resten av tidslinjen såg ut vid tillfället. Hur skulle detta utvecklas på ett tillräckligt effektivt och rättvist sätt för applikationen och användarna?
-\item Det fanns ett behov att utveckla ett system för att rangordna spelare i någon slags topplista. Hur skulle detta ske och hur skulle rangordningen bestämmas utifrån spelets mekanik? 
+\item Spelet skulle anpassa svårighetsgraden på händelserna och spelarna automatiskt vilket innebar att någon form av balansering krävdes. Tanken var att händelserna skulle ha en svårighetsgrad som justerades automatiskt beroende på hur ofta de placerades rätt eller fel. Balanseringen av händelser skulle också ta hänsyn till hur resten av tidslinjen såg ut vid tillfället. Hur skulle detta utvecklas på ett tillräckligt effektivt och rättvist sätt för händelserna och användarna?
+\item Det fanns ett behov att utveckla ett system för att rangordna spelare efter deras kunskapsnivå. Hur skulle detta ske och hur skulle rangordningen bestämmas utifrån spelets mekanik? 
 \end{itemize}
 
 \subsection{Relaterat arbete}
@@ -228,7 +224,7 @@ $$0.849 = \frac{1}{1+10^{(1000-1300)/400}}$$
 $$ R'_A = 1300 + 16(1-0.849) = 1302.416 $$
 $$ R'_B = 1000 + 16(0-0.849) = 997.584 $$
 
-I det implementerade balanseringssystemet används Elo-modellen för att beräkna spelarnas erfarenhetspoäng. Elo är ett system som utvecklades av Arpad Elo och började användas redan på 60-talet~\cite{elo}. Systemet var först och främst utvecklat för att ranka schackspelare, men har sedan dess uppkomst även applicerats på många andra spel. Eftersom Elo-systemet är förhållandevis gammalt och möjligheten till datoriserade beräkningar blivit större sedan 60-talet, finns det mer avancerade system att använda sig av idag. Ett annat system som utvecklades i syfte att vara en förbättring av Elo-systemet är ett system kallat Glicko~\cite{chessratings}. Skillnaden mellan Elo och Glicko är att Glicko också har ett värde för hur väl uppdaterad spelarens erfarenhetspoäng är. Det här innebär att spelaren har ett erfarenhetspoäng, säg 2000, samt ett trovärdighetspoäng, till exempel 100. Ju högre trovärdighetspoäng spelaren har, desto mindre exakt är erfarenhetspoängen. Erfarenhetspoängen har enligt systemet en +/- differens på dubbla trovärdighetspoängen. I nyss nämnda exempel innebär detta att spelaren har en erfarenhetspoäng på 1800-2200. Trovärdighetspoängen justeras bland annat baserat på hur länge sedan det var spelaren spelade förra gången, samt hur många matcher spelaren spelat totalt. Ju fler matcher totalt och ju närmare i tid förra matchen var, desto lägre trovärdighetspoäng har spelaren.
+I det implementerade balanseringssystemet används Elo-modellen för att beräkna spelarnas erfarenhetspoäng. Elo är ett system som utvecklades av Arpad Elo och började användas redan på 60-talet~\cite{elo}. Systemet var först och främst utvecklat för att ranka schackspelare, men har sedan dess uppkomst även applicerats på många andra spel. Eftersom Elo-systemet är förhållandevis gammalt och möjligheten till datoriserade beräkningar blivit större sedan 60-talet, finns det mer avancerade system att använda sig av idag. Ett annat system som utvecklades i syfte att vara en förbättring av Elo-systemet är ett system kallat Glicko~\cite{chessratings}. Skillnaden mellan Elo och Glicko är att Glicko också har ett värde för hur väl uppdaterad spelarens erfarenhetspoäng är. Det här innebär att spelaren har ett erfarenhetspoäng, säg 2000, samt ett trovärdighetspoäng, till exempel 100. Ju högre trovärdighetspoäng spelaren har, desto mindre exakt är erfarenhetspoängen. Erfarenhetspoängen har enligt systemet en +/- differens på dubbla trovärdighets-poängen. I nyss nämnda exempel innebär detta att spelaren har en erfarenhetspoäng på 1800-2200. Trovärdighetspoängen justeras bland annat baserat på hur länge sedan det var spelaren spelade förra gången, samt hur många matcher spelaren spelat totalt. Ju fler matcher totalt och ju närmare i tid förra matchen var, desto lägre trovärdighetspoäng har spelaren.
 
 Både Elo och Glicko används idag och det verkar vara svårt att avgöra om Glicko verkligen är bättre än Elo~\cite{stackchess}. Ett faktum som finns är i alla fall att Glicko kräver mer information för att kunna fungera. En faktor som Glicko behöver men inte Elo är en tidsvariabel som har reda på hur länge sedan det var spelaren spelade sin förra match~\cite{glickoex}. Det här gör att mer data behöver lagras i databasen, vilket är negativt ur kapacitetsperspektiv.
 
@@ -260,7 +256,7 @@ Informationshämtaren skulle tillsammans med den administrativa kontrollen gener
 
 Designen av applikationen var något som var väldigt viktigt för oss. Kravet i början var att ha en intuitiv, responsiv och snygg design. Eftersom applikationen gjordes för Android skulle den också följa dess designmönster, Material Design~\cite{MaterialDesign}.
 
-
+\newpage
 \section{Implementation}
 Den här sektionen beskriver hur de målsatta delarna implementerades i applikationen samt metoderna som användes för att lyckas med detta. Applikationens systemstruktur och dess innefattande delar förklaras och illustreras. Det finns även en grundlig genomgång av hur applikationen ser ut samt hur den fungerar, både för användare och systemadministratörer.
 
@@ -509,7 +505,7 @@ Denna vy ger fem olika möjligheter till interaktion. Högst upp i vyn finns det
 \end{figure}
 
 \newpage
-\section{Resultat}
+\section{Utvärdering}
 Den här sektionen beskriver de utvärderingar som gjorts av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet. Det utfördes tre utvärderingar på applikationen. En \textit{Think Aloud}, en \textit{Kognitiv Genomgång} och en \textit{Heuristic Evaluation}. 
 
 \subsection{Utvärderingar och deras användbarhet}
@@ -522,9 +518,7 @@ Planen var att en fungerande alfa eller betaversion av systemet skulle färdigst
 
 
 \subsection{Kognitiv Genomgång}
-En \textit{Kognitiv Genomgång}~\cite[sid 2--8]{cognitive} är en utvärderingsmetod som är till för att avgöra problem med användbarhet i ett interaktivt datorsystem. Utvärderingen går ut på att utvecklarna traverserar systemet analytiskt givet ett antal specifika uppgifter användarna förväntas utföra i systemet. Den kognitiva genomgången utvärderar vilken sekvens av steg som är nödvändiga för att användaren ska kunna utföra en uppgift. Användarnas sekvens av steg jämförs sedan med utvecklarnas förväntade sekvens för att utföra samma uppgift. Detta för att se skillnader i sekvenserna och därmed upptäcka problem med den aktuella designen.
-
-
+En \textit{Kognitiv Genomgång}~\cite[sid 2--8]{cognitive} är en utvärderingsmetod som är till för att avgöra problem med användbarhet i ett interaktivt datorsystem. Utvärderingen går ut på att utvecklarna traverserar systemet analytiskt givet ett antal specifika uppgifter användarna förväntas utföra i systemet. Den kognitiva genomgången utvärderar vilken sekvens av steg som är nödvändiga för att användaren ska kunna utföra en uppgift. Användarnas sekvens av steg jämförs sedan med utvecklarnas förväntade sekvens för att utföra samma uppgift. Detta för att se skillnader i sekvenserna och därmed upptäcka problem med den aktuella designen.\\
 Innan utvärderingen kan utföras måste utvecklarna göra en komplett lista med steg för att lyckas göra varje uppgift korrekt. Förutom detta behöver utvecklarna bestämma fyra faktorer:
 \begin{enumerate}
 \item Vilka kommer använda systemet?
@@ -552,20 +546,36 @@ De uppgifter som användaren hoppas genomföra är att starta upp applikationen 
 
 Den korrekta sekvensen av handlingar för att genomföra dessa uppgifter är:
 \begin{enumerate}
-\item Starta applikationen.
-\item Logga in med Google-konto.
-\item Skapa en ny match mot slumpad motståndare genom att trycka på \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Slumpad motståndare}.
-\item Välj den slumpade matchen genom att klicka på listelementet som ligger under rubriken \textit{Din tur}. 
-\item Starta rundan genom att trycka på \textbf{+}-ikonen.
-\item Vid avslutad runda används telefonens bakåtknapp, alternativt Chronos knapp \textbf{"$\leftarrow$ Matcher"}, för att gå tillbaka till matchsidan.
-\item Repetera steg 5 \& 6 tills dess att matchen är avslutad.
-\item Sök efter en vän genom att trycka på \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Sök spelare}.
-\item Skriv in spelarens namn.
-\item Välj önskad användare genom att klicka på användarens bild.
-\item Tryck på \textbf{+}-ikonen vid användarens bild för att lägga till som vän.
-\item Tryck på \textbf{+}-ikonen vid användarens bild för att utmana vännen.
-\item Repetera steg 5 \& 6 till dessa att matchen är avslutad.
-\item För att logga ut från applikationen tryck på knappen \textbf{$\equiv$} och välj sedan alternativet \textit{LOGGA UT} längst ner i menyn.
+\item Starta applikationen:\\
+Man startar applikationen genom att trycka på Chronos logo i telefonen.
+
+\item Logga in med Google-konto:\\
+Första vyn som användaren möts av är en inloggningsvy där spelaren ombeds att logga in med sitt Google-konto.
+
+\item Skapa en ny match mot en slumpad motståndare:\\ 
+För att starta en match mot en slumpad motståndare ska man trycka på \textbf{+}-ikonen längst nere i högre hörnet och välja alternativet \textit{Slumpad motståndare}.
+
+\item Välj den nyligen slumpade matchen:\\ 
+För att välja den nyligen slumpade matchen ska man trycka på listelementet som ligger under rubriken \textit{Din tur}. 
+
+\item Spela klart den slumpade matchen:\\ 
+Användaren startar varje ny runda genom att trycka på \textbf{+}-ikonen. Vid varje avslutat runda används telefonens bakåtknapp, alternativt Chronos knapp "$\leftarrow$ Matcher", för att gå tillbaka till matchsidan. Matchsidan kommer uppdateras när det är spelarens tur och då repeterar användaren stegen för att spela en runda tills dess att matchen är avgjord. 
+
+\item Sök efter en vän:\\ 
+För att söka efter en vän ska man trycka på \textbf{+}-ikonen längst nere i högra hörnet och välja alternativet \textit{Sök spelare}. Nästa steg ska användaren skriv in den eftersökta spelarens namn i textfältet.
+
+\item Välj eftersökt spelare:\\ 
+För att välja användaren ska man klicka på användarens bild i sökvyn.
+
+\item Lägga till som den eftersökta användaren som vän:\\
+För att lägga till den eftersökta användaren som vän ska man tryck på \textbf{+}-ikonen vid användarens bild för att sedan klicka på \textit{Lägg till som vän}. 
+
+\item Utmana den nyligen tillagda vännen:\\
+För att utmana den nyligen tillagda vännen ska man tryck på \textbf{+}-ikonen vid användarens bild och sedan klicka på \textit{Utmana}. 
+
+\item Logga ut från applikationen:\\ 
+För att logga ut från Chronos ska man trycka på knappen \textbf{$\equiv$} och sedan välja alternativet \textit{LOGGA UT} längst ner i menyn.
+
 \end{enumerate}
 
 Miljön som utvärderingen utförs i är applikationen Chronos på en smartphone med operativsystem Android 4.1 eller högre.
@@ -574,32 +584,37 @@ Miljön som utvärderingen utförs i är applikationen Chronos på en smartphone
 Detta är en simulerad körning av applikationen med användaren, uppgifterna och miljön som är beskrivna i \ref{kog}.
 
 \begin{enumerate}
-\item Starta applikationen.
-Detta är något som en person som äger en smartphone kommer kunna utföra genom kunskap från erfarenhet.
-\item Logga in med Google-konto.\\ 
-Om användaren har ett konto hos Google så kommer det inte uppstå några problem här då hen tidigare har tvingats logga på andra platser med liknande layout.
-\item Skapa en ny match mot slumpad motståndare genom att trycka på den gula cirkulära \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Slumpad motståndare}.\\
-Vid denna punkt presenteras användaren med en vy som är blank förutom den gula cirkulära \textbf{+}-ikonen. Tack vare att användaren är van vid att använda sig av applikationer kommer hen trycka på den gula cirkulära \textbf{+}-ikonen.
-\item Välj den slumpade matchen genom att klicka på listelementet som ligger under rubriken \textsc{Din tur}.
-Vyn som användaren ser framför sig nu är tom med undantaget för en match som beskriver att det är spelarens tur mot en slumpad motståndare. Eftersom att det inte finns några andra saker att klicka på, förutom den gula cirkulära \textbf{+}-ikonen, kommer användaren trycka och därmed lyckas navigera sig till matchen.
-\item Starta rundan genom att trycka på \textbf{+}-ikonen.
-Detta kommer inte vara några problem för användaren då spelet har en inbyggd funktion för nya spelare som beskriver hur en match går till och vart hen ska trycka för genomföra en omgång.
-\item Vid avslutad runda används telefonens bakåtknapp\textbf{"$\leftarrow$"}, för att gå tillbaka till matchsidan. Detta kommer inte heller vara några problem eftersom användaren i föregående steg fick en förklaring om hur hen skulle genomföra en omgång. Om användaren inte skulle se denna vy skulle hen, av vana och tidigare erfarenhet, använda sig av telefonens bakåtknapp för att komma ut matchen.
-\item Repetera steg 5 \& 6 tills dess att matchen är avslutad.
-Detta kommer inte vara några problem eftersom användaren vid det här laget har fått det beskriver för sig hur en match går till.
-\item Sök efter en vän genom att trycka på \textbf{+}-ikonen längst nere i vänstra hörnet och välja alternativet \textit{Sök spelare}.\\
-I detta steg kan det bli problem för användaren då hen kanske inte minns att den gula cirkulära \textbf{+}-ikonen hade flera olika alternativ. Ett av dessa alternativ var "Sök efter vän". Att inte hitta detta direkt skulle mycket troligt få användaren att känna sig förvirrad. Att detta sker är dock inte helt säkert ty användaren skulle kunna, genom tidigare erfarenheter av applikationer, lyckas navigera sig till rätt meny.
-\item Skriv in spelarens namn.
-Detta steg kommer inte utgöra något problem för användaren förutsatt att hen lyckades med föregående steg. Vyn som presenteras för användaren är en mycket simpel sådan med ett uppmaning som lyder "Skriv in spelarens namn" följt av ett textfält. Genom sina tidigare kunskaper om applikationer och smatphones så kommer användaren lyckas utföra denna uppgift utan problem.
-\item Välj önskad användare genom att klicka på användarens bild.
-Detta steg kommer inte vara några problem för användaren då hen presenteras med bilder och namn för varje spelare. Bilderna i kombination med namnen gör det lätt för användaren att hitta önskad spelare. Att välja eftersökt spelare kommer inte heller vara några problem för användaren då hen kommer klicka på bilden eller namnet för att välja en speciell spelare.
-\item Tryck på \textbf{+}-ikonen vid användarens bild för att lägga till som vän.
-Detta steg kommer inte vara något problem för användaren eftersom det endast finns en knapp att trycka på när hen väl är inne på en annan spelares profil. När denna knapp har blivit tryckt kommer det upp en meny där det finns flera alternativ där ett av dessa alternativ är "Lägg till vän". 
-\item Tryck på \textbf{+}-ikonen vid användarens bild för att utmana vännen.
-Detta steg är mycket likt det föregående. Att även detta steg inte skulle utgöra något problem för användaren ges med samma förklaring som föregående punkt. Det finns endast en knapp att trycka på när hen väl är inne på en annan spelares profil. När denna knapp har blivit tryckt kommer det upp en meny där det finns flera alternativ där ett av dessa alternativ är "Utmana".
-\item Repetera steg 5 \& 6 till dessa att matchen är avslutad.
-Detta kommer inte vara några problem eftersom användaren vid det här laget har fått det beskrivet för sig hur en match går till.
-\item För att logga ut från applikationen tryck på knappen \textbf{$\equiv$} och välj sedan alternativet \textit{Logga ut} längst ner i menyn. Detta är ett steg som skulle kunna utgöra ett problem för användaren då den menyn där alternativet "Logga ut" finns endast har visats för användaren första gången hen startade applikationen. Om användaren har glömt bort att denna meny finns kan det bidra till att användaren känner sig förvirrad. Att detta sker är dock inte helt säkert ty användaren skulle kunna, genom tidigare erfarenheter av applikationer, lyckas navigera sig till rätt meny.       
+\item Starta applikationen:\\
+\textbf{Användaren lyckades med uppgiften}. Eftersom användaren äger en smartphone kommer kunna utföra uppgiften utan problem.
+
+\item Logga in med Google-konto:\\ 
+\textbf{Användaren lyckades med uppgiften}. Användaren har sedan tidigare ett konto hos Google. Tack vare detta kommer det inte uppstå några problem då hen tidigare har tvingats logga på andra platser med liknande layout.
+
+\item Skapa en ny match mot en slumpad motståndare:\\
+\textbf{Användaren lyckades med uppgiften}. Efter inloggningen presenteras användaren med en vy som är tom förutom den cirkulära \textbf{+}-ikonen. Tack vare att det inte finns några andra alternativ trycker användaren på \textbf{+}-ikonen. Användaren såg då det rätta alternativet som var \textit{Slumpad motståndare}.
+
+\item Välj den nyligen slumpade matchen:\\
+\textbf{Användaren lyckades med uppgiften}. Vyn som användaren ser framför sig nu är tom med undantaget för en match som beskriver att det är användarens tur mot en slumpad motståndare. Eftersom att det inte finns några andra saker att klicka på, förutom den cirkulära \textbf{+}-ikonen, tryckte användaren på matchen och lyckades därmed navigera sig till matchen.
+
+\item Spela klart den slumpade matchen:\\
+\textbf{Användaren lyckades med uppgiften}. Användaren möts vid första matchen av en demo som beskriver hur man spelar en match och på sätt visste användaren hur hen ska spela klart matchen.
+
+\item Sök efter en vän:\\ 
+\textbf{Användaren misslyckades med uppgiften}. Användaren minns inte att den cirkulära \textbf{+}-ikonen hade flera olika alternativ. Ett av dessa alternativ var "Sök spelare". Användaren kände sig förvirrad och visste inte hur hen skulle fortskrida.
+
+\item Välj eftersökt spelare:\\ 
+\textbf{Användaren lyckades med uppgiften}. Användaren presenteras med bilder och namn för spelare som matchar sökningen. Bilderna i kombination med namnen gjorde att användaren lätt hittade den eftersökta spelare. Användaren klickade på bilden eller namnet för att välja den eftersökta spelare.
+
+\item Lägga till som den eftersökta användaren som vän:\\
+\textbf{Användaren lyckades med uppgiften}. Användaren tryckte på den enda knappen som fanns på den eftersökta spelarens profil. När användaren hade tryckt på knappen valde hen alternativet \textit{Lägg till vän}. 
+
+\item Utmana den nyligen tillagda vännen:\\
+\textbf{Användaren lyckades med uppgiften}. Användaren tryckte på den enda knappen som fanns på den eftersökta spelarens profil. När användaren hade tryckt på knappen valde hen alternativet \textit{Utmana}.
+
+\item Logga ut från applikationen:\\ 
+\textbf{Användaren misslyckades med uppgiften}.
+Användaren visste inte hur hen skulle utföra uppgiften därför att en synlig knapp för att logga ut inte fanns tillgänglig i den aktuella vyn. Hamburgarmenyn där alternativet \textit{Logga ut} finns hade endast visats för användaren vid applikationens uppstart. Användaren hade glömt bort att denna meny fanns och kunde inte slutföra uppgiften. 
+      
 \end{enumerate}
 
 \subsection{Think Aloud}
@@ -698,5 +713,7 @@ Det finns många buggar relaterade till balanseringen i den aktuella versionen. 
 Det finns många små delar som inte fungerar som det är tänkt, det saknas också begränsningar på flera stället. Spelet fungerar utan dessa begränsningar men det blir till exempel lättare att fuska när begränsningarna inte finns. I nuvarande version kan spelaren slumpa oändligt antal matcher, vilket gör att en spelare skulle kunna starta hur många matcher som hest. Det här riskerar att öka väntetiden för andra spelare eftersom värsta scenariot vore att en spelare spelar mot alla andra aktiva spelare. Det finns inte någon tidsbegränsning på hur länge en spelare har på sig att sortera sina händelser, det här gör det väldigt lätt för spelaren att söka upp informationen om händelserna utanför applikationen och sedan svara. Matcher kan också i nuläget hålla på hur länge som helst. Många spel, likt Wordfeud och Quizkampen har en begränsning på hur lång tid spelaren får på sig att svara. I en senare version av Chronos ska spelaren förlora sin match om den inte ha svarat inom en viss tid, till exempel tre dagar. I en senare version ska också slutförda matcher försvinna från flödet efter en viss tid, någonting som inte sker idag.
 
 \newpage
+\addcontentsline{toc}{section}{Referenser}
 \printbibliography[title={Referenser}]
+
 \end{document}
