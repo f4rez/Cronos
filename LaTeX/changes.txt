@@ -1,0 +1,43 @@
+Första sidan:
+* Rättade till stavfel
+
+Sammanfattning & Abstract:
+* Skrev om texterna så att de beskrev samma saker.
+* Bytte ut ord som var olämpliga och rättade till stavfel
+
+Förord:
+* Ändrade inget trots kommentar om förslag till bättre formatering. Denna formatering valdes författarna.
+* Rättade även till stavfel
+
+1. Inledning:
+* Skrev lite extra om spelen Quizkampen och Wordfeud.
+* Ändrade på fel namn av angiven källa
+* Utvecklade vad Chronos vad för något!
+
+2.2 Sällskapsspel med fokus på kunskap
+* Ändrade ordet "överkomma" till ord som faktiskt existerar.
+
+3. Projekbeskrivning
+* Ändrade ordet "överkomma" till ord som faktiskt existerar.
+
+3.2 Mål
+* Utveckalde vad administratörernas uppgit egentligen var. Innan var det lite oklart om det var interaktionen, godkännandet eller skickandet till databasen.
+
+3.2.1 Mobilapplikation
+* Ändrade på en konstig mening som saknade en del ord.
+
+3.3.1 Tekniska problem
+* Ändrade i "händelser" till "frågor"  på de flesta punkter under denna rubrik. Om det skulle hete händelse eller frågor var en intern diskussion som vi hade flera gånger.
+* Rättade även till stavfel som fanns
+
+3.4.1 Historiekampen
+* Rättade till felskrivet tempus i texten
+
+3.4.3 Chronos spets
+* Rättade till fel tempus i texten
+
+3.8 Utvärderingar
+* Detta är ett nytt stycke som skrevs för att beskriva  lite kort om hur projektet skulle utvärderas.
+
+
+

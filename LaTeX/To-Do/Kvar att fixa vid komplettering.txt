@@ -1,0 +1,39 @@
+1. Inledning
+
+* Kommentar - "Beskriv Wordfeud och Quizkampen lite mer"
+	- Denna skrev jag bara jättelite på (1/7 - 2015). Kanske borde skrivas lite mer!
+* Kommentar - "Förklara vad Chronos är - abstract är fristående"
+	- Denna har jag skrivit otroligt lite på. Detta måste troligtvis skrivas lite mer på!
+
+3.4.2 Balanseringsteori
+
+* Här måste vi ha referenser. Det känns som att Alfred får fixa detta, right?
+
+3.5 Motivation
+
+* Här kommenterar han angående upprepningar etc. Jag känner inte för att ta tag i detta just nu. Men detta måste göras.
+
+
+4. Implementation
+
+* Kommentar - "Blir lite konstigt när ni först nämner Google app engine och sen ger det et eget underkapitel"
+	- Denna put har jag inte skrivit något på alls.
+
+4.2.3 Databas
+
+* Kommentar - "Hur siljer sig NoSQL? Ni skriver om big data reality helt plötsligt"
+* Kommentar - "Vilka egenskaper?"
+
+	- Dessa punkter har jag inte skrivit någt om. Men det kommer jag göra!
+
+4.2.4
+
+* Kommentar - "Inte uppenbart i figuren att parsern är inbyggd i servern (enl figuren verkar den vara en separat del)"
+* Kommentar - "Visade sig, varför då? Hur fungerar parsern rent tekniskt?"
+
+	- Dessa punter har jag inte skrivit något om. Någon får ta på sig denna del helt enkelt.
+
+
+
+
+
