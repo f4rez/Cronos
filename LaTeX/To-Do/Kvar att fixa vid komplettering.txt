@@ -19,12 +19,6 @@
 * Kommentar - "Blir lite konstigt när ni först nämner Google app engine och sen ger det et eget underkapitel"
 	- Denna put har jag inte skrivit något på alls.
 
-4.2.3 Databas
-
-* Kommentar - "Hur siljer sig NoSQL? Ni skriver om big data reality helt plötsligt"
-* Kommentar - "Vilka egenskaper?"
-
-	- Dessa punkter har jag inte skrivit någt om. Men det kommer jag göra!
 
 4.2.4
 
