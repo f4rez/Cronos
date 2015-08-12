@@ -43,4 +43,7 @@ Förord:
 4.2.3 Databas
 * Detta stycke har skrivits om och utvecklats. Det har skrivits mer om NoSQL samt skillnaderna mellan NoSQL och SQL.
 
+4.3.2 Genomgång av applikationens implementation
+* Detta är ett helt nytt stycke som beskriver mer detaljerat om hur applikationen är implementerad.
+
 
