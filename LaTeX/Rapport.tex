@@ -207,7 +207,7 @@ Viktor nämnde även att svårighetsgraden på matcherna kunde variera mycket. V
 
 
 \subsubsection{Balanseringsteori}
-En viktig aspekt i det här projektet var att rangordna spelare och deras kunskapsnivå i förhållande till varandra för att skapa mer rättvisa matcher. Den här uppgiften har många spelutvecklare sedan tidigare funderat på och de flesta större spel använder sig också av något system för balansering. Två etablerade system för balansering är Elo och Glicko. Elo är det systemet som har implementerats i Chronos.
+En viktig aspekt i det här projektet var att rangordna spelare och deras kunskapsnivå i förhållande till varandra för att skapa mer rättvisa matcher. Den här uppgiften har många spelutvecklare sedan tidigare funderat på och de flesta större spel använder sig också av något system för balansering.\cite{matchmaking} Två etablerade system för balansering är Elo och Glicko. Elo är det systemet som har implementerats i Chronos.
 
 Elo är ett system som baserar sin balansering på spelarnas enskilda poäng. Skillnaden mellan två spelares poäng används för att förutse en trolig vinnare av matchen. Efter varje match uppdateras varje spelares individuella poäng beroende på vem som vann. En lägre rankad spelare får fler poäng vid vinst mot en högre rankad spelare och förlorar väldigt lite poäng vi en förlust. Om en högre rankad spelare däremot vinner mot en lägre rankad spelare får hen väldigt lite poäng och förlorar mycket poäng vid förlust. Detta innebär att spelet balanserar spelarna till den nivå de förtjänar.
 
@@ -294,12 +294,12 @@ Google App Engine är en \textit{Platform as a service}, vilket är en servicemo
 Hela systemet består av fem delar som interagerar med varandra. Närmast spelaren finns klienten vilket är det enda som spelaren ser. Klienten är byggd för Android som en mobilapplikation. Mobilapplikationen interagerar i sin tur med serverns API. Servern fungerar som en länk mellan klienten och resten av delarna i systemet.
 
 På serversidan av vårt system finns en semi-automatisk informations-
-hämtare, ett balanseringssystem och en databas. Informationshämtaren hanterar den semi-automatisk genereringen av händelser och balanseringssystemet justerar svårighetsgraden på spelarna samt händelserna. Balanseringen sker för att maximera spelupplevelsen.
+hämtare, ett balanseringssystem och en databas. Informationshämtaren hanterar den semi-automatiska genereringen av händelser och balanseringssystemet justerar svårighetsgraden på spelarna samt händelserna. Balanseringen sker för att maximera spelupplevelsen och för att hålla kvar spelarna så länge som möjligt.
 
 \subsubsection{Androidapplikationen}
 Androidapplikationen, klienten i systemet, var själva spelet som utvecklades. Det var den del av systemet som användaren interagerade med båda visuellt och funktionellt.
 
-När det är den aktuella spelarens tur får hen en chunk med sex händelser och dess svar (årtal) från systemets server. Svaren är gömda för användaren under rundans gång och används endast av klienten för att rätta svaren från spelaren. När spelaren är färdig med sin runda och klienten har rättat svaren så skickas dessa tillbaka till servern där de lagras i matchens historik. 
+När det är den aktuella spelarens tur får hen en chunk (vilket är ett json-objekt) med sex händelser och dess svar (årtal) från systemets server. Svaren är gömda för användaren i klienten under rundans gång. När spelaren har spelat klart sin runda rättas tidslinjen med de gömda svaren. När spelaren är färdig med sin runda och klienten har rättat svaren så skickas dessa tillbaka till servern där de lagras i matchens historik. Förutom att rätta frågorna, vilket endast handlar om att jämföra spelarens ordnade tidslinje mot facit, så sker det ingen spellogik i klienten. I det stora hela har klienten mest som uppgift att hantera gränssnittet mot användaren.
 
 \subsubsection{Server}
 Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang)~\cite{golang}. Anledningen till att vi valde att skriva servern i Go var för att det, enligt oss, var ett simpelt språk med en syntax som liknade andra språk som vi hade använt tidigare. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya händelser till spelet kommunicerar servern med databasen. Databasen skickar händelser till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra parsern som är den semi-automatiska informationshämtaren. Servern har också som uppgift att kontinuerligt köra balanseringssystemet som justerar svårighetsgraden för händelserna och spelarna i systemet. 
