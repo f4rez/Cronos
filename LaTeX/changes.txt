@@ -1,4 +1,4 @@
-Första sidan:
+﻿Första sidan:
 * Rättade till stavfel
 
 Sammanfattning & Abstract:
@@ -25,6 +25,10 @@ Förord:
 
 3.2.1 Mobilapplikation
 * Ändrade på en konstig mening som saknade en del ord.
+* Motiverade valet av Android
+
+3.2.2 Server
+* Motiverade valet av App Engine samt nämner andra tjänster och App Engines fördelar gentemot dessa.
 
 3.3.1 Tekniska problem
 * Ändrade i "händelser" till "frågor"  på de flesta punkter under denna rubrik. Om det skulle hete händelse eller frågor var en intern diskussion som vi hade flera gånger.
@@ -35,6 +39,9 @@ Förord:
 
 3.4.3 Chronos spets
 * Rättade till fel tempus i texten
+
+3.6
+* Motiverade val av att begränsa oss till < Android 4.1
 
 3.8 Utvärderingar
 * Detta är ett nytt stycke som skrevs för att beskriva  lite kort om hur projektet skulle utvärderas.
