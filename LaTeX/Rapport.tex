@@ -177,7 +177,7 @@ För att flera spelare skulle kunna interagera med varandra så behövdes det en
 
 Servermjukvaran skrevs i programspråket Go~\cite{golang} och körs på Googles molntjänst App Engine.
 
-För att snabbt och relativt enkelt få upp ett api som varje lokal mobilapplikation kunde kommunicera med så föll serverplattformsvalet på App Engine. Det finns många liknande molntjänster att välja mellan, till exempel Microsoft Azure, Heroku och Amazon. De flesta tjänster levererar en platform som består av en tom unix-server som användaren sedan kan fylla med vad den vill. I App Engine behöver man inte sätta upp hela servern från grunden utan de tillhandahåller en mjukvara (App Engine) som användaren kör på sin dator och sedan synkar upp direkt till molnet. Det här besparar utvecklarna arbetet med att sätta upp själva servern, eftersom det redan tillhandahålls en färdig sådan. App Engine är dessutom gratis upp till en viss mängd trafik, vilket passar bra vid ett första stadie i utvecklingen.
+För att snabbt och relativt enkelt få upp ett API som varje lokal mobilapplikation kunde kommunicera med så föll serverplattformsvalet på App Engine. Det finns många liknande molntjänster att välja mellan, till exempel Microsoft Azure, Heroku och Amazon. De flesta tjänster levererar en plattform som består av en tom Unix-server som användaren sedan kan fylla med vad den vill. I App Engine behöver man inte sätta upp hela servern från grunden utan Google tillhandahåller en mjukvara, App Engine, som användaren kör på sin dator vilket sedan synkroniseras direkt till molnet. Det här besparar utvecklarna arbetet med att sätta upp själva servern, eftersom det redan tillhandahålls en färdig sådan. App Engine är dessutom gratis upp till en viss mängd trafik, vilket passar bra vid ett första stadie i utvecklingen.
 
 \subsubsection{Semi-automatisk informationshämtning}
 För att spelet skulle bli så intressant som möjligt behövdes en stor bredd på de historiska händelserna som skulle lagras i spelets databas. Ett sätt att skapa många historiska händelser snabbt var att utveckla mjukvara som kunde hämta informationen automatiskt från internet. Denna information används sedan för att generera nya händelser till spelet. 
@@ -209,7 +209,7 @@ Viktor nämnde även att svårighetsgraden på matcherna kunde variera mycket. V
 
 
 \subsubsection{Balanseringsteori}
-En viktig aspekt i det här projektet var att rangordna spelare och deras kunskapsnivå i förhållande till varandra för att skapa mer rättvisa matcher. Den här uppgiften har många spelutvecklare sedan tidigare funderat på och de flesta större spel använder sig också av något system för balansering.\cite{matchmaking} Två etablerade system för balansering är Elo och Glicko. Elo är det systemet som har implementerats i Chronos.
+En viktig aspekt i det här projektet var att rangordna spelare och deras kunskapsnivå i förhållande till varandra för att skapa mer rättvisa matcher. Den här uppgiften har många spelutvecklare sedan tidigare funderat på och de flesta större spel använder sig också av något system för balansering~\cite{matchmaking}. Två etablerade system för balansering är Elo och Glicko. Elo är det systemet som har implementerats i Chronos.
 
 Elo är ett system som baserar sin balansering på spelarnas enskilda poäng. Skillnaden mellan två spelares poäng används för att förutse en trolig vinnare av matchen. Efter varje match uppdateras varje spelares individuella poäng beroende på vem som vann. En lägre rankad spelare får fler poäng vid vinst mot en högre rankad spelare och förlorar väldigt lite poäng vi en förlust. Om en högre rankad spelare däremot vinner mot en lägre rankad spelare får hen väldigt lite poäng och förlorar mycket poäng vid förlust. Detta innebär att spelet balanserar spelarna till den nivå de förtjänar.
 
@@ -273,7 +273,7 @@ Den här sektionen beskriver hur de målsatta delarna implementerades i applikat
 \subsection{Metoder}
 Ett antal olika verktyg användes för att möjliggöra detta projekt. För utvecklingen och simuleringen av Androidapplikationen användes Android Studio ~\cite{androidstudio}. Detta är ett kraftfullt verktyg som exempelvis kan, på ett smidigt sätt, simulera applikationen i olika valbara miljöer i form av layouts för olika mobiltelefoner.
 
-Google App Engine användes lokalt för att simulera serverapplikationen. När tidsperioden för den första testningen var över användes fortfarande App Engine men då i Googles moln istället för lokalt. App engine var ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjöds när man utvecklade och körde sina applikationer via denna motor var otroligt värdefulla. Det var bland annat lätt att underhålla applikationen och skala upp när trafik och data krävde det~\cite{googleappengine}. 
+Google App Engine användes lokalt för att simulera serverapplikationen. När tidsperioden för den första testningen var över användes fortfarande App Engine men då i Googles moln istället för lokalt. App Engine var ett värdefullt verktyg i vår utveckling med den enkla förklaringen att de tjänster som erbjöds när man utvecklade och körde sina applikationer via denna motor var otroligt värdefulla. Det var bland annat lätt att underhålla applikationen och skala upp när trafik och data krävde det~\cite{googleappengine}. 
 
 % Det här stämmer inte
 %
@@ -296,18 +296,18 @@ Google App Engine är en \textit{Platform as a service}, vilket är en servicemo
 Hela systemet består av fem delar som interagerar med varandra. Närmast spelaren finns klienten vilket är det enda som spelaren ser. Klienten är byggd för Android som en mobilapplikation. Mobilapplikationen interagerar i sin tur med serverns API. Servern fungerar som en länk mellan klienten och resten av delarna i systemet.
 
 På serversidan av vårt system finns en semi-automatisk informations-
-hämtare, ett balanseringssystem och en databas. Informationshämtaren hanterar den semi-automatiska genereringen av händelser och balanseringssystemet justerar svårighetsgraden på spelarna samt händelserna. Balanseringen sker för att maximera spelupplevelsen och för att hålla kvar spelarna så länge som möjligt.
+hämtare, ett balanseringssystem och en databas. Informationshämtaren hanterar den semi-automatiska genereringen av händelser och balanseringssystemet justerar svårighetsgraden på spelarna samt händelserna. Balanseringen sker för att maximera spelupplevelsen. Med detta menar vi att spelarna ständigt ska möta likvärdiga och utmanande motståndare och genom detta inte bli uttråkade så lätt.
 
 \subsubsection{Androidapplikationen}
 Androidapplikationen, klienten i systemet, var själva spelet som utvecklades. Det var den del av systemet som användaren interagerade med båda visuellt och funktionellt.
 
-När det är den aktuella spelarens tur får hen en chunk (vilket är ett json-objekt) med sex händelser och dess svar (årtal) från systemets server. Svaren är gömda för användaren i klienten under rundans gång. När spelaren har spelat klart sin runda rättas tidslinjen med de gömda svaren. När spelaren är färdig med sin runda och klienten har rättat svaren så skickas dessa tillbaka till servern där de lagras i matchens historik. Förutom att rätta frågorna, vilket endast handlar om att jämföra spelarens ordnade tidslinje mot facit, så sker det ingen spellogik i klienten. I det stora hela har klienten mest som uppgift att hantera gränssnittet mot användaren.
+När det är den aktuella spelarens tur får hen en chunk (vilket är ett JSON-objekt~\cite{jsonobject}) med sex händelser och dess svar (årtal) från systemets server. Svaren är gömda för användaren i klienten under rundans gång. När spelaren har spelat klart sin runda rättas tidslinjen med de gömda svaren. När spelaren är färdig med sin runda och klienten har rättat svaren så skickas dessa tillbaka till servern där de lagras i matchens historik. Förutom att rätta frågorna, vilket endast handlar om att jämföra spelarens ordnade tidslinje mot facit, så sker det ingen spellogik i klienten. I det stora hela har klienten mest som uppgift att hantera gränssnittet mot användaren.
 
 \subsubsection{Server}
-Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang)~\cite{golang}. Anledningen till att vi valde att skriva servern i Go var för att det, enligt oss, var ett simpelt språk med en syntax som liknade andra språk som vi hade använt tidigare. Go tillsammans med app engine är också väl anpassat för att sätta upp ett http-api, det är via det här apiet som klienten och servern kommunicerar. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya händelser till spelet kommunicerar servern med databasen. Databasen skickar händelser till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra parsern som är den semi-automatiska informationshämtaren. Servern har också som uppgift att kontinuerligt köra balanseringssystemet som justerar svårighetsgraden för händelserna och spelarna i systemet. 
+Klienten kommunicerar med en server som körs i Google App Engine. Servern är utvecklad i programspråket Go (Golang)~\cite{golang}. Anledningen till att vi valde att skriva servern i Go var för att det, enligt oss, var ett simpelt språk med en syntax som liknade andra språk som vi hade använt tidigare. Go tillsammans med App Engine är också väl anpassat för att sätta upp ett HTTP API. Det är via detta API som klienten och servern kommunicerar. Servern agerar även som en brygga mellan klienten och den databas som används. När klienten kräver nya händelser till spelet kommunicerar servern med databasen. Databasen skickar händelser till servern som i sin tur skickar vidare till klienten. Utöver kommunikation till klienten och databasen används även servern för att köra parsern som är den semi-automatiska informationshämtaren. Servern har också som uppgift att kontinuerligt köra balanseringssystemet som justerar svårighetsgraden för händelserna och spelarna i systemet. 
 
 \subsubsection{Databas}
-Databasen som servern kommunicerar med körs, likt servern, i App engine med biblioteket \textit{datastore}. Datastore~\cite{datastore} är Google App Engines egna bibliotek för hantering och lagring av data vilket innebär att systemet, utan vår assistans, hanterar all datalagring. Datastore har flera egenskaper som bidrar till en enklare utveckling av resterande delar för projektet. Med tanke på att Datastore är ett bibliotek från App Engine så medföljer dess skalbarhet som skalar beroende på behovet. Med Datastores inbyggda hjälpmedel för redundans kan data lätt replikeras till flera datacenter om det skulle behövas.
+Databasen som servern kommunicerar med körs, likt servern, i App Engine med biblioteket \textit{datastore}. Datastore~\cite{datastore} är Google App Engines egna bibliotek för hantering och lagring av data vilket innebär att systemet, utan vår assistans, hanterar all datalagring. Datastore har flera egenskaper som bidrar till en enklare utveckling av resterande delar för projektet. Med tanke på att Datastore är ett bibliotek från App Engine så medföljer dess skalbarhet som skalar beroende på behovet. Med Datastores inbyggda hjälpmedel för redundans kan data lätt replikeras till flera datacenter om det skulle behövas.
 
 
 Datastore hanterar datalagring med både SQL och NoSQL. För den som inte är bekant med NoSQL så är det en alternativ design för databaser som skiljer sig från SQL-databaser~\cite{nosql}. Det är mest strukturella skillnader mellan NoSQL och vanliga relationsdatabaser. Det betyder att vissa operationer är lättare och mer effektiva att utföra i NoSQL medan andra är snabbare i vanliga relationsdatabaser~\cite{nosqlfacts}. Förutom detta finns det en väsentlig skillnad mellan SQL och NoSQL som vi tyckte var extra intressant för Chronos. Databaser med NoSQL är använder dynamiska scheman vilket betyder att data kan skrivas in i databasen utan att behöva vara fördefinierat enligt ett schema.\\ 
@@ -380,9 +380,7 @@ Kodsnutten ovan är ett exempel på en justering som sker om en spelare har svar
 \subsection{Applikationen}
 
 \subsubsection{Genomgång av applikationen}
-%Gör en genomgång av hur applikationen fungerar med en massa bilder som även har förklaringar till sig.\\
- 
-\large \textup{1. Inloggningsvy}
+\large \textup{1. Inloggningsvy}\\
 Första gången en användare startar applikationen eller av någon anledning har blivit utloggad möts hen av inloggningsvyn. Det är en webbsida som tillhandahålls av Google App Engine. Den innehåller primärt två textfält och en knapp för att logga in. När användaren fyllt i sina inloggningsuppgifter och klickat på logga in så sköter Google allt som har med inloggningen att  göra. Vår server får sedan ett unikt id för användaren och om det är första gången hen loggar in så skapas en egen användarstruktur som sparas in i databasen.
 När detta är klart eller om användaren redan var inloggad stängs aktiviteten ner och istället öppnas matchvyn (2) upp. 
 \begin{figure}[H]
@@ -394,8 +392,7 @@ När detta är klart eller om användaren redan var inloggad stängs aktiviteten
 
 
 \pagebreak
-\large \textup{2. Startsida - Matcher}
-
+\large \textup{2. Startsida - Matcher}\\
 Matchvyn kan lättast beskrivas som startsidan i hela applikationen. Det är här användaren ser vilka matcher hen har pågående eller har avslutat. I den här vyn kan användaren även starta en ny slumpad match samt söka efter en spelare eller vänner att utmana. 
 Det finns fyra olika handlingar som användaren kan göra här vid denna sida. De kan klicka på hamburgarmenyn ($\equiv$) uppe i vänstra hörnet för att öppna navigationsvyn. De kan även klicka på en av de matcher de har pågående för att spela en ny omgång eller titta på matchens tillhörande matchstatistik. Om användaren väljer att klicka på en av matcherna skickas hen till matchstatistikvyn (3).
 \begin{figure}[H]
@@ -417,8 +414,7 @@ Användarna kan möta en slumpad motståndare via alternativet (\textit{Slumpad 
 \end{figure}
 
 \pagebreak
-\large \textup{3. Matchstatstik}
-
+\large \textup{3. Matchstatstik}\\
 Hit kommer användaren när den klickar på en match eller när hen har spelat färdigt en omgång. Vyn består av de två användarnas profilbild och namn och samt resultatet för varje runda som spelats. Längst ner finns två olika element, i mitten visas den sammanlagda poängen för hela matchen och till höger finns det en FAB som leder till en match (4).  
 
 
@@ -430,7 +426,7 @@ Hit kommer användaren när den klickar på en match eller när hen har spelat f
 \end{figure}
 
 \pagebreak
- \large \textup{4. Pågående match}\\
+\large \textup{4. Pågående match}\\
 I figuren nedan illustreras hur spelet representerar en pågående match. Överst i vyn finns ett kort som innehåller den händelse som ska placeras in i tidslinjen. Under kortet ligger tidslinjen som ska sorteras i kronologisk ordning med den händelse som hänt senast högst upp. När matchen startas ligger det en given händelse i tidslinjen och ovanför ligger det en delare (\textit{Placera in händelsen i ordning}). Delaren ska representerar händelsen som är skriven på kortet högst upp. Delaren är mobil och för att flytta den får användaren göra ett långt klick och sedan dra den den till den position hen vill. Det finns även här en FAB som rättar placeringen av delaren. Om svaret är rätt omvandlas delaren till händelsen som var på kortet högst upp. När detta har skett läggs in en ny delare med en ny händelse från kortet högst upp. Om svaret däremot var fel pulserar delaren rött och visar sedan årtalen på alla händelser som är utlagda i tidslinjen.
 
 
@@ -505,6 +501,7 @@ Denna vy ger fem olika möjligheter till interaktion. Högst upp i vyn finns det
 	\end{center}
 	\caption{\textit{Vyn över inställningar(9)}}
 \end{figure}
+
 \pagebreak
 \large \textup{10. Min profil}\\
 Överst på vyn finns det ett cirkeldiagram som innehåller statistik över hur många matcher som vunnits, förlorats eller slutat oavgjort. Under finns ett rutnät av användarens vänner som visas med hjälp av deras profilbild och användarnamn. Klickar man på en vän kommer man till deras profilsida (6). 
@@ -520,18 +517,16 @@ Denna vy ger fem olika möjligheter till interaktion. Högst upp i vyn finns det
 
 \subsubsection{Genomgång av applikationens implementation}
 
-Chronos är uppbyggd av tre olika Activities~\cite{activities} som vi har döpt till LoginActivity, MainActivity och MatchActivity. När Chronos öppnas så startas MainActivity som undersöker om användaren är inloggad. Om användaren inte är inloggad kommer en LoginActivity att startas varpå MainActivity pausas i väntan på ett resultat från LoginActivity.
+Chronos är uppbyggd av tre olika Activities~\cite{activities} som vi har döpt till LoginActivity, MainActivity och MatchActivity. När Chronos öppnas så startas MainActivity som då undersöker om användaren är inloggad. Om användaren inte är inloggad kommer en LoginActivity att startas varpå MainActivity pausas i väntan på ett resultat från LoginActivity.
 
-LoginActivity är en väldigt simpel webbläsare som vid uppstart öppnar en inloggningssida som tillhandahålls av vår server. När användaren har loggat in skickas ett resultat tillbaka till MainActivity om att hen är inloggad och att den kan fortsätta med uppstart av applikationen.
+LoginActivity är en väldigt simpel webbläsare som vid uppstart öppnar en inloggningssida som tillhandahålls av vår server. När användaren har skrivit in sina uppgifter och loggat in skickas ett resultat tillbaka till MainActivity. Informationen som skickas meddelar att användaren är inloggad och att MainActivity kan fortsätta med uppstart av applikationen.
 
-MainActivity är uppbyggt av flera fragment~\cite{fragment} där det viktigaste är StartPageFragment. StartPageFragment är fragmentet som startas som standard av MainActivity. När detta fragment startas skickar det ett meddelande till servern för att kolla om användaren är registrerad i vår databas. När fragmentet får tillbaka ett svar skickas ett nytt meddelande till servern som efterfrågar användarens aktiva samt avslutade matcher. Svaret från servern är ett JSON-objekt~\cite{jsonobject} som vi omvandlar till en ArrayList~\cite{arraylist} av vanliga java objekt. Listan skickas in till en anpassad ArrayAdapter~\cite{arrayadapter} som kan ta till vara på informationen som finns i objekten. Detta är möjligt genom att vi har skrivit en egen implementation av metoden getView~\cite{getview}. Varje objekt i listan skickas genom den och tillbaka fås en vy som läggs till i en lista som syns i fragmentet. Alla listor och rutnät som finns i Chronos är uppbyggt enligt samma princip med egna implementationer av ArrayAdapters med olika objekt som vi skapar genom JSON-data som vi får från vår server.  
+MainActivity är uppbyggt av flera fragment~\cite{fragment} där det viktigaste är StartPageFragment. StartPageFragment är fragmentet som startas som standard av MainActivity. När detta fragment startas skickar det ett meddelande till servern för att kolla om användaren är registrerad i vår databas. När fragmentet får tillbaka ett svar skickas ett nytt meddelande till servern som efterfrågar användarens aktiva samt avslutade matcher. Svaret från servern är ett JSON-objekt som vi omvandlar till en ArrayList~\cite{arraylist} av vanliga java objekt. Listan skickas in till en anpassad ArrayAdapter~\cite{arrayadapter} som kan ta till vara på informationen som finns i objekten. Detta är möjligt genom att vi har skrivit en egen implementation av metoden getView~\cite{getview}. Varje objekt i listan skickas genom metoden och tillbaka fås en vy som läggs till i en lista som syns i fragmentet. Alla listor och rutnät som finns i Chronos är uppbyggt enligt samma princip med egna implementationer av ArrayAdapters med olika objekt som vi skapar genom JSON-data som vi får från vår server.  
 
-Android har satt restriktionen att man inte får göra några nätverksanrop på huvudtråden som applikationen körs på. Så för all vår nätverkskommunikation använder vi AsyncTasks~\cite{asynctask} som körs på en egen tråd. Vi har skapat en anpassad AsyncTask som bland annat tar emot de parametrar som behövs för att serven ska veta vad vi eftersöker. Förutom detta tar den även emot vilket fragment eller aktivitet som har skapat och startat anropet. När AsyncTask exekveras anropar den olika funktioner beroende på vilka parametrar som skickas med, alla dessa funktioner är uppbyggda på samma sätt. De olika funktionerna som kan anropas skapar först en URL som leder till rätt adress på servern, sedan hämtas en cookie från en cookiestore~\cite{cookiestore} som används av servern för att validera vem som gör anropet. Med hjälp av HttpURLConnection~\cite{httpurlconnection} öppnas sedan en anslutning till serven. Anslutningen läses av och byggs ihop till en sträng som returneras till AsyncTask. Beroende på vilket fragment eller vilken aktivitet som anropat AsyncTask görs sedan ett callback till den med JSON-strängen som argument.
+Android har satt restriktionen att man inte får göra några nätverksanrop på huvudtråden som applikationen körs på. För att lösa detta använder all vår nätverkskommunikation av AsyncTasks~\cite{asynctask} som körs på en egen tråd. Vi har skapat en anpassad AsyncTask som bland annat tar emot de parametrar som behövs för att serven ska veta vad vi eftersöker. Förutom detta tar den även emot vilket fragment eller vilken aktivitet som har skapat och startat anropet. När AsyncTask exekveras anropar den olika funktioner beroende på vilka parametrar som skickas med. De funktionerna som kan anropas är alla uppbyggda på samma sätt. De olika funktionerna som kan anropas skapar först en URL som leder till rätt adress på servern, sedan hämtas en cookie från en cookiestore~\cite{cookiestore} som används av servern för att validera den som gör anropet. Med hjälp av HttpURLConnection~\cite{httpurlconnection} öppnas sedan en anslutning till servern. Anslutningen läses av och byggs ihop till en sträng som returneras till AsyncTask. Beroende på vilket fragment eller vilken aktivitet som anropat AsyncTask görs sedan ett callback till den med JSON-strängen som argument.
 
 När en match spelas kan man flytta på de olika händelserna som finns i listan. Detta görs ganska simpelt genom att när användaren gör ett långt klick skapas en bild av listcellen som klickades. Den riktigt listcellen görs osynlig och när bilden flyttas upp eller ner byter den osynliga cellen och den överliggande eller underliggande cellen plats.
-
-
-
+\pagebreak
 
 \section{Utvärdering}
 Den här sektionen beskriver de utvärderingar som gjorts av applikationen. Utvärderingarna gjordes bland annat för att fastställa applikations användarvänlighet men också för att få nödvändig feedback på applikationens utseende och effektivitet. Det utfördes tre utvärderingar på applikationen. En \textit{Think Aloud}, en \textit{Kognitiv Genomgång} och en \textit{Heuristic Evaluation}. 
