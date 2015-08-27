@@ -159,7 +159,12 @@ Eftersom presentationen är konsekvent med ett bindestreck som avskiljer årtal 
 \subsubsection{Parser}
 En parser eller tolk som det också kan kallas, är ett program som automatiskt söker igenom en dataström för att finna data som matchar ett visst mönster. Den semi-automatiska informationshämtningen i Chronos bygger på den här principen. I det här fallet söks utvalda Wikipediasidor igenom med syftet att spara informationen som matchar vårt mönster. 
 
-\subsection{Balansering}
+
+\subsubsection{Google App Engine} \label{Google App Engine}
+
+Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att utvecklare skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Den utvecklade produkten kan sedan köras på Google App Engine. Produkten körds på Googles infrastruktur och det är uppbyggt så att antalet användare för applikationen kunde utökas obegränsat. Flera stora företag använder sig av App Engine när deras produkter lanserades där några exempel av större företag var Coca Cola, Rovio och Best Buy~\cite{googleappenginecustomers}. 
+
+\subsubsection{Balansering}
 Begreppet balansering syftar på tekniker för att exempelvis göra spel så jämnt och rättvist som möjligt. Ett spel blir roligast när man spelar mot likvärdiga motståndare och får händelser som är utmanande men inte helt omöjliga. Det ska varken vara för lätt eller för svårt att vinna. Det finns två delar i Chronos som går att balansera med hänsyn till svårighetsgrad. Det ena är händelsernas svårighetsgrad vilket innebär hur pass troligt det är att spelaren vet när händelsen ägde rum. Det andra är motståndarens svårighetsgrad.
 
 \section{Projektbeskrivning}
@@ -282,9 +287,7 @@ Google App Engine användes lokalt för att simulera serverapplikationen. När t
 %Den primära källan för information till frågorna var under utvecklingsfasen Wikipedia men denna ersattes mot andra informationskällor vid ett senare skede. Detta förekom innan produkten färdigställdes.\\ 
 %Valet att inte använda Wikipedia som informationskälla i den slutgiltiga versionen av applikationen berodde på dess tvivelaktiga rykte som en pålitlig källa. Wikipedia trovärdighet har länge diskuterats och det finns många rapporter som har undersökt dess trovärdighet. Att använda Wikipedia för att bekanta sig med ett ämne är, enligt oss, fullt acceptabelt men borde lämpligtvis granskas kritiskt innan den användes som källa. Relationen mellan processerna att skapa och redigera artiklar på Wikipedia anses vara en ledande faktor till denna osäkerhet. Detta beror mycket på att hemsidan följer strukturen \textit{editable-by-all} vilket innebär att vem som helst kan ändra artiklar och på så sätt vinkla artikelns innehåll på ett eller ett annat sätt. Detta implicerar såklart inte att alla artiklar har råkat ut för detta öde men det bidrar till en viss osäkerhet vid användandet av denna hemsida som källa vid vetenskapliga rapporter ~\cite[sid 27--34]{wikipediacred}.
 
-\subsubsection{Google App Engine} \label{Google App Engine}
 
-Google App Engine är en \textit{Platform as a service}, vilket är en servicemodell för molntjänster. Det bygger på att utvecklare skapar en programvara med hjälp av färdigbyggda bibliotek och verktyg som leverantören tillhandahåller. Den utvecklade produkten kan sedan köras på Google App Engine. Servern som vi byggde i App Engine kördes på Googles infrastruktur och var uppbyggt så att antalet användare för applikationen kunde utökas obegränsat. Flera stora företag använder sig av App Engine när deras produkter lanserades där några exempel av större företag var Coca Cola, Rovio och Best Buy~\cite{googleappenginecustomers}. 
 
 \subsection{Systemstruktur}
 
