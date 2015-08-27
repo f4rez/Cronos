@@ -9,16 +9,10 @@
 
 * Här måste vi ha referenser. Det känns som att Alfred får fixa detta, right?
 
-3.5 Motivation
-
-* Här kommenterar han angående upprepningar etc. Jag känner inte för att ta tag i detta just nu. Men detta måste göras.
-
-
 4. Implementation
 
 * Kommentar - "Blir lite konstigt när ni först nämner Google app engine och sen ger det et eget underkapitel"
 	- Denna put har jag inte skrivit något på alls.
-
 
 4.2.4
 
