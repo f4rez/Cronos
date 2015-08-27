@@ -57,3 +57,9 @@ Förord:
 * Detta är ett helt nytt stycke som beskriver mer detaljerat om hur applikationen är implementerad.
 
 
+ÖVRIGT
+
+* Tog bort stycket "Motivation" och skrev ut innehållet på andra mer lämpliga platser
+* Flyttade referenser i stycket om Balanseringsteori så de ligger på bättre ställen. 
+
+
