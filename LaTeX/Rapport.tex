@@ -211,7 +211,7 @@ klarhet att utveckla ett sådant system. En svårighet med detta var att se till
 \subsection{Relaterat arbete}
 
 \subsubsection{Historiekampen} \label{Historiekampen}
-Det finns ett spel för iOS, \textit{Historiekampen} ~\cite{historiekampen} som också handlar om att lägga in händelser korrekt på en tidslinje. En nackdel som den befintliga iOS-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
+Det finns ett spel för iOS, \textit{Historiekampen}~\cite{historiekampen} som också handlar om att lägga in händelser korrekt på en tidslinje. En nackdel som den befintliga iOS-versionen har är att användaren endast ser årtal på sin tidslinje, och inte vilka händelser som ligger där.
 
 
 Historiekampen är ett spel som konceptuellt sett liknar sällskapsspelet \textit{När då då?} väldigt mycket. En spelares tur går till så att den först får en händelse som skulle placeras på spelarens tidslinje. När första frågan presenteras finns det en årtalsreferens utlagd på tidslinjen som den första händelsen ska placeras före eller efter. När nästa fråga presenteras finns det två referenser (den första plus årtalet för frågan som precis placerades) och så vidare.\\ 
@@ -223,7 +223,7 @@ Viktor nämnde även att svårighetsgraden på matcherna kunde variera mycket. V
 \subsubsection{Balanseringsteori}
 En viktig aspekt i det här projektet var att rangordna spelare och deras kunskapsnivå i förhållande till varandra för att skapa mer rättvisa matcher. Den här uppgiften har många spelutvecklare sedan tidigare funderat på och de flesta större spel använder sig också av något system för balansering~\cite{matchmaking}. Två etablerade system för balansering är Elo och Glicko. Elo är det systemet som har implementerats i Chronos.
 
-Elo är ett system som baserar sin balansering på spelarnas enskilda poäng.\cite{elo} Skillnaden mellan två spelares poäng används för att förutse en trolig vinnare av matchen. Efter varje match uppdateras varje spelares individuella poäng beroende på vem som vann. En lägre rankad spelare får fler poäng vid vinst mot en högre rankad spelare och förlorar väldigt lite poäng vi en förlust. Om en högre rankad spelare däremot vinner mot en lägre rankad spelare får hen väldigt lite poäng och förlorar mycket poäng vid förlust. Detta innebär att spelet balanserar spelarna till den nivå de förtjänar.
+Elo är ett system som baserar sin balansering på spelarnas enskilda poäng~\cite{elo}. Skillnaden mellan två spelares poäng används för att förutse en trolig vinnare av matchen. Efter varje match uppdateras varje spelares individuella poäng beroende på vem som vann. En lägre rankad spelare får fler poäng vid vinst mot en högre rankad spelare och förlorar väldigt lite poäng vi en förlust. Om en högre rankad spelare däremot vinner mot en lägre rankad spelare får hen väldigt lite poäng och förlorar mycket poäng vid förlust. Detta innebär att spelet balanserar spelarna till den nivå de förtjänar.
 
 Elo-systemet fungerar enligt följande. Varje spelare får en initial Elo-poäng på 1000. Denna justeras sedan beroende på utfallet av en match i förhållande till det förväntade utfallet. Det förväntade utfallet beräknas:
 
