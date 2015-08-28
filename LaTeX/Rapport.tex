@@ -211,7 +211,7 @@ Viktor nämnde även att svårighetsgraden på matcherna kunde variera mycket. V
 \subsubsection{Balanseringsteori}
 En viktig aspekt i det här projektet var att rangordna spelare och deras kunskapsnivå i förhållande till varandra för att skapa mer rättvisa matcher. Den här uppgiften har många spelutvecklare sedan tidigare funderat på och de flesta större spel använder sig också av något system för balansering.\cite{matchmaking} Två etablerade system för balansering är Elo och Glicko. Elo är det systemet som har implementerats i Chronos.
 
-Elo är ett system som baserar sin balansering på spelarnas enskilda poäng. Skillnaden mellan två spelares poäng används för att förutse en trolig vinnare av matchen. Efter varje match uppdateras varje spelares individuella poäng beroende på vem som vann. En lägre rankad spelare får fler poäng vid vinst mot en högre rankad spelare och förlorar väldigt lite poäng vi en förlust. Om en högre rankad spelare däremot vinner mot en lägre rankad spelare får hen väldigt lite poäng och förlorar mycket poäng vid förlust. Detta innebär att spelet balanserar spelarna till den nivå de förtjänar.
+Elo är ett system som baserar sin balansering på spelarnas enskilda poäng.\cite{elo} Skillnaden mellan två spelares poäng används för att förutse en trolig vinnare av matchen. Efter varje match uppdateras varje spelares individuella poäng beroende på vem som vann. En lägre rankad spelare får fler poäng vid vinst mot en högre rankad spelare och förlorar väldigt lite poäng vi en förlust. Om en högre rankad spelare däremot vinner mot en lägre rankad spelare får hen väldigt lite poäng och förlorar mycket poäng vid förlust. Detta innebär att spelet balanserar spelarna till den nivå de förtjänar.
 
 Elo-systemet fungerar enligt följande. Varje spelare får en initial Elo-poäng på 1000. Denna justeras sedan beroende på utfallet av en match i förhållande till det förväntade utfallet. Det förväntade utfallet beräknas:
 
@@ -319,8 +319,10 @@ Med Datastore behövde vi inte oroa sig över hur sökning och borttagning skull
 \subsubsection{Parser} \label{crawler}
 Inbyggt i servern finns en form av parser som hanterar den semi-automatiska informationshämtningen. Hela systemet har som uppgift att genom en angiven länk kunna läsa igenom hemsidan för att hitta information som passade den mall för händelserna som vi har definierat. 
 
-Sidor som visade sig vara enkla att läsa in var Wikipedias undersidor av typen listningssidor. Den här typen av sidor har en punktlista med årtal samt en beskrivande mening av händelsen det årtalet. Vad för beskrivning som finns relaterat till året beror på vilken typ av listsida som har valts. Ett exempel är sidan som listar datorspelshändelser efter år som illustreras i Figur 2 nedan.
-Denna struktur gjorde det enkelt att vid inläsning av en sida separera varje $<$li$>$-element där ett bindestreck eller kolon förekom och därefter spara varje kombination av årtal och händelse i ett temporärt cache.
+Sidor som visade sig vara enkla att läsa in var Wikipedias undersidor av typen listningssidor. De här sidorna var lätta att läsa in eftersom de var väldigt strukturerade. Händelserna var redan sammanfattade i en mening vardera och intill dessa stod det alltid ett årtal. Varje mening och årtalskombination var sedan en enhet i en större punktlista. Vad för beskrivning som finns relaterat till året beror på vilken typ av listsida som har valts. Ett exempel är sidan som listar datorspelshändelser efter år som illustreras i Figur 2 nedan.
+
+Parsern använder sig av ett bibliotek i go som kan läsa av html- och xml-kod. Wikipediaartiklarna som läses in är alltid konsekventa med sin html-struktur och därför går det bra att bygga en parser för artiklarna.
+Strukturen gjorde det enkelt att vid inläsning av en sida separera varje $<$li$>$-element där ett bindestreck eller kolon förekom och därefter spara varje kombination av årtal och händelse i ett temporärt cache.
 
 \begin{figure}[H]
 	\begin{centering}
@@ -341,7 +343,7 @@ När alla  händelser har lästs in i cachet presenteras de inlästa händelsern
 De fyra knapparna är mappade till siffrorna 1-4 på tangentbordet för att det ska gå snabbt att gå igenom händelserna. Texten kan också redigeras om administratören vill justera grammatiska fel.
 
 \subsubsection{Användare}
-Det finns två sorters användare som kunde interagera med systemet.
+Det finns två sorters användare som kan interagera med systemet.
 \newline
 \textbf{Administratörer} \label{admins}\newline
 Administratörerna är vi som utvecklade applikationen och som ansvarar för projektet. Vi är ansvariga för underhållet och utvecklingen av systemet. Vi har den högsta typen av tillgång till systemet för att kunna utföra underhållet och utvecklingen. I underhållet innefattas det felsökning samt reparation av funna fel. Underhållet innefattar även uppföljning av buggrapporter som skickats in av spelare. En vital uppgift som administratörerna har, förutom det allmänna underhållet och utvecklingen av systemet, är att godkänna information som hämtas av parsern. Detta för att se till att händelserna följer den struktur som är lämplig för spelet.\\

@@ -37,6 +37,9 @@ Förord:
 3.4.1 Historiekampen
 * Rättade till felskrivet tempus i texten
 
+3.4.2 Balanseringsteori
+* Lagt till referenser
+
 3.4.3 Chronos spets
 * Rättade till fel tempus i texten
 
