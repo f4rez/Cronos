@@ -50,10 +50,19 @@ Förord:
 * Detta är ett nytt stycke som skrevs för att beskriva  lite kort om hur projektet skulle utvärderas.
 
 
+4 Implementation
+* Flyttade sektionen där vi talar om Google App Engine till bakgrund
+
 4.2.3 Databas
 * Detta stycke har skrivits om och utvecklats. Det har skrivits mer om NoSQL samt skillnaderna mellan NoSQL och SQL.
 
 4.3.2 Genomgång av applikationens implementation
 * Detta är ett helt nytt stycke som beskriver mer detaljerat om hur applikationen är implementerad.
+
+
+ÖVRIGT
+
+* Tog bort stycket "Motivation" och skrev ut innehållet på andra mer lämpliga platser
+* Flyttade referenser i stycket om Balanseringsteori så de ligger på bättre ställen. 
 
 
